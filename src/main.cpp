@@ -1,11 +1,15 @@
-#include <iostream>
 
+#include "Core/Context.hpp"
+#include "Util/Input.hpp"
 
-//#include "Core/Context.hpp"
+int main(int, char**) {
+    auto context = Core::Context::GetInstance();
 
-int main()
-{
-	//auto
-	std::cout << "Hello CMake." << std::endl;
-	return 0;
+    while (!context->GetExit()) {
+        if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE)) {
+            context->SetExit(true);
+        }
+        context->Update();
+    }
+    return 0;
 }
