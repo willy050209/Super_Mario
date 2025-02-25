@@ -4,7 +4,7 @@
 
 #include <memory>
 
-constexpr auto BGMPath = MY_RESOURCE_DIR"\\BGM\\bgmtest.wav";
+constexpr auto BGMPath = MY_RESOURCE_DIR"\\BGM\\Ring08.wav";
 constexpr auto BackgroundImagePath = MY_RESOURCE_DIR"\\Image\\Background\\cat.jpg";
 constexpr auto marioImagePath = MY_RESOURCE_DIR"\\Image\\Character\\bee_1.png";
 
