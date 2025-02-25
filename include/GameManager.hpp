@@ -3,6 +3,8 @@
 
 #include "Util/GameObject.hpp"
 #include "Util/Renderer.hpp"
+#include "Util/BGM.hpp"
+#include "Mario.hpp"
 
 #include <memory>
 
@@ -23,7 +25,11 @@ public:
 
 private:
 	Util::Renderer m_Root;
+	std::shared_ptr<Util::BGM> bgm;
 	std::shared_ptr<Util::GameObject> background;
+
+	std::shared_ptr<Mario> mario;
+	
 
 	bool endstate = false;
 };
