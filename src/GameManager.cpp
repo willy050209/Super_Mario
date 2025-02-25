@@ -24,8 +24,9 @@ void GameManager::init() noexcept
 	text = std::make_shared<Util::GameObject>(
 		Util::GameObject(
 			std::make_unique<Util::Text>(
-				ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW))
-			, 10, glm::vec2{ 400.0f,-300.0f })
+				ArialFontPath, 20, "Text Output Example(Font = Arial)",
+				Util::Color::FromName(Util::Colors::YELLOW)),
+			10, glm::vec2{ 400.0f,-300.0f })
 	);
 
 	m_Root.AddChild(text);
