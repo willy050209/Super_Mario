@@ -20,7 +20,7 @@ void GameManager::init() noexcept
 	mario = std::make_shared<Mario>(marioImagePath);
 
 
-	text = std::make_shared<TextObject>(ArialFontPath, 20, "Text Output Example(Font = Arial", Util::Color::FromName(Util::Colors::YELLOW), 10,glm::vec2{ 400.0f,-300.0f });
+	text = std::make_shared<TextObject>(ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10,glm::vec2{ 400.0f,-300.0f });
 
 	m_Root.AddChild(text);
 	m_Root.AddChild(background);
