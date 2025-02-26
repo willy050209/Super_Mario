@@ -6,6 +6,7 @@
 #include "Util/BGM.hpp"
 #include "Util/Text.hpp"
 #include "BackgroundObject.hpp"
+#include "TextObject.hpp"
 #include "Mario.hpp"
 
 #include <memory>
@@ -28,7 +29,7 @@ public:
 private:
 	Util::Renderer m_Root;
 	std::shared_ptr<Util::BGM> bgm;
-	std::shared_ptr<Util::GameObject> text;
+	std::shared_ptr<TextObject> text;
 	std::shared_ptr<BackgroundObject> background;
 
 	std::shared_ptr<Mario> mario;
