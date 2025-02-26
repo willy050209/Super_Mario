@@ -1,6 +1,6 @@
 #include "BackgroundObject.hpp"
 
-BackgroundObject::BackgroundObject(const std::string& ImagePath) noexcept {
+BackgroundObject::BackgroundObject(const std::string& ImagePath) {
 	setImage(ImagePath);
 	m_Transform.translation = { 0.0f,0.0f };
 }
