@@ -14,12 +14,10 @@ void GameManager::init() noexcept
 
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(64);// 0~128
-	background = std::make_shared<Util::GameObject>(
-		Util::GameObject(
-			std::make_unique<Util::Image>(BackgroundImagePath), 0)
-	);
-	mario = std::make_shared<Mario>(marioImagePath);
 	
+	background = std::make_shared<BackgroundObject>(BackgroundImagePath);
+
+	mario = std::make_shared<Mario>(marioImagePath);
 
 	text = std::make_shared<Util::GameObject>(
 		Util::GameObject(
