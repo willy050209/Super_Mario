@@ -8,7 +8,7 @@ class BackgroundObject : public Util::GameObject {
 	
 public:
 
-	explicit BackgroundObject(const std::string& ImagePath) noexcept;
+	explicit BackgroundObject(const std::string& ImagePath);
 
 	BackgroundObject(
 		const std::shared_ptr< Core::Drawable >& drawable,
