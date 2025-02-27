@@ -13,7 +13,7 @@ static void callBackTest(Button* const self, void* data) {
 
 static void exitCallBack(Button* const self, void* data) {
 	auto gm = (GameManager*)data;
-	std::cout << " Exit APP! \n";
+	std::cout << "Exit APP! \n";
 	gm->End();
 }
 
