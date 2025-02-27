@@ -25,7 +25,7 @@ FetchContent_MakeAvailable(ptsd)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
 file(GLOB_RECURSE HEADER_FILES include/Object/*.hpp)
-add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES} "include/GameManager.hpp" "include/Object/Character.hpp" "include/Object/Mario.hpp" "include/Object/ImageObject.hpp" "include/Object/TextObject.hpp" "include/FormProfile.hpp"  )
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES} "include/GameManager.hpp" "include/Object/Character.hpp" "include/Object/Mario.hpp" "include/Object/ImageObject.hpp" "include/Object/TextObject.hpp" "include/FormProfile.hpp" )
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)
