@@ -9,6 +9,8 @@ unsigned int FPS_CAP = 60;
 int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
+constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
+
 
 int main(int, char**) {
 
@@ -20,7 +22,7 @@ int main(int, char**) {
     gameManger.init();
 
     //SDL_SetWindowTitle(context->GetWindow(), "My Super Mario");
-    context->SetWindowIcon(MY_RESOURCE_DIR"/image/ICON/Untitled.png");
+    context->SetWindowIcon(ICOP_PATH);
 
     while (!context->GetExit()) {
         if (gameManger.isEnd()) {

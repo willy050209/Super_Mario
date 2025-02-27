@@ -5,10 +5,10 @@
 
 #include <memory>
 
-constexpr auto BGMPath = MY_RESOURCE_DIR"\\BGM\\Ring08.wav";
-constexpr auto ArialFontPath = MY_RESOURCE_DIR"\\Font\\arial.ttf";
-constexpr auto BackgroundImagePath = MY_RESOURCE_DIR"\\Image\\Background\\cat.jpg";
-constexpr auto marioImagePath = MY_RESOURCE_DIR"\\Image\\Character\\bee_1.png";
+constexpr auto BGMPath = MY_RESOURCE_DIR"/BGM/Ring08.wav";
+constexpr auto ArialFontPath = MY_RESOURCE_DIR"/Font/arial.ttf";
+constexpr auto BackgroundImagePath = MY_RESOURCE_DIR"/Image/Background/cat.jpg";
+constexpr auto marioImagePath = MY_RESOURCE_DIR"/Image/Character/bee_1.png";
 
 inline static float GetX0(std::shared_ptr<Object> obj) noexcept {
 	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
