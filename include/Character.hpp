@@ -31,6 +31,8 @@ public:
 
     }
 
+    virtual void behavior() = 0;
+
     virtual void move(const float& d) = 0;
 
 

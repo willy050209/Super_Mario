@@ -18,9 +18,10 @@ void GameManager::init() noexcept
 	background = std::make_shared<ImageObject>(BackgroundImagePath,-10);
 
 	mario = std::make_shared<Mario>(marioImagePath);
+	mario->SetPosition({ 0,300 });
 
-
-	text = std::make_shared<TextObject>(ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10,glm::vec2{ 400.0f,-300.0f });
+	text = std::make_shared<TextObject>(ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10);
+	text->SetPosition({ -400,300 });
 
 	m_Root.AddChild(text);
 	m_Root.AddChild(background);
@@ -33,7 +34,7 @@ void GameManager::Update() noexcept
 	if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE)) {
 		End();
 	}
-	mario->move(1.0);
+	mario->behavior();
 	m_Root.Update();
 }
 

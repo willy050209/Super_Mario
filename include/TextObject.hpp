@@ -34,6 +34,10 @@ public:
 
 	TextObject() = default;
 
+	inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
+
+	inline void SetPosition(const glm::vec2& Position) { m_Transform.translation = Position; }
+
 	inline void setText(const std::string& text) noexcept;
 
 
