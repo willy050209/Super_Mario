@@ -1,16 +1,18 @@
 #ifndef IMAGEOBJECT_HPP
 #define IMAGEOBJECT_HPP
 
-#include "Util/GameObject.hpp"
+#include "Object.hpp"
 #include "Util/Image.hpp"
 
-class ImageObject : public Util::GameObject {
-	
+class ImageObject : public Object {
+
 public:
 
 	explicit ImageObject(const std::string& ImagePath,
 		const float 	zIndex,
-		const glm::vec2& pivot = { 0, 0 } );
+		const glm::vec2& pivot = { 0, 0 })
+		: Object(std::make_shared<Util::Image>(ImagePath), zIndex, pivot) {
+	}
 
 	ImageObject(
 		const std::shared_ptr< Core::Drawable >& drawable,
@@ -18,21 +20,12 @@ public:
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
-	) : Util::GameObject(drawable,zIndex,pivot,visible,children) {}
-	
+	) : Object(drawable, zIndex, pivot, visible, children) {}
+
 	ImageObject(const ImageObject& other) = default;
 
 	ImageObject(ImageObject&& other) = default;
 
 	ImageObject() = default;
-
-	inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
-
-	inline void SetPosition(const glm::vec2& Position) { m_Transform.translation = Position; }
-
-	void setImage(const std::string& ImagePathconst) noexcept;
-
-
 };
-
 #endif // !IMAGEOBJECT_HPP

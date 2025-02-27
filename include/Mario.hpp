@@ -12,7 +12,7 @@ public:
 		UP, MOVE, DOWN
 	};
 
-	explicit Mario(const std::string& ImagePath) : Character(ImagePath){}
+	explicit Mario(const std::string& ImagePath,int zindex) : Character(ImagePath, zindex){}
 
 	virtual void behavior() override;
 

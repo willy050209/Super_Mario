@@ -13,7 +13,7 @@ namespace Core {
         /**
          * @brief Initialize context for SDL, OpenGL, and create a window
          */
-        Context();
+        Context(int w = WINDOW_WIDTH, int h = WINDOW_HEIGHT);
         Context(const Context&) = delete;
         Context(Context&&) = delete;
 
@@ -34,8 +34,9 @@ namespace Core {
         inline void SetWindowWidth(unsigned int width) noexcept { m_WindowWidth = width; }
         inline void SetWindowHeight(unsigned int height) noexcept { m_WindowHeight = height; }
         inline void SetFullScreenState(SDL_bool&& sdl_bool) noexcept { fullScreenState = sdl_bool; }
-        void SetWindowIcon(const std::string& path);
+        void SetWindowIcon(const std::string& path) noexcept;
 
+        void ReSize(int w, int h) noexcept;
         void Setup() noexcept;
         void Update() noexcept;
 

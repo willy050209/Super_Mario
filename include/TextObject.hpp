@@ -1,11 +1,11 @@
 #ifndef TEXTOBJECT_HPP
 #define TEXTOBJECT_HPP
 
-#include "Util/GameObject.hpp"
+#include "Object.hpp"
 #include "Util/Color.hpp"
 #include "Util/Text.hpp"
 
-class TextObject : public Util::GameObject {
+class TextObject : public Object {
 
 public:
 
@@ -16,7 +16,7 @@ public:
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>())
-		: GameObject(std::make_unique<Util::Text>(font, size, text, color),zIndex,pivot,visible,children) {
+		: Object(std::make_unique<Util::Text>(font, size, text, color),zIndex,pivot,visible,children) {
 		
 	}
 
@@ -26,7 +26,7 @@ public:
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
-	) : Util::GameObject(drawable, zIndex, pivot, visible, children) {}
+	) :Object(drawable, zIndex, pivot, visible, children) {}
 
 	TextObject(const TextObject& other) = default;
 
@@ -34,12 +34,11 @@ public:
 
 	TextObject() = default;
 
-	inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
-
-	inline void SetPosition(const glm::vec2& Position) { m_Transform.translation = Position; }
-
 	inline void setText(const std::string& text) noexcept;
 
+	inline glm::vec2&& GetSize() const noexcept override {
+		return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
+	}
 
 };
 

@@ -1,6 +1,7 @@
 #include "MyContext.hpp"
 
 #include <memory>
+#include <stdlib.h>
 
 #include "Core/DebugMessageCallback.hpp"
 
@@ -8,12 +9,12 @@
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 
-#include "config.hpp"
+//#include "config.hpp"
 
 using Util::ms_t;
 
 namespace Core {
-    Context::Context() noexcept {
+    Context::Context(int w, int h) {
         Util::Logger::Init();
 
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -42,8 +43,8 @@ namespace Core {
         }
 
         m_Window =
-            SDL_CreateWindow(TITLE, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH,
-                WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+            SDL_CreateWindow(TITLE, WINDOW_POS_X, WINDOW_POS_Y, w,
+                h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
         if (m_Window == nullptr) {
             LOG_ERROR("Failed to create window");
@@ -113,6 +114,12 @@ namespace Core {
         SDL_Quit();
     }
 
+    void Context::ReSize(int w, int h) noexcept
+    {
+        //MY_APP_DIR
+        system("start Super_Mario.exe");
+    }
+
     void Context::Setup() noexcept {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
@@ -124,7 +131,7 @@ namespace Core {
         SDL_GL_SwapWindow(m_Window);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        constexpr ms_t frameTime = FPS_CAP != 0 ? 1000.0F / FPS_CAP : 0;
+        ms_t frameTime = FPS_CAP != 0 ? 1000.0F / FPS_CAP : 0;
         ms_t afterUpdate = Util::Time::GetElapsedTimeMs();
         ms_t updateTime = afterUpdate - m_BeforeUpdateTime;
         if (updateTime < frameTime) {
@@ -151,14 +158,14 @@ namespace Core {
 #endif // DEBUG_DELTA_TIME
     }
 
-    std::shared_ptr<Context> Context::GetInstance() {
+    std::shared_ptr<Context> Context::GetInstance() noexcept {
         if (s_Instance == nullptr) {
             s_Instance = std::make_shared<Context>();
         }
         return s_Instance;
     }
 
-    void Context::SetWindowIcon(const std::string& path) {
+    void Context::SetWindowIcon(const std::string& path) noexcept {
         SDL_Surface* image = IMG_Load(path.c_str());
         SDL_SetWindowIcon(m_Window, image);
     }
