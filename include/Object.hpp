@@ -45,7 +45,7 @@ public:
         return std::dynamic_pointer_cast<Util::Image>(m_Drawable)->GetSize();
     }
 
-    virtual void behavior() {}
+    virtual void behavior(void* data = nullptr) {}
 };
 
 #endif

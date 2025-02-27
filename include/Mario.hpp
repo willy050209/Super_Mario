@@ -14,7 +14,7 @@ public:
 
 	explicit Mario(const std::string& ImagePath,int zindex) : Character(ImagePath, zindex){}
 
-	virtual void behavior() override;
+	virtual void behavior(void* data = nullptr) override;
 
 	virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 

@@ -1,7 +1,7 @@
 #include "Mario.hpp"
 #include "Util/Input.hpp"
 
-void Mario::behavior()
+void Mario::behavior(void* data)
 {
     move();
     jump();

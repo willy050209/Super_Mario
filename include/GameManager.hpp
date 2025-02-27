@@ -26,8 +26,8 @@ public:
 
 	inline bool isEnd() const noexcept { return endstate; }
 
-	inline void doAllEvent() noexcept {
-		std::for_each(m_Events.begin(), m_Events.end(), [](const auto& it) {it->behavior(); });
+	inline void doAllEvent(void *data = nullptr) noexcept {
+		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) {it->behavior(data); });
 	}
 
 private:

@@ -24,7 +24,7 @@ void GameManager::init() noexcept
 	auto addObjectCallBack = [&](const auto& it) {
 		m_Root.AddChild(it);
 		m_Events.push_back(it);
-		};
+	};
 
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(0);// 0~128
@@ -53,6 +53,12 @@ void GameManager::init() noexcept
 		buttons.back()->SetPosition({ GetX0(buttons.back()) + 100,GetY0(buttons.back()) - 50 * (i + 1) });
 		buttons.back()->SetCallBackFunc(callBackTest);
 	}
+	buttons.push_back(std::make_shared<Button>(ArialFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100));
+	buttons.back()->SetPosition({
+		(GetX0(buttons.back()) + (WINDOW_WIDTH - buttons.back()->GetSize().x)),
+		GetY0(buttons.back()) - (WINDOW_HEIGHT - buttons.back()->GetSize().y)
+	});
+	buttons.back()->SetCallBackFunc(exitCallBack);
 	std::for_each(buttons.begin(), buttons.end(),addObjectCallBack);
 }
 
@@ -70,7 +76,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 		context->ReSize(WINDOW_HEIGHT,WINDOW_WIDTH);
 		End();
 	}*/
-	doAllEvent();
+	doAllEvent(this);
 	//button->setColor(Util::Color::FromName(Util::Colors::YELLOW));
 	m_Root.Update();
 }

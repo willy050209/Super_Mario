@@ -47,6 +47,8 @@ public:
 		return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
 	}
 
+	virtual void behavior(void* data = nullptr) {}
+
 protected:
 	Util::Color textColor = Util::Color::FromName(Util::Colors::BLUE);
 	std::string text;

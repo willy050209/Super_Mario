@@ -2,7 +2,7 @@
 #include "util/Input.hpp"
 #include "config.hpp"
 
-void Button::behavior()
+void Button::behavior(void* data)
 {
     int x, y;
     auto e = SDL_GetMouseState(&x, &y);
@@ -16,7 +16,7 @@ void Button::behavior()
         setColor(defultColor);
     }
     if (trigger && (SDL_BUTTON(e) == 0 || (unsigned)SDL_BUTTON(e) > 3)) {
-        CallBackFunc(this);
+        CallBackFunc(this, data);
         trigger = false;
     }
 }

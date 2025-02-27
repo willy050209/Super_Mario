@@ -39,13 +39,13 @@ public:
 
 	inline void* GetCallBackFunc() const noexcept { return CallBackFunc; }
 
-	inline void SetCallBackFunc(void (*CallBackFunc)(Button* const self)) noexcept { this->CallBackFunc = CallBackFunc; }
+	inline void SetCallBackFunc(void (*CallBackFunc)(Button* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
 
-	virtual void behavior() override;
+	virtual void behavior(void* data = nullptr) override;
 
 
 protected:
-	void (*CallBackFunc)(Button* const self) = nullptr;
+	void (*CallBackFunc)(Button* const self, void* data) = nullptr;
 	Util::Color ClickedColor;
 	Util::Color defultColor{ Util::Color::FromName(Util::Colors::BLACK) };
 	bool trigger = false;
