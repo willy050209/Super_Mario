@@ -10,8 +10,8 @@ constexpr const char *TITLE = "Practical Tools for Simple Design";
 static int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 static int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
-static unsigned int WINDOW_WIDTH = 1600;
-static unsigned int WINDOW_HEIGHT = 900;
+static unsigned int WINDOW_WIDTH = 800;
+static unsigned int WINDOW_HEIGHT = 600;
 
 constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
 
