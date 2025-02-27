@@ -13,7 +13,7 @@ namespace Core {
         /**
          * @brief Initialize context for SDL, OpenGL, and create a window
          */
-        Context(int w = WINDOW_WIDTH, int h = WINDOW_HEIGHT);
+        Context();
         Context(const Context&) = delete;
         Context(Context&&) = delete;
 

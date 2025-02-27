@@ -5,13 +5,13 @@
 
 #include "Util/Logger.hpp"
 
-constexpr const char *TITLE = "Practical Tools for Simple Design";
+constexpr const char *TITLE = "My Super Mario";
 
-static int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
-static int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
+extern int WINDOW_POS_X; // = SDL_WINDOWPOS_UNDEFINED;
+extern int WINDOW_POS_Y; // = SDL_WINDOWPOS_UNDEFINED;
 
-static unsigned int WINDOW_WIDTH = 800;
-static unsigned int WINDOW_HEIGHT = 600;
+extern unsigned int WINDOW_WIDTH; // = 1280;
+extern unsigned int WINDOW_HEIGHT; // = 720;
 
 constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
 
@@ -20,6 +20,6 @@ constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
  *
  * Set value to 0 to turn off FPS cap
  */
-static unsigned int FPS_CAP = 60;
+extern unsigned int FPS_CAP;// = 60;
 
 #endif
