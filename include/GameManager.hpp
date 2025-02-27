@@ -26,17 +26,18 @@ public:
 
 	inline bool isEnd() const noexcept { return endstate; }
 
-	inline void doEvent() noexcept {
+	inline void doAllEvent() noexcept {
 		std::for_each(m_Events.begin(), m_Events.end(), [](const auto& it) {it->behavior(); });
 	}
 
 private:
 	Util::Renderer m_Root;
-	std::vector<std::shared_ptr<Object>> m_Events;
 	std::shared_ptr<Util::BGM> bgm;
-	std::shared_ptr<TextObject> text;
-	std::shared_ptr<ImageObject> background;
+	std::vector<std::shared_ptr<Object>> m_Events;
+	std::vector<std::shared_ptr<TextObject>> texts;
+	std::vector<std::shared_ptr<ImageObject>> images;
 	std::vector<std::shared_ptr<Button>> buttons;
+	std::vector<std::shared_ptr<Character>> characters;
 	std::shared_ptr<Mario> mario;
 	
 
