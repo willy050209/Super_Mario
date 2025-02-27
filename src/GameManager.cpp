@@ -29,10 +29,14 @@ void GameManager::init() noexcept
 	bgm->Play();
 }
 
-void GameManager::Update() noexcept
+void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 {
 	if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE)) {
 		End();
+	}
+	if (Util::Input::IsKeyPressed(Util::Keycode::RALT)&& Util::Input::IsKeyDown(Util::Keycode::SPACE)) {
+		context->SetFullScreenState((context->GetFullScreenState() == SDL_bool::SDL_TRUE) ? SDL_bool::SDL_FALSE : SDL_bool::SDL_TRUE);
+		SDL_SetWindowFullscreen(context->GetWindow(), context->GetFullScreenState());
 	}
 	mario->behavior();
 	m_Root.Update();

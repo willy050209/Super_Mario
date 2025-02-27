@@ -1,6 +1,7 @@
 #ifndef GAMEMANGER_HPP
 #define GAMEMANGER_HPP 
 
+#include "MyContext.hpp"
 #include "Util/GameObject.hpp"
 #include "Util/Renderer.hpp"
 #include "Util/BGM.hpp"
@@ -20,7 +21,7 @@ public:
 
 	void init() noexcept;
 
-	void Update() noexcept;
+	void Update(std::shared_ptr<Core::Context>&) noexcept;
 
 	void End() noexcept;
 
