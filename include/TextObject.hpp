@@ -12,17 +12,18 @@ public:
 	TextObject(
 		const std::string& font, int size, const std::string& text,
 		const Util::Color& color,
-		const float 	zIndex,
+		const float 	zIndex = 10,
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>())
 		: Object(std::make_unique<Util::Text>(font, size, text, color),zIndex,pivot,visible,children) {
-		
+		textColor = color;
+		this->text = text;
 	}
 
 	TextObject(
 		const std::shared_ptr< Core::Drawable >& drawable,
-		const float 	zIndex,
+		const float 	zIndex = 10,
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
@@ -34,12 +35,21 @@ public:
 
 	TextObject() = default;
 
+	inline const Util::Color& GetColor()const noexcept { return textColor; }
+
+	inline const std::string& GetText() const noexcept { return text; }
+
 	inline void setText(const std::string& text) noexcept;
+
+	void setColor(const Util::Color& color);
 
 	inline glm::vec2&& GetSize() const noexcept override {
 		return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
 	}
 
+protected:
+	Util::Color textColor = Util::Color::FromName(Util::Colors::BLUE);
+	std::string text;
 };
 
 #endif // !BackgroundObject

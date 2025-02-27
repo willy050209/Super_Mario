@@ -14,7 +14,7 @@
 using Util::ms_t;
 
 namespace Core {
-    Context::Context(int w, int h) {
+    Context::Context() {
         Util::Logger::Init();
 
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -43,8 +43,8 @@ namespace Core {
         }
 
         m_Window =
-            SDL_CreateWindow(TITLE, WINDOW_POS_X, WINDOW_POS_Y, w,
-                h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+            SDL_CreateWindow(TITLE, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH,
+                WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
         if (m_Window == nullptr) {
             LOG_ERROR("Failed to create window");
@@ -116,8 +116,8 @@ namespace Core {
 
     void Context::ReSize(int w, int h) noexcept
     {
-        //MY_APP_DIR
-        system("start Super_Mario.exe");
+        SDL_SetWindowSize(m_Window, w, h);
+        m_Restart = true;
     }
 
     void Context::Setup() noexcept {

@@ -1,6 +1,7 @@
 #include "GameManager.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
+#include "ButtonCallBackFunc.hpp"
 
 #include <memory>
 
@@ -29,11 +30,28 @@ void GameManager::init() noexcept
 
 	mario = std::make_shared<Mario>(marioImagePath,10);
 	mario->SetPosition({ 0,300 });
+	m_Events.push_back(mario);
 	
 
 	text = std::make_shared<TextObject>(ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10);
 	text->SetPosition({ -400,300 });
 	text->SetPosition({ GetX0(text),GetY0(text) });
+
+
+	for (int i = 0; i < 10; ++i) {
+		buttons.push_back(std::shared_ptr<Button>(new Button(ArialFontPath, 20, "This is a button" + std::to_string(i), Util::Color::FromName(Util::Colors::YELLOW_GREEN), 20)));
+		buttons.back()->SetPosition({ GetX0(buttons.back()) + 100,GetY0(buttons.back()) - 50 * (i + 1) });
+	}
+	std::for_each(buttons.begin(), buttons.end(),
+		[&](std::shared_ptr<Button>& it) {
+			m_Root.AddChild(it);
+			m_Events.push_back(it);
+			it->SetCallBackFunc(callBackTest);
+		});
+
+	
+
+	//m_Root.AddChild(button);
 	m_Root.AddChild(text);
 	m_Root.AddChild(background);
 	m_Root.AddChild(mario);
@@ -51,9 +69,11 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::LSHIFT))
 	{
-		context->ReSize(1600, 900);
+		context->ReSize(WINDOW_HEIGHT,WINDOW_WIDTH);
+		End();
 	}
-	mario->behavior();
+	doEvent();
+	//button->setColor(Util::Color::FromName(Util::Colors::YELLOW));
 	m_Root.Update();
 }
 

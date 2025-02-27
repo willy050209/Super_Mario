@@ -3,8 +3,11 @@
 #include "GameManager.hpp"
 #include "FormProfile.hpp"
 
-unsigned int WINDOW_WIDTH = 1280, WINDOW_HEIGHT = 720, FPS_CAP = 60;
-int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED, WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
+int WINDOW_WIDTH = 1280;
+int WINDOW_HEIGHT = 720;
+unsigned int FPS_CAP = 60;
+int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
+int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
 
 int main(int, char**) {
@@ -23,9 +26,13 @@ int main(int, char**) {
         if (gameManger.isEnd()) {
             writeFormProfile(context);
             context->SetExit(true);
+            break;
         }
         gameManger.Update(context);
         context->Update();
+    }
+    if (context->GetRestart()) {
+        system("start Super_Mario.exe");
     }
     return 0;
 }

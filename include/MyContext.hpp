@@ -24,6 +24,7 @@ namespace Core {
 
         static std::shared_ptr<Context> GetInstance() noexcept;
 
+        inline bool GetRestart() const noexcept { return m_Restart; }
         inline bool GetExit() const noexcept { return m_Exit; }
         inline unsigned int GetWindowWidth() const noexcept { return m_WindowWidth; }
         inline unsigned int GetWindowHeight() const noexcept { return m_WindowHeight; }
@@ -47,6 +48,7 @@ namespace Core {
 
         static std::shared_ptr<Context> s_Instance;
         bool m_Exit = false;
+        bool m_Restart = false;
 
         unsigned int m_WindowWidth = WINDOW_WIDTH;
         unsigned int m_WindowHeight = WINDOW_HEIGHT;
