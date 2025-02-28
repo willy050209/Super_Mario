@@ -8,6 +8,7 @@
 #include "TextObject.hpp"
 #include "Mario.hpp"
 #include "Button.hpp"
+#include "Form/FormManger.hpp"
 
 #include <memory>
 
@@ -26,19 +27,21 @@ public:
 
 	inline bool isEnd() const noexcept { return endstate; }
 
-	inline void doAllEvent(void *data = nullptr) noexcept {
+	/*inline void doAllEvent(void *data = nullptr) noexcept {
 		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) {it->behavior(data); });
-	}
+	}*/
 
 private:
-	Util::Renderer m_Root;
+	/*Util::Renderer m_Root;
+	std::vector<std::shared_ptr<Object>> m_Events;*/
+	FormManger MyFM;
+
 	std::shared_ptr<Util::BGM> bgm;
-	std::vector<std::shared_ptr<Object>> m_Events;
 	std::vector<std::shared_ptr<TextObject>> texts;
 	std::vector<std::shared_ptr<ImageObject>> images;
 	std::vector<std::shared_ptr<Button>> buttons;
 	std::vector<std::shared_ptr<Character>> characters;
-	std::shared_ptr<Mario> mario;
+	//std::shared_ptr<Mario> mario;
 	
 
 	bool endstate = false;

@@ -29,11 +29,11 @@ public:
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
 	) :Object(drawable, zIndex, pivot, visible, children) {}
 
-	TextObject(const TextObject& other) = default;
+	TextObject(const TextObject& other) = delete;
 
-	TextObject(TextObject&& other) = default;
+	TextObject(TextObject&& other) = delete;
 
-	TextObject() = default;
+	TextObject() = delete;
 
 	inline const Util::Color& GetColor()const noexcept { return textColor; }
 

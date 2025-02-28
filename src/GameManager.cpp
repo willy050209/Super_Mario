@@ -21,19 +21,24 @@ inline static float GetY0(std::shared_ptr<Object> obj) noexcept {
 void GameManager::init() noexcept
 {
 
-	auto addObjectCallBack = [&](const auto& it) {
-		m_Root.AddChild(it);
-		m_Events.push_back(it);
+	auto addObjectCallBack = [&](auto& it) {
+		MyFM.addObject("Background", it);
 	};
+
+	MyFM.changeForm("Background");
 
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(0);// 0~128
 	bgm->Play();
 	
 	/*add images*/
-	images.push_back(std::make_shared<ImageObject>(BackgroundImagePath, -10));
+	images.push_back(std::make_shared<ImageObject>(BackgroundImagePath, 10));
+	images.back()->SetPosition({ GetX0(images.back()), GetY0(images.back()) - (WINDOW_HEIGHT - images.back()->GetSize().y) });
+	images.push_back(std::make_shared<ImageObject>(MY_RESOURCE_DIR"/Image/Background/phase0.png", -10));
 	images.back()->SetPosition({ GetX0(images.back()),GetY0(images.back()) - (WINDOW_HEIGHT - images.back()->GetSize().y) });
+	images.push_back(std::make_shared<ImageObject>(BackgroundImagePath, 10));
 	std::for_each(images.begin(), images.end(), addObjectCallBack);
+
 	
 	/*add characters*/
 	characters.push_back(std::make_shared<Mario>(marioImagePath,10));
@@ -76,9 +81,8 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 		context->ReSize(WINDOW_HEIGHT,WINDOW_WIDTH);
 		End();
 	}*/
-	doAllEvent(this);
-	//button->setColor(Util::Color::FromName(Util::Colors::YELLOW));
-	m_Root.Update();
+	MyFM.UpdateForm(this);
+	
 }
 
 void GameManager::End() noexcept

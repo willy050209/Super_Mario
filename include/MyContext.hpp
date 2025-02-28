@@ -14,13 +14,13 @@ namespace Core {
          * @brief Initialize context for SDL, OpenGL, and create a window
          */
         Context();
-        Context(const Context&) = delete;
-        Context(Context&&) = delete;
+        Context(const Context&) = default;
+        Context(Context&&) = default;
 
         ~Context();
 
-        Context& operator=(const Context&) = delete;
-        Context& operator=(Context&&) = delete;
+        Context& operator=(const Context&) = default;
+        Context& operator=(Context&&) = default;
 
         static std::shared_ptr<Context> GetInstance() noexcept;
 

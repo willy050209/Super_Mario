@@ -29,11 +29,11 @@ public:
 		ClickedColor = Util::Color::FromName(Util::Colors::RED);
 	}
 
-	Button(const Button& other) = default;
+	Button(const Button& other) = delete;
 
-	Button(Button&& other) = default;
+	Button(Button&& other) = delete;
 
-	Button() = default;
+	Button() = delete;
 
 	inline const Util::Color& GetClickedColor() const noexcept { return ClickedColor; }
 

@@ -22,10 +22,10 @@ public:
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
 	) : Object(drawable, zIndex, pivot, visible, children) {}
 
-	ImageObject(const ImageObject& other) = default;
+	ImageObject(const ImageObject& other) = delete;
 
-	ImageObject(ImageObject&& other) = default;
+	ImageObject(ImageObject&& other) = delete;
 
-	ImageObject() = default;
+	ImageObject() = delete;
 };
 #endif // !IMAGEOBJECT_HPP
