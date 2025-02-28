@@ -8,4 +8,9 @@
 #include "Object/Object.hpp"
 #include "Object/TextObject.hpp"
 
+enum class ObjectType
+{
+	Object, Character, Mario, ImageObject, TextObject, Button
+};
+
 #endif

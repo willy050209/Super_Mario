@@ -21,12 +21,33 @@ BUTTON_CALLBACK_FUNCTION(exitCallBack) {
 BUTTON_CALLBACK_FUNCTION(Back_Button_func) {
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
-	auto now = fm.GetNowForm();
-	auto prev = fm.GetPrevForm();
-	std::cout << "now Form is " << now << '\n';
-	std::cout << "prev Form is " << prev << '\n';
-	fm.changeForm(prev);
-	std::cout << "change Form to " << fm.GetNowForm() << '\n';
+	fm.returnPrevForm();
+}
+
+BUTTON_CALLBACK_FUNCTION(CallSettingForm) {
+	auto gm = (GameManager*)data;
+	auto& fm = gm->GetFormManger();
+	fm.changeForm(FormSetting);
+}
+
+BUTTON_CALLBACK_FUNCTION(VolumeUpClickedEvent) {
+	auto gm = (GameManager*)data;
+	auto& fm = gm->GetFormManger();
+	int volume = gm->GetBGM()->GetVolume();
+	if (volume == 100) return;
+	gm->GetBGM()->SetVolume(++volume);
+	auto text =fm.GetObject(FormSetting,ObjectType::TextObject, "VolumeValueText");
+	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
+}
+
+BUTTON_CALLBACK_FUNCTION(VolumeDownClickedEvent) {
+	auto gm = (GameManager*)data;
+	auto& fm = gm->GetFormManger();
+	int volume = gm->GetBGM()->GetVolume();
+	if (volume == 0) return;
+	gm->GetBGM()->SetVolume(--volume);
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
+	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
 #endif // !BUTTONCALLBACKFUNC

@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <string>
 
+
 class FormManger {
 public:
 
@@ -17,7 +18,28 @@ public:
 
 	inline const std::string GetNowForm() const noexcept { return nowForm; }
 
-	inline const std::string GetPrevForm() const noexcept { return prevForm; }
+	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
+
+	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType&& objtype, const std::string& objname) noexcept {
+		switch (objtype)
+		{
+		case ObjectType::Character:
+			return *std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objname; });
+			break;
+		case ObjectType::ImageObject:
+			return *std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objname; });
+			break;
+		case ObjectType::TextObject:
+			return *std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objname; });
+			break;
+		case ObjectType::Button:
+			return *std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objname; });
+			break;
+		default:
+			return nullptr;
+			break;
+		}
+	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Button>& button) noexcept {
 		m_Buttons[formName].push_back(button);
@@ -68,15 +90,24 @@ public:
 	}
 
 	inline void changeForm(const std::string& formname) noexcept { 
-		prevForm = nowForm;
+		if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+			prevForm.push_back(nowForm);
+		}
 		nowForm = formname;
 	}
 
 	inline void changeForm(std::string&& formname) noexcept {
-		prevForm = nowForm;
+		if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+			prevForm.push_back(nowForm);
+		}
 		nowForm = formname;
 	}
 	
+	inline void returnPrevForm() noexcept {
+		nowForm = prevForm.back();
+		prevForm.pop_back();
+	}
+
 
 private:
 
@@ -92,13 +123,13 @@ private:
 
 protected:
 	std::unordered_map<std::string, Form> m_Forms;
-	std::unordered_map<std::string, std::shared_ptr<Util::BGM>> m_bgm;
+	//std::unordered_map<std::string, std::shared_ptr<Util::BGM>> m_bgm;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<TextObject>>> m_Texts;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<ImageObject>>> m_Images;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<Button>>> m_Buttons;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<Character>>> m_Characters;
 	std::string  nowForm;
-	std::string prevForm;
+	std::vector<std::string> prevForm;
 };
 
 #endif //!FORMMANGER_HPP

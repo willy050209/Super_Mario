@@ -7,6 +7,15 @@
 
 #include <memory>
 
+constexpr auto BGMPath = MY_RESOURCE_DIR"/BGM/Ring08.wav";
+constexpr auto ArialFontPath = MY_RESOURCE_DIR"/Font/arial.ttf";
+constexpr auto BackgroundImagePath = MY_RESOURCE_DIR"/Image/Background/cat.jpg";
+constexpr auto marioImagePath = MY_RESOURCE_DIR"/Image/Character/bee_1.png";
+
+constexpr auto FormBackground = "Background";
+constexpr auto FormOptions = "Options";
+constexpr auto FormSetting = "Setting";
+
 class GameManager
 {
 
@@ -23,6 +32,8 @@ public:
 	inline bool isEnd() const noexcept { return endstate; }
 
 	inline FormManger& GetFormManger() noexcept { return MyFM; }
+
+	inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
 
 private:
 
