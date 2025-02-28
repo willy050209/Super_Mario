@@ -21,7 +21,6 @@ int main(int, char**) {
     GameManager gameManger;
     gameManger.init();
 
-    //SDL_SetWindowTitle(context->GetWindow(), "My Super Mario");
     context->SetWindowIcon(ICOP_PATH);
 
     while (!context->GetExit()) {

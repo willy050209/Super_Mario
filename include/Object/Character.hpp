@@ -6,7 +6,9 @@
 
 class Character : public Object {
 public:
-    explicit Character(const std::string& ImagePath,int zindex):Object(std::make_shared<Util::Image>(ImagePath),zindex){}
+    explicit Character(const std::string& name, const std::string& ImagePath, int zindex) 
+        :Object(name, std::make_shared<Util::Image>(ImagePath), zindex) {  }
+
 
     Character(const Character&) = delete;
 

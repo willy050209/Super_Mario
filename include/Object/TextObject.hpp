@@ -10,24 +10,28 @@ class TextObject : public Object {
 public:
 
 	TextObject(
+		const std::string& name,
 		const std::string& font, int size, const std::string& text,
 		const Util::Color& color,
 		const float 	zIndex = 10,
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>())
-		: Object(std::make_unique<Util::Text>(font, size, text, color),zIndex,pivot,visible,children) {
+		: Object(name, std::make_unique<Util::Text>(font, size, text, color), zIndex, pivot, visible, children) {
 		textColor = color;
 		this->text = text;
 	}
 
 	TextObject(
+		const std::string& name,
 		const std::shared_ptr< Core::Drawable >& drawable,
 		const float 	zIndex = 10,
 		const glm::vec2& pivot = { 0, 0 },
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
-	) :Object(drawable, zIndex, pivot, visible, children) {}
+	) :Object(name, drawable, zIndex, pivot, visible, children) {
+		
+	}
 
 	TextObject(const TextObject& other) = delete;
 

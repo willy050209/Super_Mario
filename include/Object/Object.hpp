@@ -8,12 +8,14 @@ class Object : public Util::GameObject {
 public:
     Object() = delete;
 
-    Object(const std::shared_ptr<Core::Drawable>& drawable,
+    Object(const std::string& name, const std::shared_ptr<Core::Drawable>& drawable,
         const float zIndex = 10, const glm::vec2& pivot = { 0, 0 },
         const bool visible = true,
         const std::vector<std::shared_ptr<GameObject>>& children =
         std::vector<std::shared_ptr<GameObject>>())
-        : GameObject(drawable,zIndex,pivot,visible,children) {}
+        : GameObject(drawable, zIndex, pivot, visible, children), name(name) {
+        
+    }
 
     Object(const Object&) = delete;
 
@@ -46,6 +48,8 @@ public:
     }
 
     virtual void behavior(void* data = nullptr) {}
+
+    std::string name;
 };
 
 #endif
