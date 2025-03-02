@@ -1,5 +1,5 @@
-#ifndef MY_CONTEXT_HPP
-#define MY_CONTEXT_HPP
+#ifndef CORE_CONTEXT_HPP
+#define CORE_CONTEXT_HPP
 
 #include "pch.hpp" // IWYU pragma: export
 
