@@ -39,7 +39,7 @@ public:
 
 	inline const Util::Color& GetClickedColor() const noexcept { return ClickedColor; }
 
-	inline void* GetCallBackFunc() const noexcept { return CallBackFunc; }
+	inline void* GetCallBackFunc() const noexcept { return (void*)CallBackFunc; }
 
 	inline void SetCallBackFunc(void (*CallBackFunc)(Button* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
 
