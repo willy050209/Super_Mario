@@ -8,7 +8,7 @@
 
 #define BUTTON_CALLBACK_FUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
 
-BUTTON_CALLBACK_FUNCTION(callBackTest){
+BUTTON_CALLBACK_FUNCTION(callBackTest) {
 	std::cout << self->GetText() << " is clicked!\n";
 }
 
@@ -36,9 +36,10 @@ BUTTON_CALLBACK_FUNCTION(VolumeUpClickedEvent) {
 	int volume = gm->GetBGM()->GetVolume();
 	if (volume == 100) return;
 	gm->GetBGM()->SetVolume(++volume);
-	auto text =fm.GetObject(FormSetting,ObjectType::TextObject, "VolumeValueText");
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
 	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
+
 
 BUTTON_CALLBACK_FUNCTION(VolumeDownClickedEvent) {
 	auto gm = (GameManager*)data;
@@ -49,5 +50,6 @@ BUTTON_CALLBACK_FUNCTION(VolumeDownClickedEvent) {
 	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
 	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
+
 
 #endif // !BUTTONCALLBACKFUNC

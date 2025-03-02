@@ -6,23 +6,20 @@
 
 #include <memory>
 
-inline static float GetX0(std::shared_ptr<Object> obj) noexcept {
+inline static int GetX0(std::shared_ptr<Object> obj) noexcept {
 	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
 }
 
-inline static float GetY0(std::shared_ptr<Object> obj) noexcept {
+inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
 	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
 }
 
-void GameManager::init() noexcept
-{
+inline static void initFormBackground(GameManager& self) noexcept {
 
-	bgm = std::make_shared<Util::BGM>(BGMPath);
-	bgm->SetVolume(0);// 0~128
-	bgm->Play();
-	
+	auto& MyFM = self.GetFormManger();
+
 	/*add images to FormBackground*/
-	auto tmpImage = std::make_shared<ImageObject>("cat0", BackgroundImagePath, -10);
+	auto& tmpImage = std::make_shared<ImageObject>("cat0", BackgroundImagePath, -10);
 	tmpImage->SetPosition({ GetX0(tmpImage), GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
 	MyFM.addObject(FormBackground, tmpImage);
 
@@ -32,15 +29,15 @@ void GameManager::init() noexcept
 
 	tmpImage = (std::make_shared<ImageObject>("cat1", BackgroundImagePath, -10));
 	MyFM.addObject(FormBackground, tmpImage);
-	
+
 	/*add characters to FormBackground*/
-	auto mario = (std::make_shared<Mario>("Mario",marioImagePath, 10));
-	mario->SetPosition({0,300});
+	auto& mario = (std::make_shared<Mario>("Mario", marioImagePath, 10));
+	mario->SetPosition({ 0,300 });
 	MyFM.addObject(FormBackground, mario);
-	
+
 	/*add Texts to FormBackground*/
-	auto text(std::make_shared<TextObject>("Text0",ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10));
-	text->SetPosition({-400,300});
+	auto& text(std::make_shared<TextObject>("Text0", ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10));
+	text->SetPosition({ -400,300 });
 	text->SetPosition({ GetX0(text),GetY0(text) });
 	MyFM.addObject(FormBackground, text);
 
@@ -49,15 +46,24 @@ void GameManager::init() noexcept
 
 	/*add buttons to FormBackground*/
 	for (int i = 0; i < 10; ++i) {
-		auto buttonptr = std::make_shared<Button>("button" + std::to_string(i), ArialFontPath, 20, "This is a button" + std::to_string(i), Util::Color::FromName(Util::Colors::YELLOW_GREEN), 20);
+		auto& buttonptr = std::make_shared<Button>("button" + std::to_string(i), ArialFontPath, 20, "This is a button" + std::to_string(i), Util::Color::FromName(Util::Colors::YELLOW_GREEN), 20);
 		buttonptr->SetPosition({ GetX0(buttonptr) + 100,GetY0(buttonptr) - 50 * (i + 1) });
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
+}
 
+void GameManager::init() noexcept
+{
+
+	bgm = std::make_shared<Util::BGM>(BGMPath);
+	bgm->SetVolume(0);// 0~128
+	bgm->Play();
+	
+	initFormBackground(*this);
 
 	/*add FormOptions Object*/
-	auto tmpbutton = std::make_shared<Button>("ExitButton", ArialFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
+	auto& tmpbutton = std::make_shared<Button>("ExitButton", ArialFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
 	tmpbutton->SetPosition({
 		0,
 		GetY0(tmpbutton) - (WINDOW_HEIGHT - tmpbutton->GetSize().y) + 50
@@ -81,7 +87,7 @@ void GameManager::init() noexcept
 	MyFM.addObject(FormOptions, tmpbutton);
 	MyFM.addObject(FormSetting, tmpbutton);
 
-	text = std::make_shared<TextObject>("VolumeValueText", ArialFontPath, 100, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	auto& text = std::make_shared<TextObject>("VolumeValueText", ArialFontPath, 100, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
 	MyFM.addObject(FormSetting, text);
 	tmpbutton = std::make_shared<Button>("Volume-Button", ArialFontPath, 100, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ 0,-(text->GetSize().y *2) });
