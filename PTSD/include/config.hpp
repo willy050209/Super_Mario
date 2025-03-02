@@ -5,6 +5,7 @@
 
 #include "Util/Logger.hpp"
 
+
 constexpr const char *TITLE = "My Super Mario";
 
 extern int WINDOW_POS_X; // = SDL_WINDOWPOS_UNDEFINED;
