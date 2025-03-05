@@ -40,7 +40,7 @@ public:
         auto& tmp4 = GetPosition();
         auto tmp1 = abs(Position.x - tmp4.x);
         auto tmp2 = abs(Position.y - tmp4.y);
-        return tmp3.x / 2 >= tmp1 && tmp3.y/2 >= tmp2;
+        return tmp3.x / 2 >= tmp1 && tmp3.y / 2 >= tmp2;
     }
 
     virtual inline glm::vec2&& GetSize() const noexcept {
