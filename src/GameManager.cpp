@@ -98,13 +98,13 @@ void GameManager::init() noexcept
 	tmpbutton->SetCallBackFunc(exitCallBack);
 	MyFM.addObject(FormOptions, tmpbutton);
 	
-	tmpbutton = std::make_shared<Button>("OptionsButton", ArialFontPath, 50, "Options", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	tmpbutton = std::make_shared<Button>("SettingButton", ArialFontPath, 50, "Setting", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ 0,tmpbutton->GetSize().y * 2 });
 	tmpbutton->SetCallBackFunc(CallSettingForm);
 	MyFM.addObject(FormOptions, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("HelpButton", ArialFontPath, 50, "Help", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
-	tmpbutton->SetPosition({ 0,-(tmpbutton->GetSize().y * 2) });
+	tmpbutton->SetPosition({ 0,0 });
 	tmpbutton->SetCallBackFunc(callBackTest);
 	MyFM.addObject(FormOptions, tmpbutton);
 
@@ -115,19 +115,40 @@ void GameManager::init() noexcept
 	MyFM.addObject(FormSetting, tmpbutton);
 
 	auto text = std::make_shared<TextObject>("VolumeValueText", ArialFontPath, 50, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
-	MyFM.addObject(FormSetting, text);
-	tmpbutton = std::make_shared<Button>("Volume-Button", ArialFontPath, 50, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ 0,-(text->GetSize().y *2) });
-	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-	tmpbutton = std::make_shared<Button>("Volume+Button", ArialFontPath, 50, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ 0,text->GetSize().y *2 });
-	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-	text = std::make_shared<TextObject>("VolumeText", ArialFontPath, 50, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ 0,(tmpbutton->GetSize().y *2) + tmpbutton->GetSize().y });
+	text->SetPosition({ 2 * text->GetSize().x ,0 });
 	MyFM.addObject(FormSetting, text);
 
+	tmpbutton = std::make_shared<Button>("Volume-Button", ArialFontPath, 50, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x,(tmpbutton->GetSize().y * -2)});
+	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	tmpbutton = std::make_shared<Button>("Volume+Button", ArialFontPath, 50, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x,text->GetSize().y *2 });
+	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	text = std::make_shared<TextObject>("VolumeText", ArialFontPath, 50, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y *2) + text->GetSize().y });
+	MyFM.addObject(FormSetting, text);
+
+	text = std::make_shared<TextObject>("ScreenSizeText", ArialFontPath, 50, std::to_string(WINDOW_WIDTH)+"\n" + std::to_string(WINDOW_HEIGHT), Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ -2 * text->GetSize().x ,0 });
+	MyFM.addObject(FormSetting, text);
+
+	tmpbutton = std::make_shared<Button>("ScreenSize-Button", ArialFontPath, 50, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x,-(tmpbutton->GetSize().y * 2) });
+	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	tmpbutton = std::make_shared<Button>("ScreenSize+Button", ArialFontPath, 50, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x,tmpbutton->GetSize().y * 2 });
+	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	text = std::make_shared<TextObject>("ScreenSizeText", ArialFontPath, 50, "ScreenSize", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y * 2) + text->GetSize().y });
+	MyFM.addObject(FormSetting, text);
 
 	MyFM.changeForm(FormTitel);
 }
