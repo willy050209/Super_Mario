@@ -114,17 +114,17 @@ void GameManager::init() noexcept
 	MyFM.addObject(FormOptions, tmpbutton);
 	MyFM.addObject(FormSetting, tmpbutton);
 
-	auto text = std::make_shared<TextObject>("VolumeValueText", ArialFontPath, 100, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	auto text = std::make_shared<TextObject>("VolumeValueText", ArialFontPath, 50, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
 	MyFM.addObject(FormSetting, text);
-	tmpbutton = std::make_shared<Button>("Volume-Button", ArialFontPath, 100, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton = std::make_shared<Button>("Volume-Button", ArialFontPath, 50, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ 0,-(text->GetSize().y *2) });
 	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
-	tmpbutton = std::make_shared<Button>("Volume+Button", ArialFontPath, 100, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton = std::make_shared<Button>("Volume+Button", ArialFontPath, 50, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ 0,text->GetSize().y *2 });
 	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
-	text = std::make_shared<TextObject>("VolumeText", ArialFontPath, 100, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text = std::make_shared<TextObject>("VolumeText", ArialFontPath, 50, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ 0,(tmpbutton->GetSize().y *2) + tmpbutton->GetSize().y });
 	MyFM.addObject(FormSetting, text);
 
