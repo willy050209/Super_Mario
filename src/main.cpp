@@ -3,8 +3,8 @@
 #include "GameManager.hpp"
 #include "FormProfile.hpp"
 
-int WINDOW_WIDTH = 1280;
-int WINDOW_HEIGHT = 720;
+int WINDOW_WIDTH = 960;
+int WINDOW_HEIGHT = 540;
 unsigned int FPS_CAP = 60;
 int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
