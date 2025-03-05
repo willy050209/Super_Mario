@@ -15,6 +15,7 @@ constexpr auto marioImagePath = MY_RESOURCE_DIR"/Image/Character/bee_1.png";
 constexpr auto FormBackground = "Background";
 constexpr auto FormOptions = "Options";
 constexpr auto FormSetting = "Setting";
+constexpr auto FormTitel = "Titel";
 
 class GameManager
 {

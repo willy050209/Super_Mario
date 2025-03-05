@@ -24,6 +24,12 @@ BUTTON_CALLBACK_FUNCTION(Back_Button_func) {
 	fm.returnPrevForm();
 }
 
+BUTTON_CALLBACK_FUNCTION(CallOptionForm) {
+	auto gm = (GameManager*)data;
+	auto& fm = gm->GetFormManger();
+	fm.changeForm(FormOptions);
+}
+
 BUTTON_CALLBACK_FUNCTION(CallSettingForm) {
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
@@ -51,5 +57,10 @@ BUTTON_CALLBACK_FUNCTION(VolumeDownClickedEvent) {
 	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
+BUTTON_CALLBACK_FUNCTION(StartButtonEvent) {
+	auto gm = (GameManager*)data;
+	auto& fm = gm->GetFormManger();
+	fm.changeForm(FormBackground);
+}
 
 #endif // !BUTTONCALLBACKFUNC

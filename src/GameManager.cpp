@@ -51,6 +51,31 @@ inline static void initFormBackground(GameManager& self) noexcept {
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
+
+}
+
+/*init Titel Form*/
+inline static void initFormTitle(GameManager& self) noexcept {
+
+	constexpr auto textSize = 50;
+	auto&& textColor = Util::Color::FromName(Util::Colors::YELLOW);
+
+	auto& MyFM = self.GetFormManger();
+
+	auto button = std::make_shared<Button>("Start", ArialFontPath, textSize, "Start", textColor, 10);
+	button->SetPosition({ 0,2 * button->GetSize().y });
+	button->SetCallBackFunc(StartButtonEvent);
+
+	MyFM.addObject(FormTitel, button);
+	button = std::make_shared<Button>("Options", ArialFontPath, textSize, "Options", textColor, 10);
+	button->SetCallBackFunc(CallOptionForm);
+	MyFM.addObject(FormTitel, button);
+
+	button = std::make_shared<Button>("ExitButton", ArialFontPath, textSize, "Exit", textColor, 10);
+	button->SetPosition({ 0,-(2 * button->GetSize().y) });
+	button->SetCallBackFunc(exitCallBack);
+	MyFM.addObject(FormTitel, button);
+
 }
 
 void GameManager::init() noexcept
@@ -61,6 +86,8 @@ void GameManager::init() noexcept
 	bgm->Play();
 	
 	initFormBackground(*this);
+
+	initFormTitle(*this);
 
 	/*add FormOptions Object*/
 	auto tmpbutton = std::make_shared<Button>("ExitButton", ArialFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
@@ -102,7 +129,7 @@ void GameManager::init() noexcept
 	MyFM.addObject(FormSetting, text);
 
 
-	MyFM.changeForm(FormBackground);
+	MyFM.changeForm(FormTitel);
 }
 
 void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
@@ -111,7 +138,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 		if (MyFM.GetPrevForm() == "") {
 			End();
 		}
-		else if (MyFM.GetNowForm() == FormBackground) {
+		else if (MyFM.GetNowForm() == FormTitel) {
 			MyFM.changeForm(FormOptions);
 		}
 		else
