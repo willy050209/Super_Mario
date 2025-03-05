@@ -32,7 +32,7 @@ int main(int, char**) {
         gameManger.Update(context);
         context->Update();
     }
-    if (context->GetRestart()) {
+    if (gameManger.GetRestart()) {
         system("start Super_Mario.exe");
     }
     return 0;

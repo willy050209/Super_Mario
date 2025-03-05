@@ -105,7 +105,7 @@ void GameManager::init() noexcept
 
 	tmpbutton = std::make_shared<Button>("HelpButton", ArialFontPath, 50, "Help", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ 0,0 });
-	tmpbutton->SetCallBackFunc(callBackTest);
+	tmpbutton->SetCallBackFunc(HelpButtonEvent);
 	MyFM.addObject(FormOptions, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("BackButton", ArialFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
@@ -138,17 +138,21 @@ void GameManager::init() noexcept
 
 	tmpbutton = std::make_shared<Button>("ScreenSize-Button", ArialFontPath, 50, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ text->GetPosition().x,-(tmpbutton->GetSize().y * 2) });
-	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
+	tmpbutton->SetCallBackFunc(ScreenSizeDownClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("ScreenSize+Button", ArialFontPath, 50, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ text->GetPosition().x,tmpbutton->GetSize().y * 2 });
-	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
+	tmpbutton->SetCallBackFunc(ScreenSizeUpClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
 
 	text = std::make_shared<TextObject>("ScreenSizeText", ArialFontPath, 50, "ScreenSize", Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y * 2) + text->GetSize().y });
 	MyFM.addObject(FormSetting, text);
+
+	/*tmpbutton = std::make_shared<Button>("RestartButton", ArialFontPath, 50, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ -GetX0(tmpbutton) ,-GetY0(tmpbutton) });
+	MyFM.addObject(FormSetting,tmpbutton);*/
 
 	MyFM.changeForm(FormTitel);
 }
@@ -156,15 +160,15 @@ void GameManager::init() noexcept
 void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 {
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
-		if (MyFM.GetPrevForm() == "") {
-			End();
+		if (MyFM.GetPrevForm() != "null") {
+			MyFM.returnPrevForm();
 		}
-		else if (MyFM.GetNowForm() == FormTitel) {
+		/*else if (MyFM.GetNowForm() == FormTitel) {
 			MyFM.changeForm(FormOptions);
-		}
+		}*/
 		else
 		{
-			MyFM.returnPrevForm();
+			MyFM.changeForm(FormOptions);
 		}
 		
 	}

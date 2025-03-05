@@ -10,7 +10,7 @@
 class FormManger {
 public:
 
-	FormManger() :nowForm("Form1") {  }
+	FormManger() :nowForm("null") {  }
 
 	FormManger(const std::string& formName) :nowForm(formName) {  }
 
