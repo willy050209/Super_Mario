@@ -65,49 +65,59 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 }
 
 BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
+	struct W_H
+	{
+		int W;
+		int H;
+	};
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
-	if (WINDOW_WIDTH == 960) {
-		WINDOW_WIDTH = 1280;
-		WINDOW_HEIGHT = 720;
+	if (new_WINDOW_WIDTH == 960) {
+		new_WINDOW_WIDTH = 1280;
+		new_WINDOW_HEIGHT = 720;
 		
-	}else if (WINDOW_WIDTH == 1280) {
-		WINDOW_WIDTH = 1600;
-		WINDOW_HEIGHT = 900;
+	}else if ( new_WINDOW_WIDTH == 1280) {
+		new_WINDOW_WIDTH = 1600;
+		new_WINDOW_HEIGHT = 900;
 	}
-	else if (WINDOW_WIDTH == 1600) {
-		WINDOW_WIDTH = 1920;
-		WINDOW_HEIGHT = 1080;
+	else if (new_WINDOW_WIDTH == 1600) {
+		new_WINDOW_WIDTH = 1920;
+		new_WINDOW_HEIGHT = 1080;
 	}
 	else{
 		return;
 	}
-	RestaetButtonEvent(self, data);
-	//gm->SetRestart(true);
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 
 
 BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
+	struct W_H
+	{
+		int W;
+		int H;
+	};
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
-	if (WINDOW_WIDTH == 1280) {
-		WINDOW_WIDTH = 960;
-		WINDOW_HEIGHT = 540;
+	if (new_WINDOW_WIDTH == 1280) {
+		new_WINDOW_WIDTH = 960;
+		new_WINDOW_HEIGHT = 540;
 
 	}
-	else if (WINDOW_WIDTH == 1600) {
-		WINDOW_WIDTH = 1280;
-		WINDOW_HEIGHT = 720;
+	else if (new_WINDOW_WIDTH == 1600) {
+		new_WINDOW_WIDTH = 1280;
+		new_WINDOW_HEIGHT = 720;
 	}
-	else if (WINDOW_WIDTH == 1920) {
-		WINDOW_WIDTH = 1600;
-		WINDOW_HEIGHT = 900;
+	else if (new_WINDOW_WIDTH == 1920) {
+		new_WINDOW_WIDTH = 1600;
+		new_WINDOW_HEIGHT = 900;
 	}
 	else {
 		return;
 	}
-	RestaetButtonEvent(self, data);
-	//gm->SetRestart(true);
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 
 BUTTONCALLBACKFUNCTION(StartButtonEvent) {

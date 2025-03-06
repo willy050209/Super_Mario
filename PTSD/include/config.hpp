@@ -11,8 +11,11 @@ constexpr const char *TITLE = "My Super Mario";
 extern int WINDOW_POS_X; // = SDL_WINDOWPOS_UNDEFINED;
 extern int WINDOW_POS_Y; // = SDL_WINDOWPOS_UNDEFINED;
 
-extern int WINDOW_WIDTH; // = 1280;
-extern int WINDOW_HEIGHT; // = 720;
+extern int WINDOW_WIDTH;
+extern int WINDOW_HEIGHT;
+
+extern int new_WINDOW_WIDTH;
+extern int new_WINDOW_HEIGHT;
 
 constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
 

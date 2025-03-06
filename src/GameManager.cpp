@@ -34,7 +34,7 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	auto mario = (std::make_shared<Mario>("Mario", marioImagePath, 10));
 	mario->SetPosition({ 0,300 });
 	MyFM.addObject(FormBackground, mario);
-
+	
 	/*add Texts to FormBackground*/
 	auto text(std::make_shared<TextObject>("Text0", ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10));
 	text->SetPosition({ -400,300 });
@@ -150,9 +150,14 @@ void GameManager::init() noexcept
 	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y * 2) + text->GetSize().y });
 	MyFM.addObject(FormSetting, text);
 
-	/*tmpbutton = std::make_shared<Button>("RestartButton", ArialFontPath, 50, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text = std::make_shared<TextObject>("", ArialFontPath, 50, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ GetX0(text),-GetY0(text)});
+	MyFM.addObject(FormSetting, text);
+
+	tmpbutton = std::make_shared<Button>("RestartButton", ArialFontPath, 50, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ -GetX0(tmpbutton) ,-GetY0(tmpbutton) });
-	MyFM.addObject(FormSetting,tmpbutton);*/
+	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
+	MyFM.addObject(FormSetting,tmpbutton);
 
 	MyFM.changeForm(FormTitel);
 }
