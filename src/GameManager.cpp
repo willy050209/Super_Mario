@@ -150,7 +150,7 @@ void GameManager::init() noexcept
 	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y * 2) + text->GetSize().y });
 	MyFM.addObject(FormSetting, text);
 
-	text = std::make_shared<TextObject>("", ArialFontPath, 50, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text = std::make_shared<TextObject>("", ArialFontPath, 20, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ GetX0(text),-GetY0(text)});
 	MyFM.addObject(FormSetting, text);
 
