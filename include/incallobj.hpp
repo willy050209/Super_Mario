@@ -7,10 +7,11 @@
 #include "Object/Character.hpp"
 #include "Object/Object.hpp"
 #include "Object/TextObject.hpp"
+#include "Object/EventObject.hpp"
 
 enum class ObjectType
 {
-	Object, Character, Mario, ImageObject, TextObject, Button
+	Object, Character, Mario, ImageObject, TextObject, Button, EventObject
 };
 
 #endif
