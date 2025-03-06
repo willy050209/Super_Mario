@@ -48,6 +48,7 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	for (int i = 0; i < 10; ++i) {
 		auto buttonptr = std::make_shared<Button>("button" + std::to_string(i), ArialFontPath, 20, "This is a button" + std::to_string(i), Util::Color::FromName(Util::Colors::YELLOW_GREEN), 20);
 		buttonptr->SetPosition({ GetX0(buttonptr) + 100,GetY0(buttonptr) - 50 * (i + 1) });
+		buttonptr->userdata = new int[1] {0};
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
@@ -166,7 +167,7 @@ void GameManager::init() noexcept
 	MyFM.changeForm(FormTitel);
 
 
-	MyFM.changeForm(FormBackground);
+	MyFM.changeForm(FormTitel);
 
 }
 
