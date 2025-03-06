@@ -192,7 +192,6 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 		
 	}
 	MyFM.UpdateForm(this);
-	
 }
 
 void GameManager::End() noexcept

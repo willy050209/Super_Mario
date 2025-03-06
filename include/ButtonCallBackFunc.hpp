@@ -122,7 +122,7 @@ BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	fm.changeForm("help");
-	system(static_cast<std::string*>(self->userdata.get())->c_str());
+	system(std::static_pointer_cast<std::string>(self->userdata)->c_str());
 }
 
 #endif // !BUTTONCALLBACKFUNC
