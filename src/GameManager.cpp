@@ -106,6 +106,7 @@ void GameManager::init() noexcept
 	tmpbutton = std::make_shared<Button>("HelpButton", ArialFontPath, 50, "Help", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ 0,0 });
 	tmpbutton->SetCallBackFunc(HelpButtonEvent);
+	tmpbutton->userdata = "start https://ntut-open-source-club.github.io/practical-tools-for-simple-design/";
 	MyFM.addObject(FormOptions, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("BackButton", ArialFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);

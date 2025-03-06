@@ -65,11 +65,6 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 }
 
 BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
-	struct W_H
-	{
-		int W;
-		int H;
-	};
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
 	if (new_WINDOW_WIDTH == 960) {
@@ -93,11 +88,6 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 
 
 BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
-	struct W_H
-	{
-		int W;
-		int H;
-	};
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
 	if (new_WINDOW_WIDTH == 1280) {
@@ -130,7 +120,7 @@ BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
 	fm.changeForm("help");
-	system("start https://ntut-open-source-club.github.io/practical-tools-for-simple-design/");
+	system((char*)self->userdata);
 }
 
 #endif // !BUTTONCALLBACKFUNC
