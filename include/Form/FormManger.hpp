@@ -37,10 +37,23 @@ public:
 		case ObjectType::Button:
 			return *std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objname; });
 			break;
+		case ObjectType::EventObject:
+			return *std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objname; });
+			break;
 		default:
 			return nullptr;
 			break;
 		}
+	}
+
+	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>& event) noexcept {
+		m_Events[formName].push_back(event);
+		addForm(formName, event);
+	}
+
+	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>&& event) noexcept {
+		m_Events[formName].push_back(event);
+		addForm(formName, event);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Button>& button) noexcept {
@@ -130,6 +143,7 @@ protected:
 	std::unordered_map<std::string, std::vector<std::shared_ptr<ImageObject>>> m_Images;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<Button>>> m_Buttons;
 	std::unordered_map<std::string, std::vector<std::shared_ptr<Character>>> m_Characters;
+	std::unordered_map<std::string, std::vector<std::shared_ptr<EventObject>>>m_Events;
 	std::string  nowForm;
 	std::vector<std::string> prevForm;
 };

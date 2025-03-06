@@ -9,7 +9,7 @@
 #define BUTTONCALLBACKFUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
 
 BUTTONCALLBACKFUNCTION(callBackTest) {
-	int* num = static_cast<int*>(self->userdata);
+	auto num = std::static_pointer_cast<int>(self->userdata);
 	(*num)++;
 	std::cout << self->GetText() << " is clicked " << *num << " times!\n";
 }
@@ -122,7 +122,7 @@ BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	fm.changeForm("help");
-	system(static_cast<char*>(self->userdata));
+	system(static_cast<std::string*>(self->userdata.get())->c_str());
 }
 
 #endif // !BUTTONCALLBACKFUNC

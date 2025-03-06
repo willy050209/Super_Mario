@@ -2,6 +2,7 @@
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "ButtonCallBackFunc.hpp"
+#include "EventCallBackFunc.hpp"
 #include "incallobj.hpp"
 
 #include <memory>
@@ -17,6 +18,10 @@ inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
 inline static void initFormBackground(GameManager& self) noexcept {
 
 	auto& MyFM = self.GetFormManger();
+
+	auto event = std::make_shared<EventObject>("SystemTime",GetSystemTimeFunc,true);
+	event->userdata = std::make_shared<int>(0);
+	MyFM.addObject(FormBackground, event);
 
 	/*add images to FormBackground*/
 	auto tmpImage = std::make_shared<ImageObject>("cat0", BackgroundImagePath, -10);
@@ -48,7 +53,7 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	for (int i = 0; i < 10; ++i) {
 		auto buttonptr = std::make_shared<Button>("button" + std::to_string(i), ArialFontPath, 20, "This is a button" + std::to_string(i), Util::Color::FromName(Util::Colors::YELLOW_GREEN), 20);
 		buttonptr->SetPosition({ GetX0(buttonptr) + 100,GetY0(buttonptr) - 50 * (i + 1) });
-		buttonptr->userdata = new int[1] {0};
+		buttonptr->userdata = std::make_shared<int>(0);
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
@@ -107,7 +112,7 @@ void GameManager::init() noexcept
 	tmpbutton = std::make_shared<Button>("HelpButton", MyFontPath, 50, "Help", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ 0,0 });
 	tmpbutton->SetCallBackFunc(HelpButtonEvent);
-	tmpbutton->userdata = "start https://ntut-open-source-club.github.io/practical-tools-for-simple-design/";
+	tmpbutton->userdata = std::make_shared<std::string>("start https://ntut-open-source-club.github.io/practical-tools-for-simple-design/");
 	MyFM.addObject(FormOptions, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);

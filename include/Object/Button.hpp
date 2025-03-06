@@ -46,7 +46,7 @@ public:
 	virtual void behavior(void* data = nullptr) override;
 
 
-protected:
+
 	void (*CallBackFunc)(Button* const self, void* data) = nullptr;
 	Util::Color ClickedColor;
 	Util::Color defultColor{ Util::Color::FromName(Util::Colors::BLACK) };

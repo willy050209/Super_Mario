@@ -50,7 +50,7 @@ public:
     virtual void behavior(void* data = nullptr) {}
 
     std::string name;
-    void* userdata = nullptr;
+    std::shared_ptr<void> userdata = nullptr;
 };
 
 #endif
