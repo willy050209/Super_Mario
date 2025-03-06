@@ -159,6 +159,8 @@ void GameManager::init() noexcept
 	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
 	MyFM.addObject(FormSetting,tmpbutton);
 
+	auto image = std::make_shared<ImageObject>("QRcode", MY_RESOURCE_DIR"/Image/Background/qrcode.png", -10);
+	MyFM.addObject("help",image);
 	MyFM.changeForm(FormTitel);
 }
 

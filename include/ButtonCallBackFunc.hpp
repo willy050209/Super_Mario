@@ -129,6 +129,7 @@ BUTTONCALLBACKFUNCTION(StartButtonEvent) {
 BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto gm = (GameManager*)data;
 	auto& fm = gm->GetFormManger();
+	fm.changeForm("help");
 	system("start https://ntut-open-source-club.github.io/practical-tools-for-simple-design/");
 }
 
