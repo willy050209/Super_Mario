@@ -28,22 +28,23 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	tmpImage->SetPosition({ GetX0(tmpImage), GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
 	MyFM.addObject(FormBackground, tmpImage);
 
-	//auto tmptest = std::make_shared<ImageObject>("mario_walk", "C:/Users/paula/Downloads/Mario_run.gif", 20);
-	////tmptest->SetPosition();
-	//MyFM.addObject(FormBackground, tmptest);
-
-	tmpImage = (std::make_shared<ImageObject>("phase0", MY_RESOURCE_DIR"/Image/Background/phase0.png", -10));
-	tmpImage->SetPosition({ GetX0(tmpImage),GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
-	MyFM.addObject(FormBackground, tmpImage);
+	auto tmptest = std::make_shared<ImageObject>("mario_walk", "D:\\University\\22\\OOP\\Super_Mario\\Resources\\super mario\\Mario\\frame0.png", 100);
+	tmptest->SetPosition({100,100});
+	MyFM.addObject(FormBackground, tmptest);
 
 	tmpImage = (std::make_shared<ImageObject>("cat1", BackgroundImagePath, -10));
+	MyFM.addObject(FormBackground, tmpImage);
+
+	tmpImage = (std::make_shared<ImageObject>("phase0", MY_RESOURCE_DIR"/super mario/Maps/SuperMarioBrosMap1-1BG.png", 1));
+	tmpImage->SetPosition({ GetX0(tmpImage),0 });
 	MyFM.addObject(FormBackground, tmpImage);
 
 	/*add characters to FormBackground*/
 	auto mario = (std::make_shared<Mario>("Mario", marioImagePath, 10));
 	mario->SetPosition({ 0,300 });
-	//mario->setImage(BackgroundImagePath);
+	mario->userdata = std::static_pointer_cast<void>(tmpImage);
 	MyFM.addObject(FormBackground, mario);
+
 	
 	/*add Texts to FormBackground*/
 	auto text(std::make_shared<TextObject>("Text0", ArialFontPath, 20, "Text Output Example(Font = Arial)", Util::Color::FromName(Util::Colors::YELLOW), 10));

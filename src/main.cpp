@@ -3,7 +3,7 @@
 #include "GameManager.hpp"
 #include "FormProfile.hpp"
 
-
+#include <iostream>
 
 int WINDOW_WIDTH = 960;
 int WINDOW_HEIGHT = 540;
@@ -13,13 +13,18 @@ unsigned int FPS_CAP = 60;
 int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
+
 constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 
 
 int main(int, char**) {
 
     readFormProfile();
-
+#if WINDOW_WIDTH == 960
+    std::cout << "960\n";
+#else
+    std::cout << "other\n";
+#endif
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
