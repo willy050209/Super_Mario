@@ -23,6 +23,10 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	tmpImage->SetPosition({ GetX0(tmpImage), GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
 	MyFM.addObject(FormBackground, tmpImage);
 
+	//auto tmptest = std::make_shared<ImageObject>("mario_walk", "C:/Users/paula/Downloads/Mario_run.gif", 20);
+	////tmptest->SetPosition();
+	//MyFM.addObject(FormBackground, tmptest);
+
 	tmpImage = (std::make_shared<ImageObject>("phase0", MY_RESOURCE_DIR"/Image/Background/phase0.png", -10));
 	tmpImage->SetPosition({ GetX0(tmpImage),GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
 	MyFM.addObject(FormBackground, tmpImage);
