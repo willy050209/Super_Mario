@@ -38,6 +38,7 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	/*add characters to FormBackground*/
 	auto mario = (std::make_shared<Mario>("Mario", marioImagePath, 10));
 	mario->SetPosition({ 0,300 });
+	//mario->setImage(BackgroundImagePath);
 	MyFM.addObject(FormBackground, mario);
 	
 	/*add Texts to FormBackground*/
