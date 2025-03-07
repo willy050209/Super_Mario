@@ -1,5 +1,6 @@
 #include "Mario.hpp"
 #include "Util/Input.hpp"
+#include "config.hpp"
 
 void Mario::behavior(void* data)
 {
@@ -44,9 +45,27 @@ void Mario::move(const float& d)
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         tmp.x += d;
+        index++;
+        if(index % 10 == 0)
+        {
+            if (index >= 20) {
+                index = 0;
+            }
+            setImage(imgs[index/10]);
+            
+        }
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         tmp.x -= d;
+        index++;
+        if (index % 10 == 0)
+        {
+            if (index >= 20) {
+                index = 0;
+            }
+            setImage(imgs[index / 10]);
+
+        }
     }
     SetPosition(tmp);
 }

@@ -27,6 +27,8 @@ private:
 
 	void comeDown() noexcept;
 
+	int index = 0;
+	std::vector < std::string > imgs = { "D:\\University\\22\\OOP\\Super_Mario\\Resources\\Image\\Character\\bee_1.png","D:\\University\\22\\OOP\\Super_Mario\\Resources\\Image\\Character\\ball-1.png" };
 	State state = State::MOVE;
 	float displacement = DEFAULTDISPLACEMENT;
 };

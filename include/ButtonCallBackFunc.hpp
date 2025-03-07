@@ -1,55 +1,128 @@
-#ifndef BUTTONCALLBACKFUNC
-#define BUTTONCALLBACKFUNC
+#ifndef BUTTONCALLBACKFUNC_hpp
+#define BUTTONCALLBACKFUNC_hpp
 
 #include "Button.hpp"
 #include "GameManager.hpp"
 
 #include <iostream>
 
-#define BUTTON_CALLBACK_FUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
+#define BUTTONCALLBACKFUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
 
-BUTTON_CALLBACK_FUNCTION(callBackTest) {
-	std::cout << self->GetText() << " is clicked!\n";
+BUTTONCALLBACKFUNCTION(callBackTest) {
+	auto num = std::static_pointer_cast<int>(self->userdata);
+	(*num)++;
+	std::cout << self->GetText() << " is clicked " << *num << " times!\n";
 }
 
-BUTTON_CALLBACK_FUNCTION(exitCallBack) {
-	auto gm = (GameManager*)data;
+BUTTONCALLBACKFUNCTION(RestaetButtonEvent) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	gm->SetRestart(true);
+	gm->End();
+}
+
+BUTTONCALLBACKFUNCTION(exitCallBack) {
+	auto gm = static_cast<GameManager*>(data);
 	std::cout << "Exit APP! \n";
 	gm->End();
 }
 
-BUTTON_CALLBACK_FUNCTION(Back_Button_func) {
-	auto gm = (GameManager*)data;
+BUTTONCALLBACKFUNCTION(Back_Button_func) {
+	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	fm.returnPrevForm();
 }
 
-BUTTON_CALLBACK_FUNCTION(CallSettingForm) {
-	auto gm = (GameManager*)data;
+BUTTONCALLBACKFUNCTION(CallOptionForm) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	fm.changeForm(FormOptions);
+}
+
+BUTTONCALLBACKFUNCTION(CallSettingForm) {
+	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	fm.changeForm(FormSetting);
 }
 
-BUTTON_CALLBACK_FUNCTION(VolumeUpClickedEvent) {
-	auto gm = (GameManager*)data;
+BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
+	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	int volume = gm->GetBGM()->GetVolume();
 	if (volume == 100) return;
 	gm->GetBGM()->SetVolume(++volume);
 	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
-	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
 
-BUTTON_CALLBACK_FUNCTION(VolumeDownClickedEvent) {
-	auto gm = (GameManager*)data;
+BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
+	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
 	int volume = gm->GetBGM()->GetVolume();
 	if (volume == 0) return;
 	gm->GetBGM()->SetVolume(--volume);
 	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
-	std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
+BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	if (new_WINDOW_WIDTH == 960) {
+		new_WINDOW_WIDTH = 1280;
+		new_WINDOW_HEIGHT = 720;
+		
+	}else if ( new_WINDOW_WIDTH == 1280) {
+		new_WINDOW_WIDTH = 1600;
+		new_WINDOW_HEIGHT = 900;
+	}
+	else if (new_WINDOW_WIDTH == 1600) {
+		new_WINDOW_WIDTH = 1920;
+		new_WINDOW_HEIGHT = 1080;
+	}
+	else{
+		return;
+	}
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
+}
+
+
+BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	if (new_WINDOW_WIDTH == 1280) {
+		new_WINDOW_WIDTH = 960;
+		new_WINDOW_HEIGHT = 540;
+
+	}
+	else if (new_WINDOW_WIDTH == 1600) {
+		new_WINDOW_WIDTH = 1280;
+		new_WINDOW_HEIGHT = 720;
+	}
+	else if (new_WINDOW_WIDTH == 1920) {
+		new_WINDOW_WIDTH = 1600;
+		new_WINDOW_HEIGHT = 900;
+	}
+	else {
+		return;
+	}
+	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
+}
+
+BUTTONCALLBACKFUNCTION(StartButtonEvent) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	fm.changeForm(FormBackground);
+}
+
+BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
+	auto gm = static_cast<GameManager*>(data);
+	auto& fm = gm->GetFormManger();
+	fm.changeForm("help");
+	system(std::static_pointer_cast<std::string>(self->userdata)->c_str());
+}
 
 #endif // !BUTTONCALLBACKFUNC

@@ -36,11 +36,11 @@ public:
     void setImage(const std::string& ImagePath) noexcept{ m_Drawable = std::make_shared<Util::Image>(ImagePath); }
 
     inline bool inRange(const glm::vec2& Position) noexcept {
-        auto tmp3 = GetSize();
-        auto tmp4 = GetPosition();
+        auto& tmp3 = GetSize();
+        auto& tmp4 = GetPosition();
         auto tmp1 = abs(Position.x - tmp4.x);
         auto tmp2 = abs(Position.y - tmp4.y);
-        return tmp3.x / 2 >= tmp1 && tmp3.y >= tmp2;
+        return tmp3.x / 2 >= tmp1 && tmp3.y / 2 >= tmp2;
     }
 
     virtual inline glm::vec2&& GetSize() const noexcept {
@@ -50,6 +50,7 @@ public:
     virtual void behavior(void* data = nullptr) {}
 
     std::string name;
+    std::shared_ptr<void> userdata = nullptr;
 };
 
 #endif
