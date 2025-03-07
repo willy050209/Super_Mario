@@ -1,4 +1,5 @@
 #include "Mario.hpp"
+#include "Object/ImageObject.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
 
@@ -38,13 +39,13 @@ void Mario::comeDown() noexcept
 
 void Mario::move(const float& d)
 {
-    auto tmp = GetPosition();
+    auto tmp = std::static_pointer_cast<ImageObject>(userdata)->GetPosition();
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && state == State::MOVE) {
         state = State::UP;
         displacement = 2 * DEFAULTDISPLACEMENT;
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        tmp.x += d;
+        tmp.x -= d;
         index++;
         if(index % 10 == 0)
         {
@@ -56,7 +57,7 @@ void Mario::move(const float& d)
         }
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-        tmp.x -= d;
+        tmp.x += d;
         index++;
         if (index % 10 == 0)
         {
@@ -67,5 +68,5 @@ void Mario::move(const float& d)
 
         }
     }
-    SetPosition(tmp);
+    std::static_pointer_cast<ImageObject>(userdata)->SetPosition(tmp);
 }
