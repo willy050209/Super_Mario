@@ -48,12 +48,12 @@ public:
 
 	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>& event) noexcept {
 		m_Events[formName].push_back(event);
-		addForm(formName, event);
+		//addForm(formName, event);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>&& event) noexcept {
 		m_Events[formName].push_back(event);
-		addForm(formName, event);
+		//addForm(formName, event);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Button>& button) noexcept {
