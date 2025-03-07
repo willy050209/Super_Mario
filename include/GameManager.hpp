@@ -38,7 +38,7 @@ public:
 	inline bool GetRestart() const noexcept { return m_Restart; }
 
 	inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
-
+	
 	inline void SetRestart(bool val) noexcept { m_Restart = val; }
 
 private:
