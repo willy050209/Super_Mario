@@ -23,7 +23,7 @@ int main(int, char**) {
 #if WINDOW_WIDTH == 960
     std::cout << "960\n";
 #else
-    std::cout << "other\n";
+    std::cout << WINDOW_WIDTH << "\n";
 #endif
     auto context = Core::Context::GetInstance();
 

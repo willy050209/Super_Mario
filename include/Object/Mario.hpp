@@ -17,18 +17,25 @@ public:
 		
 	}
 
+	inline State GetState() const noexcept { return state; }
+
+	inline void jump() noexcept {
+		state = State::UP;
+		displacement = 2 * DEFAULTDISPLACEMENT;
+	}
+
 	virtual void behavior(void* data = nullptr) override;
 
 	virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
 private:
 
-	void jump() noexcept;
+	void doJump() noexcept;
 
 	void comeDown() noexcept;
 
 	int index = 0;
-	std::vector < std::string > imgs = { "D:\\University\\22\\OOP\\Super_Mario\\Resources\\Image\\Character\\bee_1.png","D:\\University\\22\\OOP\\Super_Mario\\Resources\\Image\\Character\\ball-1.png" };
+	
 	State state = State::MOVE;
 	float displacement = DEFAULTDISPLACEMENT;
 };

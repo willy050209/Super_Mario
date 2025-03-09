@@ -5,12 +5,12 @@
 
 void Mario::behavior(void* data)
 {
-    move();
-    jump();
+    //move();
+    doJump();
     comeDown();
 }
 
-void Mario::jump() noexcept
+void Mario::doJump() noexcept
 {
     if (state == State::UP) {
         auto tmp = GetPosition();
@@ -39,34 +39,37 @@ void Mario::comeDown() noexcept
 
 void Mario::move(const float& d)
 {
-    auto tmp = std::static_pointer_cast<ImageObject>(userdata)->GetPosition();
-    if (Util::Input::IsKeyPressed(Util::Keycode::UP) && state == State::MOVE) {
-        state = State::UP;
-        displacement = 2 * DEFAULTDISPLACEMENT;
-    }
-    else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        tmp.x -= d;
-        index++;
-        if(index % 10 == 0)
-        {
-            if (index >= 20) {
-                index = 0;
-            }
-            setImage(imgs[index/10]);
-            
+    /*if (userdata.get() != nullptr)
+    {
+        auto tmp = std::static_pointer_cast<ImageObject>(userdata)->GetPosition();
+        if (Util::Input::IsKeyPressed(Util::Keycode::UP) && state == State::MOVE) {
+            state = State::UP;
+            displacement = 2 * DEFAULTDISPLACEMENT;
         }
-    }
-    else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-        tmp.x += d;
-        index++;
-        if (index % 10 == 0)
-        {
-            if (index >= 20) {
-                index = 0;
-            }
-            setImage(imgs[index / 10]);
+        else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+            tmp.x -= d;
+            index++;
+            if (index % 10 == 0)
+            {
+                if (index >= 20) {
+                    index = 0;
+                }
+                setImage(imgs[index / 10]);
 
+            }
         }
-    }
-    std::static_pointer_cast<ImageObject>(userdata)->SetPosition(tmp);
+        else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+            tmp.x += d;
+            index++;
+            if (index % 10 == 0)
+            {
+                if (index >= 20) {
+                    index = 0;
+                }
+                setImage(imgs[index / 10]);
+
+            }
+        }
+        std::static_pointer_cast<ImageObject>(userdata)->SetPosition(tmp);
+    }*/
 }

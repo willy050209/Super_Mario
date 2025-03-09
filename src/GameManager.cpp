@@ -15,6 +15,26 @@ inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
 	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
 }
 
+template<class T>
+inline static int GetX0(T obj) noexcept {
+	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
+}
+
+template<class T>
+inline static int GetY0(T obj) noexcept {
+	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
+}
+
+template<class T>
+inline static int GetX0(T* obj) noexcept {
+	return -(WINDOW_WIDTH / 2 - (*obj)->GetSize().x / 2);
+}
+
+template<class T>
+inline static int GetY0(T* obj) noexcept {
+	return (WINDOW_HEIGHT / 2 - (*obj)->GetSize().y / 2);
+}
+
 inline static void initFormBackground(GameManager& self) noexcept {
 
 	auto& MyFM = self.GetFormManger();
@@ -28,7 +48,7 @@ inline static void initFormBackground(GameManager& self) noexcept {
 	tmpImage->SetPosition({ GetX0(tmpImage), GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
 	MyFM.addObject(FormBackground, tmpImage);
 
-	auto tmptest = std::make_shared<ImageObject>("mario_walk", "D:\\University\\22\\OOP\\Super_Mario\\Resources\\super mario\\Mario\\frame0.png", 100);
+	auto tmptest = std::make_shared<ImageObject>("mario_walk", MY_RESOURCE_DIR"\\super mario\\Mario\\frame0.png", 100);
 	tmptest->SetPosition({100,100});
 	MyFM.addObject(FormBackground, tmptest);
 
@@ -90,6 +110,34 @@ inline static void initFormTitle(GameManager& self) noexcept {
 
 }
 
+/*init 1-1*/
+inline void initForm_1_1(GameManager& self) {
+	auto& MyFM = self.GetFormManger();
+
+	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
+	img->SetPosition({ GetX0(img),0 });
+	MyFM.addObject(Form_1_1, img);
+
+	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 10);
+	MyFM.addObject(Form_1_1, mario);
+
+	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
+	/*auto ptr = new void* [2] { mario.get(), img.get()};
+	std::cout << mario.get() << ' ' << img.get() << '\n';
+	std::cout << ptr << ' ' << ptr + 1 << '\n';
+	std::cout << ptr[0] << ' ' << ptr[1] << '\n';
+	std::cout << &ptr[0] << ' ' << &ptr[1] << '\n';*/
+	
+	event->userdata = (std::make_shared<void*>(new void* [2] { img.get(), mario.get()}));
+	MyFM.addObject(Form_1_1, event);
+
+	/*void** voidarr = (std::static_pointer_cast<void*>(event->userdata).get());
+	std::cout << voidarr[0] << ' ' << ' ' << (void*)((char*)voidarr[0]) << ' ' << (void*)((char*)*voidarr + sizeof(void*)) << '\n';
+	auto background = (std::shared_ptr<ImageObject>*)((void*)((char*)voidarr[0] + sizeof(void*)));
+	auto _ = ((std::shared_ptr<Mario>*) * voidarr);
+	(*background)->SetPosition({ 0,-100 });*/
+}
+
 void GameManager::init() noexcept
 {
 
@@ -100,6 +148,8 @@ void GameManager::init() noexcept
 	initFormBackground(*this);
 
 	initFormTitle(*this);
+
+	initForm_1_1(*this);
 
 	/*add FormOptions Object*/
 	auto tmpbutton = std::make_shared<Button>("ExitButton", MyFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);

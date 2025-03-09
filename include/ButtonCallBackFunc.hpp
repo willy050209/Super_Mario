@@ -115,7 +115,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 BUTTONCALLBACKFUNCTION(StartButtonEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
-	fm.changeForm(FormBackground);
+	fm.changeForm(Form_1_1);
 }
 
 BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
