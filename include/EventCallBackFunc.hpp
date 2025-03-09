@@ -5,11 +5,13 @@
 #include "config.hpp"
 #include "util/Input.hpp"
 
-#define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
 #include <iostream>
 #include <chrono>
 #include <ctime>
 #include <memory>
+
+#define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
+
 
 EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
     auto num = std::static_pointer_cast<int>(self->userdata);
