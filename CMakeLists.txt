@@ -25,7 +25,8 @@ FetchContent_MakeAvailable(ptsd)
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
 file(GLOB_RECURSE HEADER_FILES include/Object/*.hpp)
-add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES} "include/GameManager.hpp" "include/Object/Character.hpp" "include/Object/Mario.hpp" "include/Object/ImageObject.hpp" "include/Object/TextObject.hpp" "include/FormProfile.hpp" "include/incallobj.hpp" "include/ButtonCallBackFunc.hpp" "include/EventCallBackFunc.hpp")
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES})
+
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)
@@ -47,6 +48,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${DEPENDENCY_INCLUDE_D
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/PTSD/include)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/Object)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/Form)
 
 
 target_link_libraries(${PROJECT_NAME}

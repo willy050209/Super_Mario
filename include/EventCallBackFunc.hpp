@@ -4,6 +4,7 @@
 #include "incallobj.hpp"
 #include "config.hpp"
 #include "util/Input.hpp"
+#include "Position.hpp"
 
 #include <iostream>
 #include <chrono>
@@ -32,12 +33,32 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
-        pos.x--;
+        if (mario->GetPosition().x!=0 && pos.x == GetX0(background) ) {
+            mario->SetPosition({ mario->GetPosition().x + 10,mario->GetPosition().y });
+        }
+        else if(pos.x > -GetX0(background))
+        {
+            pos.x-=10;
+        }
+        else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x)
+        {
+            mario->SetPosition({ mario->GetPosition().x + 10,mario->GetPosition().y });
+        }
         (background)->SetPosition(pos);
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         auto pos = (background)->GetPosition();
-        pos.x++;
+        if (mario->GetPosition().x != 0 && pos.x == -GetX0(background)) {
+            mario->SetPosition({ mario->GetPosition().x - 10,mario->GetPosition().y });
+        }
+        else if (pos.x < GetX0(background))
+        {
+            pos.x += 10;
+        }
+        else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2) + mario->GetSize().x)
+        {
+            mario->SetPosition({ mario->GetPosition().x - 10,mario->GetPosition().y });
+        }
         (background)->SetPosition(pos);
     }
 }

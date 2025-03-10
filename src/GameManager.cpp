@@ -4,36 +4,11 @@
 #include "ButtonCallBackFunc.hpp"
 #include "EventCallBackFunc.hpp"
 #include "incallobj.hpp"
+#include "Position.hpp"
 
 #include <memory>
 
-inline static int GetX0(std::shared_ptr<Object> obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
-}
 
-inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
-}
-
-template<class T>
-inline static int GetX0(T obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
-}
-
-template<class T>
-inline static int GetY0(T obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
-}
-
-template<class T>
-inline static int GetX0(T* obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - (*obj)->GetSize().x / 2);
-}
-
-template<class T>
-inline static int GetY0(T* obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - (*obj)->GetSize().y / 2);
-}
 
 inline static void initFormBackground(GameManager& self) noexcept {
 
@@ -115,27 +90,16 @@ inline void initForm_1_1(GameManager& self) {
 	auto& MyFM = self.GetFormManger();
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
-	img->SetPosition({ GetX0(img),0 });
+	img->SetPosition({ -GetX0(img),0 });
 	MyFM.addObject(Form_1_1, img);
 
 	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 10);
 	MyFM.addObject(Form_1_1, mario);
 
 	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
-	/*auto ptr = new void* [2] { mario.get(), img.get()};
-	std::cout << mario.get() << ' ' << img.get() << '\n';
-	std::cout << ptr << ' ' << ptr + 1 << '\n';
-	std::cout << ptr[0] << ' ' << ptr[1] << '\n';
-	std::cout << &ptr[0] << ' ' << &ptr[1] << '\n';*/
-	
+
 	event->userdata = (std::make_shared<void*>(new void* [2] { img.get(), mario.get()}));
 	MyFM.addObject(Form_1_1, event);
-
-	/*void** voidarr = (std::static_pointer_cast<void*>(event->userdata).get());
-	std::cout << voidarr[0] << ' ' << ' ' << (void*)((char*)voidarr[0]) << ' ' << (void*)((char*)*voidarr + sizeof(void*)) << '\n';
-	auto background = (std::shared_ptr<ImageObject>*)((void*)((char*)voidarr[0] + sizeof(void*)));
-	auto _ = ((std::shared_ptr<Mario>*) * voidarr);
-	(*background)->SetPosition({ 0,-100 });*/
 }
 
 void GameManager::init() noexcept
