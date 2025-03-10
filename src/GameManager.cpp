@@ -109,7 +109,7 @@ void GameManager::init() noexcept
 	bgm->SetVolume(0);// 0~128
 	bgm->Play();
 	
-	initFormBackground(*this);
+	//initFormBackground(*this);
 
 	initFormTitle(*this);
 
