@@ -10,6 +10,7 @@
 #include <chrono>
 #include <ctime>
 #include <memory>
+#include <tuple>
 
 #define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
 
@@ -25,9 +26,9 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
-    void** voidarr = (std::static_pointer_cast<void*>(self->userdata).get());
-    auto& background = *((std::shared_ptr<ImageObject>*) * voidarr);
-    auto& mario = *((std::shared_ptr<Mario>*)(void*)((char*)voidarr[0] + sizeof(void*)));
+    auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
+    auto& background = std::get<0>(*tuplePtr);
+    auto& mario = std::get<1>(*tuplePtr);
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }

@@ -7,6 +7,7 @@
 #include "Position.hpp"
 
 #include <memory>
+#include <tuple>
 
 
 
@@ -97,8 +98,7 @@ inline void initForm_1_1(GameManager& self) {
 	MyFM.addObject(Form_1_1, mario);
 
 	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
-
-	event->userdata = (std::make_shared<void*>(new void* [2] { img.get(), mario.get()}));
+	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 }
 
