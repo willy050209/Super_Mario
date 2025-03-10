@@ -5,6 +5,12 @@
 
 #include <iostream>
 
+
+
+#define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
+#define FOLDERPATH MY_RESOURCE_DIR
+#define OUTPUTFOLDPATH "out"
+
 int WINDOW_WIDTH = 960;
 int WINDOW_HEIGHT = 540;
 int new_WINDOW_WIDTH = 0;
@@ -25,6 +31,10 @@ int main(int, char**) {
 #else
     std::cout << WINDOW_WIDTH << "\n";
 #endif
+
+    if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
+        return 1;
+    }
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
