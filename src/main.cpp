@@ -4,6 +4,8 @@
 #include "FormProfile.hpp"
 
 #include <iostream>
+#include <thread>
+#include <atomic>
 
 
 
@@ -23,8 +25,14 @@ int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 
 
-int main(int, char**) {
+void aaa(std::atomic<int>& atom) {
+    if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
+        atom++;
+    }
+}
 
+int main(int, char**) {
+    
     readFormProfile();
 #if WINDOW_WIDTH == 960
     std::cout << "960\n";
@@ -32,15 +40,29 @@ int main(int, char**) {
     std::cout << WINDOW_WIDTH << "\n";
 #endif
 
-    if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
-        return 1;
-    }
+
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
+
+    std::atomic<int> atom;
+    std::thread ImageResizer([&]() {
+        // IMAGERESIZER_EXE return 0 if completes normally else return -1
+        if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) { 
+            atom++;
+        }
+    });
+    
     gameManger.init();
 
     context->SetWindowIcon(ICOP_PATH);
+
+    ImageResizer.join();
+    if (atom) {
+        std::cerr << "Failed to initialize image\n";
+        context->SetExit(true);
+        exit(1);
+    }
 
     while (!context->GetExit()) {
         if (gameManger.isEnd()) {

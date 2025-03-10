@@ -87,7 +87,7 @@ inline static void initFormTitle(GameManager& self) noexcept {
 }
 
 /*init 1-1*/
-inline void initForm_1_1(GameManager& self) {
+inline static void initForm_1_1(GameManager& self) {
 	auto& MyFM = self.GetFormManger();
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
