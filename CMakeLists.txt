@@ -25,7 +25,7 @@ FetchContent_Declare(
 FetchContent_Declare(
     ImageResizer
 
-    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/heads/main.zip
+    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/test.zip
 
     SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
 )
@@ -51,7 +51,7 @@ else()
     target_compile_definitions(${PROJECT_NAME} PRIVATE MY_RESOURCE_DIR="${CMAKE_INSTALL_PREFIX}/Resources")
 endif()
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE MY_IMAGERESIZER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer")
+target_compile_definitions(${PROJECT_NAME} PRIVATE MY_IMAGERESIZER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer/ImageResizer/bin/Release")
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${DEPENDENCY_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/PTSD/include)
