@@ -20,7 +20,16 @@ FetchContent_Declare(
     SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/PTSD
 )
 
-FetchContent_MakeAvailable(ptsd)
+#FetchContent_MakeAvailable(ptsd)
+
+FetchContent_Declare(
+    ImageResizer
+
+    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/heads/main.zip
+
+    SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
+)
+FetchContent_MakeAvailable(PTSD ImageResizer)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
