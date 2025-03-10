@@ -72,8 +72,9 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 	if (new_WINDOW_WIDTH == 960) {
 		new_WINDOW_WIDTH = 1280;
 		new_WINDOW_HEIGHT = 720;
-		
-	}else if ( new_WINDOW_WIDTH == 1280) {
+
+	}
+	else if (new_WINDOW_WIDTH == 1280) {
 		new_WINDOW_WIDTH = 1600;
 		new_WINDOW_HEIGHT = 900;
 	}
@@ -81,7 +82,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 		new_WINDOW_WIDTH = 1920;
 		new_WINDOW_HEIGHT = 1080;
 	}
-	else{
+	else {
 		return;
 	}
 	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
