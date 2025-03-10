@@ -27,8 +27,8 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 
 EVENTCALLCALLBACKFUN(moveEvent) {
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
-    auto& background = std::get<0>(*tuplePtr);
-    auto& mario = std::get<1>(*tuplePtr);
+    auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
+    auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }
