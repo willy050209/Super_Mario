@@ -26,6 +26,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
+    constexpr auto Displacement = 8;
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
     auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
@@ -35,30 +36,30 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
         if (mario->GetPosition().x!=0 && pos.x == GetX0(background) ) {
-            mario->SetPosition({ mario->GetPosition().x + 10,mario->GetPosition().y });
+            mario->SetPosition({ mario->GetPosition().x + Displacement,mario->GetPosition().y });
         }
         else if(pos.x > -GetX0(background))
         {
-            pos.x-=10;
+            pos.x-= Displacement;
         }
         else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x)
         {
-            mario->SetPosition({ mario->GetPosition().x + 10,mario->GetPosition().y });
+            mario->SetPosition({ mario->GetPosition().x + Displacement,mario->GetPosition().y });
         }
         (background)->SetPosition(pos);
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         auto pos = (background)->GetPosition();
         if (mario->GetPosition().x != 0 && pos.x == -GetX0(background)) {
-            mario->SetPosition({ mario->GetPosition().x - 10,mario->GetPosition().y });
+            mario->SetPosition({ mario->GetPosition().x - Displacement,mario->GetPosition().y });
         }
         else if (pos.x < GetX0(background))
         {
-            pos.x += 10;
+            pos.x += Displacement;
         }
         else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2) + mario->GetSize().x)
         {
-            mario->SetPosition({ mario->GetPosition().x - 10,mario->GetPosition().y });
+            mario->SetPosition({ mario->GetPosition().x - Displacement,mario->GetPosition().y });
         }
         (background)->SetPosition(pos);
     }
