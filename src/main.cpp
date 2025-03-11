@@ -25,11 +25,6 @@ int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 
 
-void aaa(std::atomic<int>& atom) {
-    if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
-        atom++;
-    }
-}
 
 int main(int, char**) {
     
