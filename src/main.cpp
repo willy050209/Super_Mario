@@ -35,18 +35,17 @@ int main(int, char**) {
     std::cout << WINDOW_WIDTH << "\n";
 #endif
 
-    auto context = Core::Context::GetInstance();
-
-    GameManager gameManger;
-
     std::atomic<int> atom;
     std::thread ImageResizer([&]() {
         // IMAGERESIZER_EXE return 0 if completes normally else return -1
-        if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) { 
+        if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
             atom++;
         }
-    });
+        });
 
+    auto context = Core::Context::GetInstance();
+
+    GameManager gameManger;
 
     gameManger.init();
     
