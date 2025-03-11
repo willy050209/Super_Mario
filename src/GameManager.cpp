@@ -8,12 +8,14 @@
 
 #include <memory>
 #include <tuple>
+#include <vector>
+#include <thread>
 
+#define INITFORM_FUNC(func_name) static void func_name(GameManager* self)
 
+INITFORM_FUNC(initFormBackground) noexcept {
 
-inline static void initFormBackground(GameManager& self) noexcept {
-
-	auto& MyFM = self.GetFormManger();
+	auto& MyFM = self->GetFormManger();
 
 	auto event = std::make_shared<EventObject>("SystemTime",GetSystemTimeFunc,true);
 	event->userdata = std::make_shared<int>(0);
@@ -63,12 +65,12 @@ inline static void initFormBackground(GameManager& self) noexcept {
 }
 
 /*init Titel Form*/
-inline static void initFormTitle(GameManager& self) noexcept {
+INITFORM_FUNC(initFormTitle) noexcept {
 
 	constexpr auto textSize = 50;
 	auto&& textColor = Util::Color::FromName(Util::Colors::YELLOW);
 
-	auto& MyFM = self.GetFormManger();
+	auto& MyFM = self->GetFormManger();
 
 	auto button = std::make_shared<Button>("Start", MyFontPath, textSize, "Start", textColor, 10);
 	button->SetPosition({ 0,2 * button->GetSize().y });
@@ -84,46 +86,23 @@ inline static void initFormTitle(GameManager& self) noexcept {
 	button->SetCallBackFunc(exitCallBack);
 	MyFM.addObject(FormTitel, button);
 
+	auto image = std::make_shared<ImageObject>("QRcode", MY_RESOURCE_DIR"/Image/Background/qrcode.png", -10);
+	MyFM.addObject("help", image);
+	MyFM.changeForm(FormTitel);
+
 }
 
-/*init 1-1*/
-inline static void initForm_1_1(GameManager& self) {
-	auto& MyFM = self.GetFormManger();
-
-	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
-	img->SetPosition({ -GetX0(img),0 });
-	MyFM.addObject(Form_1_1, img);
-
-	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 10);
-	MyFM.addObject(Form_1_1, mario);
-
-	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
-	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
-	MyFM.addObject(Form_1_1, event);
-}
-
-void GameManager::init() noexcept
-{
-
-	bgm = std::make_shared<Util::BGM>(BGMPath);
-	bgm->SetVolume(0);// 0~128
-	bgm->Play();
-	
-	//initFormBackground(*this);
-
-	initFormTitle(*this);
-
-	initForm_1_1(*this);
-
-	/*add FormOptions Object*/
+/*init Options Form*/
+INITFORM_FUNC(initFormOptions){
+	auto& MyFM = self->GetFormManger();
 	auto tmpbutton = std::make_shared<Button>("ExitButton", MyFontPath, 50, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
 	tmpbutton->SetPosition({
 		0,
 		GetY0(tmpbutton) - (WINDOW_HEIGHT - tmpbutton->GetSize().y) + 50
-	});
+		});
 	tmpbutton->SetCallBackFunc(exitCallBack);
 	MyFM.addObject(FormOptions, tmpbutton);
-	
+
 	tmpbutton = std::make_shared<Button>("SettingButton", MyFontPath, 50, "Setting", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ 0,tmpbutton->GetSize().y * 2 });
 	tmpbutton->SetCallBackFunc(CallSettingForm);
@@ -139,28 +118,51 @@ void GameManager::init() noexcept
 	tmpbutton->SetPosition({ GetX0(tmpbutton),GetY0(tmpbutton) });
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(FormOptions, tmpbutton);
+}
+
+/*init 1-1*/
+INITFORM_FUNC(initForm_1_1){
+	auto& MyFM = self->GetFormManger();
+
+	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
+	img->SetPosition({ -GetX0(img),0 });
+	MyFM.addObject(Form_1_1, img);
+
+	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 10);
+	MyFM.addObject(Form_1_1, mario);
+
+	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
+	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
+	MyFM.addObject(Form_1_1, event);
+}
+
+INITFORM_FUNC(initFormSetting) {
+	auto& MyFM = self->GetFormManger();
+	auto tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	tmpbutton->SetPosition({ GetX0(tmpbutton),GetY0(tmpbutton) });
+	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(FormSetting, tmpbutton);
 
-	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(self->GetBGM()->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ 2 * text->GetSize().x ,0 });
 	MyFM.addObject(FormSetting, text);
 
 	tmpbutton = std::make_shared<Button>("Volume-Button", MyFontPath, 30, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x,(tmpbutton->GetSize().y * -2)});
+	tmpbutton->SetPosition({ text->GetPosition().x,(tmpbutton->GetSize().y * -2) });
 	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("Volume+Button", MyFontPath, 30, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x,text->GetSize().y *2 });
+	tmpbutton->SetPosition({ text->GetPosition().x,text->GetSize().y * 2 });
 	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
 
 	text = std::make_shared<TextObject>("VolumeText", MyFontPath, 30, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y *2) + text->GetSize().y });
+	text->SetPosition({ tmpbutton->GetPosition().x,(text->GetSize().y * 2) + text->GetSize().y });
 	MyFM.addObject(FormSetting, text);
 
 
-	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, std::to_string(WINDOW_WIDTH)+"\n" + std::to_string(WINDOW_HEIGHT), Util::Color::FromName(Util::Colors::WHITE), 10);
+	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, std::to_string(WINDOW_WIDTH) + "\n" + std::to_string(WINDOW_HEIGHT), Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ -2 * text->GetSize().x ,0 });
 	MyFM.addObject(FormSetting, text);
 
@@ -179,17 +181,33 @@ void GameManager::init() noexcept
 	MyFM.addObject(FormSetting, text);
 
 	text = std::make_shared<TextObject>("", ArialFontPath, 30, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ GetX0(text),-GetY0(text)});
+	text->SetPosition({ GetX0(text),-GetY0(text) });
 	MyFM.addObject(FormSetting, text);
 
 	tmpbutton = std::make_shared<Button>("RestartButton", MyFontPath, 30, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ -GetX0(tmpbutton) ,-GetY0(tmpbutton) });
 	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
-	MyFM.addObject(FormSetting,tmpbutton);
+	MyFM.addObject(FormSetting, tmpbutton);
+}
 
-	auto image = std::make_shared<ImageObject>("QRcode", MY_RESOURCE_DIR"/Image/Background/qrcode.png", -10);
-	MyFM.addObject("help",image);
-	MyFM.changeForm(FormTitel);
+
+void GameManager::init() noexcept
+{
+
+	bgm = std::make_shared<Util::BGM>(BGMPath);
+	bgm->SetVolume(0);// 0~128
+	bgm->Play();
+
+
+	initFormBackground(this);
+
+	initFormTitle(this);
+
+	initForm_1_1(this);
+
+	initFormOptions(this);
+
+	initFormSetting(this);
 
 
 	MyFM.changeForm(FormTitel);
