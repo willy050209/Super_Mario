@@ -35,7 +35,6 @@ int main(int, char**) {
     std::cout << WINDOW_WIDTH << "\n";
 #endif
 
-
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
@@ -47,9 +46,10 @@ int main(int, char**) {
             atom++;
         }
     });
-    
-    gameManger.init();
 
+
+    gameManger.init();
+    
     context->SetWindowIcon(ICOP_PATH);
 
     ImageResizer.join();

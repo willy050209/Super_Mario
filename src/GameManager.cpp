@@ -8,8 +8,8 @@
 
 #include <memory>
 #include <tuple>
-#include <vector>
 #include <thread>
+
 
 #define INITFORM_FUNC(func_name) static void func_name(GameManager* self)
 
@@ -17,10 +17,13 @@ INITFORM_FUNC(initFormBackground) noexcept {
 
 	auto& MyFM = self->GetFormManger();
 
-	auto event = std::make_shared<EventObject>("SystemTime",GetSystemTimeFunc,true);
-	event->userdata = std::make_shared<int>(0);
-	MyFM.addObject(FormBackground, event);
+	std::thread initenent([&]() {
+		auto event = std::make_shared<EventObject>("SystemTime", GetSystemTimeFunc, true);
+		event->userdata = std::make_shared<int>(0);
+		MyFM.addObject(FormBackground, event);
 
+		});
+	
 	/*add images to FormBackground*/
 	auto tmpImage = std::make_shared<ImageObject>("cat0", BackgroundImagePath, -10);
 	tmpImage->SetPosition({ GetX0(tmpImage), GetY0(tmpImage) - (WINDOW_HEIGHT - tmpImage->GetSize().y) });
@@ -61,6 +64,8 @@ INITFORM_FUNC(initFormBackground) noexcept {
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
+
+	initenent.join();
 
 }
 
@@ -197,10 +202,9 @@ void GameManager::init() noexcept
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(0);// 0~128
 	bgm->Play();
-
-
+	
 	initFormBackground(this);
-
+	
 	initFormTitle(this);
 
 	initForm_1_1(this);
@@ -208,7 +212,6 @@ void GameManager::init() noexcept
 	initFormOptions(this);
 
 	initFormSetting(this);
-
 
 	MyFM.changeForm(FormTitel);
 
