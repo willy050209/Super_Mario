@@ -153,7 +153,7 @@ INITFORM_FUNC(initForm_1_1){
 	img->SetPosition({ GetX0(img),0 });
 	MyFM.addObject(Form_1_1, img);
 
-	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 10);
+	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 50);
 	MyFM.addObject(Form_1_1, mario);
 
 	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
@@ -168,6 +168,9 @@ INITFORM_FUNC(initForm_1_1){
 		bricks.back()->SetPosition({ 0 + brick->GetSize().x * i,-brick->GetSize().y });
 		MyFM.addObject(Form_1_1, bricks.back());
 	}
+	bricks.push_back(std::make_shared<ImageObject>("brick", BrickImagePath, 10));
+	bricks.back()->SetPosition({ 0,0 });
+	MyFM.addObject(Form_1_1, bricks.back());
 	img->userdata = std::make_shared< std::vector<std::shared_ptr<ImageObject>>>(bricks);
 	mario->userdata = img->userdata;
 	/*for (int i = 0; i < (int)img->GetSize().x / brick->GetSize().x; ++i)
