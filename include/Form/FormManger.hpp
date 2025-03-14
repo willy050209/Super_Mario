@@ -22,23 +22,23 @@ public:
 
 	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
 
-	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType objtype, const std::string& objname) noexcept {
+	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
 		switch (objtype)
 		{
 		case ObjectType::Character:
-			return *std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objname; });
+			return *std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objName; });
 			break;
 		case ObjectType::ImageObject:
-			return *std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objname; });
+			return *std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objName; });
 			break;
 		case ObjectType::TextObject:
-			return *std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objname; });
+			return *std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objName; });
 			break;
 		case ObjectType::Button:
-			return *std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objname; });
+			return *std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objName; });
 			break;
 		case ObjectType::EventObject:
-			return *std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objname; });
+			return *std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objName; });
 			break;
 		default:
 			return nullptr;
