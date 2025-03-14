@@ -30,6 +30,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
     auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
+    auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }
@@ -41,6 +42,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         else if(pos.x > -GetX0(background))
         {
             pos.x-= Displacement;
+            for (auto& it : *bricks) {
+                it->SetPosition({ it->GetPosition().x - Displacement,it->GetPosition().y });
+            }
         }
         else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x)
         {
@@ -56,12 +60,16 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         else if (pos.x < GetX0(background))
         {
             pos.x += Displacement;
+            for (auto& it : *bricks) {
+                it->SetPosition({ it->GetPosition().x + Displacement,it->GetPosition().y });
+            }
         }
         else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2) + mario->GetSize().x)
         {
             mario->SetPosition({ mario->GetPosition().x - Displacement,mario->GetPosition().y });
         }
         (background)->SetPosition(pos);
+        
     }
 }
 #endif

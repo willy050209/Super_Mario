@@ -27,8 +27,16 @@ void Mario::doJump() noexcept
 
 void Mario::comeDown() noexcept
 {
-    if (state != State::UP && GetPosition().y > 0) {
-        auto tmp = GetPosition();
+    auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
+    bool flag = false;
+    auto tmp = GetPosition();
+    for (auto& it : *bricks) {
+        if (tmp.y > it->GetPosition().y) {
+            flag = true;
+            break;
+        }
+    }
+    if (state != State::UP && tmp.y>0) {
         tmp.y -= displacement;
         SetPosition(tmp);
         if (GetPosition().y == 0) {
