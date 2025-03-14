@@ -3,7 +3,7 @@
 
 #include "Character.hpp"
 
-constexpr auto DEFAULTDISPLACEMENT = 4;
+constexpr auto DEFAULTDISPLACEMENT = 3.f;
 
 class Mario : public Character {
 public:

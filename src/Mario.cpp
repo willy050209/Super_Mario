@@ -16,8 +16,8 @@ void Mario::doJump() noexcept
         auto tmp = GetPosition();
         tmp.y += displacement;
         SetPosition(tmp);
-        displacement -= 1.0;
-        if (displacement <= 0) {
+        displacement -= (float)(DEFAULTDISPLACEMENT / 5);
+        if (displacement < 0.1) {
             state = State::DOWN;
             displacement = DEFAULTDISPLACEMENT;
         }
