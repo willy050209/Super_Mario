@@ -163,7 +163,7 @@ INITFORM_FUNC(initForm_1_1){
 
 	std::vector<std::shared_ptr<ImageObject>> Blocks;
 	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 30; ++i)
 	{
 		Blocks.push_back( std::make_shared<ImageObject>("brick", BlockImagePath, 10));
 		Blocks.back()->SetPosition({ 0 + Block->GetSize().x * i,-Block->GetSize().y });
