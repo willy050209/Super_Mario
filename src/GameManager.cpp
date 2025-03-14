@@ -69,11 +69,11 @@ INITFORM_FUNC(initFormBackground) noexcept {
 		MyFM.addObject(FormBackground, buttonptr);
 	}
 	/*give BGM to FormBackground*/
-	auto tmp = std::make_shared<Util::BGM>();
-	tmp->LoadMedia(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
+	auto tmp = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
+	//tmp->LoadMedia(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
 	tmp->Play(-1);
-	auto tmpdouble = std::make_shared<Util::BGM>();
-	tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
+	auto tmpdouble = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
+	//tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
 	tmpdouble->Play(-1);
 	
 	///*time_try*/
@@ -264,6 +264,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ 100,100 });
 	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
+	MyFM.removeObject(Form_1_1, ObjectType::TextObject, "Timetext");
 	MyFM.addObject(Form_1_1, texttime);
 
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {

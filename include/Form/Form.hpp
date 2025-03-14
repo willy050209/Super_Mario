@@ -15,6 +15,11 @@ public:
 		m_Events.push_back(obj);
 	}
 
+	inline void removeFormObj(std::shared_ptr<Object>& obj) noexcept {
+		m_Root.RemoveChild(obj);
+		m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj),m_Events.end());
+	}
+
 	inline void doAllEvent(void* data = nullptr) noexcept {
 		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) {it->behavior(data); });
 	}

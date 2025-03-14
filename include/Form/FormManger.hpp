@@ -22,7 +22,7 @@ public:
 
 	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
 
-	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType&& objtype, const std::string& objname) noexcept {
+	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType objtype, const std::string& objname) noexcept {
 		switch (objtype)
 		{
 		case ObjectType::Character:
@@ -42,6 +42,31 @@ public:
 			break;
 		default:
 			return nullptr;
+			break;
+		}
+	}
+
+	inline void removeObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
+		m_Forms[formName].removeFormObj(GetObject(formName, objtype, objName));
+		switch (objtype)
+		{
+		case ObjectType::Character:
+			m_Characters[formName].erase(std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objName; }));
+			break;
+		case ObjectType::ImageObject:
+			m_Images[formName].erase(std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objName; }));
+			break;
+		case ObjectType::TextObject:
+			m_Texts[formName].erase(std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objName; }));
+			break;
+		case ObjectType::Button:
+			m_Buttons[formName].erase(std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objName; }));
+			break;
+		case ObjectType::EventObject:
+			m_Events[formName].erase(std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objName; }));
+			break;
+		default:
+			
 			break;
 		}
 	}
@@ -133,6 +158,7 @@ private:
 	inline void addForm(const std::string& formName, std::shared_ptr<Object> obj) noexcept {
 		m_Forms[formName].addForm(obj);
 	}
+
 
 	
 
