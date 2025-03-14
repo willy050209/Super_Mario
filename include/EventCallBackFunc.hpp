@@ -30,7 +30,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
     auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
-    auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
+    auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
     bool flag = true;
     auto tmp = mario->GetPosition();
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
@@ -38,9 +38,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
-        for (auto& it : *bricks) {
+        for (auto& it : *block) {
             if (it->inRange({ tmp.x + Displacement + mario->GetSize().x / 2,tmp.y })) {
                 flag = false;
+                break;
             }
         }
         if (mario->GetPosition().x!=0 && pos.x == GetX0(background) && flag ) {
@@ -49,7 +50,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         else if(pos.x > -GetX0(background) && flag)
         {
             pos.x-= Displacement;
-            for (auto& it : *bricks) {
+            for (auto& it : *block) {
                 it->SetPosition({ it->GetPosition().x - Displacement,it->GetPosition().y });
             }
         }
@@ -62,9 +63,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         auto pos = (background)->GetPosition();
-        for (auto& it : *bricks) {
+        for (auto& it : *block) {
             if (it->inRange({ tmp.x - Displacement - mario->GetSize().x / 2,tmp.y })) {
                 flag = false;
+                break;
             }
         }
         if (mario->GetPosition().x != 0 && pos.x == -GetX0(background) && flag) {
@@ -73,7 +75,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         else if (pos.x < GetX0(background) && flag)
         {
             pos.x += Displacement;
-            for (auto& it : *bricks) {
+            for (auto& it : *block) {
                 it->SetPosition({ it->GetPosition().x + Displacement,it->GetPosition().y });
             }
         }

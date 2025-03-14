@@ -38,6 +38,8 @@ private:
 	
 	State state = State::MOVE;
 	float displacement = DEFAULTDISPLACEMENT;
+
+	int jumpDlay = 0;
 };
 
 #endif // !MARIO_HPP

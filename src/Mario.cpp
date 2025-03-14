@@ -12,17 +12,32 @@ void Mario::behavior(void* data)
 
 void Mario::doJump() noexcept
 {
-    if (state == State::UP) {
+    if (state == State::UP && !jumpDlay) {
         auto tmp = GetPosition();
+        auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
         tmp.y += displacement;
+        for (auto it = block->begin(); it < block->end(); ++it) {
+            if ((*it)->inRange(tmp)) {
+                tmp.y = (*it)->GetPosition().y - (*it)->GetPosition().y / 2 - GetSize().y / 2;
+                if ((*it)->name == "QuestionBlock") {
+                    (*it)->SetVisible(false);
+                }
+                block->erase(it);
+                displacement = 0;
+                break;
+            }
+        }
         SetPosition(tmp);
         displacement -= (float)(DEFAULTDISPLACEMENT / 5);
         if (displacement < 0.1) {
             state = State::DOWN;
             displacement = DEFAULTDISPLACEMENT;
+            jumpDlay = 10;
         }
     }
-    
+    else if (jumpDlay > 0) {
+        --jumpDlay;
+    }
 }
 
 void Mario::comeDown() noexcept

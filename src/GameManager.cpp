@@ -161,21 +161,25 @@ INITFORM_FUNC(initForm_1_1){
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 
-	std::vector<std::shared_ptr<ImageObject>> bricks;
-	std::shared_ptr<ImageObject> brick = std::make_shared<ImageObject>("brick", BrickImagePath, 1);
+	std::vector<std::shared_ptr<ImageObject>> Blocks;
+	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
 	for (int i = 0; i < 10; ++i)
 	{
-		bricks.push_back( std::make_shared<ImageObject>("brick", BrickImagePath, 10));
-		bricks.back()->SetPosition({ 0 + brick->GetSize().x * i,-brick->GetSize().y });
-		MyFM.addObject(Form_1_1, bricks.back());
+		Blocks.push_back( std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+		Blocks.back()->SetPosition({ 0 + Block->GetSize().x * i,-Block->GetSize().y });
+		MyFM.addObject(Form_1_1, Blocks.back());
 	}
-	bricks.push_back(std::make_shared<ImageObject>("brick", BrickImagePath, 10));
-	bricks.back()->SetPosition({ 0,0 });
-	MyFM.addObject(Form_1_1, bricks.back());
-	bricks.push_back(std::make_shared<ImageObject>("brick", BrickImagePath, 10));
-	bricks.back()->SetPosition({ 100,0 });
-	MyFM.addObject(Form_1_1, bricks.back());
-	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(bricks);
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+	Blocks.back()->SetPosition({ 0,0 });
+	MyFM.addObject(Form_1_1, Blocks.back());
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+	Blocks.back()->SetPosition({ 100,0 });
+	MyFM.addObject(Form_1_1, Blocks.back());
+
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
+	Blocks.back()->SetPosition({ 16,16 });
+	MyFM.addObject(Form_1_1, Blocks.back());
+	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 	/*for (int i = 0; i < (int)img->GetSize().x / brick->GetSize().x; ++i)
 	{
 		bricks.push_back(std::make_shared<ImageObject>("brick", BrickImagePath, 10));
