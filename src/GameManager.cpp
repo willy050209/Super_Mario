@@ -6,9 +6,13 @@
 #include "incallobj.hpp"
 #include "Position.hpp"
 
+/*try BGM*/
+//#include "Util/BGM.hpp"
+
 #include <memory>
 #include <tuple>
 #include <thread>
+#include <ctime>
 
 
 #define INITFORM_FUNC(func_name) static void func_name(GameManager* self)
@@ -64,6 +68,22 @@ INITFORM_FUNC(initFormBackground) noexcept {
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
+	/*give BGM to FormBackground*/
+	auto tmp = std::make_shared<Util::BGM>();
+	tmp->LoadMedia(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
+	tmp->Play(-1);
+	auto tmpdouble = std::make_shared<Util::BGM>();
+	tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
+	tmpdouble->Play(-1);
+	
+	///*time_try*/
+	time_t now = time(0);
+	std::string tm = ctime(&now);
+	//std::cout << tm << '\n';
+	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({100,100 });
+	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
+	MyFM.addObject(Form_1_1, texttime);
 
 	initenent.join();
 
@@ -200,7 +220,7 @@ void GameManager::init() noexcept
 {
 
 	bgm = std::make_shared<Util::BGM>(BGMPath);
-	bgm->SetVolume(0);// 0~128
+	bgm->SetVolume(50);// 0~128
 	bgm->Play();
 	
 	initFormBackground(this);
@@ -213,12 +233,22 @@ void GameManager::init() noexcept
 
 	initFormSetting(this);
 
-	MyFM.changeForm(FormTitel);
+	MyFM.changeForm(FormTitel/*FormBackground*/);
 
 }
 
 void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 {
+	/*time_try*/
+	//MyFM.
+	time_t now = time(0);
+	std::string tm = ctime(&now);
+	//std::cout << tm << '\n';
+	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({ 100,100 });
+	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
+	MyFM.addObject(Form_1_1, texttime);
+
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
 		if (MyFM.GetPrevForm() != "null") {
 			MyFM.returnPrevForm();

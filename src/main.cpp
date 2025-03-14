@@ -59,6 +59,7 @@ int main(int, char**) {
     }
 
     while (!context->GetExit()) {
+        
         if (gameManger.isEnd()) {
             writeFormProfile(context);
             context->SetExit(true);
