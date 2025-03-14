@@ -26,7 +26,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
-    constexpr auto Displacement = 8;
+    constexpr auto Displacement = 4;
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
     auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
