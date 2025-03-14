@@ -88,4 +88,19 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         
     }
 }
+
+EVENTCALLCALLBACKFUN(UpdateTimeText) {
+    auto& num = std::get<std::shared_ptr<int>>(*(std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata)));
+    if ((*num)++ >= FPS_CAP) {
+        auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
+        auto currentTime = std::chrono::system_clock::now();
+        auto time = std::chrono::system_clock::to_time_t(currentTime);
+        std::cout << "目前時間：" << std::ctime(&time);
+        std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::string(std::ctime(&time)));
+        timetext->SetPosition({ GetX0(timetext),GetY0(timetext) });
+        (*num) = 0;
+    }
+}
+
+
 #endif

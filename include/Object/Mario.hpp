@@ -20,8 +20,11 @@ public:
 	inline State GetState() const noexcept { return state; }
 
 	inline void jump() noexcept {
-		state = State::UP;
-		displacement = 2 * DEFAULTDISPLACEMENT;
+		if(jumpDelay == 0)
+		{
+			state = State::UP;
+			displacement = 2 * DEFAULTDISPLACEMENT;
+		}
 	}
 
 	virtual void behavior(void* data = nullptr) override;

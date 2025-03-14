@@ -45,6 +45,8 @@ public:
 
 	inline void setText(const std::string& text) noexcept;
 
+	void setText(std::string&& text) noexcept;
+
 	void setColor(const Util::Color& color);
 
 	inline glm::vec2&& GetSize() const noexcept override {

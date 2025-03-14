@@ -76,14 +76,14 @@ INITFORM_FUNC(initFormBackground) noexcept {
 	//tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
 	tmpdouble->Play(-1);
 	
-	///*time_try*/
-	time_t now = time(0);
-	std::string tm = ctime(&now);
-	//std::cout << tm << '\n';
-	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
-	texttime->SetPosition({100,100 });
-	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
-	MyFM.addObject(Form_1_1, texttime);
+	/////*time_try*/
+	//time_t now = time(0);
+	//std::string tm = ctime(&now);
+	////std::cout << tm << '\n';
+	//auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
+	//texttime->SetPosition({100,100 });
+	//texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
+	//MyFM.addObject(Form_1_1, texttime);
 
 	initenent.join();
 
@@ -180,12 +180,13 @@ INITFORM_FUNC(initForm_1_1){
 	Blocks.back()->SetPosition({ 16,16 });
 	MyFM.addObject(Form_1_1, Blocks.back());
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
-	/*for (int i = 0; i < (int)img->GetSize().x / brick->GetSize().x; ++i)
-	{
-		bricks.push_back(std::make_shared<ImageObject>("brick", BrickImagePath, 10));
-		bricks.back()->SetPosition({ (-WINDOW_WIDTH / 2) + brick->GetSize().x * i,-brick->GetSize().y });
-		MyFM.addObject(Form_1_1, bricks.back());
-	}*/
+	
+	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, "--- --- -- --:--:-- ----", Util::Color::FromName(Util::Colors::WHITE), 100);
+	MyFM.addObject(Form_1_1, texttime);
+
+	event = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
+	event->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), texttime);
+	MyFM.addObject(Form_1_1, event);
 }
 
 INITFORM_FUNC(initFormSetting) {
@@ -268,14 +269,14 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 {
 	/*time_try*/
 	//MyFM.
-	time_t now = time(0);
-	std::string tm = ctime(&now);
-	//std::cout << tm << '\n';
-	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
-	texttime->SetPosition({ 100,100 });
-	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
-	MyFM.removeObject(Form_1_1, ObjectType::TextObject, "Timetext");
-	MyFM.addObject(Form_1_1, texttime);
+	//time_t now = time(0);
+	//std::string tm = ctime(&now);
+	////std::cout << tm << '\n';
+	//auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
+	//texttime->SetPosition({ 100,100 });
+	//texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
+	//MyFM.removeObject(Form_1_1, ObjectType::TextObject, "Timetext");
+	//MyFM.addObject(Form_1_1, texttime);
 
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
 		if (MyFM.GetPrevForm() != "null") {
