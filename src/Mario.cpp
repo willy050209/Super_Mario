@@ -30,16 +30,10 @@ void Mario::comeDown() noexcept
     auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
     bool flag = true;
     auto tmp = GetPosition();
-    /*for (auto& it : *bricks) {
-        if (abs(tmp.x - it->GetPosition().x) <= it->GetSize().x / 2 && tmp.y >= it->GetPosition().y + GetSize().y/2 + it->GetSize().y/2) {
-            flag = false;
-            break;
-        }
-    }*/
     if (state != State::UP && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
         for (auto& it : *bricks) {
-            if (it->inRange(tmp)) {
+            if (it->inRange({tmp.x,tmp.y-GetSize().y/4})) {
                 flag = false;
             }
         }
