@@ -14,6 +14,7 @@
 
 #define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
 
+using Util::Input;
 
 EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
     auto num = std::static_pointer_cast<int>(self->userdata);

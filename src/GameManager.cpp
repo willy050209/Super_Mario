@@ -250,7 +250,13 @@ void GameManager::init() noexcept
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(50);// 0~128
 	bgm->Play();
-	
+	bgms.push_back(std::make_shared<MyBGM>(L"Bgm0", L"D:/program/C++/Super_Mario/Resources""/BGM/Ring08.wav"));
+	bgms.push_back(std::make_shared<MyBGM>(L"Bgm1", L"C:\\Users\\Willy\\Music\\test.wav"));
+
+	for (auto& it : bgms) {
+		it->Play();
+	}
+
 	initFormBackground(this);
 	
 	initFormTitle(this);

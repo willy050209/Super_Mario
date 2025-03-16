@@ -3,10 +3,11 @@
 
 #include "Button.hpp"
 #include "GameManager.hpp"
-
+#include "FormManger.hpp"
 #include <iostream>
 
 #define BUTTONCALLBACKFUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
+
 
 BUTTONCALLBACKFUNCTION(callBackTest) {
 	auto num = std::static_pointer_cast<int>(self->userdata);
@@ -51,7 +52,7 @@ BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
 	int volume = gm->GetBGM()->GetVolume();
 	if (volume == 100) return;
 	gm->GetBGM()->SetVolume(++volume);
-	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
+	auto text =fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
@@ -62,7 +63,8 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 	int volume = gm->GetBGM()->GetVolume();
 	if (volume == 0) return;
 	gm->GetBGM()->SetVolume(--volume);
-	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
+	
+	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
 }
 
@@ -85,7 +87,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 	else {
 		return;
 	}
-	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 
@@ -109,7 +111,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 	else {
 		return;
 	}
-	auto text = fm.GetObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 
@@ -124,6 +126,7 @@ BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto& fm = gm->GetFormManger();
 	fm.changeForm("help");
 	system(std::static_pointer_cast<std::string>(self->userdata)->c_str());
+
 }
 
 #endif // !BUTTONCALLBACKFUNC

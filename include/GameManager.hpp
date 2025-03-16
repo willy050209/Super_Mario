@@ -4,6 +4,7 @@
 #include "MyContext.hpp"
 #include "Util/BGM.hpp"
 #include "Form/FormManger.hpp"
+#include "MyBGM.hpp"
 
 #include <memory>
 
@@ -50,6 +51,7 @@ private:
 	FormManger MyFM;
 
 	std::shared_ptr<Util::BGM> bgm;
+	std::vector<std::shared_ptr<MyBGM>> bgms;
 	bool endstate = false;
 	bool m_Restart = false;
 };

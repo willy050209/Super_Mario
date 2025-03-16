@@ -22,7 +22,7 @@ public:
 
 	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
 
-	inline std::shared_ptr<Object> GetObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
+	inline std::shared_ptr<Object> GetFormObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
 		switch (objtype)
 		{
 		case ObjectType::Character:
@@ -47,7 +47,7 @@ public:
 	}
 
 	inline void removeObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
-		m_Forms[formName].removeFormObj(GetObject(formName, objtype, objName));
+		m_Forms[formName].removeFormObj(GetFormObject(formName, objtype, objName));
 		switch (objtype)
 		{
 		case ObjectType::Character:
