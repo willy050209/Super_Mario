@@ -98,7 +98,6 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
         auto time = std::chrono::system_clock::to_time_t(currentTime);
         std::cout << "目前時間：" << std::ctime(&time);
         std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::string(std::ctime(&time)));
-        timetext->SetPosition({ GetX0(timetext),GetY0(timetext) });
         (*num) = 0;
     }
 }

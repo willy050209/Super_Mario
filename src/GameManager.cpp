@@ -179,9 +179,11 @@ INITFORM_FUNC(initForm_1_1){
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
 	Blocks.back()->SetPosition({ 16,16 });
 	MyFM.addObject(Form_1_1, Blocks.back());
+
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 	
 	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, "--- --- -- --:--:-- ----", Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
 	MyFM.addObject(Form_1_1, texttime);
 
 	event = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
