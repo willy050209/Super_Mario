@@ -15,9 +15,9 @@
 #include <ctime>
 
 
-#define INITFORM_FUNC(func_name) static void func_name(GameManager* self)
+#define INITFORM_FUNC(func_name) static void func_name(GameManager* self) noexcept
 
-INITFORM_FUNC(initFormBackground) noexcept {
+INITFORM_FUNC(initFormBackground) {
 
 	auto& MyFM = self->GetFormManger();
 
@@ -90,7 +90,7 @@ INITFORM_FUNC(initFormBackground) noexcept {
 }
 
 /*init Titel Form*/
-INITFORM_FUNC(initFormTitle) noexcept {
+INITFORM_FUNC(initFormTitle) {
 
 	constexpr auto textSize = 50;
 	auto&& textColor = Util::Color::FromName(Util::Colors::YELLOW);
