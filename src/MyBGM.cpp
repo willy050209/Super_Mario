@@ -6,25 +6,17 @@
 
 void MyBGM::Play() noexcept {
 	std::wstring command;
-	switch (state)
+	if (state == State::pause) {
+		command = L"resume " + name;
+	}
+	else
 	{
-	case MyBGM::State::null:
 		command = L"open \"" + filePath + L"\" alias " + name;
 		mciSendStringW(command.c_str(), NULL, 0, NULL);
 		command = L"Play " + name;
-		break;
-	case MyBGM::State::play:
-		break;
-	case MyBGM::State::pause:
-		command = L"resume " + name;
-		break;
-	default:
-		return;
-		break;
 	}
 	state = State::play;
 	mciSendStringW(command.c_str(), NULL, 0, NULL);
-	//chageVolume();
 }
 
 void MyBGM::Pause() noexcept
@@ -49,6 +41,7 @@ void MyBGM::Pause() noexcept
 void MyBGM::Stop() noexcept
 {
 	std::wstring command;
+	state = State::null;
 	command = L"stop " + name;
 	mciSendStringW(command.c_str(), NULL, 0, NULL);
 	command = L"close " + name;
@@ -57,7 +50,8 @@ void MyBGM::Stop() noexcept
 
 void MyBGM::RePlay() noexcept
 {
-
+	Stop();
+	Play();
 }
 
 //void MyBGM::chageVolume() noexcept {

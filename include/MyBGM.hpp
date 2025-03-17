@@ -43,6 +43,13 @@ public:
 
 
 private:
+//#ifdef UNICODE
+//#define M_UNICODE
+//	std::wstring filePath = L"", name = L"";
+//#else
+//	std::string filePath = "", name = "";
+//#endif // UNICODE
+
 	std::wstring filePath = L"", name = L"";
 	State state = State::null;
 	int Volume = 50;
