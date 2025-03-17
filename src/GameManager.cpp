@@ -66,13 +66,13 @@ INITFORM_FUNC(initFormBackground) {
 		buttonptr->SetCallBackFunc(callBackTest);
 		MyFM.addObject(FormBackground, buttonptr);
 	}
-	/*give BGM to FormBackground*/
-	auto tmp = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
-	//tmp->LoadMedia(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
-	tmp->Play(-1);
-	auto tmpdouble = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
-	//tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
-	tmpdouble->Play(-1);
+	///*give BGM to FormBackground*/
+	//auto tmp = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
+	////tmp->LoadMedia(MY_RESOURCE_DIR"/BGM/wakeup music.mp3");
+	//tmp->Play(-1);
+	//auto tmpdouble = std::make_shared<Util::BGM>(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
+	////tmpdouble->LoadMedia(MY_RESOURCE_DIR"/BGM/01. Ground Theme.mp3");
+	//tmpdouble->Play(-1);
 	
 	/////*time_try*/
 	//time_t now = time(0);
@@ -187,6 +187,7 @@ INITFORM_FUNC(initForm_1_1){
 	event = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), texttime);
 	MyFM.addObject(Form_1_1, event);
+
 }
 
 INITFORM_FUNC(initFormSetting) {
@@ -196,7 +197,7 @@ INITFORM_FUNC(initFormSetting) {
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(FormSetting, tmpbutton);
 
-	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(self->GetBGM()->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(MyBGM::GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ 2 * text->GetSize().x ,0 });
 	MyFM.addObject(FormSetting, text);
 
@@ -246,15 +247,27 @@ INITFORM_FUNC(initFormSetting) {
 
 void GameManager::init() noexcept
 {
-
-	bgm = std::make_shared<Util::BGM>(BGMPath);
-	bgm->SetVolume(50);// 0~128
-	bgm->Play();
-	bgms.push_back(std::make_shared<MyBGM>(L"Bgm", L"D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
-	bgms.push_back(std::make_shared<MyBGM>(L"Bgm1", L"D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));
+	/*test BGM*/
+	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
+	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
+	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
 	}
+	/*auto button = std::make_shared<Button>("test", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	button->SetPosition({ -GetX0(button),GetY0(button) });
+	button->userdata = bgms.back();
+	button->SetCallBackFunc([](Button* self, void* data) {
+		auto bgm = std::static_pointer_cast<MyBGM::BGM>(self->userdata);
+		if (bgm->GetLoop()) {
+			bgm->Pause();
+		}
+		else
+		{
+			bgm->Resum();
+		}
+	});
+	MyFM.addObject(Form_1_1,button);*/
 
 	initFormBackground(this);
 	
@@ -268,6 +281,10 @@ void GameManager::init() noexcept
 
 	MyFM.changeForm(FormTitel/*FormBackground*/);
 
+	/*system("pause");
+	for (auto& it : bgms) {
+		it->SetLoop(false);
+	}*/
 }
 
 void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept

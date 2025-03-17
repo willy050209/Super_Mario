@@ -4,6 +4,7 @@
 #include "Button.hpp"
 #include "GameManager.hpp"
 #include "FormManger.hpp"
+#include "MyBGM.hpp"
 #include <iostream>
 
 #define BUTTONCALLBACKFUNCTION(FUNC_name) static void FUNC_name(Button* const self, void* data)
@@ -49,23 +50,23 @@ BUTTONCALLBACKFUNCTION(CallSettingForm) {
 BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
-	int volume = gm->GetBGM()->GetVolume();
-	if (volume == 100) return;
-	gm->GetBGM()->SetVolume(++volume);
+	int volume = MyBGM::GetVolume();
+	if (volume == 15) return;
+	MyBGM::SetVolume(++volume);
 	auto text =fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
-	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(MyBGM::GetVolume()));
 }
 
 
 BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
-	int volume = gm->GetBGM()->GetVolume();
+	int volume = MyBGM::GetVolume();
 	if (volume == 0) return;
-	gm->GetBGM()->SetVolume(--volume);
+	MyBGM::SetVolume(--volume);
 	
 	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
-	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(gm->GetBGM()->GetVolume()));
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(MyBGM::GetVolume()));
 }
 
 BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
