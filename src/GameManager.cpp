@@ -248,8 +248,8 @@ INITFORM_FUNC(initFormSetting) {
 void GameManager::init() noexcept
 {
 	/*test BGM*/
-	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
-	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
+	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
+	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
@@ -319,4 +319,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept
 void GameManager::End() noexcept
 {
 	endstate = true;
+	for (auto& bgm : bgms) {
+		bgm->Stop();
+	}
 }

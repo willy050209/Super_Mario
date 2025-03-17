@@ -73,7 +73,7 @@ void BGM::PlayOnce() noexcept {
 		Stop();
 		doloop->join();
 	}
-	doloop = std::make_shared< std::thread>([&]() {
+	doloop = std::make_shared<std::thread>([&]() {
 		this->exit.store(false);
 		char command[256], retstr[64];
 		sprintf(command, "open \"%s\" alias \"%s\"", filePath.c_str(), name.c_str());
