@@ -8,7 +8,6 @@
 #include <atomic>
 
 
-
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
 #define FOLDERPATH MY_RESOURCE_DIR
 #define OUTPUTFOLDPATH "out"
@@ -57,7 +56,6 @@ int main(int, char**) {
         context->SetExit(true);
         exit(1);
     }
-
     while (!context->GetExit()) {
         
         if (gameManger.isEnd()) {

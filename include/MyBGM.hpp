@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 #pragma comment(lib, "winmm.lib")
 
 class MyBGM {
@@ -24,9 +23,9 @@ public:
 
 	MyBGM() = delete;
 
-	inline const int& GetVolume() const noexcept { return Volume; }
+	inline const int& GetLoop() const noexcept { return loop; }
 
-	inline void SetVolume(int volume) noexcept { Volume = volume; }
+	inline void SetLoop(bool isloop) noexcept { loop = isloop; }
 
 	inline void SetFilePath(const std::wstring& filePath) noexcept { this->filePath = filePath; }
 	inline void SetFilePath(std::wstring&& filePath) noexcept { this->filePath = filePath; }
@@ -45,14 +44,14 @@ public:
 private:
 //#ifdef UNICODE
 //#define M_UNICODE
-//	std::wstring filePath = L"", name = L"";
+//	std::string filePath = "", name = "";
 //#else
 //	std::string filePath = "", name = "";
 //#endif // UNICODE
 
 	std::wstring filePath = L"", name = L"";
 	State state = State::null;
-	int Volume = 50;
+	bool loop = false;
 
 	//void chageVolume() noexcept;
 };

@@ -5,15 +5,13 @@
 #include "EventCallBackFunc.hpp"
 #include "incallobj.hpp"
 #include "Position.hpp"
+#include "MyBGM.hpp"
 
-/*try BGM*/
-//#include "Util/BGM.hpp"
 
 #include <memory>
 #include <tuple>
 #include <thread>
 #include <ctime>
-
 
 #define INITFORM_FUNC(func_name) static void func_name(GameManager* self) noexcept
 
@@ -252,9 +250,8 @@ void GameManager::init() noexcept
 	bgm = std::make_shared<Util::BGM>(BGMPath);
 	bgm->SetVolume(50);// 0~128
 	bgm->Play();
-	bgms.push_back(std::make_shared<MyBGM>(L"Bgm0", L"D:/program/C++/Super_Mario/Resources""/BGM/Ring08.wav"));
-	bgms.push_back(std::make_shared<MyBGM>(L"Bgm1", L"C:\\Users\\Willy\\Music\\test.wav"));
-
+	bgms.push_back(std::make_shared<MyBGM>(L"Bgm", L"D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
+	bgms.push_back(std::make_shared<MyBGM>(L"Bgm1", L"D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));
 	for (auto& it : bgms) {
 		it->Play();
 	}

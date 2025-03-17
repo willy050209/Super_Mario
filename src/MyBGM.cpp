@@ -1,7 +1,6 @@
 #include "MyBGM.hpp"
 #include <windows.h>
 #include <mmsystem.h>
-#include <SDL_mixer.h>
 
 
 void MyBGM::Play() noexcept {
@@ -14,9 +13,13 @@ void MyBGM::Play() noexcept {
 		command = L"open \"" + filePath + L"\" alias " + name;
 		mciSendStringW(command.c_str(), NULL, 0, NULL);
 		command = L"Play " + name;
+		if (loop) {
+			command += L" repeat";
+		}
 	}
 	state = State::play;
 	mciSendStringW(command.c_str(), NULL, 0, NULL);
+	//waveOutSetVolume(0, 1717986918);
 }
 
 void MyBGM::Pause() noexcept
@@ -55,7 +58,7 @@ void MyBGM::RePlay() noexcept
 }
 
 //void MyBGM::chageVolume() noexcept {
-//	std::wstring command = L"setaudio " + name + L" volume to " + std::to_wstring(1000);
+//	std::string command = "setaudio " + name + " volume to " + std::to_string(1000);
 //	mciSendStringW(command.c_str(), NULL, 0, NULL);
 //	auto sss = (((unsigned int)Volume & 0x0000ffff) | ((unsigned int)Volume << 16));
 //	//waveOutSetVolume(0, (((unsigned int)Volume & 0x0000ffff) | ((unsigned int)Volume << 16)));
