@@ -248,18 +248,18 @@ INITFORM_FUNC(initFormSetting) {
 void GameManager::init() noexcept
 {
 	/*test BGM*/
-	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
-	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));
+	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
+	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
 	}
-	/*auto button = std::make_shared<Button>("test", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	auto button = std::make_shared<Button>("test", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	button->SetPosition({ -GetX0(button),GetY0(button) });
 	button->userdata = bgms.back();
 	button->SetCallBackFunc([](Button* self, void* data) {
 		auto bgm = std::static_pointer_cast<MyBGM::BGM>(self->userdata);
-		if (bgm->GetLoop()) {
+		if (bgm->isPlay()) {
 			bgm->Pause();
 		}
 		else
@@ -267,7 +267,7 @@ void GameManager::init() noexcept
 			bgm->Resum();
 		}
 	});
-	MyFM.addObject(Form_1_1,button);*/
+	MyFM.addObject(Form_1_1,button);
 
 	initFormBackground(this);
 	

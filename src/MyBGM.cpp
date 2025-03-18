@@ -7,64 +7,70 @@
 
 using namespace MyBGM;
 
-
-
 void BGM::Play() noexcept {
-	if (loop.load()) {
-		PlayLoop();
+	if (isPause()) {
+		Resum();
 	}
-	else {
-		PlayOnce();
+	else
+	{
+		if (loop.load()) {
+			PlayLoop();
+		}
+		else {
+			PlayOnce();
+		}
 	}
 }
 
 void BGM::PlayLoop() noexcept {
-	if (doloop != nullptr && doloop->joinable())
-	{
-		Stop();
-		doloop->join();
-	}
-	doloop = std::make_shared< std::thread>([&]() {
-		this->exit.store(false);
-		do
-		{
-			if (loop.load())
+	if (doloop == nullptr) {
+		start.store(true);
+		doloop = std::make_shared< std::thread>([&]() {
+			this->exit.store(false);
+			do
 			{
-				//puts("play audio");
-				char command[256], retstr[64];
-				sprintf(command, "open \"%s\" alias \"%s\"", filePath.c_str(), name.c_str());
-				mciSendStringA(command, NULL, 0, NULL);
-				if (pause.load()) {
-					//puts("load audio");
-					//std::cout << sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition) << pausePosition;
-					sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition);
-					mciSendStringA(command, NULL, 0, NULL);
-					pause.store(false);
-				}
-				else
+				if (start.load())
 				{
-					sprintf(command, "play \"%s\"", name.c_str());
+					puts("play audio");
+					char command[256], retstr[64];
+					sprintf(command, "open \"%s\" alias \"%s\"", filePath.c_str(), name.c_str());
 					mciSendStringA(command, NULL, 0, NULL);
-				}
-				sprintf(command, "status \"%s\" length", name.c_str());
-				mciSendStringA(command, retstr, sizeof(retstr), NULL);
-				int len = atoi(retstr);
-				do
-				{
-					sprintf(command, "status \"%s\" position", name.c_str());
+					if (pause.load()) {
+						puts("load audio");
+						//std::cout << sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition) << pausePosition;
+						sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition);
+						mciSendStringA(command, NULL, 0, NULL);
+						pause.store(false);
+					}
+					else
+					{
+						sprintf(command, "play \"%s\"", name.c_str());
+						mciSendStringA(command, NULL, 0, NULL);
+					}
+					sprintf(command, "status \"%s\" length", name.c_str());
 					mciSendStringA(command, retstr, sizeof(retstr), NULL);
-					pausePosition = (atoi(retstr));
+					int len = atoi(retstr);
+					do
+					{
+						sprintf(command, "status \"%s\" position", name.c_str());
+						mciSendStringA(command, retstr, sizeof(retstr), NULL);
+						pausePosition = (atoi(retstr));
 
-				} while (!pause.load() && loop.load() && len > pausePosition);
-				sprintf(command, "stop \"%s\"", name.c_str());
-				mciSendStringA(command, retstr, sizeof(retstr), NULL);
-				sprintf(command, "close \"%s\"", name.c_str());
-				mciSendStringA(command, retstr, sizeof(retstr), NULL);
-			}
-		} while (!this->exit.load());
-		//puts("exit loop");
-		});
-
+					} while (!pause.load() && loop.load() && len > pausePosition);
+					sprintf(command, "stop \"%s\"", name.c_str());
+					mciSendStringA(command, retstr, sizeof(retstr), NULL);
+					sprintf(command, "close \"%s\"", name.c_str());
+					mciSendStringA(command, retstr, sizeof(retstr), NULL);
+					start.store(loop.load() && !pause.load());
+				}
+			} while (!this->exit.load());
+			puts("exit loop");
+			});
+	}
+	else
+	{
+		start.store(true);
+	}
 }
 
 void BGM::PlayOnce() noexcept {

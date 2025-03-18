@@ -50,6 +50,8 @@ namespace MyBGM
 
 		inline const bool& isPause() const noexcept { return pause.load(); }
 
+		inline const bool& isPlay() const noexcept { return start.load(); }
+
 		inline void SetLoop(bool isloop) noexcept { loop.store(isloop); }
 
 		inline void SetFilePath(const std::string& filePath) noexcept { this->filePath = filePath; }
@@ -61,12 +63,13 @@ namespace MyBGM
 
 		inline void Pause() noexcept { 
 			pause.store(true);
-			loop.store(false);
+			start.store(false);
+			//loop.store(false);
 		}
 
 		inline void Resum() noexcept {
 			//pause.store(false);
-			loop.store(true);
+			start.store(true);
 		}
 
 		void Stop() noexcept { exit.store(true); loop.store(false); }
@@ -82,7 +85,7 @@ namespace MyBGM
 
 		std::string filePath = "", name = "";
 		State state = State::null;
-		std::atomic_bool loop{ true }, pause{ false }, exit{ false };
+		std::atomic_bool loop{ true }, pause{ false }, exit{ false }, start{ false };
 		int pausePosition{0};
 		std::shared_ptr<std::thread> doloop{nullptr};
 	};
