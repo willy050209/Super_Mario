@@ -25,7 +25,7 @@ FetchContent_Declare(
 FetchContent_Declare(
     ImageResizer
 
-    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/V0.0.zip
+    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/V1.0.zip
 
     SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
 )
