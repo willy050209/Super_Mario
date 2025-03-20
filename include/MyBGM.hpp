@@ -6,7 +6,9 @@
 #include <thread>
 
 #pragma comment(lib, "winmm.lib")
+
 namespace MyBGM {
+
 	/// <summary>
 	/// Get Volume value (0 ~ F)
 	/// </summary>
@@ -21,15 +23,10 @@ namespace MyBGM {
 
 	class BGM {
 	public:
-		enum class State {
-			null,
-			play,
-			pause
-		};
-
+		
 		BGM(const std::string& name) : name(name) {}
 
-		BGM(const std::string& name, const std::string& filePath) : name(name), filePath(filePath), state(State::null) {}
+		BGM(const std::string& name, const std::string& filePath) : name(name), filePath(filePath) {}
 
 		BGM(const BGM& other) = delete;
 
@@ -84,8 +81,7 @@ namespace MyBGM {
 
 		void PlayOnce() noexcept;
 
-		std::string filePath = "", name = "";
-		State state = State::null;
+		std::string filePath{ "" }, name{ "" };
 		std::atomic_bool loop{ true }, pause{ false }, exit{ false }, start{ false };
 		int pausePosition{ 0 };
 		std::shared_ptr<std::thread> doloop{ nullptr };
