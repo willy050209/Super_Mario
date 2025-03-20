@@ -19,20 +19,18 @@ struct FormAndObject {
 
 class FormManger {
 public:
+	FormManger() : nowForm("null") {}
 
-	FormManger() :nowForm("null") {  }
+	FormManger(const std::string& formName) : nowForm(formName) {}
 
-	FormManger(const std::string& formName) :nowForm(formName) {  }
-
-	FormManger(std::string&& formName) :nowForm(formName) {}
+	FormManger(std::string&& formName) : nowForm(formName) {}
 
 	inline const std::string GetNowForm() const noexcept { return nowForm; }
 
 	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
 
 	inline std::shared_ptr<Object> GetFormObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
-		switch (objtype)
-		{
+		switch (objtype) {
 		case ObjectType::Character:
 			return *std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; });
 			break;
@@ -56,8 +54,7 @@ public:
 
 	inline void removeObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
 		m_Forms[formName].m_Form.removeFormObj(GetFormObject(formName, objtype, objName));
-		switch (objtype)
-		{
+		switch (objtype) {
 		case ObjectType::Character:
 			m_Forms[formName].m_Characters.erase(std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; }));
 			break;
@@ -74,7 +71,7 @@ public:
 			m_Forms[formName].m_Events.erase(std::find_if(m_Forms[formName].m_Events.begin(), m_Forms[formName].m_Events.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		default:
-			
+
 			break;
 		}
 	}
@@ -130,14 +127,13 @@ public:
 	}
 
 	inline void UpdateForm(void* data) {
-		if (m_Forms.count(nowForm))
-		{
+		if (m_Forms.count(nowForm)) {
 			doFormEvent(nowForm, data);
 			m_Forms[nowForm].m_Form.Update();
 		}
 	}
 
-	inline void changeForm(const std::string& formname) noexcept { 
+	inline void changeForm(const std::string& formname) noexcept {
 		if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 			prevForm.push_back(nowForm);
 		}
@@ -150,7 +146,7 @@ public:
 		}
 		nowForm = formname;
 	}
-	
+
 	inline void returnPrevForm() noexcept {
 		nowForm = prevForm.back();
 		prevForm.pop_back();
@@ -158,7 +154,6 @@ public:
 
 
 private:
-
 	inline void doFormEvent(const std::string& formName, void* data) noexcept {
 		m_Forms[formName].m_Form.doAllEvent(data);
 	}
@@ -168,12 +163,12 @@ private:
 	}
 
 
-	
+
 
 protected:
 	std::unordered_map<std::string, FormAndObject> m_Forms;
-	std::string  nowForm;
+	std::string nowForm;
 	std::vector<std::string> prevForm;
 };
 
-#endif //!FORMMANGER_HPP
+#endif //! FORMMANGER_HPP

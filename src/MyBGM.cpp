@@ -28,13 +28,13 @@ void BGM::PlayLoop() noexcept {
 			this->exit.store(false);
 			do {
 				if (start.load()) {
-					//puts("play audio");
+					// puts("play audio");
 					char command[256], retstr[64];
 					sprintf(command, "open \"%s\" alias \"%s\"", filePath.c_str(), name.c_str());
 					mciSendStringA(command, NULL, 0, NULL);
 					if (pause.load()) {
-						//puts("load audio");
-						// std::cout << sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition) << pausePosition;
+						// puts("load audio");
+						//  std::cout << sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition) << pausePosition;
 						sprintf(command, "play \"%s\" from %d", name.c_str(), pausePosition);
 						mciSendStringA(command, NULL, 0, NULL);
 						pause.store(false);
@@ -59,7 +59,7 @@ void BGM::PlayLoop() noexcept {
 					start.store(loop.load() && !pause.load());
 				}
 			} while (!this->exit.load());
-			//puts("exit loop");
+			// puts("exit loop");
 		});
 	}
 	else {

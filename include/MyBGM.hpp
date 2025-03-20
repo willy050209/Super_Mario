@@ -6,8 +6,7 @@
 #include <thread>
 
 #pragma comment(lib, "winmm.lib")
-namespace MyBGM
-{
+namespace MyBGM {
 	/// <summary>
 	/// Get Volume value (0 ~ F)
 	/// </summary>
@@ -22,15 +21,15 @@ namespace MyBGM
 
 	class BGM {
 	public:
-
-		enum class State
-		{
-			null, play, pause
+		enum class State {
+			null,
+			play,
+			pause
 		};
 
-		BGM(const std::string& name) :name(name) {}
+		BGM(const std::string& name) : name(name) {}
 
-		BGM(const std::string& name, const std::string& filePath) :name(name), filePath(filePath), state(State::null) {}
+		BGM(const std::string& name, const std::string& filePath) : name(name), filePath(filePath), state(State::null) {}
 
 		BGM(const BGM& other) = delete;
 
@@ -61,24 +60,26 @@ namespace MyBGM
 
 		void Play() noexcept;
 
-		inline void Pause() noexcept { 
+		inline void Pause() noexcept {
 			pause.store(true);
 			start.store(false);
-			//loop.store(false);
+			// loop.store(false);
 		}
 
 		inline void Resum() noexcept {
-			//pause.store(false);
+			// pause.store(false);
 			start.store(true);
 		}
 
-		void Stop() noexcept { exit.store(true); loop.store(false); }
+		void Stop() noexcept {
+			exit.store(true);
+			loop.store(false);
+		}
 
 		void RePlay() noexcept;
 
 
 	private:
-
 		void PlayLoop() noexcept;
 
 		void PlayOnce() noexcept;
@@ -86,8 +87,8 @@ namespace MyBGM
 		std::string filePath = "", name = "";
 		State state = State::null;
 		std::atomic_bool loop{ true }, pause{ false }, exit{ false }, start{ false };
-		int pausePosition{0};
-		std::shared_ptr<std::thread> doloop{nullptr};
+		int pausePosition{ 0 };
+		std::shared_ptr<std::thread> doloop{ nullptr };
 	};
 }
 
