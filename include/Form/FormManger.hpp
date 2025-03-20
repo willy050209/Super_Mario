@@ -8,6 +8,14 @@
 
 #include <algorithm>
 
+struct FormAndObject {
+	Form m_Form;
+	std::vector<std::shared_ptr<TextObject>> m_Texts;
+	std::vector<std::shared_ptr<ImageObject>> m_Images;
+	std::vector<std::shared_ptr<Button>> m_Buttons;
+	std::vector<std::shared_ptr<Character>> m_Characters;
+	std::vector<std::shared_ptr<EventObject>> m_Events;
+};
 
 class FormManger {
 public:
@@ -26,19 +34,19 @@ public:
 		switch (objtype)
 		{
 		case ObjectType::Character:
-			return *std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objName; });
+			return *std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; });
 			break;
 		case ObjectType::ImageObject:
-			return *std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objName; });
+			return *std::find_if(m_Forms[formName].m_Images.begin(), m_Forms[formName].m_Images.end(), [&](auto& it) { return it->name == objName; });
 			break;
 		case ObjectType::TextObject:
-			return *std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objName; });
+			return *std::find_if(m_Forms[formName].m_Texts.begin(), m_Forms[formName].m_Texts.end(), [&](auto& it) { return it->name == objName; });
 			break;
 		case ObjectType::Button:
-			return *std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objName; });
+			return *std::find_if(m_Forms[formName].m_Buttons.begin(), m_Forms[formName].m_Buttons.end(), [&](auto& it) { return it->name == objName; });
 			break;
 		case ObjectType::EventObject:
-			return *std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objName; });
+			return *std::find_if(m_Forms[formName].m_Events.begin(), m_Forms[formName].m_Events.end(), [&](auto& it) { return it->name == objName; });
 			break;
 		default:
 			return nullptr;
@@ -47,23 +55,23 @@ public:
 	}
 
 	inline void removeObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
-		m_Forms[formName].removeFormObj(GetFormObject(formName, objtype, objName));
+		m_Forms[formName].m_Form.removeFormObj(GetFormObject(formName, objtype, objName));
 		switch (objtype)
 		{
 		case ObjectType::Character:
-			m_Characters[formName].erase(std::find_if(m_Characters[formName].begin(), m_Characters[formName].end(), [&](auto& it) {return it->name == objName; }));
+			m_Forms[formName].m_Characters.erase(std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		case ObjectType::ImageObject:
-			m_Images[formName].erase(std::find_if(m_Images[formName].begin(), m_Images[formName].end(), [&](auto& it) {return it->name == objName; }));
+			m_Forms[formName].m_Images.erase(std::find_if(m_Forms[formName].m_Images.begin(), m_Forms[formName].m_Images.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		case ObjectType::TextObject:
-			m_Texts[formName].erase(std::find_if(m_Texts[formName].begin(), m_Texts[formName].end(), [&](auto& it) {return it->name == objName; }));
+			m_Forms[formName].m_Texts.erase(std::find_if(m_Forms[formName].m_Texts.begin(), m_Forms[formName].m_Texts.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		case ObjectType::Button:
-			m_Buttons[formName].erase(std::find_if(m_Buttons[formName].begin(), m_Buttons[formName].end(), [&](auto& it) {return it->name == objName; }));
+			m_Forms[formName].m_Buttons.erase(std::find_if(m_Forms[formName].m_Buttons.begin(), m_Forms[formName].m_Buttons.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		case ObjectType::EventObject:
-			m_Events[formName].erase(std::find_if(m_Events[formName].begin(), m_Events[formName].end(), [&](auto& it) {return it->name == objName; }));
+			m_Forms[formName].m_Events.erase(std::find_if(m_Forms[formName].m_Events.begin(), m_Forms[formName].m_Events.end(), [&](auto& it) { return it->name == objName; }));
 			break;
 		default:
 			
@@ -72,52 +80,52 @@ public:
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>& event) noexcept {
-		m_Events[formName].push_back(event);
+		m_Forms[formName].m_Events.push_back(event);
 		addForm(formName, event);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>&& event) noexcept {
-		m_Events[formName].push_back(event);
+		m_Forms[formName].m_Events.push_back(event);
 		addForm(formName, event);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Button>& button) noexcept {
-		m_Buttons[formName].push_back(button);
+		m_Forms[formName].m_Buttons.push_back(button);
 		addForm(formName, button);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Button>&& button) noexcept {
-		m_Buttons[formName].push_back(button);
+		m_Forms[formName].m_Buttons.push_back(button);
 		addForm(formName, button);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<ImageObject>& image) noexcept {
-		m_Images[formName].push_back(image);
+		m_Forms[formName].m_Images.push_back(image);
 		addForm(formName, image);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<ImageObject>&& image) noexcept {
-		m_Images[formName].push_back(image);
+		m_Forms[formName].m_Images.push_back(image);
 		addForm(formName, image);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Character>& character) noexcept {
-		m_Characters[formName].push_back(character);
+		m_Forms[formName].m_Characters.push_back(character);
 		addForm(formName, character);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<Character>&& character) noexcept {
-		m_Characters[formName].push_back(character);
+		m_Forms[formName].m_Characters.push_back(character);
 		addForm(formName, character);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<TextObject>& text) noexcept {
-		m_Texts[formName].push_back(text);
+		m_Forms[formName].m_Texts.push_back(text);
 		addForm(formName, text);
 	}
 
 	inline void addObject(const std::string& formName, std::shared_ptr<TextObject>&& text) noexcept {
-		m_Texts[formName].push_back(text);
+		m_Forms[formName].m_Texts.push_back(text);
 		addForm(formName, text);
 	}
 
@@ -125,7 +133,7 @@ public:
 		if (m_Forms.count(nowForm))
 		{
 			doFormEvent(nowForm, data);
-			m_Forms[nowForm].Update();
+			m_Forms[nowForm].m_Form.Update();
 		}
 	}
 
@@ -152,24 +160,18 @@ public:
 private:
 
 	inline void doFormEvent(const std::string& formName, void* data) noexcept {
-		m_Forms[formName].doAllEvent(data);
+		m_Forms[formName].m_Form.doAllEvent(data);
 	}
 
 	inline void addForm(const std::string& formName, std::shared_ptr<Object> obj) noexcept {
-		m_Forms[formName].addForm(obj);
+		m_Forms[formName].m_Form.addForm(obj);
 	}
 
 
 	
 
 protected:
-	std::unordered_map<std::string, Form> m_Forms;
-	//std::unordered_map<std::string, std::shared_ptr<Util::BGM>> m_bgm;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<TextObject>>> m_Texts;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<ImageObject>>> m_Images;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<Button>>> m_Buttons;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<Character>>> m_Characters;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<EventObject>>>m_Events;
+	std::unordered_map<std::string, FormAndObject> m_Forms;
 	std::string  nowForm;
 	std::vector<std::string> prevForm;
 };
