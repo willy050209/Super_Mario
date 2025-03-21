@@ -40,7 +40,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-            if (it->inRange({ tmp.x + Displacement + mario->GetSize().x / 2,tmp.y })) {
+			if (it->inRange({ tmp.x + Displacement + mario->GetSize().x/2, tmp.y })) {
                 flag = false;
                 break;
             }
@@ -65,13 +65,13 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-            if (it->inRange({ tmp.x - Displacement - mario->GetSize().x / 2,tmp.y })) {
+			if (it->inRange({ tmp.x - Displacement - mario->GetSize().x/2, tmp.y })) {
                 flag = false;
                 break;
             }
         }
         if (mario->GetPosition().x != 0 && pos.x == -GetX0(background) && flag) {
-            mario->SetPosition({ mario->GetPosition().x - Displacement,mario->GetPosition().y });
+			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
         }
         else if (pos.x < GetX0(background) && flag)
         {
@@ -87,6 +87,15 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         if(flag)
             (background)->SetPosition(pos);
         
+    }
+    else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
+		for (auto& it : *block) {
+			if (it->inRange({ tmp.x, tmp.y })) {
+				flag = false;
+				break;
+			}
+		}
+		std::cout << flag;
     }
 }
 

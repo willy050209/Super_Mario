@@ -164,10 +164,10 @@ INITFORM_FUNC(initForm_1_1) {
 		//MyFM.addObject(Form_1_1, Blocks.back());
 	}
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ 0, 0 });
+	Blocks.back()->SetPosition({ GetX0(Block), 0 });
 	//MyFM.addObject(Form_1_1, Blocks.back());
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ 100, 0 });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 });
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
@@ -248,10 +248,33 @@ INITFORM_FUNC(initFormSetting) {
 }
 
 
+void showProgressBar(int total, int current, int width = 50) {
+	// 計算完成百分比
+	float ratio = (float)current / total;
+	int completedWidth = (int)(ratio * width);
+
+	// 輸出進度條
+	std::cout << "[";
+	for (int i = 0; i < width; ++i) {
+		if (i < completedWidth) {
+			std::cout << "="; // 已完成部分
+		}
+		else {
+			std::cout << " "; // 未完成部分
+		}
+	}
+	std::cout << "] " << (int)(ratio * 100) << "%";
+	std::cout << "\r"; // 回到行首，覆蓋之前的輸出
+	std::cout.flush(); // 強制刷新輸出緩衝區
+}
+
 void GameManager::init() noexcept {
 	/*test BGM*/
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
+	int total = 6, current = 0;
+	std::cout << "init GameManager\n";
+	showProgressBar(total,current++);
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
@@ -271,17 +294,22 @@ void GameManager::init() noexcept {
 	MyFM.addObject(Form_1_1, button);
 
 	initFormBackground(this);
+	showProgressBar(total, current++);
 
 	initFormTitle(this);
+	showProgressBar(total, current++);
 
 	initForm_1_1(this);
+	showProgressBar(total, current++);
 
 	initFormOptions(this);
+	showProgressBar(total, current++);
 
 	initFormSetting(this);
+	showProgressBar(total, current++);
 
 	MyFM.changeForm(FormTitel /*FormBackground*/);
-
+	showProgressBar(total, current);
 	/*system("pause");
 	for (auto& it : bgms) {
 		it->SetLoop(false);

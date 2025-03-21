@@ -17,7 +17,7 @@ void Mario::doJump() noexcept
         auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
         tmp.y += displacement;
         for (auto it = block->begin(); it < block->end(); ++it) {
-            if ((*it)->inRange(tmp)) {
+			if ((*it)->inRange({ tmp.x, tmp.y + GetSize().y/2 })) {
                 tmp.y = (*it)->GetPosition().y - (*it)->GetPosition().y / 2 - GetSize().y / 2;
                 if ((*it)->name == "QuestionBlock") {
                     (*it)->SetVisible(false);
@@ -50,12 +50,14 @@ void Mario::comeDown() noexcept
         for (auto& it : *bricks) {
             if (it->inRange({tmp.x,tmp.y - GetSize().y/2})) {
                 flag = false;
+				tmp.y += displacement;
 				break;
             }
         }
+		SetPosition(tmp);
         if(flag)
         {
-            SetPosition(tmp);
+            
         }
         else
         {
