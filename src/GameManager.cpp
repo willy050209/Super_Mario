@@ -6,6 +6,7 @@
 #include "incallobj.hpp"
 #include "Position.hpp"
 #include "MyBGM.hpp"
+#include "config.hpp"
 
 
 #include <memory>
@@ -158,9 +159,8 @@ INITFORM_FUNC(initForm_1_1) {
 	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
 	for (int i = 0; i < 30; ++i) {
 		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-		Blocks.back()->SetPosition({ 0 + Block->GetSize().x * i, -Block->GetSize().y });
-		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-		Blocks.back()->SetPosition({ 0 - Block->GetSize().x * i, -Block->GetSize().y });
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -Block->GetSize().y });
+		//
 		//MyFM.addObject(Form_1_1, Blocks.back());
 	}
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
@@ -171,11 +171,11 @@ INITFORM_FUNC(initForm_1_1) {
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ 16 * 3, 32 });
+	Blocks.back()->SetPosition({ GetX0(Block)  + Block->GetSize().x * 3, 32 });
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
-	Blocks.back()->SetPosition({ 16, 16 });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 32 });
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	for (auto& it : Blocks) {

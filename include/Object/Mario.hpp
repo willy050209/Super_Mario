@@ -1,9 +1,10 @@
 #ifndef MARIO_HPP
 #define MARIO_HPP
-
+#include "config.hpp"
 #include "Character.hpp"
 
-constexpr auto DEFAULTDISPLACEMENT = 3.f;
+
+const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT/20.f/5;
 
 class Mario : public Character {
 public:

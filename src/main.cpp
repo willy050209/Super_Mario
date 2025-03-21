@@ -12,8 +12,8 @@
 #define FOLDERPATH MY_RESOURCE_DIR
 #define OUTPUTFOLDPATH "out"
 
-int WINDOW_WIDTH = 960;
-int WINDOW_HEIGHT = 540;
+int WINDOW_WIDTH = 640;
+int WINDOW_HEIGHT = 480;
 int new_WINDOW_WIDTH = 0;
 int new_WINDOW_HEIGHT = 0;
 unsigned int FPS_CAP = 60;
@@ -37,7 +37,12 @@ int main(int, char**) {
     std::atomic<int> atom;
     std::thread ImageResizer([&]() {
         // IMAGERESIZER_EXE return 0 if completes normally else return -1
-        if (system(IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " 1.0") != 0) {
+		char callImageResize[512];
+		
+		sprintf(callImageResize, "%s %s %s %.1f", IMAGERESIZER_EXE, FOLDERPATH, OUTPUTFOLDPATH, (WINDOW_HEIGHT) / 480.f);
+		puts(callImageResize);
+		//sprintf(callImageResize, IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " %d", WINDOW_WIDTH);
+		if (system(callImageResize) != 0) {
             atom++;
         }
         });
@@ -45,8 +50,6 @@ int main(int, char**) {
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
-
-    gameManger.init();
     
     context->SetWindowIcon(ICOP_PATH);
 
@@ -56,6 +59,9 @@ int main(int, char**) {
         context->SetExit(true);
         exit(1);
     }
+
+	gameManger.init();
+    
     while (!context->GetExit()) {
         
         if (gameManger.isEnd()) {

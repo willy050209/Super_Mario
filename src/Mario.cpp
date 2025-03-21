@@ -48,8 +48,9 @@ void Mario::comeDown() noexcept
     if (state != State::UP && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
         for (auto& it : *bricks) {
-            if (it->inRange({tmp.x,tmp.y-GetSize().y/4})) {
+            if (it->inRange({tmp.x,tmp.y - GetSize().y/2})) {
                 flag = false;
+				break;
             }
         }
         if(flag)

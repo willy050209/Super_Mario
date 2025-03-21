@@ -12,10 +12,10 @@ constexpr auto BGMPath = MY_RESOURCE_DIR"/BGM/Ring08.wav";
 constexpr auto MyFontPath = MY_RESOURCE_DIR"/Font/t112590005.ttf";
 constexpr auto ArialFontPath = MY_RESOURCE_DIR"/Font/arial.ttf";
 constexpr auto BackgroundImagePath = MY_RESOURCE_DIR"/Image/Background/cat.jpg";
-constexpr auto marioImagePath = MY_RESOURCE_DIR"/super mario/Mario/frame0.png";
-constexpr auto Background_1_1_ImagePath = MY_RESOURCE_DIR"/super mario/Maps/SuperMarioBrosMap1-1BG.png";
-constexpr auto BlockImagePath = MY_RESOURCE_DIR"/super mario/1-1/BrickBlockBrown.png";
-constexpr auto QuestionBlockPath = MY_RESOURCE_DIR"/super mario/QuestionBlock/frame0.png";
+constexpr auto marioImagePath = "out/super mario/Mario/frame0.png";
+constexpr auto Background_1_1_ImagePath = "out/super mario/Maps/SuperMarioBrosMap1-1main-up.png";
+constexpr auto BlockImagePath = "out/super mario/1-1/BrickBlockBrown.png";
+constexpr auto QuestionBlockPath = "out/super mario/QuestionBlock/frame0.png";
 
 constexpr auto FormBackground = "Background";
 constexpr auto FormOptions = "Options";
