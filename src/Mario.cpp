@@ -21,8 +21,8 @@ void Mario::doJump() noexcept
                 tmp.y = (*it)->GetPosition().y - (*it)->GetPosition().y / 2 - GetSize().y / 2;
                 if ((*it)->name == "QuestionBlock") {
                     (*it)->SetVisible(false);
+					block->erase(it);
                 }
-                block->erase(it);
                 displacement = 0;
                 jumpDelay = 15;
                 break;

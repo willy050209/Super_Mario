@@ -159,18 +159,28 @@ INITFORM_FUNC(initForm_1_1) {
 	for (int i = 0; i < 30; ++i) {
 		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
 		Blocks.back()->SetPosition({ 0 + Block->GetSize().x * i, -Block->GetSize().y });
-		MyFM.addObject(Form_1_1, Blocks.back());
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+		Blocks.back()->SetPosition({ 0 - Block->GetSize().x * i, -Block->GetSize().y });
+		//MyFM.addObject(Form_1_1, Blocks.back());
 	}
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
 	Blocks.back()->SetPosition({ 0, 0 });
-	MyFM.addObject(Form_1_1, Blocks.back());
+	//MyFM.addObject(Form_1_1, Blocks.back());
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
 	Blocks.back()->SetPosition({ 100, 0 });
-	MyFM.addObject(Form_1_1, Blocks.back());
+	//MyFM.addObject(Form_1_1, Blocks.back());
+
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+	Blocks.back()->SetPosition({ 16 * 3, 32 });
+	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
 	Blocks.back()->SetPosition({ 16, 16 });
-	MyFM.addObject(Form_1_1, Blocks.back());
+	//MyFM.addObject(Form_1_1, Blocks.back());
+
+	for (auto& it : Blocks) {
+		MyFM.addObject(Form_1_1, it);
+	}
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 
@@ -246,7 +256,7 @@ void GameManager::init() noexcept {
 	for (auto& it : bgms) {
 		it->Play();
 	}
-	auto button = std::make_shared<Button>("test", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	auto button = std::make_shared<Button>("test", MyFontPath, 50, "pause", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	button->SetPosition({ -GetX0(button), GetY0(button) });
 	button->userdata = bgms.back();
 	button->SetCallBackFunc([](Button* self, void* data) {
