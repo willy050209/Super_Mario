@@ -2,6 +2,7 @@
 #include "MyContext.hpp"
 #include "GameManager.hpp"
 #include "FormProfile.hpp"
+#include "ImageResizer.hpp"
 
 #include <iostream>
 #include <thread>
@@ -28,25 +29,29 @@ constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 int main(int, char**) {
     
     readFormProfile();
-#if WINDOW_WIDTH == 960
-    std::cout << "960\n";
-#else
-    std::cout << WINDOW_WIDTH << "\n";
-#endif
+//#if WINDOW_WIDTH == 960
+//    std::cout << "960\n";
+//#else
+//    std::cout << WINDOW_WIDTH << "\n";
+//#endif
 
-    std::atomic<int> atom;
+    //std::atomic<int> atom{0};
+  //  std::thread ImageResizer([&]() {
+  //      // IMAGERESIZER_EXE return 0 if completes normally else return -1
+		//char callImageResize[512];
+		//
+		//sprintf(callImageResize, "%s %s %s %.1f", IMAGERESIZER_EXE, FOLDERPATH, OUTPUTFOLDPATH, (WINDOW_HEIGHT) / 480.f);
+		//puts(callImageResize);
+		////sprintf(callImageResize, IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " %d", WINDOW_WIDTH);
+		//if (system(callImageResize) != 0) {
+  //          atom++;
+  //      }
+  //      });
+
     std::thread ImageResizer([&]() {
-        // IMAGERESIZER_EXE return 0 if completes normally else return -1
-		char callImageResize[512];
-		
-		sprintf(callImageResize, "%s %s %s %.1f", IMAGERESIZER_EXE, FOLDERPATH, OUTPUTFOLDPATH, (WINDOW_HEIGHT) / 480.f);
-		puts(callImageResize);
-		//sprintf(callImageResize, IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " %d", WINDOW_WIDTH);
-		if (system(callImageResize) != 0) {
-            atom++;
-        }
-        });
-
+		enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
+	});
+	
     auto context = Core::Context::GetInstance();
 
     GameManager gameManger;
@@ -54,11 +59,11 @@ int main(int, char**) {
     context->SetWindowIcon(ICOP_PATH);
 
     ImageResizer.join();
-    if (atom) {
+    /*if (atom) {
         std::cerr << "Failed to initialize image\n";
         context->SetExit(true);
         exit(1);
-    }
+    }*/
 
 	gameManger.init();
     

@@ -22,14 +22,15 @@ FetchContent_Declare(
 
 #FetchContent_MakeAvailable(ptsd)
 
-FetchContent_Declare(
-    ImageResizer
-
-    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/V1.0.zip
-
-    SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
-)
-FetchContent_MakeAvailable(PTSD ImageResizer)
+#FetchContent_Declare(
+#    ImageResizer
+#
+#    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/V1.0.zip
+#
+#    SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
+#)
+#FetchContent_MakeAvailable(PTSD ImageResizer)
+FetchContent_MakeAvailable(PTSD)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
