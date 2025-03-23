@@ -12,6 +12,18 @@
 
 namespace fs = std::filesystem;
 
+int total = 0, current = 0;
+
+inline int get_all_files(const fs::path& directory) {
+	int result{0};
+	for (const auto& entry : fs::recursive_directory_iterator(directory)) {
+		if (fs::is_regular_file(entry) && entry.path().extension() == ".png") {
+			result++;
+		}
+	}
+	return result;
+}
+
 // 函式用於將影像放大，並遞迴處理子目錄
 void enlargeImages(const std::string& folderPath, double scaleFactor, const std::string& outputPath) {
 	// 檢查資料夾路徑是否有效
@@ -82,7 +94,7 @@ void enlargeImages(const std::string& folderPath, double scaleFactor, const std:
 			else {
 				//std::cout << "成功放大並儲存影像：" << outputImagePath << std::endl;
 			}
-
+			showProgressBar(total, current++);
 			// 釋放 SDL_Surface
 			SDL_FreeSurface(imageSurface);
 			SDL_FreeSurface(enlargedSurface);

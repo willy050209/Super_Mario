@@ -48,8 +48,10 @@ int main(int, char**) {
   //      }
   //      });
 
-    std::thread ImageResizer([&]() {
+    std::thread ImageResizer([]() {
+		total = get_all_files(FOLDERPATH);
 		enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
+		showProgressBar(total, total);
 	});
 	
     auto context = Core::Context::GetInstance();
