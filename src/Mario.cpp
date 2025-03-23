@@ -17,7 +17,7 @@ void Mario::doJump() noexcept
         auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
         tmp.y += displacement;
         for (auto it = block->begin(); it < block->end(); ++it) {
-			if ((*it)->inRange({ tmp.x, tmp.y + GetSize().y/2 })) {
+			if ((*it)->inRange({ tmp.x, tmp.y},GetSize())) {
                 tmp.y = (*it)->GetPosition().y - (*it)->GetPosition().y / 2 - GetSize().y / 2;
                 if ((*it)->name == "QuestionBlock") {
                     (*it)->SetVisible(false);
@@ -28,10 +28,12 @@ void Mario::doJump() noexcept
                 break;
             }
         }
+		//changeImg();
         SetPosition(tmp);
         displacement -= (float)(DEFAULTDISPLACEMENT / 5);
         if (displacement < 0.1) {
             state = State::DOWN;
+			index = 0;
             displacement = DEFAULTDISPLACEMENT;
         }
     }
@@ -47,10 +49,11 @@ void Mario::comeDown() noexcept
     auto tmp = GetPosition();
     if (state != State::UP && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
+		const auto aaa = GetSize();
         for (auto& it : *bricks) {
-            if (it->inRange({tmp.x,tmp.y - GetSize().y/2})) {
+			if (it->inRange(tmp, aaa)) {
                 flag = false;
-				tmp.y += displacement;
+				tmp.y = it->GetPosition().y + it->GetSize().y;
 				break;
             }
         }
@@ -61,44 +64,27 @@ void Mario::comeDown() noexcept
         }
         else
         {
-            state = State::MOVE;
+			if (state != State::MOVE) {
+				state = State::MOVE;
+				index = 0;
+				changeImg();
+			}
+			
         }
     }
 }
 
+void Mario::changeImg() noexcept {
+	std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[state][index]);
+}
+
 void Mario::move(const float& d)
 {
-    /*if (userdata.get() != nullptr)
-    {
-        auto tmp = std::static_pointer_cast<ImageObject>(userdata)->GetPosition();
-        if (Util::Input::IsKeyPressed(Util::Keycode::UP) && state == State::MOVE) {
-            state = State::UP;
-            displacement = 2 * DEFAULTDISPLACEMENT;
-        }
-        else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-            tmp.x -= d;
-            index++;
-            if (index % 10 == 0)
-            {
-                if (index >= 20) {
-                    index = 0;
-                }
-                setImage(imgs[index / 10]);
-
-            }
-        }
-        else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-            tmp.x += d;
-            index++;
-            if (index % 10 == 0)
-            {
-                if (index >= 20) {
-                    index = 0;
-                }
-                setImage(imgs[index / 10]);
-
-            }
-        }
-        std::static_pointer_cast<ImageObject>(userdata)->SetPosition(tmp);
-    }*/
+	imgChangeDelay++;
+	if (imgChangeDelay >= 10) {
+		index++;
+		index %= imgs[state].size();
+		changeImg();
+		imgChangeDelay = 0;
+	}
 }

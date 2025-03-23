@@ -49,7 +49,7 @@ public:
 
 	void setColor(const Util::Color& color);
 
-	inline glm::vec2&& GetSize() const noexcept override {
+	inline glm::vec2 GetSize() const noexcept override {
 		return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
 	}
 

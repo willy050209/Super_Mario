@@ -35,17 +35,24 @@ public:
 
     void setImage(const std::string& ImagePath) noexcept{ m_Drawable = std::make_shared<Util::Image>(ImagePath); }
 
-    inline bool inRange(const glm::vec2& Position) noexcept {
-        auto& tmp3 = GetSize();
-        auto& tmp4 = GetPosition();
-        auto tmp1 = abs(Position.x - tmp4.x);
-        auto tmp2 = abs(Position.y - tmp4.y);
-        return tmp3.x / 2 >= tmp1 && tmp3.y / 2 >= tmp2;
+    inline bool inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
+		const auto& mpos = GetPosition();
+		const auto& msize = GetSize();
+		const auto&& _ml = mpos.x - msize.x / 2;
+		const auto&& _mr = mpos.x + msize.x / 2;
+		const auto&& _md = mpos.y - msize.y / 2;
+		const auto&& _mu = mpos.y + msize.y / 2;
+		const auto&& _ol = Position.x - size.x / 2;
+		const auto&& _or = Position.x + size.x / 2;
+		const auto&& _od = Position.y - size.y / 2;
+		const auto&& _ou = Position.y + size.y / 2;
+		return _ml < _or && _mr > _ol && _mu > _od && _md < _ou;
     }
 
-    virtual inline glm::vec2&& GetSize() const noexcept {
+    virtual inline glm::vec2 GetSize() const noexcept {
         return std::dynamic_pointer_cast<Util::Image>(m_Drawable)->GetSize();
     }
+
 
     virtual void behavior(void* data = nullptr) {}
 

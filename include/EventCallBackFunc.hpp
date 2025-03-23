@@ -27,20 +27,21 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
-    const auto Displacement = WINDOW_HEIGHT/20.f/4.f;
+    const auto Displacement = WINDOW_HEIGHT/15/16.f;
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
     auto& mario = std::get<std::shared_ptr<Mario>>(*tuplePtr);
     auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
     bool flag = true;
     auto tmp = mario->GetPosition();
+	auto mariosize = mario->GetSize();
     if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-			if (it->inRange({ tmp.x + Displacement + mario->GetSize().x/2, tmp.y })) {
+			if (it->inRange({ tmp.x + Displacement, tmp.y }, mariosize)) {
                 flag = false;
                 break;
             }
@@ -61,11 +62,12 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         }
         if(flag)
             (background)->SetPosition(pos);
+		mario->move();
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-			if (it->inRange({ tmp.x - Displacement - mario->GetSize().x/2, tmp.y })) {
+			if (it->inRange({ tmp.x - Displacement, tmp.y }, mariosize)) {
                 flag = false;
                 break;
             }
@@ -86,11 +88,12 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         }
         if(flag)
             (background)->SetPosition(pos);
+		mario->move();
         
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
 		for (auto& it : *block) {
-			if (it->inRange({ tmp.x, tmp.y })) {
+			if (it->inRange({ tmp.x, tmp.y }, mariosize)) {
 				flag = false;
 				break;
 			}

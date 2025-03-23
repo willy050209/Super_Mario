@@ -142,21 +142,23 @@ INITFORM_FUNC(initFormOptions) {
 /*init 1-1*/
 INITFORM_FUNC(initForm_1_1) {
 	auto& MyFM = self->GetFormManger();
+	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
+	std::vector<std::shared_ptr<ImageObject>> Blocks;
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, -10);
 	img->SetPosition({ GetX0(img), 0 });
 	MyFM.addObject(Form_1_1, img);
 
 	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 50);
-	mario->SetPosition({ 0, 100 });
+	mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_1, mario);
 
 	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 
-	std::vector<std::shared_ptr<ImageObject>> Blocks;
-	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
+	
+	
 	for (int i = 0; i < 30; ++i) {
 		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -Block->GetSize().y });
@@ -164,19 +166,22 @@ INITFORM_FUNC(initForm_1_1) {
 		//MyFM.addObject(Form_1_1, Blocks.back());
 	}
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block), 0 });
+	Blocks.back()->SetPosition({ GetX0(Block), 0 + Block->GetSize().y });
 	//MyFM.addObject(Form_1_1, Blocks.back());
-	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 });
+	/*Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 });*/
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block)  + Block->GetSize().x * 3, 32 });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 3, 0 + Block->GetSize().y });
 	//MyFM.addObject(Form_1_1, Blocks.back());
 
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 32 });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 + Block->GetSize().y });
 	//MyFM.addObject(Form_1_1, Blocks.back());
+
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 6, 0  });
 
 	for (auto& it : Blocks) {
 		MyFM.addObject(Form_1_1, it);

@@ -6,7 +6,7 @@ void Button::behavior(void* data)
 {
     int x, y;
     auto e = SDL_GetMouseState(&x, &y);
-    if (inRange(Util::Input::GetCursorPosition())) {
+	if (inRange(Util::Input::GetCursorPosition(), {1,1})) {
         setColor(ClickedColor);
         if (1 == SDL_BUTTON(e) && CallBackFunc) {
             trigger = true;
