@@ -192,9 +192,17 @@ INITFORM_FUNC(initForm_1_1) {
 		}
 	}
 
+	auto VisibleBrickindex = Blocks.size();
+
+	Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (10) });
+
 	for (auto& it : Blocks) {
-		it->SetVisible(false);
-		//MyFM.addObject(Form_1_1, it);
+		//it->SetVisible(false);
+	}
+
+	for (int i = VisibleBrickindex; i < Blocks.size(); ++i) {
+		MyFM.addObject(Form_1_1, Blocks[i]);
 	}
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);

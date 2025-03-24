@@ -18,7 +18,7 @@ void Mario::doJump() noexcept
         tmp.y += displacement;
         for (auto it = block->begin(); it < block->end(); ++it) {
 			if ((*it)->inRange({ tmp.x, tmp.y},GetSize())) {
-                tmp.y = (*it)->GetPosition().y - (*it)->GetPosition().y / 2 - GetSize().y / 2;
+				tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
                 if ((*it)->name == "QuestionBlock") {
                     (*it)->SetVisible(false);
 					block->erase(it);
