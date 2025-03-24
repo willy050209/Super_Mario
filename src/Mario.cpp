@@ -50,7 +50,6 @@ void Mario::comeDown() noexcept
     if (state != State::UP && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
 		const auto aaa = GetSize();
-		state = State::DOWN;
         for (auto& it : *bricks) {
 			if (it->inRange(tmp, aaa)) {
                 flag = false;
@@ -61,7 +60,7 @@ void Mario::comeDown() noexcept
 		SetPosition(tmp);
         if(flag)
         {
-            
+			state = State::DOWN;
         }
         else
         {
