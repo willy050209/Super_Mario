@@ -6,12 +6,11 @@
 
 #include <iostream>
 #include <thread>
-#include <atomic>
 
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
 #define FOLDERPATH MY_RESOURCE_DIR
-#define OUTPUTFOLDPATH "out"
+#define OUTPUTFOLDPATH "imgs"
 
 int WINDOW_WIDTH = 640;
 int WINDOW_HEIGHT = 480;
