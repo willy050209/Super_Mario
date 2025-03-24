@@ -40,6 +40,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
+		mario->left = 0;
         for (auto& it : *block) {
 			if (it->inRange({ tmp.x + Displacement, tmp.y }, mariosize)) {
                 flag = false;
@@ -65,6 +66,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->move();
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+		mario->left = 1;
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
 			if (it->inRange({ tmp.x - Displacement, tmp.y }, mariosize)) {

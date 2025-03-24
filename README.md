@@ -14,3 +14,4 @@
 
 2025/03/23 mario移動時切換圖片，優化Objenc::inRange()方法
 2025/03/24 放棄C#改用SDL2做圖片縮放(ImageResizer.hpp)。
+2025/03/24 mario移動時切換圖片，加上左右
