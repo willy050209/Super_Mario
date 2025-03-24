@@ -146,43 +146,51 @@ INITFORM_FUNC(initForm_1_1) {
 	std::shared_ptr<ImageObject> Block = std::make_shared<ImageObject>("brick", BlockImagePath, 1);
 	std::vector<std::shared_ptr<ImageObject>> Blocks;
 
-	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, -10);
+	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
 	img->SetPosition({ GetX0(img), 0 });
 	MyFM.addObject(Form_1_1, img);
 
 	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 50);
-	mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
+	mario->SetPosition({ 0, 100 });
+	//mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_1, mario);
 
 	auto event = std::make_shared<EventObject>("moveEvent", moveEvent);
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 
-	
-	
-	for (int i = 0; i < 30; ++i) {
-		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -Block->GetSize().y });
-		//
-		//MyFM.addObject(Form_1_1, Blocks.back());
+	/*init Brick*/
+	for (int i = 0; i < 224; ++i) {
+		if (i >= 68 && i < 72 || i >= 85 && i < 90 || i >= 152 && i < 156) {
+			continue;
+		}
+		Blocks.push_back(std::make_shared<ImageObject>("brick", FloorImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -GetY0(Block) });
+		Blocks.push_back(std::make_shared<ImageObject>("brick", FloorImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -GetY0(Block) + Block->GetSize().y });
 	}
-	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block), 0 + Block->GetSize().y });
-	//MyFM.addObject(Form_1_1, Blocks.back());
-	/*Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 });*/
-	//MyFM.addObject(Form_1_1, Blocks.back());
-
-	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 3, 0 + Block->GetSize().y });
-	//MyFM.addObject(Form_1_1, Blocks.back());
-
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 0 + Block->GetSize().y });
-	//MyFM.addObject(Form_1_1, Blocks.back());
-
-	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 6, 0  });
+	for (int j = 0; j < 4; ++j) {
+		for (int k = j; k < 4; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 134), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((4-k) + 139), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((4 - k) + 154), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 4; ++j) {
+		for (int k = j; k < 5; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 148), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+			}
+	}
+	for (int j = 0; j < 8; ++j) {
+		for (int k = j; k < 9; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 181), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
 
 	for (auto& it : Blocks) {
 		MyFM.addObject(Form_1_1, it);
@@ -266,7 +274,7 @@ void GameManager::init() noexcept {
 	for (auto& it : bgms) {
 		it->Play();
 	}
-	auto button = std::make_shared<Button>("test", MyFontPath, 50, "pause", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	/*auto button = std::make_shared<Button>("test", MyFontPath, 50, "pause", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	button->SetPosition({ -GetX0(button), GetY0(button) });
 	button->userdata = bgms.back();
 	button->SetCallBackFunc([](Button* self, void* data) {
@@ -278,7 +286,7 @@ void GameManager::init() noexcept {
 			bgm->Resum();
 		}
 	});
-	MyFM.addObject(Form_1_1, button);
+	MyFM.addObject(Form_1_1, button);*/
 
 	initFormBackground(this);
 	showProgressBar(total, current++);
