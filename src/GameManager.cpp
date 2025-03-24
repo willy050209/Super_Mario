@@ -193,6 +193,7 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 
 	for (auto& it : Blocks) {
+		it->SetVisible(false);
 		MyFM.addObject(Form_1_1, it);
 	}
 
