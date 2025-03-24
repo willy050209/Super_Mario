@@ -194,7 +194,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	auto VisibleBrickindex = Blocks.size();
 
-	Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", StairsBrickImagePath, 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (10) });
 
 	for (auto& it : Blocks) {
