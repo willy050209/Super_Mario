@@ -194,7 +194,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
-		MyFM.addObject(Form_1_1, it);
+		//MyFM.addObject(Form_1_1, it);
 	}
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
