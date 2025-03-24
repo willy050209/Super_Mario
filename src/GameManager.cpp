@@ -210,7 +210,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 INITFORM_FUNC(initFormSetting) {
 	auto& MyFM = self->GetFormManger();
-	auto tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 50, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	auto tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 40, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ GetX0(tmpbutton), GetY0(tmpbutton) });
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(FormSetting, tmpbutton);
@@ -252,11 +252,11 @@ INITFORM_FUNC(initFormSetting) {
 	text->SetPosition({ tmpbutton->GetPosition().x, (text->GetSize().y * 2) + text->GetSize().y });
 	MyFM.addObject(FormSetting, text);
 
-	text = std::make_shared<TextObject>("", ArialFontPath, 30, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text = std::make_shared<TextObject>("", ArialFontPath, 20, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ GetX0(text), -GetY0(text) });
 	MyFM.addObject(FormSetting, text);
 
-	tmpbutton = std::make_shared<Button>("RestartButton", MyFontPath, 30, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton = std::make_shared<Button>("RestartButton", MyFontPath, 20, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
 	tmpbutton->SetPosition({ -GetX0(tmpbutton), -GetY0(tmpbutton) });
 	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
 	MyFM.addObject(FormSetting, tmpbutton);
@@ -271,10 +271,10 @@ void GameManager::init() noexcept {
 	int total = 6, current = 0;
 	std::cout << "init GameManager\n";
 	showProgressBar(total,current++);
-	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/Ring08.wav"));
+	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", MY_RESOURCE_DIR"/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
-	}
+	}*/
 	/*auto button = std::make_shared<Button>("test", MyFontPath, 50, "pause", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	button->SetPosition({ -GetX0(button), GetY0(button) });
 	button->userdata = bgms.back();
@@ -306,6 +306,7 @@ void GameManager::init() noexcept {
 
 	MyFM.changeForm(FormTitel /*FormBackground*/);
 	showProgressBar(total, current);
+	puts("");
 	/*system("pause");
 	for (auto& it : bgms) {
 		it->SetLoop(false);

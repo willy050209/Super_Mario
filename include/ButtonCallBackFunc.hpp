@@ -72,18 +72,14 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
-	if (new_WINDOW_WIDTH == 960) {
-		new_WINDOW_WIDTH = 1280;
+	if (new_WINDOW_HEIGHT == 480) {
+		new_WINDOW_WIDTH = 960;
 		new_WINDOW_HEIGHT = 720;
 
 	}
-	else if (new_WINDOW_WIDTH == 1280) {
-		new_WINDOW_WIDTH = 1600;
-		new_WINDOW_HEIGHT = 900;
-	}
-	else if (new_WINDOW_WIDTH == 1600) {
-		new_WINDOW_WIDTH = 1920;
-		new_WINDOW_HEIGHT = 1080;
+	else if (new_WINDOW_HEIGHT == 720) {
+		new_WINDOW_WIDTH = 1280;
+		new_WINDOW_HEIGHT = 960;
 	}
 	else {
 		return;
@@ -96,18 +92,13 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 	auto gm = static_cast<GameManager*>(data);
 	auto& fm = gm->GetFormManger();
-	if (new_WINDOW_WIDTH == 1280) {
+	if (new_WINDOW_HEIGHT == 960) {
 		new_WINDOW_WIDTH = 960;
-		new_WINDOW_HEIGHT = 540;
-
-	}
-	else if (new_WINDOW_WIDTH == 1600) {
-		new_WINDOW_WIDTH = 1280;
 		new_WINDOW_HEIGHT = 720;
 	}
-	else if (new_WINDOW_WIDTH == 1920) {
-		new_WINDOW_WIDTH = 1600;
-		new_WINDOW_HEIGHT = 900;
+	else if (new_WINDOW_HEIGHT == 720) {
+		new_WINDOW_WIDTH = 640;
+		new_WINDOW_HEIGHT = 480;
 	}
 	else {
 		return;

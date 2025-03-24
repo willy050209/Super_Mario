@@ -49,6 +49,7 @@ int main(int, char**) {
 
     std::thread ImageResizer([]() {
 		total = get_all_files(FOLDERPATH);
+		puts("init images");
 		enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
 		showProgressBar(total, total);
 	});
@@ -60,11 +61,7 @@ int main(int, char**) {
     context->SetWindowIcon(ICOP_PATH);
 
     ImageResizer.join();
-    /*if (atom) {
-        std::cerr << "Failed to initialize image\n";
-        context->SetExit(true);
-        exit(1);
-    }*/
+
 
 	gameManger.init();
     
