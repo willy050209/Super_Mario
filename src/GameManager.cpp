@@ -161,7 +161,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	/*init Brick*/
 	for (int i = 0; i < 224; ++i) {
-		if (i >= 68 && i < 72 || i >= 85 && i < 90 || i >= 152 && i < 156) {
+		if (i > 68 && i < 71 || i > 85 && i < 89 || i > 152 && i < 155) {
 			continue;
 		}
 		Blocks.push_back(std::make_shared<ImageObject>("brick", FloorImagePath, 10));
