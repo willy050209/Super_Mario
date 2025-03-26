@@ -393,7 +393,7 @@ void GameManager::init() noexcept {
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
 	int total = 6, current = 0;
-	std::cout << "init GameManager\n";
+	puts("init GameManager");
 	showProgressBar(total,current++);
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", MY_RESOURCE_DIR"/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
@@ -413,7 +413,7 @@ void GameManager::init() noexcept {
 	});
 	MyFM.addObject(Form_1_1, button);*/
 
-	initFormBackground(this);
+	//initFormBackground(this);
 	showProgressBar(total, current++);
 
 	initFormTitle(this);

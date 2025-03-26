@@ -128,6 +128,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 			auto& MyFM = gm->GetFormManger();
 			std::static_pointer_cast<EventObject>(MyFM.GetFormObject(MyFM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
 			self->Enable = false;
+			MyFM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
             puts("time is finish");
 			//MyFM.Pause();
         }

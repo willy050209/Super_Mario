@@ -30,6 +30,8 @@ FetchContent_Declare(
 #    SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
 #)
 #FetchContent_MakeAvailable(PTSD ImageResizer)
+
+
 FetchContent_MakeAvailable(PTSD)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
@@ -53,6 +55,8 @@ else()
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE MY_IMAGERESIZER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer/ImageResizer/bin/Release")
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE MY_NAME="${PROJECT_NAME}")
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${DEPENDENCY_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/PTSD/include)
