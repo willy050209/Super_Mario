@@ -197,7 +197,8 @@ INITFORM_FUNC(initForm_1_1) {
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 179), -GetY0(Block) + Block->GetSize().y * (j + 2) });
 		}
 	}
-
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((198)), -GetY0(Block) + Block->GetSize().y * 2 });
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
 	}
@@ -234,36 +235,80 @@ INITFORM_FUNC(initForm_1_1) {
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 181), -GetY0(Block) + Block->GetSize().y * (j + 2) });
 		}
 	}
+	for (int i = 0; i < 3; ++i)
+	{
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((20) + i*2), GetY0(Block) - Block->GetSize().y * (9) });
+	}
+	for (int i = 0; i < 2; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((77) + i * 2), GetY0(Block) - Block->GetSize().y * (9) });
+	}
+	for (int i = 0; i < 8; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((80) + i), GetY0(Block) - Block->GetSize().y * (5) });
+	}
+	for (int i = 0; i < 4; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((91) + i ), GetY0(Block) - Block->GetSize().y * (5) });
+	}
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((94)), GetY0(Block) - Block->GetSize().y * (9) });
+	for (int i = 0; i < 2; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((100) + i), GetY0(Block) - Block->GetSize().y * (9) });
+	}
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((119)), GetY0(Block) - Block->GetSize().y * (9) });
+	for (int i = 0; i < 4; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((121) + i), GetY0(Block) - Block->GetSize().y * (5) });
+	}
+	for (int i = 0; i < 2; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((129) + i), GetY0(Block) - Block->GetSize().y * (9) });
+	}
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((128)), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((131)), GetY0(Block) - Block->GetSize().y * (5) });
+	for (int i = 0; i < 2; ++i) {
+		Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((168) + i), GetY0(Block) - Block->GetSize().y * (9) });
+	}
+	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((171)), GetY0(Block) - Block->GetSize().y * (9) });
+	
 
 	//auto VisibleBrickindex = Blocks.size();
-
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	/*init QuestionBlock*/
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (22), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (21), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (23), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (78), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (94), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (106), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (112), GetY0(Block) - Block->GetSize().y * (9) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (129), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (130), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (170), GetY0(Block) - Block->GetSize().y * (9) });
 	
 	

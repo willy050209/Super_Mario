@@ -37,7 +37,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
-		Displacement *= 2;
+		Displacement *= 16;
     }
     if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
