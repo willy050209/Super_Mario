@@ -117,14 +117,20 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 }
 
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
-    auto& num = std::get<std::shared_ptr<int>>(*(std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata)));
+	auto& num = std::get<0>(*(std::static_pointer_cast < std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata)));
     if ((*num)++ >= FPS_CAP) {
         auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
-        auto currentTime = std::chrono::system_clock::now();
-        auto time = std::chrono::system_clock::to_time_t(currentTime);
-        std::cout << "目前時間：" << std::ctime(&time);
-        std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::string(std::ctime(&time)));
+		auto& nowtime = *std::get<1>(*(std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata)));
+        std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
         (*num) = 0;
+        if (nowtime == 0) {
+			auto gm = static_cast<GameManager*>(data);
+			auto& MyFM = gm->GetFormManger();
+			std::static_pointer_cast<EventObject>(MyFM.GetFormObject(MyFM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
+			self->Enable = false;
+            puts("time is finish");
+			//MyFM.Pause();
+        }
     }
 }
 

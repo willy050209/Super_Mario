@@ -76,6 +76,10 @@ public:
 		}
 	}
 
+	inline const FormAndObject& GetFormAndObject(const std::string& formName) noexcept {
+		return m_Forms[formName];
+	}
+
 	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>& event) noexcept {
 		m_Forms[formName].m_Events.push_back(event);
 		addForm(formName, event);
@@ -152,10 +156,18 @@ public:
 		prevForm.pop_back();
 	}
 
+	inline void Pause() noexcept {
+		isPause = true;
+	}
+
+	inline void rePause() noexcept {
+		isPause = false;
+	}
 
 private:
 	inline void doFormEvent(const std::string& formName, void* data) noexcept {
-		m_Forms[formName].m_Form.doAllEvent(data);
+		if (!isPause)
+			m_Forms[formName].m_Form.doAllEvent(data);
 	}
 
 	inline void addForm(const std::string& formName, std::shared_ptr<Object> obj) noexcept {
@@ -169,6 +181,7 @@ protected:
 	std::unordered_map<std::string, FormAndObject> m_Forms;
 	std::string nowForm;
 	std::vector<std::string> prevForm;
+	bool isPause = false;
 };
 
 #endif //! FORMMANGER_HPP

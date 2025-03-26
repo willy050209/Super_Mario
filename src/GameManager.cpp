@@ -323,12 +323,12 @@ INITFORM_FUNC(initForm_1_1) {
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 
-	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, "--- --- -- --:--:-- ----", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
 	MyFM.addObject(Form_1_1, texttime);
 
 	event = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
-	event->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), texttime);
+	event->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), std::make_shared<int>(300), texttime);
 	MyFM.addObject(Form_1_1, event);
 }
 
