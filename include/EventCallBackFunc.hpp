@@ -27,7 +27,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
-    const auto Displacement = WINDOW_HEIGHT/15/16.f;
+    auto&& Displacement = WINDOW_HEIGHT/15/16.f;
 	//const auto Displacement = WINDOW_HEIGHT / 15/2;
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
@@ -36,10 +36,13 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     bool flag = true;
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
-    if (Util::Input::IsKeyPressed(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
+		Displacement *= 2;
+    }
+    if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }
-    else if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+    if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
 		mario->left = 0;
         for (auto& it : *block) {
@@ -103,9 +106,14 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		std::cout << flag;
     }
-	else if (Util::Input::IsKeyPressed(Util::Keycode::SPACE)) {
+	
+    /*test*/
+    if (Util::Input::IsKeyPressed(Util::Keycode::SPACE)) {
 		mario->jump();
 	}
+    else if (Util::Input::IsKeyPressed(Util::Keycode::W)) {
+		mario->SetPosition({ mario->GetPosition().x, GetY0(mario) });
+    }
 }
 
 EVENTCALLCALLBACKFUN(UpdateTimeText) {

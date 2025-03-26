@@ -31,5 +31,7 @@ public:
 	ImageObject(ImageObject&& other) = delete;
 
 	ImageObject() = delete;
+
+	bool collisionable = true;
 };
 #endif // !IMAGEOBJECT_HPP

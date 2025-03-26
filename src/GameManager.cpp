@@ -159,6 +159,49 @@ INITFORM_FUNC(initForm_1_1) {
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 
+
+	/*init pipe*/
+	for (int j = 0; j < 2; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 28), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 3; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 38), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 4; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 46), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 4; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 57), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 2; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 163), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+	for (int j = 0; j < 2; ++j) {
+		for (int k = 0; k < 2; ++k) {
+			Blocks.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 179), -GetY0(Block) + Block->GetSize().y * (j + 2) });
+		}
+	}
+
+	for (auto& it : Blocks) {
+		it->SetVisible(false);
+	}
+
 	/*init Brick*/
 	for (int i = 0; i < 224; ++i) {
 		if (i > 68 && i < 71 || i > 85 && i < 89 || i > 152 && i < 155) {
@@ -192,18 +235,46 @@ INITFORM_FUNC(initForm_1_1) {
 		}
 	}
 
-	auto VisibleBrickindex = Blocks.size();
+	//auto VisibleBrickindex = Blocks.size();
 
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", StairsBrickImagePath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (10) });
-
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (22), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (21), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (23), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (78), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (94), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (106), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (112), GetY0(Block) - Block->GetSize().y * (9) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (129), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (130), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", BlueblockImagePath, 50));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (170), GetY0(Block) - Block->GetSize().y * (9) });
+	
+	
 	for (auto& it : Blocks) {
 		//it->SetVisible(false);
+		MyFM.addObject(Form_1_1, it);
 	}
 
-	for (int i = VisibleBrickindex; i < Blocks.size(); ++i) {
+	/*for (int i = VisibleBrickindex; i < Blocks.size(); ++i) {
 		MyFM.addObject(Form_1_1, Blocks[i]);
-	}
+	}*/
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 

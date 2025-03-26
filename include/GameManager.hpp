@@ -18,6 +18,7 @@ constexpr auto BlockImagePath = "imgs/super mario/1-1/BrickBlockBrown.png";
 constexpr auto FloorImagePath = "imgs/super mario/floor.png";
 constexpr auto StairsBrickImagePath = "imgs/super mario/StairsBrick.png";
 constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";
+constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/newBlueblock.png";
 
 constexpr auto FormBackground = "Background";
 constexpr auto FormOptions = "Options";
