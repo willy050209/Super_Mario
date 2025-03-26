@@ -159,6 +159,15 @@ INITFORM_FUNC(initForm_1_1) {
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
 	MyFM.addObject(Form_1_1, event);
 
+	/*init door*/
+
+	std::array<std::shared_ptr<ImageObject>, 2> doorarr{ std::make_shared<ImageObject>("door", StairsBrickImagePath, -10), std::make_shared<ImageObject>("door", StairsBrickImagePath, -10) };
+	for (int k = 0; k < 2; ++k) {
+		doorarr[k]->collisionable = false;
+		doorarr[k]->SetVisible(false);
+		doorarr[k]->SetPosition({ GetX0(Block) + Block->GetSize().x * 204, -GetY0(Block) + Block->GetSize().y * (k + 2) });
+		Blocks.push_back(doorarr[k]);
+	}
 
 	/*init pipe*/
 	for (int j = 0; j < 2; ++j) {
@@ -323,13 +332,30 @@ INITFORM_FUNC(initForm_1_1) {
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(Blocks);
 
-	auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto texttime = std::make_shared<TextObject>("Timetext", MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
 	MyFM.addObject(Form_1_1, texttime);
 
 	event = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	event->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), std::make_shared<int>(300), texttime);
 	MyFM.addObject(Form_1_1, event);
+	
+	event = std::make_shared<EventObject>("CheckDoor", [](EventObject* const self, void* data) {
+		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+		auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
+		auto mario = FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario");
+		auto marioPos = mario->GetPosition();
+		auto marioSize = mario->GetSize();
+		for (auto& it : *doorarrPtr) {
+			if (it->inRange(marioPos, marioSize)) {
+				FM.changeForm(Form_1_2);
+				break;
+			}
+		}
+	});
+	event->userdata = std::make_shared<std::array<std::shared_ptr<ImageObject>, 2>>(doorarr);
+	MyFM.addObject(Form_1_1, event);
+
 }
 
 INITFORM_FUNC(initFormSetting) {
@@ -386,6 +412,12 @@ INITFORM_FUNC(initFormSetting) {
 	MyFM.addObject(FormSetting, tmpbutton);
 }
 
+INITFORM_FUNC(initForm_1_2) {
+	auto& MyFM = self->GetFormManger();
+	auto text = std::make_shared<TextObject>("text", MyFontPath, 50, "Win", Util::Color::FromName(Util::Colors::WHITE), 100);
+	MyFM.addObject(Form_1_2, text);
+}
+
 
 
 void GameManager::init() noexcept {
@@ -414,12 +446,15 @@ void GameManager::init() noexcept {
 	MyFM.addObject(Form_1_1, button);*/
 
 	//initFormBackground(this);
-	showProgressBar(total, current++);
+	//showProgressBar(total, current++);
 
 	initFormTitle(this);
 	showProgressBar(total, current++);
 
 	initForm_1_1(this);
+	showProgressBar(total, current++);
+
+	initForm_1_2(this);
 	showProgressBar(total, current++);
 
 	initFormOptions(this);
@@ -450,15 +485,16 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
 	// MyFM.addObject(Form_1_1, texttime);
 
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
-		if (MyFM.GetPrevForm() != "null") {
-			MyFM.returnPrevForm();
-		}
-		/*else if (MyFM.GetNowForm() == FormTitel) {
-			MyFM.changeForm(FormOptions);
-		}*/
-		else {
-			MyFM.changeForm(FormOptions);
-		}
+		MyFM.changeForm(FormOptions);
+		//if (MyFM.GetPrevForm() != "null") {
+		//	MyFM.returnPrevForm();
+		//}
+		///*else if (MyFM.GetNowForm() == FormTitel) {
+		//	MyFM.changeForm(FormOptions);
+		//}*/
+		//else {
+		//	MyFM.changeForm(FormOptions);
+		//}
 	}
 	MyFM.UpdateForm(this);
 }

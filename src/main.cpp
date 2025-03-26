@@ -8,16 +8,6 @@
 #include <iostream>
 #include <thread>
 
-#if defined(_WIN64) || defined(_WIN32) || defined(WIN32)
-#include <direct.h>
-#else
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#else
-#include <unistd.h>
-#endif // if defined(__APPLE__)
-
-#endif
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
 #define FOLDERPATH MY_RESOURCE_DIR

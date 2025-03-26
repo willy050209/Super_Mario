@@ -46,7 +46,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         auto pos = (background)->GetPosition();
 		mario->left = 0;
         for (auto& it : *block) {
-			if (it->inRange({ tmp.x + Displacement, tmp.y }, mariosize)) {
+			if (it->collisionable && it->inRange({ tmp.x + Displacement, tmp.y }, mariosize)) {
                 flag = false;
                 break;
             }
@@ -73,7 +73,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->left = 1;
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-			if (it->inRange({ tmp.x - Displacement, tmp.y }, mariosize)) {
+			if (it->collisionable && it->inRange({ tmp.x - Displacement, tmp.y }, mariosize)) {
                 flag = false;
                 break;
             }
