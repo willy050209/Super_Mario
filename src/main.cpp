@@ -4,9 +4,20 @@
 #include "FormProfile.hpp"
 #include "ImageResizer.hpp"
 
+
 #include <iostream>
 #include <thread>
 
+#if defined(_WIN64) || defined(_WIN32) || defined(WIN32)
+#include <direct.h>
+#else
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#else
+#include <unistd.h>
+#endif // if defined(__APPLE__)
+
+#endif
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
 #define FOLDERPATH MY_RESOURCE_DIR
@@ -25,8 +36,9 @@ constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 
 
 
-int main(int, char**) {
-    
+
+int main(int, char** argc) {
+	puts(argc[0]);
     readFormProfile();
 //#if WINDOW_WIDTH == 960
 //    std::cout << "960\n";
@@ -76,7 +88,19 @@ int main(int, char**) {
         context->Update();
     }
     if (gameManger.GetRestart()) {
-        system("start Super_Mario.exe");
+		char cmdBif[1024];
+		memset(cmdBif, 0x00, sizeof(cmdBif));
+#if defined(_WIN64) || defined(_WIN32) || defined(WIN32)
+		sprintf(cmdBif, "start \"\" \"%s\"", argc[0]);
+		puts(cmdBif);
+		system(cmdBif);
+#else
+		
+		sprintf(cmdBif, "\"\" \"%s\"", argc[0]);
+		puts(cmdBif);
+		system(cmdBif);
+
+#endif
     }
     return 0;
 }
