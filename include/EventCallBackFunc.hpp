@@ -193,9 +193,9 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& objandform = FM.GetFormAndObject(*std::static_pointer_cast<std::string>(self->userdata));
     for (auto& eventobj : objandform.m_Events) {
-		static_cast<GameManager*>(data)->pause = true;
 		eventobj->Enable = false;
     }
+	static_cast<GameManager*>(data)->pause = true;
 	FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
