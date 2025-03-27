@@ -351,19 +351,7 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), std::make_shared<int>(300), texttime);
 	MyFM.addObject(Form_1_1, eventobj);
 	
-	eventobj = std::make_shared<EventObject>("CheckDoor", [](EventObject* const self, void* data) {
-		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-		auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
-		auto mario = FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario");
-		auto marioPos = mario->GetPosition();
-		auto marioSize = mario->GetSize();
-		for (auto& it : *doorarrPtr) {
-			if (it->inRange(marioPos, marioSize)) {
-				FM.changeForm(Form_1_2);
-				break;
-			}
-		}
-	});
+	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoor);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<ImageObject>, 2>>(doorarr);
 	MyFM.addObject(Form_1_1, eventobj);
 
