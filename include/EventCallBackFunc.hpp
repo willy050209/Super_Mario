@@ -176,8 +176,14 @@ EVENTCALLCALLBACKFUN(CheckEneyCollisionable) {
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
     for (auto& it : *eneys) {
-		if (it->inRange(marioPos, marioSize)) {
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+		if (it->collisionable && it->inRange(marioPos, marioSize)) {
+            if (marioPos.y > it->GetPosition().y) {
+				it->collisionable = false;
+				it->SetVisible(false);
+            }
+			else {
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+			}
         }
     }
 }

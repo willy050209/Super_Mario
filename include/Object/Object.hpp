@@ -56,8 +56,11 @@ public:
 
     virtual void behavior(void* data = nullptr) {}
 
+	bool collisionable{ true };
+
     std::string name;
-    std::shared_ptr<void> userdata = nullptr;
+	std::shared_ptr<void> userdata{ nullptr };
+	
 };
 
 #endif

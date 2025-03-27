@@ -343,6 +343,10 @@ INITFORM_FUNC(initForm_1_1) {
 
 	enemys.push_back(std::make_shared<Goomba>("Goomba", "imgs/super mario/1-1/LittleGoomba/frame0.png", 50));
 	enemys[0]->SetPosition({ -GetX0(enemys[0]), 0 });
+	for (int i = 0; i < 2; ++i) {
+		enemys.push_back(std::make_shared<Goomba>("Goomba", "imgs/super mario/1-1/LittleGoomba/frame0.png", 50));
+		enemys.back()->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x* i, 0 });
+	}
 	for (auto& it : enemys) {
 		it->userdata = mario->userdata;
 		MyFM.addObject(Form_1_1, it);
