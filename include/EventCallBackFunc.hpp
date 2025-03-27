@@ -37,6 +37,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     bool flag = true;
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
+
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
 		Displacement *= 2;
     }
@@ -194,9 +195,9 @@ EVENTCALLCALLBACKFUN(CallFinish) {
     for (auto& eventobj : objandform.m_Events) {
 		static_cast<GameManager*>(data)->pause = true;
 		eventobj->Enable = false;
-		FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
-		puts("Game Over");
     }
+	FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
+	puts("Game Over");
 }
 
 #endif
