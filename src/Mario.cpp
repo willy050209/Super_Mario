@@ -2,6 +2,7 @@
 #include "Object/ImageObject.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
+#include "FilePath.hpp"
 
 void Mario::behavior(void* data)
 {
@@ -17,11 +18,12 @@ void Mario::doJump() noexcept
         auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
         tmp.y += displacement;
         for (auto it = block->begin(); it < block->end(); ++it) {
-			if ((*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
+			if ((*it)->collisionable && (*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
 				tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
                 if ((*it)->name == "QuestionBlock") {
-                    (*it)->SetVisible(false);
-					(*it)->collisionable = false;
+                    (*it)->SetVisible(true);
+					std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
+					(*it)->name = "EmptyBlock";
 					//block->erase(it);
                 }
                 displacement = 0;

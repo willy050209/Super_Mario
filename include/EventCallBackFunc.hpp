@@ -27,7 +27,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
 }
 
 EVENTCALLCALLBACKFUN(moveEvent) {
-    auto&& Displacement = WINDOW_HEIGHT/15/16.f;
+    auto&& Displacement = WINDOW_HEIGHT/15/8.f;
 	//const auto Displacement = WINDOW_HEIGHT / 15/2;
     auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(self->userdata);
     auto& background = std::get<std::shared_ptr<ImageObject>>(*tuplePtr);
@@ -37,7 +37,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
-		Displacement *= 16;
+		Displacement *= 2;
     }
     if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
@@ -133,6 +133,24 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 			//MyFM.Pause();
         }
     }
+}
+
+EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
+	const std::string imgs[] = { "imgs/super mario/QuestionBlock/frame0.png" , "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
+	auto& questions = std::get<std::vector<std::shared_ptr<ImageObject>>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
+	auto& count = std::get<0>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
+	auto& imgindex = std::get<1>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
+	++(*count);
+	if (*count >= FPS_CAP / 6) {
+		++*imgindex;
+		*imgindex %= 6;
+		for (auto& it : questions) {
+			if ((it)->name == "QuestionBlock" && abs(it->GetPosition().x) <= WINDOW_WIDTH / 2 && abs(it->GetPosition().y) <= WINDOW_HEIGHT / 2) {
+				std::static_pointer_cast<Util::Image>((it)->GetDrawable())->SetImage(imgs[*imgindex]);
+			}
+		}
+		*count = 0;
+	}
 }
 
 

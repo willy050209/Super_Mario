@@ -8,7 +8,7 @@
 #include <string>
 
 
-const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT/15.f/5;
+const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT/15.f/4;
 
 class Mario : public Character {
 public:
