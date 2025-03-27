@@ -39,6 +39,8 @@ public:
 	
 	inline void SetRestart(bool val) noexcept { m_Restart = val; }
 
+	bool pause{ false };
+
 private:
 
 	FormManger MyFM;

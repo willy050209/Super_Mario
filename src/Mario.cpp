@@ -3,12 +3,15 @@
 #include "Util/Input.hpp"
 #include "config.hpp"
 #include "FilePath.hpp"
+#include "GameManager.hpp"
 
 void Mario::behavior(void* data)
 {
-    //move();
-    doJump();
-    comeDown();
+	if (!static_cast<GameManager*>(data)->pause) {
+		// move();
+		doJump();
+		comeDown();
+	}
 }
 
 void Mario::doJump() noexcept
@@ -45,7 +48,7 @@ void Mario::doJump() noexcept
     }
 }
 
-void Mario::comeDown() noexcept
+void Mario::comeDown()
 {
     auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
     bool flag = true;

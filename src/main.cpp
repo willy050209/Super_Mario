@@ -10,8 +10,8 @@
 
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
-#define FOLDERPATH MY_RESOURCE_DIR
-#define OUTPUTFOLDPATH "imgs"
+#define FOLDERPATH MY_RESOURCE_DIR "/super mario"
+#define OUTPUTFOLDPATH "imgs/super mario"
 
 int WINDOW_WIDTH = 640;
 int WINDOW_HEIGHT = 480;
@@ -86,7 +86,7 @@ int main(int, char** argc) {
 		system(cmdBif);
 #else
 		
-		sprintf(cmdBif, "\"\" \"%s\"", argc[0]);
+		sprintf(cmdBif, "\"%s\"", argc[0]);
 		puts(cmdBif);
 		system(cmdBif);
 

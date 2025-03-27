@@ -3,6 +3,9 @@
 
 #include "Util/GameObject.hpp"
 #include "Object.hpp"
+#include "config.hpp"
+
+const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 4;
 
 class Character : public Object {
 public:
@@ -23,12 +26,11 @@ public:
 
     }
 
-    virtual void move(const float& d) = 0;
-
-
+    //virtual void move(const float& d) = 0;
 
 private:
     inline void ResetPosition() noexcept { m_Transform.translation = { 0, 0 }; }
+	virtual void comeDown() = 0;
 };
 
 #endif // !CHARACTER_HPP

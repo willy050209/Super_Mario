@@ -155,10 +155,6 @@ INITFORM_FUNC(initForm_1_1) {
 	//mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_1, mario);
 
-	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>>(img, mario);
-	MyFM.addObject(Form_1_1, eventobj);
-
 	/*init door*/
 
 	std::array<std::shared_ptr<ImageObject>, 2> doorarr{ std::make_shared<ImageObject>("door", StairsBrickImagePath, -10), std::make_shared<ImageObject>("door", StairsBrickImagePath, -10) };
@@ -247,10 +243,6 @@ INITFORM_FUNC(initForm_1_1) {
 	for (int i = index; i < Blocks.size(); ++i) {
 		QuestionBlocks.push_back(Blocks[i]);
 	}
-
-	eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
-	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
-	MyFM.addObject(Form_1_1, eventobj);
 
 	/*init Brick*/
 	for (int i = 0; i < 224; ++i) {
@@ -347,12 +339,37 @@ INITFORM_FUNC(initForm_1_1) {
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
 	MyFM.addObject(Form_1_1, texttime);
 
+	std::vector<std::shared_ptr<Character>> enemys;
+
+	enemys.push_back(std::make_shared<Goomba>("Goomba", "imgs/super mario/1-1/LittleGoomba/frame0.png", 50));
+	enemys[0]->SetPosition({ -GetX0(enemys[0]), 0 });
+	for (auto& it : enemys) {
+		it->userdata = mario->userdata;
+		MyFM.addObject(Form_1_1, it);
+	}
+
+	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);
+	MyFM.addObject(Form_1_1, eventobj);
+
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), std::make_shared<int>(300), texttime);
 	MyFM.addObject(Form_1_1, eventobj);
 	
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoor);
+	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<ImageObject>, 2>>(doorarr);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
+	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckEneyCollisionable", CheckEneyCollisionable);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	eventobj = std::make_shared<EventObject>("FinifhEvent", CallFinish, false);
+	eventobj->userdata = std::make_shared<std::string>(Form_1_1);
 	MyFM.addObject(Form_1_1, eventobj);
 
 }

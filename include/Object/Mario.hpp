@@ -7,9 +7,6 @@
 #include <vector>
 #include <string>
 
-
-const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT/15.f/4;
-
 class Mario : public Character {
 public:
 	enum class State
@@ -36,7 +33,9 @@ public:
 
 	virtual void behavior(void* data = nullptr) override;
 
-	virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
+	//virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
+
+	void move(const float& d = DEFAULTDISPLACEMENT);
 
 	int left = 0; 
 
@@ -44,7 +43,7 @@ private:
 
 	void doJump() noexcept;
 
-	void comeDown() noexcept;
+	virtual void comeDown() override;
 
 	void changeImg() noexcept;
 
