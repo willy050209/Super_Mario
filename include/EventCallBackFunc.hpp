@@ -31,15 +31,15 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	//const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>>>(self->userdata);
 	auto& enemys = std::get<0>(*tuplePtr);
-    auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(Form_1_1, ObjectType::ImageObject, "Background"));
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"));
+	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
     auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
     bool flag = true;
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
 
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
-		Displacement *= 2;
+		Displacement *= 4;
     }
     if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
@@ -159,20 +159,24 @@ EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
-	auto mario = FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario");
+	auto mario = FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	for (auto& it : *doorarrPtr) {
 		if (it->inRange(marioPos, marioSize)) {
+			auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
+			for (auto& eventobj : objandform.m_Events) {
+				eventobj->Enable = false;
+			}
 			FM.changeForm(Form_1_2);
 			break;
 		}
 	}
 }
 
-EVENTCALLCALLBACKFUN(CheckEneyCollisionable) {
+EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"));
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto& eneys = std::static_pointer_cast<std::vector<std::shared_ptr<Character>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -185,7 +189,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollisionable) {
 			else {
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
 				auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
-				bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+				//bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
 				bgm->Play(1);
 			}
         }
@@ -194,13 +198,29 @@ EVENTCALLCALLBACKFUN(CheckEneyCollisionable) {
 
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& objandform = FM.GetFormAndObject(*std::static_pointer_cast<std::string>(self->userdata));
+	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
     for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
     }
 	static_cast<GameManager*>(data)->pause = true;
-	FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
+	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
+}
+
+
+EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
+	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(self->userdata);
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	for (auto& it = flagpole->begin(); it < flagpole->end();++it) {
+		if ((*it)->inRange(marioPos, marioSize)) {
+			printf("FlagpoleCollision.\nTouch height:%d",it - flagpole->begin());
+			self->Enable = false;
+			break;
+		}
+	}
 }
 
 #endif
