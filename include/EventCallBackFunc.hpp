@@ -5,7 +5,7 @@
 #include "config.hpp"
 #include "util/Input.hpp"
 #include "Position.hpp"
-
+#include<GameManager.hpp>
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -198,12 +198,19 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+	bgm->Play(1);
+	/*mario->changeState("DIED");
+	mario->changeImg();*/
+	mario->diedjump();
+	auto& objandform = FM.GetFormAndObject(*std::static_pointer_cast<std::string>(self->userdata));
     for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
     }
-	static_cast<GameManager*>(data)->pause = true;
-	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
+	//static_cast<GameManager*>(data)->pause = true;
+	FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
 
