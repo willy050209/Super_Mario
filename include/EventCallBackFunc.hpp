@@ -5,7 +5,7 @@
 #include "config.hpp"
 #include "util/Input.hpp"
 #include "Position.hpp"
-#include<GameManager.hpp>
+#include "GameManager.hpp"
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -200,7 +200,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
-	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+	//bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
 	bgm->Play(1);
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
