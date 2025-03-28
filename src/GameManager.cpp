@@ -356,6 +356,7 @@ INITFORM_FUNC(initForm_1_1) {
 	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3");
 	bgm->Play(-1);
 
+	
 
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);

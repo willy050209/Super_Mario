@@ -10,35 +10,52 @@ void Mario::behavior(void* data)
 	if (!static_cast<GameManager*>(data)->pause) {
 		// move();
 		doJump();
+		//if (state != State::DIED)
 		comeDown();
 	}
 }
 
+void Mario::changeState(std::string str) {
+	if (str == "UP")
+		state = State::UP;
+	else if (str == "MOVE")
+		state = State::MOVE;
+	else if (str == "DOWN")
+		state = State::DOWN;
+	else if (str == "DIED")
+		state = State::DIED;
+}
+
 void Mario::doJump() noexcept
 {
-    if (state == State::UP && jumpDelay == 0) {
+	if ((state == State::UP || (state == State::DIED && !diedflag)) && jumpDelay == 0) {
         auto tmp = GetPosition();
         auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
         tmp.y += displacement;
-        for (auto it = block->begin(); it < block->end(); ++it) {
-			if ((*it)->collisionable && (*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
-				tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
-                if ((*it)->name == "QuestionBlock") {
-                    (*it)->SetVisible(true);
-					std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
-					(*it)->name = "EmptyBlock";
-					//block->erase(it);
-                }
-                displacement = 0;
-                jumpDelay = 15;
-                break;
-            }
-        }
+		if (state != State::DIED) {
+			for (auto it = block->begin(); it < block->end(); ++it) {
+				if ((*it)->collisionable && (*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
+					tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
+					if ((*it)->name == "QuestionBlock") {
+						(*it)->SetVisible(true);
+						std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
+						(*it)->name = "EmptyBlock";
+						// block->erase(it);
+					}
+					displacement = 0;
+					jumpDelay = 15;
+					break;
+				}
+			}
+		}
 		//changeImg();
         SetPosition(tmp);
         displacement -= (float)(DEFAULTDISPLACEMENT / 5);
-        if (displacement < 0.1) {
-            state = State::DOWN;
+		if (displacement < 0.1 ) {
+			if (state != State::DIED)
+				state = State::DOWN;
+			else
+				diedflag = true;
 			index = 0;
             displacement = DEFAULTDISPLACEMENT;
         }
@@ -53,16 +70,20 @@ void Mario::comeDown()
     auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
     bool flag = true;
     auto tmp = GetPosition();
-    if (state != State::UP && tmp.y < WINDOW_HEIGHT) {
+	if ( diedflag) {
+		tmp.y -= displacement;
+		SetPosition(tmp);
+	}
+	else if (state != State::UP && state != State::DIED && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
 		const auto aaa = GetSize();
-        for (auto& it : *bricks) {
+		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(tmp, aaa)) {
-                flag = false;
+				flag = false;
 				tmp.y = it->GetPosition().y + it->GetSize().y;
 				break;
-            }
-        }
+			}
+		}
 		SetPosition(tmp);
         if(flag)
         {
@@ -82,6 +103,7 @@ void Mario::comeDown()
 }
 
 void Mario::changeImg() noexcept {
+	index %= imgs[state][left].size();
 	std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[state][left][index]);
 }
 
@@ -90,8 +112,17 @@ void Mario::move(const float& d)
 	imgChangeDelay++;
 	if (imgChangeDelay >= 10) {
 		index++;
-		index %= imgs[state][left].size();
+		//index %= imgs[state][left].size();
 		changeImg();
 		imgChangeDelay = 0;
 	}
+}
+
+void Mario::diedjump() noexcept{
+		state = State::DIED;
+		displacement = 2.5 * DEFAULTDISPLACEMENT;
+		index = 0;
+		jumpDelay = 0;
+		changeImg();
+		//state = State::UP;
 }
