@@ -184,6 +184,9 @@ EVENTCALLCALLBACKFUN(CheckEneyCollisionable) {
             }
 			else {
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+				auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+				bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+				bgm->Play(1);
 			}
         }
     }

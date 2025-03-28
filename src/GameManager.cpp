@@ -352,6 +352,11 @@ INITFORM_FUNC(initForm_1_1) {
 		MyFM.addObject(Form_1_1, it);
 	}
 
+	auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3");
+	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3");
+	bgm->Play(-1);
+
+
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);
 	MyFM.addObject(Form_1_1, eventobj);
