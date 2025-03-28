@@ -235,9 +235,7 @@ INITFORM_FUNC(initForm_1_1) {
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (78), GetY0(Block) - Block->GetSize().y * (9) });
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (94), GetY0(Block) - Block->GetSize().y * (5) });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (95), GetY0(Block) - Block->GetSize().y * (5) });
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (106), GetY0(Block) - Block->GetSize().y * (9) });
 	Blocks.push_back(std::make_shared<ImageObject>("QuestionBlock", QuestionBlockPath, 10));
