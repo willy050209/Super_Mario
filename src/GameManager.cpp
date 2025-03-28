@@ -394,6 +394,9 @@ INITFORM_FUNC(initForm_1_1) {
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 
+	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
+	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<ImageObject>, 2>>(doorarr);
+	MyFM.addObject(Form_1_1, eventobj);
 
 }
 

@@ -159,7 +159,7 @@ EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
-	auto mario = FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario");
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	for (auto& it : *doorarrPtr) {
@@ -222,11 +222,34 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto marioSize = mario->GetSize();
 	for (auto& it = flagpole->begin(); it < flagpole->end();++it) {
 		if ((*it)->inRange(marioPos, marioSize)) {
-			printf("FlagpoleCollision.\nTouch height:%d",it - flagpole->begin());
+			printf("FlagpoleCollision.\nTouch height:%d", static_cast<int>(it - flagpole->begin()));
 			self->Enable = false;
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveToDoor"))->Enable = true;
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
 			break;
 		}
 	}
+}
+
+EVENTCALLCALLBACKFUN(moveToDoor) {
+	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	auto&& Displacement = WINDOW_HEIGHT / 15 / 8.f;
+	if (mario->GetState() == Mario::State::MOVE) {
+		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
+			marioPos.x -= Displacement;
+			mario->left = 1;
+		}
+		else {
+			marioPos.x += Displacement;
+			mario->left = 0;
+		}
+	}
+	mario->SetPosition(marioPos);
+	mario->move();
 }
 
 #endif
