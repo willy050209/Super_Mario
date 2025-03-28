@@ -205,7 +205,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
 	mario->diedjump();
-	auto& objandform = FM.GetFormAndObject(*std::static_pointer_cast<std::string>(self->userdata));
+	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
     for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
     }
