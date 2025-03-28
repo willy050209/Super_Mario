@@ -40,13 +40,14 @@ public:
 	inline void SetRestart(bool val) noexcept { m_Restart = val; }
 
 	bool pause{ false };
+	std::shared_ptr<Util::BGM> bgm;
 
 private:
 
 	FormManger MyFM;
 
-	//std::shared_ptr<Util::BGM> bgm;
-	std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
+	
+	//std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 	bool endstate = false;
 	bool m_Restart = false;
 };

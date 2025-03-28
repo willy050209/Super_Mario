@@ -188,9 +188,8 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
             }
 			else {
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-				auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
-				//bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
-				bgm->Play(1);
+				static_cast<GameManager*>(data)->bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+				static_cast<GameManager*>(data)->bgm->Play(1);
 			}
         }
     }
@@ -199,8 +198,8 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	auto bgm = std::make_shared<Util::BGM>(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
-	//bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+	auto& bgm = static_cast<GameManager*>(data)->bgm;
+	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
 	bgm->Play(1);
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
