@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <thread>
+#include <filesystem>
 
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
@@ -21,16 +22,13 @@ unsigned int FPS_CAP = 60;
 int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
-
 constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
-
-
 
 
 int main(int, char** argc) {
 	puts(argc[0]);
     readFormProfile();
-//#if WINDOW_WIDTH == 960
+		//#if WINDOW_WIDTH == 960
 //    std::cout << "960\n";
 //#else
 //    std::cout << WINDOW_WIDTH << "\n";
@@ -41,15 +39,16 @@ int main(int, char** argc) {
   //      // IMAGERESIZER_EXE return 0 if completes normally else return -1
 		//char callImageResize[512];
 		//
-		//sprintf(callImageResize, "%s %s %s %.1f", IMAGERESIZER_EXE, FOLDERPATH, OUTPUTFOLDPATH, (WINDOW_HEIGHT) / 480.f);
+		//std::snprintf(callImageResize,sizeof(callImageResize), "%s %s %s %.1f", IMAGERESIZER_EXE, FOLDERPATH, OUTPUTFOLDPATH, (WINDOW_HEIGHT) / 480.f);
 		//puts(callImageResize);
-		////sprintf(callImageResize, IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " %d", WINDOW_WIDTH);
+		////std::snprintf(callImageResize,sizeof(callImageResize), IMAGERESIZER_EXE " " FOLDERPATH " " OUTPUTFOLDPATH " %d", WINDOW_WIDTH);
 		//if (system(callImageResize) != 0) {
   //          atom++;
   //      }
   //      });
 
     std::thread ImageResizer([]() {
+		std::filesystem::create_directory("imgs");
 		total = get_all_files(FOLDERPATH);
 		puts("init images");
 		enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
@@ -78,17 +77,17 @@ int main(int, char** argc) {
         context->Update();
     }
     if (gameManger.GetRestart()) {
-		char cmdBif[1024];
-		memset(cmdBif, 0x00, sizeof(cmdBif));
+		char cmdBuf[1024];
+		memset(cmdBuf, 0x00, sizeof(cmdBuf));
 #if defined(_WIN64) || defined(_WIN32) || defined(WIN32)
-		sprintf(cmdBif, "start \"\" \"%s\"", argc[0]);
-		puts(cmdBif);
-		system(cmdBif);
+		std::snprintf(cmdBuf, sizeof(cmdBuf), "start \"\" \"%s\"", argc[0]);
+		puts(cmdBuf);
+		system(cmdBuf);
 #else
 		
-		sprintf(cmdBif, "\"%s\"", argc[0]);
-		puts(cmdBif);
-		system(cmdBif);
+		std::snprintf(cmdBuf, sizeof(cmdBuf), "start \"\" \"%s\"", argc[0]);
+		puts(cmdBuf);
+		system(cmdBuf);
 
 #endif
     }

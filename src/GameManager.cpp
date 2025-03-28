@@ -204,9 +204,22 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 	Blocks.push_back(std::make_shared<ImageObject>("brick", BlockImagePath, 50));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((198)), -GetY0(Block) + Block->GetSize().y * 2 });
+	
+	/*Flagpole collision box*/
+	std::vector<std::shared_ptr<ImageObject>> flagpole;
+	for (int k = 0; k < 11; ++k) {
+		flagpole.push_back(std::make_shared<ImageObject>("brick", StairsBrickImagePath, 10));
+		flagpole.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (198), -GetY0(Block) + Block->GetSize().y * (k + 2) });
+		flagpole.back()->collisionable = false;
+	}
+	for (auto& it :flagpole) {
+		Blocks.push_back(it);
+	}
+
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
 	}
+
 
 	const auto index = Blocks.size();
 	std::vector<std::shared_ptr<ImageObject>> QuestionBlocks;
@@ -374,13 +387,16 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
 	MyFM.addObject(Form_1_1, eventobj);
 
-	eventobj = std::make_shared<EventObject>("CheckEneyCollisionable", CheckEneyCollisionable);
+	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
 	MyFM.addObject(Form_1_1, eventobj);
 
-	eventobj = std::make_shared<EventObject>("FinifhEvent", CallFinish, false);
-	eventobj->userdata = std::make_shared<std::string>(Form_1_1);
+	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<ImageObject>>>(flagpole);
 	MyFM.addObject(Form_1_1, eventobj);
+
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
+
 
 }
 
