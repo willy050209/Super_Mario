@@ -39,7 +39,22 @@ public:
 	void move(const float& d = DEFAULTDISPLACEMENT);
 	void changeImg() noexcept;
 	void diedjump() noexcept;
-	void changeState(std::string str); // noexcept;
+
+	inline void changeState(const std::string& str) noexcept {
+		if (str == "UP")
+			state = State::UP;
+		else if (str == "MOVE")
+			state = State::MOVE;
+		else if (str == "DOWN")
+			state = State::DOWN;
+		else if (str == "DIED")
+			state = State::DIED;
+	}
+
+	inline void changeState(State state_) noexcept {
+		state = state_;
+	}
+
 	int left = 0; 
 
 private:

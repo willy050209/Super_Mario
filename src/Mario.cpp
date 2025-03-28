@@ -15,17 +15,6 @@ void Mario::behavior(void* data)
 	}
 }
 
-void Mario::changeState(std::string str) {
-	if (str == "UP")
-		state = State::UP;
-	else if (str == "MOVE")
-		state = State::MOVE;
-	else if (str == "DOWN")
-		state = State::DOWN;
-	else if (str == "DIED")
-		state = State::DIED;
-}
-
 void Mario::doJump() noexcept
 {
 	if ((state == State::UP || (state == State::DIED && !diedflag)) && jumpDelay == 0) {
