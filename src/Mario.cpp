@@ -19,16 +19,17 @@ void Mario::doJump() noexcept
 {
 	if ((state == State::UP || (state == State::DIED && !diedflag)) && jumpDelay == 0) {
         auto tmp = GetPosition();
-        auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
+        auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
         tmp.y += displacement;
 		if (state != State::DIED) {
-			for (auto it = block->begin(); it < block->end(); ++it) {
+			for (auto it = blocks->begin(); it < blocks->end(); ++it) {
 				if ((*it)->collisionable && (*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
 					tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
-					if ((*it)->name == "QuestionBlock") {
-						(*it)->SetVisible(true);
+					if ((*it)->MyType == ObjectType::QuestionBlock) {
+						std::static_pointer_cast<QuestionBlock>(*it)->bonk();
+						/*(*it)->SetVisible(true);
 						std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
-						(*it)->name = "EmptyBlock";
+						(*it)->name = "EmptyBlock";*/
 						// block->erase(it);
 					}
 					displacement = 0;
@@ -56,7 +57,7 @@ void Mario::doJump() noexcept
 
 void Mario::comeDown()
 {
-    auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
+    auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
     bool flag = true;
     auto tmp = GetPosition();
 	if ( diedflag) {

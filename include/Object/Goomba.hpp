@@ -3,6 +3,7 @@
 
 #include "config.hpp"
 #include "Character.hpp"
+#include <string>
 
 class Goomba : public Character {
 public:
@@ -24,8 +25,10 @@ public:
 
 	bool loop = true;
 
+	static constexpr char* const imgs[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+
 private:
-	std::array<std::string, 2> imgs{ "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+	
 	int imgIndex{ 0 }, imageChangeDelay{ 0 };
 
 	void ChangeImg() noexcept;

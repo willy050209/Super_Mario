@@ -9,17 +9,8 @@
 #include "Object/TextObject.hpp"
 #include "Object/EventObject.hpp"
 #include "Object/Goomba.hpp"
-
-enum class ObjectType
-{
-	Object,
-	Character,
-	Mario,
-	ImageObject,
-	TextObject,
-	Button,
-	EventObject,
-	Goomba
-};
+#include "Object/Brick.hpp"
+#include "Object/QuestionBlock.hpp"
+#include "Object/ObjectType.hpp"
 
 #endif

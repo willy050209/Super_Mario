@@ -5,7 +5,7 @@
 #include "Object.hpp"
 #include "config.hpp"
 
-const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 4;
+const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 2;
 
 class Character : public Object {
 public:

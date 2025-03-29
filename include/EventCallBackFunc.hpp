@@ -33,7 +33,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& enemys = std::get<0>(*tuplePtr);
 	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-    auto block = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(background->userdata);
+	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
     bool flag = true;
     auto tmp = mario->GetPosition();
 	auto mariosize = mario->GetSize();
@@ -138,27 +138,27 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
     }
 }
 
-EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
-	const std::string imgs[] = { "imgs/super mario/QuestionBlock/frame0.png" , "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
-	auto& questions = std::get<std::vector<std::shared_ptr<ImageObject>>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
-	auto& count = std::get<0>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
-	auto& imgindex = std::get<1>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
-	++(*count);
-	if (*count >= FPS_CAP / 6) {
-		++*imgindex;
-		*imgindex %= 6;
-		for (auto& it : questions) {
-			if ((it)->name == "QuestionBlock" && abs(it->GetPosition().x) <= WINDOW_WIDTH / 2 && abs(it->GetPosition().y) <= WINDOW_HEIGHT / 2) {
-				std::static_pointer_cast<Util::Image>((it)->GetDrawable())->SetImage(imgs[*imgindex]);
-			}
-		}
-		*count = 0;
-	}
-}
+//EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
+//	static const std::string imgs[] = { "imgs/super mario/QuestionBlock/frame0.png" , "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
+//	auto& questions = std::get<std::vector<std::shared_ptr<QuestionBlock>>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<QuestionBlock>>>>(self->userdata));
+//	auto& count = std::get<0>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
+//	auto& imgindex = std::get<1>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
+//	++(*count);
+//	if (*count >= FPS_CAP / 6) {
+//		++*imgindex;
+//		*imgindex %= 6;
+//		for (auto& it : questions) {
+//			if ((it)->name == "QuestionBlock" && abs(it->GetPosition().x) <= WINDOW_WIDTH / 2 && abs(it->GetPosition().y) <= WINDOW_HEIGHT / 2) {
+//				std::static_pointer_cast<Util::Image>((it)->GetDrawable())->SetImage(imgs[*imgindex]);
+//			}
+//		}
+//		*count = 0;
+//	}
+//}
 
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -188,7 +188,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
             }
 			else {
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-				static_cast<GameManager*>(data)->bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+				static_cast<GameManager*>(data)->bgm->LoadMedia(Lost_a_Life);
 				static_cast<GameManager*>(data)->bgm->Play(1);
 			}
         }
@@ -199,7 +199,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto& bgm = static_cast<GameManager*>(data)->bgm;
-	bgm->LoadMedia(MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3");
+	bgm->LoadMedia(Lost_a_Life);
 	bgm->Play(1);
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
@@ -217,7 +217,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	auto& flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(self->userdata);
+	auto& flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	for (auto& it = flagpole->begin(); it < flagpole->end();++it) {
@@ -233,7 +233,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<ImageObject>, 2>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
