@@ -187,42 +187,6 @@ INITFORM_FUNC(initForm_1_1) {
 		
 	}
 	inp.close();
-	/*for (int j = 0; j < 2; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 28), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 3; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 38), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 4; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 46), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 4; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 57), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 2; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 163), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 2; ++j) {
-		for (int k = 0; k < 2; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 179), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}*/
 	
 	/*Flagpole collision box*/
 	std::vector<std::shared_ptr<Brick>> flagpole;
@@ -240,16 +204,6 @@ INITFORM_FUNC(initForm_1_1) {
 	for (auto& it : flagpole) {
 		Blocks.push_back(it);
 	}
-	/*for (int k = 0; k < 11; ++k) {
-		flagpole.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-		flagpole.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (198), -GetY0(Block) + Block->GetSize().y * (k + 2) });
-		flagpole.back()->collisionable = false;
-	}
-	for (auto& it :flagpole) {
-		Blocks.push_back(it);
-	}
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((198)), -GetY0(Block) + Block->GetSize().y * 2 });*/
 
 	/*init floor*/
 	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_floor.txt");
@@ -309,94 +263,13 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 	inp.close();
 
-	/*for (int i = 0; i < 224; ++i) {
-		if (i > 68 && i < 71 || i > 85 && i < 89 || i > 152 && i < 155) {
-			continue;
-		}
-		Blocks.push_back(std::make_shared<Brick>("brick", FloorImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - Block->GetSize().y * (13) });
-		Blocks.push_back(std::make_shared<Brick>("brick", FloorImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - Block->GetSize().y * (14) });
-	}
-	for (int j = 0; j < 4; ++j) {
-		for (int k = j; k < 4; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 134), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-			Blocks.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((4-k) + 139), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-			Blocks.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((4 - k) + 154), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int j = 0; j < 4; ++j) {
-		for (int k = j; k < 5; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 148), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-			}
-	}
-	for (int j = 0; j < 8; ++j) {
-		for (int k = j; k < 9; ++k) {
-			Blocks.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
-			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 181), -GetY0(Block) + Block->GetSize().y * (j + 2) });
-		}
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((20) + i*2), GetY0(Block) - Block->GetSize().y * (9) });
-	}
-	for (int i = 0; i < 2; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((77) + i * 2), GetY0(Block) - Block->GetSize().y * (9) });
-	}
-	for (int i = 0; i < 8; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((80) + i), GetY0(Block) - Block->GetSize().y * (5) });
-	}
-	for (int i = 0; i < 4; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((91) + i ), GetY0(Block) - Block->GetSize().y * (5) });
-	}
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((94)), GetY0(Block) - Block->GetSize().y * (9) });
-	for (int i = 0; i < 2; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((100) + i), GetY0(Block) - Block->GetSize().y * (9) });
-	}
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((119)), GetY0(Block) - Block->GetSize().y * (9) });
-	for (int i = 0; i < 4; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((121) + i), GetY0(Block) - Block->GetSize().y * (5) });
-	}
-	for (int i = 0; i < 2; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((129) + i), GetY0(Block) - Block->GetSize().y * (9) });
-	}
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((128)), GetY0(Block) - Block->GetSize().y * (5) });
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((131)), GetY0(Block) - Block->GetSize().y * (5) });
-	for (int i = 0; i < 2; ++i) {
-		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((168) + i), GetY0(Block) - Block->GetSize().y * (9) });
-	}
-	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((171)), GetY0(Block) - Block->GetSize().y * (9) });*/
-
-
-	
 	for (auto& it : Blocks) {
-		//it->SetVisible(false);
 		MyFM.addObject(Form_1_1, it);
 		/*char tmpstr[512];
 		std::snprintf(tmpstr, sizeof(tmpstr), "%d %d ", (int)((it->GetPosition().x - GetX0(Block)) / Block->GetSize().x), (int)(-(it->GetPosition().y - GetY0(Block)) / Block->GetSize().y));
 		outfile << tmpstr;*/
 	}
 	//outfile.close();
-	/*for (int i = VisibleBrickindex; i < Blocks.size(); ++i) {
-		MyFM.addObject(Form_1_1, Blocks[i]);
-	}*/
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 
@@ -419,8 +292,6 @@ INITFORM_FUNC(initForm_1_1) {
 
 	auto& bgm = self->bgm = std::make_shared<Util::BGM>(Ground_Theme);
 	bgm->Play(-1);
-
-	
 
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);
