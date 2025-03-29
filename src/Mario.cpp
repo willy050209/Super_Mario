@@ -33,7 +33,7 @@ void Mario::doJump() noexcept
 						// block->erase(it);
 					}
 					displacement = 0;
-					jumpDelay = 15;
+					jumpDelay = 0;
 					break;
 				}
 			}

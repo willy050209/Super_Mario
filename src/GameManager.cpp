@@ -14,6 +14,7 @@
 #include <tuple>
 #include <thread>
 #include <ctime>
+#include <fstream>
 
 #define INITFORM_FUNC(func_name) static void func_name(GameManager* self) noexcept
 
@@ -155,18 +156,38 @@ INITFORM_FUNC(initForm_1_1) {
 	//mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_1, mario);
 
-	/*init door*/
+	//std::ofstream outfile("map.txt");
 
+	/*init door*/
+	std::ifstream inp(MY_RESOURCE_DIR "/MAP/map1_1_door.txt");
+	int posx = 0, posy = 0;
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_door.txt";
+		exit(-1);
+	}
 	std::array<std::shared_ptr<Brick>, 2> doorarr{ std::make_shared<Brick>("door", StairsBrickImagePath, -10), std::make_shared<Brick>("door", StairsBrickImagePath, -10) };
 	for (int k = 0; k < 2; ++k) {
 		doorarr[k]->collisionable = false;
 		doorarr[k]->SetVisible(false);
-		doorarr[k]->SetPosition({ GetX0(Block) + Block->GetSize().x * 204, -GetY0(Block) + Block->GetSize().y * (k + 2) });
+		inp >> posx >> posy;
+		doorarr[k]->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
 		Blocks.push_back(doorarr[k]);
 	}
+	inp.close();
 
 	/*init pipe*/
-	for (int j = 0; j < 2; ++j) {
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_pipe.txt");
+	if(!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_pipe.txt";
+		exit(-1);
+	}
+	while (inp>>posx>>posy) {
+		Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+		
+	}
+	inp.close();
+	/*for (int j = 0; j < 2; ++j) {
 		for (int k = 0; k < 2; ++k) {
 			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 28), -GetY0(Block) + Block->GetSize().y * (j + 2) });
@@ -201,11 +222,25 @@ INITFORM_FUNC(initForm_1_1) {
 			Blocks.push_back(std::make_shared<Brick>("pipe", StairsBrickImagePath, 10));
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (k + 179), -GetY0(Block) + Block->GetSize().y * (j + 2) });
 		}
-	}
+	}*/
 	
 	/*Flagpole collision box*/
 	std::vector<std::shared_ptr<Brick>> flagpole;
-	for (int k = 0; k < 11; ++k) {
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_Flagpole.txt");
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_Flagpole.txt";
+		exit(-1);
+	}
+	while (inp >> posx >> posy) {
+		flagpole.push_back(std::make_shared<Brick>("Flagpole", StairsBrickImagePath, 10));
+		flagpole.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+		flagpole.back()->collisionable = false;
+	}
+	inp.close();
+	for (auto& it : flagpole) {
+		Blocks.push_back(it);
+	}
+	/*for (int k = 0; k < 11; ++k) {
 		flagpole.push_back(std::make_shared<Brick>("brick", StairsBrickImagePath, 10));
 		flagpole.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (198), -GetY0(Block) + Block->GetSize().y * (k + 2) });
 		flagpole.back()->collisionable = false;
@@ -214,54 +249,74 @@ INITFORM_FUNC(initForm_1_1) {
 		Blocks.push_back(it);
 	}
 	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((198)), -GetY0(Block) + Block->GetSize().y * 2 });
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((198)), -GetY0(Block) + Block->GetSize().y * 2 });*/
+
+	/*init floor*/
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_floor.txt");
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_floor.txt";
+		exit(-1);
+	}
+	while (inp >> posx >> posy) {
+		Blocks.push_back(std::make_shared<Brick>("Brick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+	}
+	inp.close();
+	
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
 	}
 
-
-	std::vector<std::shared_ptr<QuestionBlock>> QuestionBlocks;
 	/*init QuestionBlock*/
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (16), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (22), GetY0(Block) - Block->GetSize().y * (5) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (21), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (23), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (78), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (95), GetY0(Block) - Block->GetSize().y * (5) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (106), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (112), GetY0(Block) - Block->GetSize().y * (9) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (109), GetY0(Block) - Block->GetSize().y * (5) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (129), GetY0(Block) - Block->GetSize().y * (5) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (130), GetY0(Block) - Block->GetSize().y * (5) });
-	QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", QuestionBlockPath, 10));
-	QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (170), GetY0(Block) - Block->GetSize().y * (9) });
-	
+	std::vector<std::shared_ptr<QuestionBlock>> QuestionBlocks;
+
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_QuestionBlock.txt");
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_QuestionBlock.txt";
+		exit(-1);
+	}
+	while (inp >> posx >> posy) {
+		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", StairsBrickImagePath, 10));
+		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+	}
+	inp.close();
+
 	for (auto& it : QuestionBlocks) {
 		Blocks.push_back(it);
 	}
 
 	/*init Brick*/
-	for (int i = 0; i < 224; ++i) {
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_Brick.txt");
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_Brick.txt";
+		exit(-1);
+	}
+	while (inp >> posx >> posy) {
+		Blocks.push_back(std::make_shared<Brick>("Brick", BlockImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+	}
+	inp.close();
+
+	/*init Stairs*/
+	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_StairsBrick.txt");
+	if (!inp.is_open()) {
+		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_StairsBrick.txt";
+		exit(-1);
+	}
+	while (inp >> posx >> posy) {
+		Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
+	}
+	inp.close();
+
+	/*for (int i = 0; i < 224; ++i) {
 		if (i > 68 && i < 71 || i > 85 && i < 89 || i > 152 && i < 155) {
 			continue;
 		}
 		Blocks.push_back(std::make_shared<Brick>("brick", FloorImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -GetY0(Block) });
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - Block->GetSize().y * (13) });
 		Blocks.push_back(std::make_shared<Brick>("brick", FloorImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, -GetY0(Block) + Block->GetSize().y });
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - Block->GetSize().y * (14) });
 	}
 	for (int j = 0; j < 4; ++j) {
 		for (int k = j; k < 4; ++k) {
@@ -327,17 +382,18 @@ INITFORM_FUNC(initForm_1_1) {
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((168) + i), GetY0(Block) - Block->GetSize().y * (9) });
 	}
 	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 50));
-	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((171)), GetY0(Block) - Block->GetSize().y * (9) });
-	
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * ((171)), GetY0(Block) - Block->GetSize().y * (9) });*/
 
-	//auto VisibleBrickindex = Blocks.size();
 
 	
 	for (auto& it : Blocks) {
 		//it->SetVisible(false);
 		MyFM.addObject(Form_1_1, it);
+		/*char tmpstr[512];
+		std::snprintf(tmpstr, sizeof(tmpstr), "%d %d ", (int)((it->GetPosition().x - GetX0(Block)) / Block->GetSize().x), (int)(-(it->GetPosition().y - GetY0(Block)) / Block->GetSize().y));
+		outfile << tmpstr;*/
 	}
-
+	//outfile.close();
 	/*for (int i = VisibleBrickindex; i < Blocks.size(); ++i) {
 		MyFM.addObject(Form_1_1, Blocks[i]);
 	}*/
