@@ -312,7 +312,7 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(Form_1_1, eventobj);
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
-	eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::shared_ptr<TextObject>>>(std::make_shared<int>(0), std::make_shared<int>(300), texttime);
+	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
 	MyFM.addObject(Form_1_1, eventobj);
 	
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
