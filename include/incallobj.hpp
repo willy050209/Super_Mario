@@ -11,6 +11,7 @@
 #include "Object/Goomba.hpp"
 #include "Object/Brick.hpp"
 #include "Object/QuestionBlock.hpp"
+#include "Object/CheckPoint.hpp"
 #include "Object/ObjectType.hpp"
 
 #endif

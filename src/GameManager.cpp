@@ -156,6 +156,16 @@ INITFORM_FUNC(initForm_1_1) {
 	//mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_1, mario);
 
+	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
+	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint", CheckPointPath, -10));
+	checkPointArray[0]->collisionable = false;
+	checkPointArray[0]->SetVisible(false);
+	checkPointArray[0]->SetPosition({ 0, 0 });
+
+
+	for (auto& it : checkPointArray) {
+		Blocks.push_back(it);
+	}
 	//std::ofstream outfile("map.txt");
 
 	/*init door*/
@@ -317,12 +327,19 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
 	MyFM.addObject(Form_1_1, eventobj);
 
-	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
-
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(Form_1_1, eventobj);
 
+	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
+	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = ptr;
+	MyFM.addObject(Form_1_1, eventobj);
+
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 }
 
 INITFORM_FUNC(initFormSetting) {

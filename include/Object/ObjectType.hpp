@@ -8,6 +8,7 @@ enum class ObjectType {
 	ImageObject,
 	Brick,
 	QuestionBlock,
+	CheckPoint,
 	TextObject,
 	Button,
 	EventObject

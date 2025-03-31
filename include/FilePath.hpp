@@ -15,5 +15,7 @@ constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";
 constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/Blueblock.png";
 constexpr auto Ground_Theme = MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3";
 constexpr auto Lost_a_Life = MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3";
+constexpr auto CheckPointPath = "imgs/super mario/CheckPoint.png";
+
 
 #endif // !FILEPATH_HPP

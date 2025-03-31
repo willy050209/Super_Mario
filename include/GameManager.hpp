@@ -35,9 +35,23 @@ public:
 
 	inline bool GetRestart() const noexcept { return m_Restart; }
 
+	inline const glm::vec2& GetCheckPointPos() const noexcept {
+		return checkPointPos;
+	}
+
+	inline const int& GetHP() const noexcept { return HP; }
+
+	inline void IncHP() noexcept { ++HP; }
+
+	inline void DecHP() noexcept { --HP; }
+
 	//inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
 	
 	inline void SetRestart(bool val) noexcept { m_Restart = val; }
+
+	inline void SaveCheckPointPos(const glm::vec2& pos) noexcept {
+		checkPointPos = pos;
+	}
 
 	bool pause{ false };
 	std::shared_ptr<Util::BGM> bgm;
@@ -46,10 +60,11 @@ private:
 
 	FormManger MyFM;
 
-	
+	int HP = 3;
 	//std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 	bool endstate = false;
 	bool m_Restart = false;
+	glm::vec2 checkPointPos;
 };
 
 
