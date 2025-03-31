@@ -12,6 +12,7 @@ public:
 		const float 	zIndex,
 		const glm::vec2& pivot = { 0, 0 })
 		: Object(name, std::make_shared<Util::Image>(ImagePath), zIndex, pivot) {
+		MyType = ObjectType::ImageObject;
 		
 	}
 
@@ -23,7 +24,7 @@ public:
 		const bool 	visible = true,
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
 	) : Object(name, drawable, zIndex, pivot, visible, children) {
-		
+		MyType = ObjectType::ImageObject;
 	}
 
 	ImageObject(const ImageObject& other) = delete;

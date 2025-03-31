@@ -3,6 +3,7 @@
 
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
+#include "ObjectType.hpp"
 
 class Object : public Util::GameObject {
 public:
@@ -71,7 +72,7 @@ public:
     std::string name;
 
 	std::shared_ptr<void> userdata{ nullptr };
-	
+	ObjectType MyType = ObjectType::Object;
 };
 
 #endif

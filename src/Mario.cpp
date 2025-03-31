@@ -60,7 +60,7 @@ void Mario::comeDown()
     auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
     bool flag = true;
     auto tmp = GetPosition();
-	if ( diedflag) {
+	if (diedflag && state == State::DIED) {
 		tmp.y -= displacement;
 		SetPosition(tmp);
 	}

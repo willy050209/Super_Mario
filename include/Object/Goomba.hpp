@@ -9,6 +9,7 @@ class Goomba : public Character {
 public:
 	Goomba(const std::string& name, const std::string& ImagePath, int zindex)
 		: Character(name, ImagePath, zindex) {
+		MyType = ObjectType::Goomba;
 	}
 
 	Goomba(const Goomba&) = delete;

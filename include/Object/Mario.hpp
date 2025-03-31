@@ -16,7 +16,7 @@ public:
 
 	explicit Mario(const std::string& name, const std::string& ImagePath,int zindex) 
 		: Character(name, ImagePath, zindex) {
-		
+		MyType = ObjectType::Mario;
 	}
 
 	inline State GetState() const noexcept { return state; }
@@ -52,6 +52,11 @@ public:
 
 	inline void changeState(State state_) noexcept {
 		state = state_;
+	}
+
+	inline void Reset() noexcept {
+		state = State::MOVE;
+		diedflag = false;
 	}
 
 	int left = 0; 

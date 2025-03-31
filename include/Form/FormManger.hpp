@@ -31,9 +31,14 @@ public:
 
 	inline std::shared_ptr<Object> GetFormObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
 		switch (objtype) {
+		case ObjectType::Mario:
+		case ObjectType::Goomba:
 		case ObjectType::Character:
 			return *std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; });
 			break;
+		case ObjectType::QuestionBlock:
+		case ObjectType::Brick:
+		case ObjectType::CheckPoint:
 		case ObjectType::ImageObject:
 			return *std::find_if(m_Forms[formName].m_Images.begin(), m_Forms[formName].m_Images.end(), [&](auto& it) { return it->name == objName; });
 			break;

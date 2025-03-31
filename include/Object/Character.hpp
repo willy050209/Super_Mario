@@ -10,7 +10,9 @@ const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 2;
 class Character : public Object {
 public:
     explicit Character(const std::string& name, const std::string& ImagePath, int zindex) 
-        :Object(name, std::make_shared<Util::Image>(ImagePath), zindex) {  }
+        :Object(name, std::make_shared<Util::Image>(ImagePath), zindex) { 
+        MyType = ObjectType::Character;
+    }
 
 
     Character(const Character&) = delete;

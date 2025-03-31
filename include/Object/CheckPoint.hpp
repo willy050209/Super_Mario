@@ -26,7 +26,7 @@ public:
 
 	CheckPoint(Brick&& CheckPoint) = delete;
 
-	CheckPoint() = delete;
+	//CheckPoint() = delete;
 
 	bool Enable = true;
 };

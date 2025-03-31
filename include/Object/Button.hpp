@@ -18,6 +18,7 @@ public:
 		defultColor = textColor = color;
 		this->text = text;
 		ClickedColor = Util::Color::FromName(Util::Colors::RED);
+		MyType = ObjectType::Button;
 	}
 
 	Button(
@@ -29,6 +30,7 @@ public:
 		const std::vector< std::shared_ptr< GameObject > >& children = std::vector<std::shared_ptr<GameObject>>()
 	) :TextObject(name, drawable, zIndex, pivot, visible, children) {
 		ClickedColor = Util::Color::FromName(Util::Colors::RED);
+		MyType = ObjectType::Button;
 	}
 
 	Button(const Button& other) = delete;

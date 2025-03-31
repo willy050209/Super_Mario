@@ -303,6 +303,10 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& bgm = self->bgm = std::make_shared<Util::BGM>(Ground_Theme);
 	bgm->Play(-1);
 
+	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
+	text->SetPosition({ -GetX0(text), GetY0(text) });
+	MyFM.addObject(Form_1_1,text);
+
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);
 	MyFM.addObject(Form_1_1, eventobj);
@@ -333,6 +337,14 @@ INITFORM_FUNC(initForm_1_1) {
 
 	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
 	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+
+
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+
+	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(Form_1_1, eventobj);
 
 	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);

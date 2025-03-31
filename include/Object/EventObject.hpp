@@ -10,6 +10,7 @@ public:
     EventObject(const std::string& name, void (*CallBackFunc)(EventObject* const self, void* data) = nullptr,bool Enable = true)
         : Object(name, nullptr, 0, {0,0}, false, std::vector<std::shared_ptr<GameObject>>()), Enable(Enable) {
         this->CallBackFunc = CallBackFunc;
+		MyType = ObjectType::EventObject;
     }
 
     EventObject(const EventObject&) = delete;

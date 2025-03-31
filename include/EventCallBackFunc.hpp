@@ -211,8 +211,17 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 				GM->bgm->LoadMedia(Lost_a_Life);
 				GM->bgm->Play(1);
 				GM->DecHP();
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
-				//loadCheckpoint(GM);
+				mario->diedjump();
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+				if (GM->GetHP() == 0) {
+					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+				}else{
+					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
+					auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
+					sleepevent->Enable = true;
+					sleepevent->userdata.reset();
+					sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+				}
 			}
         }
     }
@@ -226,7 +235,6 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	bgm->Play(1);
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
-	mario->diedjump();
 	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
     for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
@@ -296,25 +304,23 @@ EVENTCALLCALLBACKFUN(CheckPointCollision) {
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
 	auto& allobj = FM.GetFormAndObject(FM.GetNowForm());
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	int gobackposx;
+	int gobackposx = 0;
+	mario->SetPosition(static_cast<GameManager*>(data)->GetCheckPointPos());
+	mario->Reset();
 	for (int i = checkPoints->size() - 1; i >= 0;--i) {
 		if (!(*checkPoints)[i]->Enable) {
 			gobackposx = (*checkPoints)[i]->GetPosition().x;
-			mario->SetPosition(static_cast<GameManager*>(data)->GetCheckPointPos());
 			for (auto& obj : allobj.m_Images) {
-				if (obj->name != "checkpoint") {
+				if (obj->MyType != ObjectType::CheckPoint) {
 					auto pos = obj->GetPosition();
 					pos.x -= gobackposx;
 					obj->SetPosition(pos);
 				}
 			}
 			for (auto& obj : allobj.m_Characters) {
-				if (obj->name != "Mario") {
+				if (obj->MyType != ObjectType::Mario) {
 					auto pos = obj->GetPosition();
 					pos.x -= gobackposx;
 					obj->SetPosition(pos);
@@ -328,6 +334,60 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 		auto pos = it->GetPosition();
 		pos.x -= gobackposx;
 		it->SetPosition(pos);
+	}
+}
+
+EVENTCALLCALLBACKFUN(UpdateHPText) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto& text = FM.GetFormObject(FM.GetNowForm(), ObjectType::TextObject, "HPText");
+	char textstr[10] = "";
+	snprintf(textstr, sizeof(textstr), "HP:%d", GM->GetHP());
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
+	self->Enable = false;
+}
+
+EVENTCALLCALLBACKFUN(CheckMArioPosition) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT) >> 1)) {
+		GM->DecHP();
+		std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+		if (GM->GetHP() == 0) {
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+		}
+		else {
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
+		}
+	}
+}
+
+EVENTCALLCALLBACKFUN(SleepAllevent) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	int& count = std::get<int>(*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
+	auto& bvec = std::get<1>(*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
+	--count;
+	if (bvec.size() == 0) {
+		auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+		for (auto& it : allevent) {
+			bvec.push_back(it->Enable);
+			if (it->name != self->name) 
+				it->Enable = false;
+		}
+	}
+	else {
+		if (count == 0) {
+			auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+			for (int i = 0; i < allevent.size();++i) {
+				if (allevent[i]->name == self->name) {
+					allevent[i]->Enable = false;
+					continue;
+				}
+				allevent[i]->Enable = bvec[i];
+			}
+		}
 	}
 }
 
