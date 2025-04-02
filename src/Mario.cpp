@@ -25,13 +25,14 @@ void Mario::doJump() noexcept
 			for (auto it = blocks->begin(); it < blocks->end(); ++it) {
 				if ((*it)->collisionable && (*it)->inRange({ tmp.x, tmp.y }, GetSize())) {
 					tmp.y = (*it)->GetPosition().y - (*it)->GetSize().y / 2 - GetSize().y / 2;
-					if ((*it)->MyType == ObjectType::QuestionBlock) {
-						std::static_pointer_cast<QuestionBlock>(*it)->bonk();
-						/*(*it)->SetVisible(true);
-						std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
-						(*it)->name = "EmptyBlock";*/
-						// block->erase(it);
-					}
+					//if ((*it)->MyType == ObjectType::QuestionBlock) {
+					//	std::static_pointer_cast<QuestionBlock>(*it)->bonk();
+					//	/*(*it)->SetVisible(true);
+					//	std::static_pointer_cast<Util::Image>((*it)->GetDrawable())->SetImage(EmptyBlockImagePath);
+					//	(*it)->name = "EmptyBlock";*/
+					//	// block->erase(it);
+					//}
+					(*it)->bonk();
 					displacement = 0;
 					jumpDelay = 0;
 					break;

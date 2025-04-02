@@ -41,6 +41,11 @@ public:
 
 	inline const int& GetHP() const noexcept { return HP; }
 
+	inline const int& GetPoint() const noexcept { return point; }
+
+	inline void addPoint(const int& val) noexcept { point += val; }
+	inline void addPoint(int&& val) noexcept { point += val; }
+
 	inline void IncHP() noexcept { ++HP; }
 
 	inline void DecHP() noexcept { --HP; }
@@ -61,6 +66,7 @@ private:
 	FormManger MyFM;
 
 	int HP = 3;
+	int point = 0;
 	//std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 	bool endstate = false;
 	bool m_Restart = false;

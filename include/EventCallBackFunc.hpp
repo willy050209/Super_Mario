@@ -351,7 +351,7 @@ EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT) >> 1)) {
+	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT) >> 1) && mario->GetPosition().y <0) {
 		GM->DecHP();
 		std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
 		if (GM->GetHP() == 0) {
@@ -389,6 +389,32 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 			}
 		}
 	}
+}
+
+EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Mario, "Mario"));
+	auto& coins = std::static_pointer_cast<std::vector<std::shared_ptr<Coin>>>(self->userdata);
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	for (auto& it : *coins) {
+		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
+			it->bonk();
+			GM->addPoint(100);
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdatePointText"))->Enable = true;
+		}
+	}
+}
+
+EVENTCALLCALLBACKFUN(UpdatePointText) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto& text = FM.GetFormObject(FM.GetNowForm(), ObjectType::TextObject, "PointText");
+	char textstr[128] = "";
+	snprintf(textstr, sizeof(textstr), "Point:%d", GM->GetPoint());
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
+	self->Enable = false;
 }
 
 #endif

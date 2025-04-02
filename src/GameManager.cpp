@@ -273,6 +273,19 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 	inp.close();
 
+	/*init Coin*/
+	std::vector<std::shared_ptr<Coin>> coins;
+	for (int i=0;i<10;++i) {
+		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 11 });
+		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
+	
+	}
+	for (auto& it : coins) {
+		Blocks.push_back(it);
+	}
+
 	for (auto& it : Blocks) {
 		MyFM.addObject(Form_1_1, it);
 		/*char tmpstr[512];
@@ -307,6 +320,10 @@ INITFORM_FUNC(initForm_1_1) {
 	text->SetPosition({ -GetX0(text), GetY0(text) });
 	MyFM.addObject(Form_1_1,text);
 
+	auto pointtext = std::make_shared<TextObject>("PointText", MyFontPath, 20, "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
+	pointtext->SetPosition({ 0, GetY0(pointtext) });
+	MyFM.addObject(Form_1_1, pointtext);
+
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>>>(enemys);
 	MyFM.addObject(Form_1_1, eventobj);
@@ -330,6 +347,12 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
 	MyFM.addObject(Form_1_1, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
+	MyFM.addObject(Form_1_1, eventobj);
+
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
