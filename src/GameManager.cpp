@@ -352,8 +352,6 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
 	MyFM.addObject(Form_1_1, eventobj);
 
-	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
-
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(Form_1_1, eventobj);
@@ -366,6 +364,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(Form_1_1, eventobj);

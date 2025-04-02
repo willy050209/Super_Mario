@@ -253,7 +253,9 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto marioSize = mario->GetSize();
 	for (auto& it = flagpole->begin(); it < flagpole->end();++it) {
 		if ((*it)->inRange(marioPos, marioSize)) {
-			printf("FlagpoleCollision.\nTouch height:%d", static_cast<int>(it - flagpole->begin()));
+			int f_height = static_cast<int>(it - flagpole->begin());
+			static_cast<GameManager*>(data)->addPoint(1000 * f_height);
+			printf("FlagpoleCollision.\nTouch height:%d", f_height);
 			self->Enable = false;
 			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveToDoor"))->Enable = true;
 			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
