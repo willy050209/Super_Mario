@@ -141,6 +141,60 @@ INITFORM_FUNC(initFormOptions) {
 	MyFM.addObject(FormOptions, tmpbutton);
 }
 
+INITFORM_FUNC(initFormSetting) {
+	auto& MyFM = self->GetFormManger();
+	auto tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 40, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
+	tmpbutton->SetPosition({ GetX0(tmpbutton), GetY0(tmpbutton) });
+	tmpbutton->SetCallBackFunc(Back_Button_func);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(MyBGM::GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ 2 * text->GetSize().x, 0 });
+	MyFM.addObject(FormSetting, text);
+
+	tmpbutton = std::make_shared<Button>("Volume-Button", MyFontPath, 30, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x, (tmpbutton->GetSize().y * -2) });
+	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	tmpbutton = std::make_shared<Button>("Volume+Button", MyFontPath, 30, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x, text->GetSize().y * 2 });
+	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	text = std::make_shared<TextObject>("VolumeText", MyFontPath, 30, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ tmpbutton->GetPosition().x, (text->GetSize().y * 2) + text->GetSize().y });
+	MyFM.addObject(FormSetting, text);
+
+
+	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, std::to_string(WINDOW_WIDTH) + "\n" + std::to_string(WINDOW_HEIGHT), Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ -2 * text->GetSize().x, 0 });
+	MyFM.addObject(FormSetting, text);
+
+	tmpbutton = std::make_shared<Button>("ScreenSize-Button", MyFontPath, 30, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x, -(tmpbutton->GetSize().y * 2) });
+	tmpbutton->SetCallBackFunc(ScreenSizeDownClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	tmpbutton = std::make_shared<Button>("ScreenSize+Button", MyFontPath, 30, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ text->GetPosition().x, tmpbutton->GetSize().y * 2 });
+	tmpbutton->SetCallBackFunc(ScreenSizeUpClickedEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+
+	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, "ScreenSize", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ tmpbutton->GetPosition().x, (text->GetSize().y * 2) + text->GetSize().y });
+	MyFM.addObject(FormSetting, text);
+
+	text = std::make_shared<TextObject>("", ArialFontPath, 20, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
+	text->SetPosition({ GetX0(text), -GetY0(text) });
+	MyFM.addObject(FormSetting, text);
+
+	tmpbutton = std::make_shared<Button>("RestartButton", MyFontPath, 20, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
+	tmpbutton->SetPosition({ -GetX0(tmpbutton), -GetY0(tmpbutton) });
+	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
+	MyFM.addObject(FormSetting, tmpbutton);
+}
+
 /*init 1-1*/
 INITFORM_FUNC(initForm_1_1) {
 	auto& MyFM = self->GetFormManger();
@@ -311,7 +365,7 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 
 	std::vector<std::shared_ptr<Turtle>> turtles;
-	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::TortoiseShell[0], 50));
+	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::imgs[0], 50));
 	turtles.back()->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x * 4, 10 });
 	for (auto& it : turtles) {
 		enemys.push_back(it);
@@ -388,58 +442,10 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 }
 
-INITFORM_FUNC(initFormSetting) {
+INITFORM_FUNC(initForm_1_1_Pip) {
 	auto& MyFM = self->GetFormManger();
-	auto tmpbutton = std::make_shared<Button>("BackButton", MyFontPath, 40, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
-	tmpbutton->SetPosition({ GetX0(tmpbutton), GetY0(tmpbutton) });
-	tmpbutton->SetCallBackFunc(Back_Button_func);
-	MyFM.addObject(FormSetting, tmpbutton);
-
-	auto text = std::make_shared<TextObject>("VolumeValueText", MyFontPath, 30, std::to_string(MyBGM::GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ 2 * text->GetSize().x, 0 });
-	MyFM.addObject(FormSetting, text);
-
-	tmpbutton = std::make_shared<Button>("Volume-Button", MyFontPath, 30, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x, (tmpbutton->GetSize().y * -2) });
-	tmpbutton->SetCallBackFunc(VolumeDownClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-
-	tmpbutton = std::make_shared<Button>("Volume+Button", MyFontPath, 30, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x, text->GetSize().y * 2 });
-	tmpbutton->SetCallBackFunc(VolumeUpClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-
-	text = std::make_shared<TextObject>("VolumeText", MyFontPath, 30, "Volume", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ tmpbutton->GetPosition().x, (text->GetSize().y * 2) + text->GetSize().y });
-	MyFM.addObject(FormSetting, text);
-
-
-	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, std::to_string(WINDOW_WIDTH) + "\n" + std::to_string(WINDOW_HEIGHT), Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ -2 * text->GetSize().x, 0 });
-	MyFM.addObject(FormSetting, text);
-
-	tmpbutton = std::make_shared<Button>("ScreenSize-Button", MyFontPath, 30, "-", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x, -(tmpbutton->GetSize().y * 2) });
-	tmpbutton->SetCallBackFunc(ScreenSizeDownClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-
-	tmpbutton = std::make_shared<Button>("ScreenSize+Button", MyFontPath, 30, "+", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ text->GetPosition().x, tmpbutton->GetSize().y * 2 });
-	tmpbutton->SetCallBackFunc(ScreenSizeUpClickedEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
-
-	text = std::make_shared<TextObject>("ScreenSizeText", MyFontPath, 30, "ScreenSize", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ tmpbutton->GetPosition().x, (text->GetSize().y * 2) + text->GetSize().y });
-	MyFM.addObject(FormSetting, text);
-
-	text = std::make_shared<TextObject>("", ArialFontPath, 20, "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ GetX0(text), -GetY0(text) });
-	MyFM.addObject(FormSetting, text);
-
-	tmpbutton = std::make_shared<Button>("RestartButton", MyFontPath, 20, "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ -GetX0(tmpbutton), -GetY0(tmpbutton) });
-	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
-	MyFM.addObject(FormSetting, tmpbutton);
+	auto text = std::make_shared<TextObject>("text", MyFontPath, 50, "pipe", Util::Color::FromName(Util::Colors::WHITE), 100);
+	MyFM.addObject(Form_1_2, text);
 }
 
 INITFORM_FUNC(initForm_1_2) {
@@ -456,7 +462,6 @@ void GameManager::init() noexcept {
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
 	int total = 6, current = 0;
 	puts("init GameManager");
-	showProgressBar(total,current++);
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", MY_RESOURCE_DIR"/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
 		it->Play();
@@ -482,6 +487,9 @@ void GameManager::init() noexcept {
 	showProgressBar(total, current++);
 
 	initForm_1_1(this);
+	showProgressBar(total, current++);
+
+	initForm_1_1_Pip(this);
 	showProgressBar(total, current++);
 
 	initForm_1_2(this);
