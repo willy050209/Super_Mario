@@ -28,11 +28,13 @@ public:
 
     }
 
+    virtual void died() noexcept = 0;
+
     //virtual void move(const float& d) = 0;
 
 private:
     inline void ResetPosition() noexcept { m_Transform.translation = { 0, 0 }; }
-	virtual void comeDown() = 0;
+	virtual void comeDown() noexcept = 0;
 };
 
 #endif // !CHARACTER_HPP

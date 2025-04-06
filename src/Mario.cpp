@@ -56,7 +56,7 @@ void Mario::doJump() noexcept
     }
 }
 
-void Mario::comeDown()
+void Mario::comeDown() noexcept
 {
     auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
     bool flag = true;
@@ -67,11 +67,11 @@ void Mario::comeDown()
 	}
 	else if (state != State::UP && state != State::DIED && tmp.y < WINDOW_HEIGHT) {
         tmp.y -= displacement;
-		const auto aaa = GetSize();
+		const auto MySize = GetSize();
 		for (auto& it : *bricks) {
-			if (it->collisionable && it->inRange(tmp, aaa)) {
+			if (it->collisionable && it->inRange(tmp, MySize)) {
 				flag = false;
-				tmp.y = it->GetPosition().y + it->GetSize().y;
+				tmp.y = it->GetPosition().y + it->GetSize().y / 2 + MySize.y / 2;
 				break;
 			}
 		}
@@ -116,4 +116,7 @@ void Mario::diedjump() noexcept{
 		jumpDelay = 0;
 		changeImg();
 		//state = State::UP;
+}
+
+void Mario::died() noexcept {
 }

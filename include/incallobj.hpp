@@ -9,6 +9,7 @@
 #include "Object/TextObject.hpp"
 #include "Object/EventObject.hpp"
 #include "Object/Goomba.hpp"
+#include "Object/Turtle.hpp"
 #include "Object/Brick.hpp"
 #include "Object/QuestionBlock.hpp"
 #include "Object/Coin.hpp"

@@ -38,6 +38,7 @@ public:
 	void move(const float& d = DEFAULTDISPLACEMENT);
 	void changeImg() noexcept;
 	void diedjump() noexcept;
+	virtual void died() noexcept override;
 
 	inline void changeState(const std::string& str) noexcept {
 		if (str == "UP")
@@ -65,7 +66,7 @@ private:
 
 	void doJump() noexcept;
 
-	virtual void comeDown() override;
+	virtual void comeDown() noexcept override;
 
 
 	int index = 0;

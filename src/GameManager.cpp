@@ -283,6 +283,7 @@ INITFORM_FUNC(initForm_1_1) {
 	
 	}
 	for (auto& it : coins) {
+		std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
 	}
 
@@ -308,6 +309,14 @@ INITFORM_FUNC(initForm_1_1) {
 		enemys.push_back(std::make_shared<Goomba>("Goomba", Goomba::imgs[0], 50));
 		enemys.back()->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x* i, 0 });
 	}
+
+	std::vector<std::shared_ptr<Turtle>> turtles;
+	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::TortoiseShell[0], 50));
+	turtles.back()->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x * 4, 10 });
+	for (auto& it : turtles) {
+		enemys.push_back(it);
+	}
+
 	for (auto& it : enemys) {
 		it->userdata = mario->userdata;
 		MyFM.addObject(Form_1_1, it);
@@ -362,6 +371,9 @@ INITFORM_FUNC(initForm_1_1) {
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
 
+	eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
+	MyFM.addObject(Form_1_1, eventobj);
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));

@@ -203,8 +203,9 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
     for (auto& it : *eneys) {
 		if (it->collisionable && it->inRange(marioPos, marioSize)) {
             if (marioPos.y > it->GetPosition().y) {
-				it->collisionable = false;
-				it->SetVisible(false);
+				it->died();
+				/*it->collisionable = false;
+				it->SetVisible(false);*/
             }
 			else {
 				//std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
@@ -417,6 +418,27 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 	snprintf(textstr, sizeof(textstr), "Point:%d", GM->GetPoint());
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
 	self->Enable = false;
+}
+
+EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Mario, "Mario"));
+	auto& turtles = std::static_pointer_cast<std::vector<std::shared_ptr<Turtle>>>(self->userdata);
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	for (auto& it : *turtles) {
+		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
+			auto turtlePos{ it->GetPosition() };
+			if (it->GetPosition().x > marioPos.x) {
+				turtlePos.x += it->GetSize().x;
+			}
+			else {
+				turtlePos.x -= it->GetSize().x;
+			}
+			it->SetPosition(turtlePos);
+		}
+	}
 }
 
 #endif
