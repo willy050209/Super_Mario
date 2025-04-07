@@ -12,7 +12,7 @@
 
 namespace fs = std::filesystem;
 
-int total = 0, current = 0;
+//int total = 0, current = 0;
 
 inline int get_all_files(const fs::path& directory) {
 	int result{0};
@@ -22,6 +22,22 @@ inline int get_all_files(const fs::path& directory) {
 		}
 	}
 	return result;
+}
+
+inline std::vector<std::string> getSubdirectoriesRecursive(const std::string& path) noexcept {
+	std::vector<std::string> subdirectories{ path };
+	std::error_code ec; // 用於處理可能發生的錯誤
+
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::skip_permission_denied, ec)) {
+		if (ec) {
+			std::cerr << "Error accessing path: " << entry.path() << " - " << ec.message() << std::endl;
+			continue; // 發生錯誤則跳過當前項目
+		}
+		if (entry.is_directory()) {
+			subdirectories.push_back(entry.path().string());
+		}
+	}
+	return subdirectories;
 }
 
 // 函式用於將影像放大，並遞迴處理子目錄
@@ -40,15 +56,16 @@ void enlargeImages(const std::string& folderPath, double scaleFactor, const std:
 
 	// 迭代資料夾中的所有檔案和子目錄
 	for (const auto& entry : fs::directory_iterator(folderPath)) {
-		if (entry.is_directory()) {
-			// 遞迴呼叫自身來處理子目錄
-			std::string newOutputPath = (fs::path(outputPath) / entry.path().filename()).string();
-			if (!fs::exists(newOutputPath)) {
-				fs::create_directory(newOutputPath);
-			}
-			enlargeImages(entry.path().string(), scaleFactor, newOutputPath);
-		}
-		else if (entry.is_regular_file() && entry.path().extension() == ".png") {
+		//if (entry.is_directory()) {
+		//	// 遞迴呼叫自身來處理子目錄
+		//	std::string newOutputPath = (fs::path(outputPath) / entry.path().filename()).string();
+		//	if (!fs::exists(newOutputPath)) {
+		//		fs::create_directory(newOutputPath);
+		//	}
+		//	enlargeImages(entry.path().string(), scaleFactor, newOutputPath);
+		//}
+		//else 
+		if (entry.is_regular_file() && entry.path().extension() == ".png") {
 			// 處理 .png 檔案
 			std::string imagePath = entry.path().string();
 			// 使用 SDL_image 讀取影像
@@ -94,7 +111,7 @@ void enlargeImages(const std::string& folderPath, double scaleFactor, const std:
 			else {
 				//std::cout << "成功放大並儲存影像：" << outputImagePath << std::endl;
 			}
-			showProgressBar(total, current++);
+			//showProgressBar(total, current++);
 			// 釋放 SDL_Surface
 			SDL_FreeSurface(imageSurface);
 			SDL_FreeSurface(enlargedSurface);

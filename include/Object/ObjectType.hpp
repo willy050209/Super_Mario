@@ -5,6 +5,7 @@ enum class ObjectType {
 	Character,
 	Mario,
 	Goomba,
+	Turtle,
 	ImageObject,
 	Brick,
 	QuestionBlock,

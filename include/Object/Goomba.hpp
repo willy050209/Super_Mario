@@ -22,9 +22,10 @@ public:
 
 	virtual void behavior(void* data) override;
 
-	//virtual void move(const float& d) override;
+	virtual void died() noexcept override;
 
 	bool loop = true;
+
 
 	static constexpr char* const imgs[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
 
@@ -34,7 +35,7 @@ private:
 
 	void ChangeImg() noexcept;
 
-	virtual void comeDown() override;
+	virtual void comeDown() noexcept override;
 
 };
 

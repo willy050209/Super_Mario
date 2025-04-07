@@ -47,13 +47,28 @@ int main(int, char** argc) {
   //      }
   //      });
 
-    std::thread ImageResizer([]() {
-		std::filesystem::create_directory("imgs");
-		total = get_all_files(FOLDERPATH);
-		puts("init images");
-		enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
-		showProgressBar(total, total);
-	});
+	auto directorys = getSubdirectoriesRecursive(FOLDERPATH);
+
+	std::filesystem::create_directory("imgs");
+	std::vector<std::thread> threads;
+	for (auto& it : directorys) {
+		threads.push_back(std::thread([&]() {
+			std::cout << "enlarge " << it << '\n';
+			std::string outpath = "imgs/" + it.substr(sizeof(MY_RESOURCE_DIR));
+			std::filesystem::create_directory(outpath);
+			// std::cout << outpath << '\n';
+			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
+			std::cout << "Successfully enlarged and stored the image";
+		}));
+	}
+
+ //   std::thread ImageResizer([]() {
+	//	std::filesystem::create_directory("imgs");
+	//	//total = get_all_files(FOLDERPATH);
+	//	puts("init images");
+	//	enlargeImages(FOLDERPATH, (WINDOW_HEIGHT) / 480.f, OUTPUTFOLDPATH);
+	//	//showProgressBar(total, total);
+	//});
 	
     auto context = Core::Context::GetInstance();
 
@@ -61,8 +76,10 @@ int main(int, char** argc) {
     
     context->SetWindowIcon(ICOP_PATH);
 
-    ImageResizer.join();
-
+    //ImageResizer.join();
+	for (auto& it : threads) {
+		it.join();
+	}
 
 	gameManger.init();
     
