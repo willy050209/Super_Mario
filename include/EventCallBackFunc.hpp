@@ -59,7 +59,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto mariosize = mario->GetSize();
 
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
-		Displacement *= 4;
+		Displacement *= 2;
     }
     if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
@@ -73,7 +73,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
                 break;
             }
         }
-        if (mario->GetPosition().x!=0 && pos.x == GetX0(background) && flag ) {
+		if (abs(mario->GetPosition().x ) >= mariosize.x && pos.x == GetX0(background) && flag) {
             mario->SetPosition({ mario->GetPosition().x + Displacement,mario->GetPosition().y });
         }
         else if(pos.x > -GetX0(background) && flag)
@@ -103,7 +103,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
                 break;
             }
         }
-        if (mario->GetPosition().x != 0 && pos.x == -GetX0(background) && flag) {
+		if (abs(mario->GetPosition().x) >= mariosize.x && pos.x == -GetX0(background) && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
         }
         else if (pos.x < GetX0(background) && flag)

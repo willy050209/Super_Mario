@@ -10,6 +10,7 @@ constexpr auto Background_1_1_ImagePath = "imgs/super mario/Maps/SuperMarioBrosM
 constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main.png";
 constexpr auto BlockImagePath = /*"imgs/super mario/floor.png";*/ "imgs/super mario/1-1/BrickBlockBrown.png";
 constexpr auto FloorImagePath = "imgs/super mario/floor.png";
+constexpr auto FloorDarkImagePath = "imgs/super mario/floordark.png";
 constexpr auto StairsBrickImagePath = "imgs/super mario/StairsBrick.png";
 constexpr auto StairsBrickDarkImagePath = "imgs/super mario/BrickBlockDark.png";
 constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";

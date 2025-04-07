@@ -58,7 +58,7 @@ int main(int, char** argc) {
 			std::filesystem::create_directory(outpath);
 			// std::cout << outpath << '\n';
 			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
-			std::cout << "Successfully enlarged and stored the image";
+			std::cout << "Successfully enlarged and stored the image\n";
 		}));
 	}
 

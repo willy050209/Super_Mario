@@ -470,13 +470,26 @@ INITFORM_FUNC(initForm_1_2) {
 	MyFM.addObject(Form_1_2, mario);
 
 	for (int i = 0; i < 193;i++) {
-		if (i >= 82 && i < 84) {
+		if (i > 80 && i < 84 || i>120 && i<123 || i>124 && i < 127 || i> 138 && i < 146 || i>153 && i< 161) {
 			continue;
 		}
-		Blocks.push_back(std::make_shared<Brick>("Floor", BlockImagePath, 10));
+		Blocks.push_back(std::make_shared<Brick>("Floor", FloorImagePath, 10));
 		Blocks.back()->SetPosition({ GetX0(Block) + i * Block->GetSize().x, GetY0(Block) - 13 * Block->GetSize().y });
-		//Blocks.push_back(std::make_shared<Brick>("Floor", StairsBrickImagePath, 10));
-		//Blocks.back()->SetPosition({ i * Block->GetSize().x + GetX0(Block), GetY0(Block) - 14 * Block->GetSize().y });
+		Blocks.push_back(std::make_shared<Brick>("Floor", FloorImagePath, 10));
+		Blocks.back()->SetPosition({ i * Block->GetSize().x + GetX0(Block), GetY0(Block) - 14 * Block->GetSize().y });
+	}
+
+	for (int i = 2; i < 13; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) , GetY0(Block) - i * Block->GetSize().y });
+	}
+	for (int i = 6; i < 139; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - 2 * Block->GetSize().y });
+	}
+	for (int i = 162; i < 170; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - 2 * Block->GetSize().y });
 	}
 
 	for (auto& it : Blocks) {
