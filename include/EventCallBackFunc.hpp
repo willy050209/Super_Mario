@@ -48,8 +48,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
     auto&& Displacement = WINDOW_HEIGHT/15/8.f;
 	//const auto Displacement = WINDOW_HEIGHT / 15/2;
-	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>>>(self->userdata);
+	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(self->userdata);
 	auto& enemys = std::get<0>(*tuplePtr);
+	auto& pipes = std::get<1>(*tuplePtr);
 	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
@@ -125,13 +126,14 @@ EVENTCALLCALLBACKFUN(moveEvent) {
         
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
-		for (auto& it : *block) {
+		for (auto& it : pipes) {
 			if (it->inRange({ tmp.x, tmp.y }, mariosize)) {
-				flag = false;
-				break;
+				auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
+				ChangeFormEventObject->Enable = true;
+				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1_Pipe);
+				return;
 			}
 		}
-		std::cout << flag;
     }
 	
     /*test*/
@@ -187,7 +189,9 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			for (auto& eventobj : objandform.m_Events) {
 				eventobj->Enable = false;
 			}
-			FM.changeForm(Form_1_2);
+			auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
+			ChangeFormEventObject->Enable = true;
+			ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
 			break;
 		}
 	}
@@ -439,6 +443,14 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 			it->SetPosition(turtlePos);
 		}
 	}
+}
+
+EVENTCALLCALLBACKFUN(ChangeFormEvent) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto form = std::static_pointer_cast<std::string>(self->userdata);
+	self->Enable = false;
+	FM.changeForm(*form);
 }
 
 #endif
