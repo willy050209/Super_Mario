@@ -195,6 +195,11 @@ INITFORM_FUNC(initFormSetting) {
 	MyFM.addObject(FormSetting, tmpbutton);
 }
 
+INITFORM_FUNC(winForm) {
+	auto& MyFM = self->GetFormManger();
+	MyFM.addObject("Win", std::make_shared<TextObject>("", MyFontPath, 20, "Win", Util::Color::FromName(Util::Colors::WHITE), 10));
+}
+
 /*init 1-1*/
 INITFORM_FUNC(initForm_1_1) {
 	auto& MyFM = self->GetFormManger();
@@ -459,15 +464,36 @@ INITFORM_FUNC(initForm_1_2) {
 	std::vector<std::shared_ptr<Brick>> Blocks;
 	std::vector<std::shared_ptr<Character>> enemys;
 	std::vector<std::shared_ptr<Brick>> pipes;
+	std::vector<std::shared_ptr<Coin>> coins;
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", StairsBrickImagePath, -10), std::make_shared<Brick>("door", StairsBrickImagePath, -10) };
+	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_2_ImagePath, 1);
 	img->SetPosition({ GetX0(img), 0 });
 	MyFM.addObject(Form_1_2, img);
 
 	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 100);
-	mario->SetPosition({ 0, 100 });
+	mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, 100 });
 	// mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 10, 100 });
 	MyFM.addObject(Form_1_2, mario);
+
+	doorarr[0]->SetPosition({ Block->GetSize().x * 167 + GetX0(Block), GetY0(Block) - 8 * Block->GetSize().y });
+	doorarr[1]->SetPosition({ Block->GetSize().x * 167 + GetX0(Block), GetY0(Block) - 9 * Block->GetSize().y });
+
+	for (auto& it : doorarr) {
+		it->collisionable = false;
+		Blocks.push_back(it);
+	}
+
+	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint", CheckPointPath, -10));
+	checkPointArray[0]->collisionable = false;
+	checkPointArray[0]->SetVisible(false);
+	checkPointArray[0]->SetPosition({ 0, 0 });
+
+
+	for (auto& it : checkPointArray) {
+		Blocks.push_back(it);
+	}
 
 	for (int i = 0; i < 193;i++) {
 		if (i > 80 && i < 84 || i>120 && i<123 || i>124 && i < 127 || i> 138 && i < 146 || i>153 && i< 161) {
@@ -594,11 +620,70 @@ INITFORM_FUNC(initForm_1_2) {
 		Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (76 + i), GetY0(Block) - (9) * Block->GetSize().y });
 	}
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 6; ++i) {
 		for (int j = 0; j < 2; ++j) {
 			Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (85 + i), GetY0(Block) - (7 + j) * Block->GetSize().y });
 		}
+	}
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (123 + i), GetY0(Block) - (10 + j) * Block->GetSize().y });
+		}
+	}
+	for (int i = 0; i < 6; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (146 + i), GetY0(Block) - (8) * Block->GetSize().y });
+	}
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j <= i; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (134 + i), GetY0(Block) - (12 - j) * Block->GetSize().y });	
+		}
+	}
+	for (int i = 0; i < 4; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("StairsBrick", StairsBrickDarkImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (138), GetY0(Block) - (12 - i) * Block->GetSize().y });
+	}
+	for (int i = 0; i < 17; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (161 + i), GetY0(Block) - (10 + j) * Block->GetSize().y });
+		}
+	}
+	for (int i = 0; i < 7; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("BlockBrick", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (171 + i), GetY0(Block) - (2 + j) * Block->GetSize().y });
+		}
+	}
+
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("pipe", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (104 + i), GetY0(Block) - (12 - j) * Block->GetSize().y });
+			Blocks.back()->SetVisible(false);
+		}
+	}
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("pipe", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (110 + i), GetY0(Block) - (12 - j) * Block->GetSize().y });
+			Blocks.back()->SetVisible(false);
+		}
+	}
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			Blocks.push_back(std::make_shared<Brick>("pipe", BlockDarkImagePath, 10));
+			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (116 + i), GetY0(Block) - (12 - j) * Block->GetSize().y });
+			Blocks.back()->SetVisible(false);
+		}
+	}
+	for (int j = 0; j < 8; ++j) {
+		Blocks.push_back(std::make_shared<Brick>("pipe", BlockDarkImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (170), GetY0(Block) - (12 - j) * Block->GetSize().y });
+		Blocks.back()->SetVisible(false);
 	}
 
 	std::vector<std::shared_ptr<QuestionBlock>> QuestionBlocks;
@@ -616,6 +701,14 @@ INITFORM_FUNC(initForm_1_2) {
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 
+	enemys.push_back(std::make_shared<Goomba>("Goomba", Goomba::imgs[0], 50));
+	enemys[0]->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x, 0 });
+
+	for (auto& it : enemys) {
+		it->userdata = mario->userdata;
+		MyFM.addObject(Form_1_2, it);
+	}
+
 	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ -GetX0(text), GetY0(text) });
 	MyFM.addObject(Form_1_2, text);
@@ -624,11 +717,66 @@ INITFORM_FUNC(initForm_1_2) {
 	pointtext->SetPosition({ 0, GetY0(pointtext) });
 	MyFM.addObject(Form_1_2, pointtext);
 
+	auto texttime = std::make_shared<TextObject>("Timetext", MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
+	MyFM.addObject(Form_1_2, texttime);
+
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("freeForm_1_1", freeForm_1_1));
 
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(enemys, pipes);
 	MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
+	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	// eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
+	// eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
+	// MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	/*eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
+	MyFM.addObject(Form_1_2, eventobj);*/
+
+	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
+	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
+	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+
+	/*eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
+	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
+	MyFM.addObject(Form_1_2, eventobj);*/
+
+	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+
+	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
+	MyFM.addObject(Form_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = ptr;
+	MyFM.addObject(Form_1_2, eventobj);
+
+	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
+	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 
 }
 
@@ -638,7 +786,7 @@ void GameManager::init() noexcept {
 	/*test BGM*/
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/
-	int total = 6, current = 0;
+	int total = 7, current = 0;
 	puts("init GameManager");
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", MY_RESOURCE_DIR"/BGM/Ring08.wav"));
 	for (auto& it : bgms) {
@@ -679,8 +827,11 @@ void GameManager::init() noexcept {
 	initFormSetting(this);
 	showProgressBar(total, current++);
 
+	winForm(this);
+	showProgressBar(total, current++);
+
 	MyFM.changeForm(Form_1_1 /*FormBackground*/);
-	MyFM.changeForm(Form_1_2);
+	//MyFM.changeForm(Form_1_2);
 	showProgressBar(total, current);
 	puts("");
 	/*system("pause");

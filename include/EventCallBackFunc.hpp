@@ -50,8 +50,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     auto&& Displacement = WINDOW_HEIGHT/15/8.f;
 	//const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(self->userdata);
-	auto& enemys = std::get<0>(*tuplePtr);
-	auto& pipes = std::get<1>(*tuplePtr);
+	auto& [enemys, pipes] = (*tuplePtr);
 	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
@@ -148,10 +147,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& num = std::get<0>(*(std::static_pointer_cast < std::tuple<int, int, std::shared_ptr<TextObject>>>(self->userdata)));
+	auto& [num, nowtime, timetext] = (*(std::static_pointer_cast<std::tuple<int, int, std::shared_ptr<TextObject>>>(self->userdata)));
     if ((num)++ >= FPS_CAP) {
-        auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
-		auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<TextObject>>>(self->userdata)));
+        //auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
+		//auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<TextObject>>>(self->userdata)));
         std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
         (num) = 0;
         if (nowtime == 0) {
@@ -192,7 +191,12 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
 			ChangeFormEventObject->Enable = true;
-			ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
+			if (FM.GetNowForm() == Form_1_1) {
+				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
+			}
+			else {
+				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
+			}
 			//initForm_1_2((GameManager*)data);
 			break;
 		}
@@ -247,7 +251,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 		eventobj->Enable = false;
     }
 	//static_cast<GameManager*>(data)->pause = true;
-	FM.addObject(Form_1_1, std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
+	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
 
@@ -375,8 +379,7 @@ EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	int& count = std::get<int>(*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
-	auto& bvec = std::get<1>(*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
+	auto & [ count, bvec ] = (*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
 	--count;
 	if (bvec.size() == 0) {
 		auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
