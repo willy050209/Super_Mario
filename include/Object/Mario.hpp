@@ -35,7 +35,7 @@ public:
 
 	//virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
-	void move(const float& d = DEFAULTDISPLACEMENT);
+	virtual void move() noexcept override;
 	void changeImg() noexcept;
 	void diedjump() noexcept;
 	virtual void died() noexcept override;
@@ -60,8 +60,6 @@ public:
 		diedflag = false;
 	}
 
-	int left = 0; 
-
 private:
 
 	void doJump() noexcept;
@@ -83,6 +81,7 @@ private:
 		{ State::UP, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
 		{ State::DOWN, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
 		{ State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } } };
+
 
 };
 

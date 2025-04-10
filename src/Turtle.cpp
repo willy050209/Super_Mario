@@ -8,6 +8,7 @@
 void Turtle::behavior(void* data) {
 	if (!static_cast<GameManager*>(data)->pause) {
 		ChangeImg();
+		move();
 		comeDown();
 	}
 }

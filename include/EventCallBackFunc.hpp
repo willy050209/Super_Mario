@@ -220,6 +220,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
 			}
 			else {
+				winForm((GameManager*)data);
 				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 			}
 			//initForm_1_2((GameManager*)data);

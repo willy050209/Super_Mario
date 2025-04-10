@@ -8,6 +8,7 @@
 void Goomba::behavior(void* data) {
 	if (!static_cast<GameManager*>(data)->pause) {
 		ChangeImg();
+		move();
 		comeDown();
 	}
 }
@@ -45,3 +46,4 @@ void Goomba::comeDown() noexcept {
 		SetPosition(tmp);
 	}
 }
+

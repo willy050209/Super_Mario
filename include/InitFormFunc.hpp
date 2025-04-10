@@ -1,6 +1,8 @@
 #define INITFORM_FUNC(func_name) void func_name(GameManager* self) noexcept
 
 INITFORM_FUNC(initForm_1_2);
+INITFORM_FUNC(initForm_1_1_Pip);
+INITFORM_FUNC(winForm);
 
 #ifndef INITFORMFUNC_HPP
 #define INITFORMFUNC_HPP
@@ -288,6 +290,11 @@ INITFORM_FUNC(initForm_1_1) {
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
 	}
 	inp.close();
+
+	for (int i = 0; i < 15; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("Brick", StairsBrickImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) - Block->GetSize().x , GetY0(Block) - Block->GetSize().y * (i) });
+	}
 
 	for (auto& it : Blocks) {
 		it->SetVisible(false);

@@ -38,6 +38,7 @@ private:
 	void ChangeImg() noexcept;
 
 	virtual void comeDown() noexcept override;
+
 };
 
 #endif // !GOOMBA_HPP

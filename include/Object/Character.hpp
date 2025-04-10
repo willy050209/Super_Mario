@@ -30,7 +30,9 @@ public:
 
     virtual void died() noexcept = 0;
 
-    //virtual void move(const float& d) = 0;
+    virtual void move() noexcept ;
+
+	int left = 0;
 
 private:
     inline void ResetPosition() noexcept { m_Transform.translation = { 0, 0 }; }

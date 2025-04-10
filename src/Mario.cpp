@@ -98,7 +98,7 @@ void Mario::changeImg() noexcept {
 	std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[state][left][index]);
 }
 
-void Mario::move(const float& d)
+void Mario::move() noexcept
 {
 	imgChangeDelay++;
 	if (imgChangeDelay >= 10) {
