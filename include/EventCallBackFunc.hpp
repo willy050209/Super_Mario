@@ -6,6 +6,7 @@
 #include "util/Input.hpp"
 #include "Position.hpp"
 #include "GameManager.hpp"
+#include <vector>
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -192,6 +193,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
 			ChangeFormEventObject->Enable = true;
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
+			//initForm_1_2((GameManager*)data);
 			break;
 		}
 	}
@@ -451,6 +453,15 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
 	self->Enable = false;
 	FM.changeForm(*form);
+}
+
+EVENTCALLCALLBACKFUN(freeForm_1_1) {
+	auto GM = static_cast<GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	FM.freeForm(Form_1_1);
+	self->Enable = false;
+	auto& m_Events = FM.GetFormAndObject(Form_1_2).m_Events;
+	m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [](auto& i) { return i->name == "freeForm_1_1"; }));
 }
 
 #endif

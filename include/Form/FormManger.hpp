@@ -81,7 +81,7 @@ public:
 		}
 	}
 
-	inline const FormAndObject& GetFormAndObject(const std::string& formName) noexcept {
+	inline FormAndObject& GetFormAndObject(const std::string& formName) noexcept {
 		return m_Forms[formName];
 	}
 
@@ -167,6 +167,10 @@ public:
 
 	inline void rePause() noexcept {
 		isPause = false;
+	}
+
+	inline void freeForm(const std::string& formName) {
+		m_Forms.erase(formName);
 	}
 
 private:
