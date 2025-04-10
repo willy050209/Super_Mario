@@ -60,6 +60,7 @@ public:
 	}
 
 	bool pause{ false };
+	bool opMode = false;
 	std::shared_ptr<Util::BGM> bgm;
 
 private:

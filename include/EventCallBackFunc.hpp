@@ -60,20 +60,22 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
     bool flag = true;
-    auto tmp = mario->GetPosition();
+    auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
+
+	auto& opmode = static_cast<GameManager*>(data)->opMode;
 
     if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
 		Displacement *= 2;
     }
-    if (Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
+    if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
         (mario)->jump();
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         auto pos = (background)->GetPosition();
 		mario->left = 0;
         for (auto& it : *block) {
-			if (it->collisionable && it->inRange({ tmp.x + Displacement, tmp.y }, mariosize)) {
+			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
                 flag = false;
                 break;
             }
@@ -103,7 +105,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->left = 1;
         auto pos = (background)->GetPosition();
         for (auto& it : *block) {
-			if (it->collisionable && it->inRange({ tmp.x - Displacement, tmp.y }, mariosize)) {
+			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
                 flag = false;
                 break;
             }
@@ -132,7 +134,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
     else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
 		for (auto& it : pipes) {
-			if (it->inRange({ tmp.x, tmp.y }, mariosize)) {
+			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
 				auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
 				ChangeFormEventObject->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1_Pipe);
@@ -142,12 +144,28 @@ EVENTCALLCALLBACKFUN(moveEvent) {
     }
 	
     /*test*/
-    if (Util::Input::IsKeyPressed(Util::Keycode::SPACE)) {
-		mario->jump();
+	if (Util::Input::IsKeyDown(Util::Keycode::O)) {
+		opmode = !opmode;
+		std::cout << "opmode : " << (opmode ? "true" : "false") << '\n';
 	}
-    else if (Util::Input::IsKeyPressed(Util::Keycode::W)) {
-		mario->SetPosition({ mario->GetPosition().x, GetY0(mario) });
-    }
+	if (opmode) {
+		if (Util::Input::IsKeyDown(Util::Keycode::W)) {
+			marioPos.y += mariosize.y;
+			mario->SetPosition(marioPos);
+		}
+		else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
+			marioPos.y -= mariosize.y;
+			mario->SetPosition(marioPos);
+		}
+		else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
+			marioPos.x += mariosize.x;
+			mario->SetPosition(marioPos);
+		}
+		else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
+			marioPos.x -= mariosize.x;
+			mario->SetPosition(marioPos);
+		}
+	}
 }
 
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
@@ -217,32 +235,35 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	auto& eneys = std::static_pointer_cast<std::vector<std::shared_ptr<Character>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-    for (auto& it : *eneys) {
-		if (it->collisionable && it->inRange(marioPos, marioSize)) {
-            if (marioPos.y > it->GetPosition().y) {
-				it->died();
-				/*it->collisionable = false;
-				it->SetVisible(false);*/
-            }
-			else {
-				//std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-				GM->bgm->LoadMedia(Lost_a_Life);
-				GM->bgm->Play(1);
-				GM->DecHP();
-				mario->diedjump();
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
-				if (GM->GetHP() == 0) {
-					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-				}else{
-					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
-					auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
-					sleepevent->Enable = true;
-					sleepevent->userdata.reset();
-					sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+	if (!GM->opMode) {
+		for (auto& it : *eneys) {
+			if (it->collisionable && it->inRange(marioPos, marioSize)) {
+				if (marioPos.y > it->GetPosition().y) {
+					it->died();
+					/*it->collisionable = false;
+					it->SetVisible(false);*/
+				}
+				else {
+					// std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+					GM->bgm->LoadMedia(Lost_a_Life);
+					GM->bgm->Play(1);
+					GM->DecHP();
+					mario->diedjump();
+					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+					if (GM->GetHP() == 0) {
+						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+					}
+					else {
+						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
+						auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
+						sleepevent->Enable = true;
+						sleepevent->userdata.reset();
+						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+					}
 				}
 			}
-        }
-    }
+		}
+	}
 }
 
 EVENTCALLCALLBACKFUN(CallFinish) {
@@ -275,8 +296,10 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			static_cast<GameManager*>(data)->addPoint(1000 * f_height);
 			printf("FlagpoleCollision.\nTouch height:%d", f_height);
 			self->Enable = false;
+			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdatePointText"))->Enable = true;
 			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveToDoor"))->Enable = true;
 			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
+			static_cast<GameManager*>(data)->opMode = false;
 			break;
 		}
 	}
@@ -465,13 +488,13 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	FM.changeForm(*form);
 }
 
-EVENTCALLCALLBACKFUN(freeForm_1_1) {
+EVENTCALLCALLBACKFUN(freeForm) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	FM.freeForm(Form_1_1);
+	FM.freeForm(*std::static_pointer_cast<std::string>(self->userdata));
 	self->Enable = false;
-	auto& m_Events = FM.GetFormAndObject(Form_1_2).m_Events;
-	m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [](auto& i) { return i->name == "freeForm_1_1"; }));
+	auto& m_Events = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+	m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [&](auto& i) { return i->name == self->name; }));
 }
 
 #endif

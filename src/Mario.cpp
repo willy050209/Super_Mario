@@ -7,7 +7,7 @@
 
 void Mario::behavior(void* data)
 {
-	if (!static_cast<GameManager*>(data)->pause) {
+	if (!static_cast<GameManager*>(data)->pause && !static_cast<GameManager*>(data)->opMode) {
 		// move();
 		doJump();
 		//if (state != State::DIED)
