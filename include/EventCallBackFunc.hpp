@@ -1,11 +1,12 @@
 #ifndef EVENTCALLCALLBACKFUNC_hpp
 #define EVENTCALLCALLBACKFUNC_hpp
-
+#include "InitFormFunc.hpp"
 #include "incallobj.hpp"
 #include "config.hpp"
 #include "util/Input.hpp"
 #include "Position.hpp"
-#include "GameManager.hpp"
+
+
 #include <vector>
 #include <iostream>
 #include <chrono>
@@ -13,7 +14,10 @@
 #include <memory>
 #include <tuple>
 
+#define INITFORM_FUNC(func_name) void func_name(GameManager* self) noexcept
 #define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
+
+//INITFORM_FUNC(initForm_1_2);
 
 //inline void loadCheckpoint(GameManager* const GM, std::shared_ptr<std::vector<std::shared_ptr<CheckPoint>>> checkPoints) noexcept {
 //	auto& FM = GM->GetFormManger();
@@ -34,6 +38,8 @@
 //		}
 //	}
 //}
+
+
 
 EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
     auto num = std::static_pointer_cast<int>(self->userdata);
@@ -192,6 +198,8 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
 			ChangeFormEventObject->Enable = true;
 			if (FM.GetNowForm() == Form_1_1) {
+				initForm_1_2((GameManager*)data);
+				//initForm_1_2((GameManager*)data);
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
 			}
 			else {

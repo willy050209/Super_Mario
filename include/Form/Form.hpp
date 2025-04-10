@@ -20,6 +20,13 @@ public:
 		m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj),m_Events.end());
 	}
 
+	inline void free() noexcept {
+		for (auto& it : m_Events) {
+			it.reset();
+		}
+		m_Events.clear();
+	}
+
 	inline void doAllEvent(void* data = nullptr) noexcept {
 		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) {it->behavior(data); });
 	}

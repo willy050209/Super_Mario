@@ -1,4 +1,7 @@
 #ifndef ProgressBar_HPP
+#define ProgressBar_HPP
+#include <iostream>
+
 inline void showProgressBar(int total, int current, int width = 50) noexcept {
 	// 計算完成百分比
 	float ratio = (float)current / total;
