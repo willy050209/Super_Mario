@@ -5,7 +5,7 @@ void QuestionBlock::bonk() noexcept {
 	if (play) {
 		SetVisible(true);
 		play = false;
-		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(EmptyBlockImagePath);
+		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? EmptyBlockImagePath : EmptyBlockDarkImagePath));
 	}
 }
 

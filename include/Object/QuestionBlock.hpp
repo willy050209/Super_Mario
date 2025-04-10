@@ -7,7 +7,7 @@
 class QuestionBlock : public Brick {
 public:
 	explicit QuestionBlock(const std::string& name, const std::string& ImagePath,
-		const float zIndex,
+		const float zIndex, 
 		const glm::vec2& pivot = { 0, 0 })
 		: Brick(name, std::make_shared<Util::Image>(ImagePath), zIndex, pivot) {
 		MyType = ObjectType::QuestionBlock;
@@ -29,6 +29,10 @@ public:
 
 	QuestionBlock() = delete;
 
+	inline void setDark() noexcept {
+		blockState = EmptyBlockState::Dark;
+	}
+
 	virtual void bonk() noexcept override;
 
 	virtual void behavior(void* data = nullptr) override;
@@ -41,9 +45,15 @@ public:
 		static constexpr char* const imgs[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 		
 		static constexpr char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
+		static constexpr char* const EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };
 		
 		int count{ 0 }, imgindex{ 0 };
 		bool play{ true };
+
+		enum class EmptyBlockState {
+			normal,
+			Dark
+		} blockState = EmptyBlockState::normal;
 };
 
 #endif // !QUESTIONBLOCK_HPP

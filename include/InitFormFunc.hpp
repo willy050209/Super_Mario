@@ -344,7 +344,7 @@ INITFORM_FUNC(initForm_1_1) {
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
 	}
 	for (auto& it : coins) {
-		std::cout << &it->imgs << '\n';
+		//std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
 	}
 
@@ -490,6 +490,17 @@ INITFORM_FUNC(initForm_1_2) {
 
 
 	for (auto& it : checkPointArray) {
+		Blocks.push_back(it);
+	}
+
+	for (int i = 0; i < 2; ++i) {
+		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 11 });
+		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
+	}
+	for (auto& it : coins) {
+		//std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
 	}
 
@@ -690,6 +701,7 @@ INITFORM_FUNC(initForm_1_2) {
 		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - 9 * Block->GetSize().y });
 	}
 	for (auto& it : QuestionBlocks) {
+		it->setDark();
 		Blocks.push_back(it);
 	}
 
@@ -732,10 +744,6 @@ INITFORM_FUNC(initForm_1_2) {
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(Form_1_2, eventobj);
-
-	// eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
-	// eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
-	// MyFM.addObject(Form_1_2, eventobj);
 
 	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);

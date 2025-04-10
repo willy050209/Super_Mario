@@ -14,7 +14,6 @@
 #include <memory>
 #include <tuple>
 
-#define INITFORM_FUNC(func_name) void func_name(GameManager* self) noexcept
 #define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
 
 //INITFORM_FUNC(initForm_1_2);
