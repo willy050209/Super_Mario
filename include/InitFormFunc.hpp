@@ -607,7 +607,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	MyFM.addObject(Form_1_1_to_1_2, eventobj);
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent);
-	eventobj->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(15, std::vector<bool>());
+	eventobj->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(30, std::vector<bool>());
 	MyFM.addObject(Form_1_1_to_1_2, eventobj);
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor);
