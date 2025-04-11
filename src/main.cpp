@@ -8,6 +8,7 @@
 #include <iostream>
 #include <thread>
 #include <filesystem>
+#include <utility>
 
 
 #define IMAGERESIZER_EXE MY_IMAGERESIZER_DIR"/ImageResizer.exe"
