@@ -19,6 +19,9 @@ constexpr auto Form_1_1_to_1_2 = "Form_1_1_to_1_2";
 constexpr auto Form_1_2 = "Form_1_2";
 constexpr auto Form_1_2_Pipe = "Form_1_2_Pipe";
 
+/// <summary>
+/// 管理遊戲開始、執行、暫停、結束
+/// </summary>
 class GameManager
 {
 
@@ -51,7 +54,7 @@ public:
 	/// <summary>
 	/// 取得FormManger
 	/// </summary>
-	/// <returns>所有表單</returns>
+	/// <returns></returns>
 	inline FormManger& GetFormManger() noexcept { return MyFM; }
 
 	/// <summary>

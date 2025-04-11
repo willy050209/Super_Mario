@@ -2,6 +2,9 @@
 #define FILEPATH_HPP
 
 constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
+/// <summary>
+/// 生成式人工智慧導論製作的手寫字型
+/// </summary>
 constexpr auto MyFontPath = MY_RESOURCE_DIR "/Font/t112590005.ttf";
 constexpr auto ArialFontPath = MY_RESOURCE_DIR "/Font/arial.ttf";
 constexpr auto BackgroundImagePath = MY_RESOURCE_DIR "/Image/Background/cat.jpg";

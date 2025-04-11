@@ -1,5 +1,9 @@
 #ifndef OBJECTTYPE_HPP
 #define OBJECTTYPE_HPP
+
+/// <summary>
+/// 列舉所有繼承Object的型別
+/// </summary>
 enum class ObjectType {
 	Object,
 	Character,

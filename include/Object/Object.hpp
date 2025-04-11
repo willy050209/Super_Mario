@@ -35,7 +35,7 @@ public:
     /// <summary>
     /// 取得座標
     /// </summary>
-    /// <returns>const glm::vec2&</returns>
+    /// <returns>Position</returns>
     virtual inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
 
     /// <summary>
@@ -111,7 +111,7 @@ public:
     std::string name;
     
 	/// <summary>
-	/// 提供而外資料接口
+	/// 提供而外資料接口 (void *)
 	/// </summary>
 	std::shared_ptr<void> userdata{ nullptr };
 

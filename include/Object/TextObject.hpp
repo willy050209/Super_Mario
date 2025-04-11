@@ -50,6 +50,10 @@ public:
 
 	void setColor(const Util::Color& color);
 
+	/// <summary>
+	/// 取得自身大小
+	/// </summary>
+	/// <returns>矩形大小</returns>
 	inline glm::vec2 GetSize() const noexcept override {
 		return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
 	}

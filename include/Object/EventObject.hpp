@@ -45,6 +45,9 @@ public:
             CallBackFunc(this, data);
     }
 
+    /// <summary>
+    /// 是否啟用事件
+    /// </summary>
     bool Enable = true;
 
     void (*CallBackFunc)(EventObject* const self, void* data) = nullptr;

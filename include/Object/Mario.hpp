@@ -33,7 +33,7 @@ public:
 	inline State GetState() const noexcept { return state; }
 
 	/// <summary>
-	/// 執行跳躍
+	/// 準備跳躍
 	/// </summary>
 	inline void jump() noexcept {
 		if(jumpDelay == 0)
@@ -45,15 +45,37 @@ public:
 		}
 	}
 
+	/// <summary>
+	/// 表單刷新時執行
+	/// </summary>
+	/// <param name="data">GameManager * </param>
 	virtual void behavior(void* data = nullptr) override;
 
 	//virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
+	/// <summary>
+	/// 移動事件
+	/// </summary>
 	virtual void move() noexcept override;
+
+	/// <summary>
+	/// 切換圖片
+	/// </summary>
 	void changeImg() noexcept;
-	void diedjump() noexcept;
+
+	/// <summary>
+	/// 死亡跳躍事件
+	/// </summary>
+	//void diedjump() noexcept;
+
+	/// <summary>
+	/// 死亡事件
+	/// </summary>
 	virtual void died() noexcept override;
 
+	/// <summary>
+	/// 設定state 建議使用changeState(State state_)
+	/// </summary>
 	inline void changeState(const std::string& str) noexcept {
 		if (str == "UP")
 			state = State::UP;
@@ -65,10 +87,22 @@ public:
 			state = State::DIED;
 	}
 
+	/// <summary>
+	/// 設定state
+	/// </summary>
+	/// <param name="state_"></param>
+	/// <returns>enum class State
+	/// {
+	/// 	UP, MOVE, DOWN, DIED
+	/// };
+	/// </returns>
 	inline void changeState(State state_) noexcept {
 		state = state_;
 	}
 
+	/// <summary>
+	/// 重設狀態
+	/// </summary>
 	inline void Reset() noexcept {
 		state = State::MOVE;
 		diedflag = false;
@@ -76,8 +110,14 @@ public:
 
 private:
 
+	/// <summary>
+	/// 執行跳躍
+	/// </summary>
 	void doJump() noexcept;
 
+	/// <summary>
+	/// 墜落事件
+	/// </summary>
 	virtual void comeDown() noexcept override;
 
 

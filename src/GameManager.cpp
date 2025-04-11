@@ -33,7 +33,6 @@ void GameManager::init() noexcept {
 
 	//initFormBackground(this);
 	//showProgressBar(total, current++);
-
 	initFormTitle(this);
 	showProgressBar(total, current++);
 

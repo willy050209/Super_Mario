@@ -25,7 +25,7 @@ public:
 
 	virtual void died() noexcept override;
 
-	bool loop = true;
+	bool diedFlag = false;
 
 	//static constexpr char* const imgs[][2] = { { "imgs/super mario/1-1/TurtleGreen/frame0.png", "imgs/super mario/1-1/TurtleGreen/frame1.png" }, { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" } };
 	
@@ -36,8 +36,6 @@ public:
 
 private:
 	int imgIndex{ 0 }, imageChangeDelay{ 0 };
-
-	bool diedFlag = false;
 
 	void ChangeImg() noexcept;
 

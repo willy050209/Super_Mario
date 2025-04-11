@@ -1,29 +1,10 @@
-#define INITFORM_FUNC(func_name) void func_name(GameManager* self) noexcept
+#define INITFORM_FUNC(func_name) static void func_name(GameManager* self) noexcept
 
-/// <summary>
-/// 初始化1-2地圖
-/// </summary>
-/// <param name=""></param>
+
 INITFORM_FUNC(initForm_1_2);
-
-/// <summary>
-/// 初始化1-1水管
-/// </summary>
-/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_Pip);
-
-/// <summary>
-/// 初始化1-1到1-2過場
-/// </summary>
-/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_to_1_2);
-
-/// <summary>
-/// 初始化1-2水管
-/// </summary>
-/// <param name=""></param>
 INITFORM_FUNC(initForm_1_2_Pipe);
-
 INITFORM_FUNC(winForm);
 
 #ifndef INITFORMFUNC_HPP
@@ -113,7 +94,6 @@ INITFORM_FUNC(initFormBackground) {
 
 /*init Titel Form*/
 INITFORM_FUNC(initFormTitle) {
-
 	constexpr auto textSize = 50;
 	auto&& textColor = Util::Color::FromName(Util::Colors::YELLOW);
 
@@ -315,7 +295,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	for (int i = 0; i < 15; ++i) {
 		Blocks.push_back(std::make_shared<Brick>("Brick", StairsBrickImagePath, 10));
-		Blocks.back()->SetPosition({ GetX0(Block) - Block->GetSize().x , GetY0(Block) - Block->GetSize().y * (i) });
+		Blocks.back()->SetPosition({ GetX0(Block) - Block->GetSize().x, GetY0(Block) - Block->GetSize().y * (i) });
 	}
 
 	for (auto& it : Blocks) {
@@ -373,7 +353,7 @@ INITFORM_FUNC(initForm_1_1) {
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
 	}
 	for (auto& it : coins) {
-		//std::cout << &it->imgs << '\n';
+		// std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
 	}
 
@@ -402,7 +382,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	std::vector<std::shared_ptr<Turtle>> turtles;
 	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::imgs[0], 50));
-	turtles.back()->SetPosition({ -GetX0(enemys[0]) + 64 , 0 });
+	turtles.back()->SetPosition({ -GetX0(enemys[0]) + 64, 0 });
 	for (auto& it : turtles) {
 		enemys.push_back(it);
 	}
@@ -483,6 +463,10 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
+/// <summary>
+/// 初始化1-1水管
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_Pip) {
 	auto& MyFM = self->GetFormManger();
 	std::shared_ptr<Brick> Block = std::make_shared<Brick>("brick", BlockImagePath, 1);
@@ -538,7 +522,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
-		//MyFM.addObject(Form_1_1_Pipe, it);
+		// MyFM.addObject(Form_1_1_Pipe, it);
 	}
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
@@ -566,9 +550,9 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(Form_1_1_Pipe, eventobj);
 
-	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	//eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
-	//MyFM.addObject(Form_1_1_Pipe, eventobj);
+	// eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	// eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
+	// MyFM.addObject(Form_1_1_Pipe, eventobj);
 
 	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
@@ -586,6 +570,10 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
+/// <summary>
+/// 初始化1-1到1-2過場
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto& MyFM = self->GetFormManger();
 	std::shared_ptr<Brick> Block = std::make_shared<Brick>("brick", BlockImagePath, 1);
@@ -618,6 +606,10 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	eventobj->userdata = std::make_shared<std::string>(Form_1_1);
 	MyFM.addObject(Form_1_1_to_1_2, eventobj);
 
+	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent);
+	eventobj->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(15, std::vector<bool>());
+	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(Form_1_1_to_1_2, eventobj);
@@ -629,6 +621,10 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	MyFM.addObject(Form_1_1_to_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
+/// <summary>
+/// 初始化1-2地圖
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_2) {
 	auto& MyFM = self->GetFormManger();
 	std::shared_ptr<Brick> Block = std::make_shared<Brick>("brick", BlockImagePath, 1);
@@ -636,7 +632,7 @@ INITFORM_FUNC(initForm_1_2) {
 	std::vector<std::shared_ptr<Character>> enemys;
 	std::vector<std::shared_ptr<Brick>> pipes;
 	std::vector<std::shared_ptr<Coin>> coins;
-	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", StairsBrickImagePath, -10)};
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", StairsBrickImagePath, -10) };
 	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_2_ImagePath, 1);
@@ -671,7 +667,7 @@ INITFORM_FUNC(initForm_1_2) {
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
 	}
 	for (auto& it : coins) {
-		//std::cout << &it->imgs << '\n';
+		// std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
 	}
 
@@ -973,6 +969,10 @@ INITFORM_FUNC(initForm_1_2) {
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
+/// <summary>
+/// 初始化1-2水管
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto& MyFM = self->GetFormManger();
 	std::shared_ptr<Brick> Block = std::make_shared<Brick>("brick", BlockImagePath, 1);
@@ -1012,7 +1012,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (4 + i), GetY0(Block) - Block->GetSize().y * (9) });
 	}
 	for (int i = 0; i < 10; ++i) {
-		for (int j=0;j<5;++j) {
+		for (int j = 0; j < 5; ++j) {
 			Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 10));
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (4 + i), GetY0(Block) - Block->GetSize().y * (2 + j) });
 		}
@@ -1021,11 +1021,11 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 10));
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (14), GetY0(Block) - Block->GetSize().y * (2 + i) });
 	}
-	
+
 
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
-		//MyFM.addObject(Form_1_2_Pipe, it);
+		// MyFM.addObject(Form_1_2_Pipe, it);
 	}
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);

@@ -109,7 +109,7 @@ void Mario::move() noexcept
 	}
 }
 
-void Mario::diedjump() noexcept{
+void Mario::died() noexcept{
 		state = State::DIED;
 		displacement = 2.5 * DEFAULTDISPLACEMENT;
 		index = 0;
@@ -118,5 +118,3 @@ void Mario::diedjump() noexcept{
 		//state = State::UP;
 }
 
-void Mario::died() noexcept {
-}

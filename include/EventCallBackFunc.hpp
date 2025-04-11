@@ -16,9 +16,9 @@
 
 #define EVENTCALLCALLBACKFUN(FUNC_name) static void FUNC_name(EventObject* const self, void* data)
 
-//INITFORM_FUNC(initForm_1_2);
+// INITFORM_FUNC(initForm_1_2);
 
-//inline void loadCheckpoint(GameManager* const GM, std::shared_ptr<std::vector<std::shared_ptr<CheckPoint>>> checkPoints) noexcept {
+// inline void loadCheckpoint(GameManager* const GM, std::shared_ptr<std::vector<std::shared_ptr<CheckPoint>>> checkPoints) noexcept {
 //	auto& FM = GM->GetFormManger();
 //	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 //	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
@@ -36,110 +36,107 @@
 //			break;
 //		}
 //	}
-//}
+// }
 
 
 /// <summary>
 /// 取得現在系統時間，並輸出至CMD
 /// </summary>
-/// <param name=""></param>
-EVENTCALLCALLBACKFUN(GetSystemTimeFunc){
-    auto num = std::static_pointer_cast<int>(self->userdata);
-    if ((*num)++ >= FPS_CAP) {
-        auto currentTime = std::chrono::system_clock::now();
-        auto time = std::chrono::system_clock::to_time_t(currentTime);
-        std::cout << "目前時間：" << std::ctime(&time);
-        (*num) = 0;
-    }
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
+EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
+	auto num = std::static_pointer_cast<int>(self->userdata);
+	if ((*num)++ >= FPS_CAP) {
+		auto currentTime = std::chrono::system_clock::now();
+		auto time = std::chrono::system_clock::to_time_t(currentTime);
+		std::cout << "目前時間：" << std::ctime(&time);
+		(*num) = 0;
+	}
 }
 
 /// <summary>
 /// 移動事件
 /// </summary>
-/// <param name=""></param>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-    auto&& Displacement = WINDOW_HEIGHT/15/8.f;
-	//const auto Displacement = WINDOW_HEIGHT / 15/2;
+	// const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(self->userdata);
 	auto& [enemys, pipes] = (*tuplePtr);
 	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
-    bool flag = true;
-    auto marioPos = mario->GetPosition();
+	bool flag = true;
+	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
+	auto&& Displacement = (int)mariosize.x >> 3;
 
 	auto& opmode = static_cast<GameManager*>(data)->opMode;
 
-    if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
+	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
 		Displacement *= 2;
-    }
-    if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
-        (mario)->jump();
-    }
-    if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        auto pos = (background)->GetPosition();
+	}
+	if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == Mario::State::MOVE) {
+		(mario)->jump();
+	}
+	if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+		auto pos = (background)->GetPosition();
 		mario->left = 0;
-        for (auto& it : *block) {
+		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
-                flag = false;
-                break;
-            }
-        }
-		if (abs(mario->GetPosition().x ) >= mariosize.x && pos.x == GetX0(background) && flag) {
-            mario->SetPosition({ mario->GetPosition().x + Displacement,mario->GetPosition().y });
-        }
-        else if(pos.x > -GetX0(background) && flag)
-        {
-            pos.x-= Displacement;
-            for (auto& it : *block) {
-                it->SetPosition({ it->GetPosition().x - Displacement,it->GetPosition().y });
-            }
-            for (auto& it : enemys) {
+				flag = false;
+				break;
+			}
+		}
+		if (abs(mario->GetPosition().x) >= mariosize.x && pos.x == GetX0(background) && flag) {
+			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
+		}
+		else if (pos.x > -GetX0(background) && flag) {
+			pos.x -= Displacement;
+			for (auto& it : *block) {
 				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
-            }
-        }
-        else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x && flag)
-        {
-            mario->SetPosition({ mario->GetPosition().x + Displacement,mario->GetPosition().y });
-        }
-        if(flag)
-            (background)->SetPosition(pos);
+			}
+			for (auto& it : enemys) {
+				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+			}
+		}
+		else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x && flag) {
+			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
+		}
+		if (flag)
+			(background)->SetPosition(pos);
 		mario->move();
-    }
-    else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+	}
+	else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
 		mario->left = 1;
-        auto pos = (background)->GetPosition();
-        for (auto& it : *block) {
+		auto pos = (background)->GetPosition();
+		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
-                flag = false;
-                break;
-            }
-        }
+				flag = false;
+				break;
+			}
+		}
 		if (abs(mario->GetPosition().x) >= mariosize.x && pos.x == -GetX0(background) && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
-        }
-        else if (pos.x < GetX0(background) && flag)
-        {
-            pos.x += Displacement;
-            for (auto& it : *block) {
-                it->SetPosition({ it->GetPosition().x + Displacement,it->GetPosition().y });
-            }
+		}
+		else if (pos.x < GetX0(background) && flag) {
+			pos.x += Displacement;
+			for (auto& it : *block) {
+				it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+			}
 			for (auto& it : enemys) {
 				it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 			}
-        }
-        else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2) + mario->GetSize().x && flag)
-        {
-            mario->SetPosition({ mario->GetPosition().x - Displacement,mario->GetPosition().y });
-        }
-        if(flag)
-            (background)->SetPosition(pos);
+		}
+		else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2) + mario->GetSize().x && flag) {
+			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
+		}
+		if (flag)
+			(background)->SetPosition(pos);
 		mario->move();
-        
-    }
-    else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
+	}
+	else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
 		for (auto& it : pipes) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
 				if (FM.GetNowForm() == Form_1_1) {
@@ -158,9 +155,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				}
 			}
 		}
-    }
-	
-    /*test*/
+	}
+
+	/*test*/
 	if (Util::Input::IsKeyDown(Util::Keycode::O)) {
 		opmode = !opmode;
 		std::cout << "opmode : " << (opmode ? "true" : "false") << '\n';
@@ -188,22 +185,23 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 /// <summary>
 /// 變更時間事件
 /// </summary>
-/// <param name=""></param>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& [num, nowtime, timetext] = (*(std::static_pointer_cast<std::tuple<int, int, std::shared_ptr<TextObject>>>(self->userdata)));
-    if ((num)++ >= FPS_CAP) {
-        //auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
-		//auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<TextObject>>>(self->userdata)));
-        std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
-        (num) = 0;
-        if (nowtime == 0) {
+	if ((num)++ >= FPS_CAP) {
+		// auto& timetext = std::get<std::shared_ptr<TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<TextObject>>>(self->userdata));
+		// auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<TextObject>>>(self->userdata)));
+		std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
+		(num) = 0;
+		if (nowtime == 0) {
 			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-        }
-    }
+		}
+	}
 }
 
-//EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
+// EVENTCALLCALLBACKFUN(QuestionBlockPlayGIF) {
 //	static const std::string imgs[] = { "imgs/super mario/QuestionBlock/frame0.png" , "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 //	auto& questions = std::get<std::vector<std::shared_ptr<QuestionBlock>>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<QuestionBlock>>>>(self->userdata));
 //	auto& count = std::get<0>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(self->userdata));
@@ -219,12 +217,13 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 //		}
 //		*count = 0;
 //	}
-//}
+// }
 
 /// <summary>
 /// 判斷是否到達大門
 /// </summary>
-/// <param name=""></param>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
@@ -283,7 +282,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				winForm((GameManager*)data);
 				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 			}
-			//initForm_1_2((GameManager*)data);
+			// initForm_1_2((GameManager*)data);
 			break;
 		}
 	}
@@ -292,7 +291,8 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 /// <summary>
 /// 判斷與敵人碰撞
 /// </summary>
-/// <param name=""></param>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -313,7 +313,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 					GM->bgm->LoadMedia(Lost_a_Life);
 					GM->bgm->Play(1);
 					GM->DecHP();
-					mario->diedjump();
+					mario->died();
 					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
 					if (GM->GetHP() == 0) {
 						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
@@ -331,6 +331,11 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	}
 }
 
+/// <summary>
+/// Game Over Event
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -340,22 +345,26 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
 	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
-    for (auto& eventobj : objandform.m_Events) {
+	for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
-    }
-	//static_cast<GameManager*>(data)->pause = true;
+	}
+	// static_cast<GameManager*>(data)->pause = true;
 	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
 
-
+/// <summary>
+/// 判斷與旗桿碰撞
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto& flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	for (auto& it = flagpole->begin(); it < flagpole->end();++it) {
+	for (auto& it = flagpole->begin(); it < flagpole->end(); ++it) {
 		if ((*it)->inRange(marioPos, marioSize)) {
 			int f_height = static_cast<int>(it - flagpole->begin());
 			static_cast<GameManager*>(data)->addPoint(1000 * f_height);
@@ -370,6 +379,11 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	}
 }
 
+/// <summary>
+/// 移動到大門事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
@@ -391,6 +405,11 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	mario->move();
 }
 
+/// <summary>
+/// 判斷與存檔點碰撞事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckPointCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -409,6 +428,11 @@ EVENTCALLCALLBACKFUN(CheckPointCollision) {
 	}
 }
 
+/// <summary>
+/// 返回存檔點事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -417,7 +441,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	int gobackposx = 0;
 	mario->SetPosition(static_cast<GameManager*>(data)->GetCheckPointPos());
 	mario->Reset();
-	for (int i = checkPoints->size() - 1; i >= 0;--i) {
+	for (int i = checkPoints->size() - 1; i >= 0; --i) {
 		if (!(*checkPoints)[i]->Enable) {
 			gobackposx = (*checkPoints)[i]->GetPosition().x;
 			for (auto& obj : allobj.m_Images) {
@@ -445,6 +469,11 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	}
 }
 
+/// <summary>
+/// 更新HP文字事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdateHPText) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -455,11 +484,16 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 	self->Enable = false;
 }
 
+/// <summary>
+/// 判斷Mario座標事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT) >> 1) && mario->GetPosition().y <0) {
+	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT) >> 1) && mario->GetPosition().y < 0) {
 		GM->DecHP();
 		std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
 		if (GM->GetHP() == 0) {
@@ -471,23 +505,30 @@ EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 	}
 }
 
+/// <summary>
+/// 暫停所有事件事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto & [ count, bvec ] = (*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
+	/// <summary> count 暫停的幀數 
+	/// bvec 原本事件的狀態 </summary>
+	auto& [count, bvec] = (*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
 	--count;
 	if (bvec.size() == 0) {
 		auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
 		for (auto& it : allevent) {
 			bvec.push_back(it->Enable);
-			if (it->name != self->name) 
+			if (it->name != self->name)
 				it->Enable = false;
 		}
 	}
 	else {
 		if (count == 0) {
 			auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
-			for (int i = 0; i < allevent.size();++i) {
+			for (int i = 0; i < allevent.size(); ++i) {
 				if (allevent[i]->name == self->name) {
 					allevent[i]->Enable = false;
 					continue;
@@ -498,6 +539,11 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 	}
 }
 
+/// <summary>
+/// 判斷與金幣碰撞事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -514,16 +560,27 @@ EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 	}
 }
 
+/// <summary>
+/// 更新分數事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto& text = FM.GetFormObject(FM.GetNowForm(), ObjectType::TextObject, "PointText");
+	/// <summary>分數文字</summary>
 	char textstr[128] = "";
 	snprintf(textstr, sizeof(textstr), "Point:%d", GM->GetPoint());
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
 	self->Enable = false;
 }
 
+/// <summary>
+/// 龜殼碰撞事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -532,7 +589,7 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	for (auto& it : *turtles) {
-		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
+		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
 			auto turtlePos{ it->GetPosition() };
 			if (it->GetPosition().x > marioPos.x) {
 				turtlePos.x += it->GetSize().x;
@@ -559,7 +616,7 @@ EVENTCALLCALLBACKFUN(freeForm) {
 	FM.freeForm(*std::static_pointer_cast<std::string>(self->userdata));
 	self->Enable = false;
 	auto& m_Events = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
-	//m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [&](auto& i) { return i->name == self->name; }));
+	// m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [&](auto& i) { return i->name == self->name; }));
 }
 
 #endif
