@@ -56,9 +56,10 @@ void GameManager::init() noexcept {
 	showProgressBar(total, current++);
 
 	//initForm_1_1_to_1_2(this);
+	//initForm_1_2_Pipe(this);
 
 	MyFM.changeForm(FormTitel /*FormBackground*/);
-	//MyFM.changeForm(Form_1_1_to_1_2);
+	//MyFM.changeForm(Form_1_2_Pipe);
 	showProgressBar(total, current);
 	puts("");
 	/*system("pause");

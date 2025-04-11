@@ -17,6 +17,7 @@ constexpr auto Form_1_1 = "Form_1_1";
 constexpr auto Form_1_1_Pipe = "Form_1_1_Pipe";
 constexpr auto Form_1_1_to_1_2 = "Form_1_1_to_1_2";
 constexpr auto Form_1_2 = "Form_1_2";
+constexpr auto Form_1_2_Pipe = "Form_1_2_Pipe";
 
 class GameManager
 {
