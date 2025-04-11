@@ -51,13 +51,17 @@ int main(int, char** argc) {
 
 	std::filesystem::create_directory("imgs");
 	std::vector<std::thread> threads;
+	std::vector<std::pair<std::string, std::string>> outpaths;
 	for (auto& it : directorys) {
+		std::cout << "enlarge " << it << '\n';
+		std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
+		std::filesystem::create_directory(outpath);
+		outpaths.push_back(std::pair<std::string, std::string>(it, outpath));
+	}
+	for (auto& it : outpaths) {
 		threads.push_back(std::thread([&]() {
-			std::cout << "enlarge " << it << '\n';
-			std::string outpath = "imgs/" + it.substr(sizeof(MY_RESOURCE_DIR));
-			std::filesystem::create_directory(outpath);
 			// std::cout << outpath << '\n';
-			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
+			enlargeImages(it.first, (WINDOW_HEIGHT) / 480.f, it.second);
 			std::cout << "Successfully enlarged and stored the image\n";
 		}));
 	}
@@ -80,6 +84,9 @@ int main(int, char** argc) {
 	for (auto& it : threads) {
 		it.join();
 	}
+	//auto sleep_time = std::chrono::system_clock::now() + std::chrono::milliseconds(10);
+
+	//std::this_thread::sleep_until(sleep_time);
 
 	gameManger.init();
     
