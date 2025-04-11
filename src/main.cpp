@@ -52,20 +52,31 @@ int main(int, char** argc) {
 
 	std::filesystem::create_directory("imgs");
 	std::vector<std::thread> threads;
-	std::vector<std::pair<std::string, std::string>> outpaths;
 	for (auto& it : directorys) {
-		std::cout << "enlarge " << it << '\n';
-		std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
-		std::filesystem::create_directory(outpath);
-		outpaths.push_back(std::pair<std::string, std::string>(it, outpath));
-	}
-	for (auto& it : outpaths) {
-		threads.push_back(std::thread([&]() {
+		threads.push_back(std::thread([=]() {
 			// std::cout << outpath << '\n';
-			enlargeImages(it.first, (WINDOW_HEIGHT) / 480.f, it.second);
+			std::cout << "enlarge " << it << '\n';
+			std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
+			std::filesystem::create_directory(outpath);
+			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
 			std::cout << "Successfully enlarged and stored the image\n";
 		}));
 	}
+
+	//std::vector<std::pair<std::string, std::string>> filepaths;
+	//for (auto& it : directorys) {
+	//	std::cout << "enlarge " << it << '\n';
+	//	std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
+	//	std::filesystem::create_directory(outpath);
+	//	filepaths.push_back(std::pair<std::string, std::string>(it, outpath));
+	//}
+	//for (auto& it : filepaths) {
+	//	threads.push_back(std::thread([&]() {
+	//		// std::cout << outpath << '\n';
+	//		enlargeImages(it.first, (WINDOW_HEIGHT) / 480.f, it.second);
+	//		std::cout << "Successfully enlarged and stored the image\n";
+	//	}));
+	//}
 
  //   std::thread ImageResizer([]() {
 	//	std::filesystem::create_directory("imgs");
