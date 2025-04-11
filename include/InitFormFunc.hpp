@@ -1,9 +1,23 @@
 #define INITFORM_FUNC(func_name) void func_name(GameManager* self) noexcept
 
+/// <summary>
+/// 初始化1-2地圖
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_2);
+
+/// <summary>
+/// 初始化1-1水管
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_Pip);
-INITFORM_FUNC(winForm);
+
+/// <summary>
+/// 初始化1-1到1-2過場
+/// </summary>
+/// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_to_1_2);
+INITFORM_FUNC(winForm);
 
 #ifndef INITFORMFUNC_HPP
 #define INITFORMFUNC_HPP
@@ -218,7 +232,7 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(Form_1_1, mario);
 
 	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
-	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint", CheckPointPath, -10));
+	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint"));
 	checkPointArray[0]->collisionable = false;
 	checkPointArray[0]->SetVisible(false);
 	checkPointArray[0]->SetPosition({ 0, 0 });
@@ -629,7 +643,7 @@ INITFORM_FUNC(initForm_1_2) {
 	doorarr[1] = doorarr[0];
 	Blocks.push_back(doorarr[0]);
 
-	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint", CheckPointPath, -10));
+	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint"));
 	checkPointArray[0]->collisionable = false;
 	checkPointArray[0]->SetVisible(false);
 	checkPointArray[0]->SetPosition({ 0, 0 });

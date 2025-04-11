@@ -26,16 +26,42 @@ public:
 
     Object& operator=(Object&&) = delete;
 
+    /// <summary>
+    /// 取得 Core::Drawable
+    /// </summary>
+    /// <returns>Core::Drawable</returns>
     inline std::shared_ptr<Core::Drawable> GetDrawable() const noexcept { return m_Drawable; }
 
+    /// <summary>
+    /// 取得座標
+    /// </summary>
+    /// <returns>const glm::vec2&</returns>
     virtual inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
 
+    /// <summary>
+    /// 取得是否可見
+    /// </summary>
+    /// <returns>Visible</returns>
     inline bool GetVisibility() const noexcept { return m_Visible; }
 
+    /// <summary>
+    /// 設定座標
+    /// </summary>
+    /// <param name="Position">座標</param>
     inline void SetPosition(const glm::vec2& Position) noexcept { m_Transform.translation = Position; }
 
+    /// <summary>
+    /// 設定圖片
+    /// </summary>
+    /// <param name="ImagePath">圖片路徑</param>
     void setImage(const std::string& ImagePath) noexcept{ m_Drawable = std::make_shared<Util::Image>(ImagePath); }
 
+    /// <summary>
+    /// 判斷輸入的矩形是否與自身重疊
+    /// </summary>
+    /// <param name="Position">矩形中心座標</param>
+    /// <param name="size">矩形大小</param>
+    /// <returns></returns>
     inline bool inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
 		const auto& mpos = GetPosition();
 		const auto& msize = GetSize();
@@ -60,18 +86,38 @@ public:
 		return _ml < _or && _mr > _ol && _mu > _od && _md < _ou;
     }
 
+    /// <summary>
+    /// 取得自身大小
+    /// </summary>
+    /// <returns>矩形大小</returns>
     virtual inline glm::vec2 GetSize() const noexcept {
         return std::dynamic_pointer_cast<Util::Image>(m_Drawable)->GetSize();
     }
 
-
+    /// <summary>
+    /// 每次表單刷新時執行
+    /// </summary>
+    /// <param name="data">GameManager *</param>
     virtual void behavior(void* data = nullptr) {}
 
+    /// <summary>
+    /// 是否可碰撞
+    /// </summary>
     bool collisionable{ true };
 
+    /// <summary>
+    /// 自身 ID
+    /// </summary>
     std::string name;
-
+    
+	/// <summary>
+	/// 提供而外資料接口
+	/// </summary>
 	std::shared_ptr<void> userdata{ nullptr };
+
+	/// <summary>
+	/// 自身資料類型
+	/// </summary>
 	ObjectType MyType = ObjectType::Object;
 };
 

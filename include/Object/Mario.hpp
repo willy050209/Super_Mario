@@ -7,6 +7,9 @@
 #include <vector>
 #include <string>
 
+/// <summary>
+/// 馬力歐物件 繼承Character
+/// </summary>
 class Mario : public Character {
 public:
 	enum class State
@@ -19,8 +22,19 @@ public:
 		MyType = ObjectType::Mario;
 	}
 
+	/// <summary>
+	/// 取得目前狀態
+	/// </summary>
+	/// <returns>enum class State
+	/// {
+	/// 	UP, MOVE, DOWN, DIED
+	/// };
+	/// </returns>
 	inline State GetState() const noexcept { return state; }
 
+	/// <summary>
+	/// 執行跳躍
+	/// </summary>
 	inline void jump() noexcept {
 		if(jumpDelay == 0)
 		{

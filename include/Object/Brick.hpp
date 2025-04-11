@@ -4,6 +4,9 @@
 #include "ImageObject.hpp"
 #include "ObjectType.hpp"
 
+/// <summary>
+/// 所有磚頭的父類別 繼承ImageObject
+/// </summary>
 class Brick : public ImageObject {
 public:
 	explicit Brick(const std::string& name, const std::string& ImagePath,
@@ -13,7 +16,7 @@ public:
 		MyType = ObjectType::Brick;
 	}
 
-	Brick(
+	/*Brick(
 		const std::string& name,
 		const std::shared_ptr<Core::Drawable>& drawable,
 		const float zIndex,
@@ -21,7 +24,7 @@ public:
 		const bool visible = true,
 		const std::vector<std::shared_ptr<GameObject>>& children = std::vector<std::shared_ptr<GameObject>>()) : ImageObject(name, drawable, zIndex, pivot, visible, children) {
 		MyType = ObjectType::Brick;
-	}
+	}*/
 
 	Brick(const Brick& other) = delete;
 
@@ -29,6 +32,9 @@ public:
 
 	Brick() = delete;
 
+	/// <summary>
+	/// 被敲擊事件
+	/// </summary>
 	virtual void bonk() noexcept;
 };
 

@@ -4,6 +4,9 @@
 #include "TextObject.hpp"
 #include "Util/Color.hpp"
 
+/// <summary>
+/// 按鈕事件 繼承TextObject
+/// </summary>
 class Button :public TextObject {
 public:
 	Button(
@@ -21,7 +24,7 @@ public:
 		MyType = ObjectType::Button;
 	}
 
-	Button(
+	/*Button(
 		const std::string& name,
 		const std::shared_ptr< Core::Drawable >& drawable,
 		const float 	zIndex = 10,
@@ -31,7 +34,7 @@ public:
 	) :TextObject(name, drawable, zIndex, pivot, visible, children) {
 		ClickedColor = Util::Color::FromName(Util::Colors::RED);
 		MyType = ObjectType::Button;
-	}
+	}*/
 
 	Button(const Button& other) = delete;
 
@@ -39,19 +42,49 @@ public:
 
 	Button() = delete;
 
+	/// <summary>
+	/// 取得被選取到改變的顏色
+	/// </summary>
+	/// <returns></returns>
 	inline const Util::Color& GetClickedColor() const noexcept { return ClickedColor; }
 
+	/// <summary>
+	/// 取得CallBack Function
+	/// </summary>
+	/// <returns></returns>
 	inline void* GetCallBackFunc() const noexcept { return (void*)CallBackFunc; }
 
+	/// <summary>
+	/// 設定CallBack Function
+	/// </summary>
+	/// <param name="CallBackFunc"></param>
 	inline void SetCallBackFunc(void (*CallBackFunc)(Button* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
 
+	/// <summary>
+	/// 表單刷新時執行
+	/// </summary>
+	/// <param name="data"></param>
 	virtual void behavior(void* data = nullptr) override;
 
 
-
+	/// <summary>
+	/// CallBack Function
+	/// </summary>
 	void (*CallBackFunc)(Button* const self, void* data) = nullptr;
+
+	/// <summary>
+	/// 點擊顏色
+	/// </summary>
 	Util::Color ClickedColor;
+
+	/// <summary>
+	/// 預設顏色
+	/// </summary>
 	Util::Color defultColor{ Util::Color::FromName(Util::Colors::BLACK) };
+
+	/// <summary>
+	/// 觸發
+	/// </summary>
 	bool trigger = false;
 };
 

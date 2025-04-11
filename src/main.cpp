@@ -53,11 +53,11 @@ int main(int, char** argc) {
 	std::filesystem::create_directory("imgs");
 	std::vector<std::thread> threads;
 	for (auto& it : directorys) {
+		std::cout << "enlarge " << it << '\n';
+		std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
+		std::filesystem::create_directory(outpath);
 		threads.push_back(std::thread([=]() {
 			// std::cout << outpath << '\n';
-			std::cout << "enlarge " << it << '\n';
-			std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
-			std::filesystem::create_directory(outpath);
 			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
 			std::cout << "Successfully enlarged and stored the image\n";
 		}));

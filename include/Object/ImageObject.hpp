@@ -4,6 +4,9 @@
 #include "Object.hpp"
 #include "Util/Image.hpp"
 
+/// <summary>
+/// 圖片物件 繼承Object
+/// </summary>
 class ImageObject : public Object {
 
 public:

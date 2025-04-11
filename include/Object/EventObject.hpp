@@ -3,6 +3,9 @@
 
 #include "Object.hpp"
 
+/// <summary>
+/// 事件物件 繼承Object
+/// </summary>
 class EventObject :public Object {
 
 public:
@@ -21,10 +24,22 @@ public:
 
     EventObject& operator=(EventObject&&) = delete;
 
+    /// <summary>
+    /// 取得CallBack Function
+    /// </summary>
+    /// <returns></returns>
     inline void* GetCallBackFunc() const noexcept { return (void*)CallBackFunc; }
 
+    /// <summary>
+    /// 設定CallBack Function
+    /// </summary>
+    /// <param name="CallBackFunc"></param>
     inline void SetCallBackFunc(void (*CallBackFunc)(EventObject* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
 
+    /// <summary>
+    /// 表單刷新時執行
+    /// </summary>
+    /// <param name="data"></param>
     virtual void behavior(void* data = nullptr) override {
         if(Enable && data)
             CallBackFunc(this, data);

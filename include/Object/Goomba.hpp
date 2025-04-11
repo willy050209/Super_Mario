@@ -5,6 +5,9 @@
 #include "Character.hpp"
 #include <string>
 
+/// <summary>
+/// ®ßÄ_Ä_ª«¥ó Ä~©ÓCharacter
+/// </summary>
 class Goomba : public Character {
 public:
 	Goomba(const std::string& name, const std::string& ImagePath, int zindex)
