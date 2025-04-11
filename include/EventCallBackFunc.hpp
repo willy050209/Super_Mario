@@ -59,6 +59,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::tuple(std::vector(std::shared_ptr(Character)), std::vector(std::shared_ptr(Brick))) </param>
 EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
@@ -187,6 +188,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::tuple(int, int, std::shared_ptr(TextObject))) </param>
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& [num, nowtime, timetext] = (*(std::static_pointer_cast<std::tuple<int, int, std::shared_ptr<TextObject>>>(self->userdata)));
@@ -224,6 +226,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
@@ -293,6 +296,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(Character)) </param>
 EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -358,6 +362,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(Brick)) </param>
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -384,6 +389,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
@@ -410,6 +416,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(CheckPointCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -433,6 +440,7 @@ EVENTCALLCALLBACKFUN(CheckPointCollision) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
@@ -510,6 +518,7 @@ EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::tuple(int, std::vector(bool))) </param>
 EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -544,6 +553,7 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(Coin)) </param>
 EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -581,6 +591,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
+/// <param name="self->userdata"> *std::vector(std::shared_ptr(Turtle)) </param>
 EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -602,6 +613,12 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	}
 }
 
+/// <summary>
+/// 改變表單事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
+/// <param name="self->userdata">切換目的表單</param>
 EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -610,6 +627,12 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	FM.changeForm(*form);
 }
 
+/// <summary>
+/// 釋放表單事件
+/// </summary>
+/// <param name="self">指向當前物件的指標</param>
+/// <param name="data">GameManager *</param>
+/// <param name="self->userdata">目標表單</param>
 EVENTCALLCALLBACKFUN(freeForm) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
