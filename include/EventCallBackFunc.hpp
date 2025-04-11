@@ -332,7 +332,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	auto&& Displacement = (int)marioSize.x >> 4;
+	auto&& Displacement = (int)marioSize.x >> 3;
 	if (mario->GetState() == Mario::State::MOVE) {
 		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
 			marioPos.x -= Displacement;
