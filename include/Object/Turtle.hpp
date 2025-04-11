@@ -10,6 +10,7 @@ public:
 	Turtle(const std::string& name, const std::string& ImagePath, int zindex)
 		: Character(name, ImagePath, zindex) {
 		MyType = ObjectType::Turtle;
+		left = 1;
 	}
 
 	Turtle(const Turtle&) = delete;
@@ -26,7 +27,10 @@ public:
 
 	bool loop = true;
 
-	static constexpr char* const imgs[] = { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" };
+	//static constexpr char* const imgs[][2] = { { "imgs/super mario/1-1/TurtleGreen/frame0.png", "imgs/super mario/1-1/TurtleGreen/frame1.png" }, { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" } };
+	
+	static constexpr char* const imgs[2] =  { "imgs/super mario/TurtleGreen_faceleft/frame0.png", "imgs/super mario/TurtleGreen_faceleft/frame1.png" } ;
+	static constexpr char* const imgs_r[2] = { "imgs/super mario/TurtleGreen/frame0.png", "imgs/super mario/TurtleGreen/frame1.png" };
 	
 	static constexpr char* const TortoiseShell[] = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
 

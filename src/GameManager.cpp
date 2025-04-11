@@ -40,7 +40,7 @@ void GameManager::init() noexcept {
 	initForm_1_1(this);
 	showProgressBar(total, current++);
 
-	initForm_1_1_Pip(this);
+	//initForm_1_1_Pip(this);
 	showProgressBar(total, current++);
 
 	//initForm_1_2(this);
@@ -56,7 +56,7 @@ void GameManager::init() noexcept {
 	showProgressBar(total, current++);
 
 	MyFM.changeForm(FormTitel /*FormBackground*/);
-	//MyFM.changeForm(Form_1_2);
+	//MyFM.changeForm(Form_1_1_Pipe);
 	showProgressBar(total, current);
 	puts("");
 	/*system("pause");
