@@ -8,6 +8,7 @@ constexpr auto BackgroundImagePath = MY_RESOURCE_DIR "/Image/Background/cat.jpg"
 constexpr auto marioImagePath = "imgs/super mario/Mario/frame0.png";
 constexpr auto Background_1_1_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1main-up.png";
 constexpr auto Background_1_1_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1inpipe.png";
+constexpr auto Background_1_1_to_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1 to 1-2.png";
 constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main_new.png";
 constexpr auto BlockImagePath = /*"imgs/super mario/floor.png";*/ "imgs/super mario/1-1/BrickBlockBrown.png";
 constexpr auto BlockDarkImagePath = "imgs/super mario/BrickBlockDark.png";

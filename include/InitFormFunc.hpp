@@ -3,6 +3,7 @@
 INITFORM_FUNC(initForm_1_2);
 INITFORM_FUNC(initForm_1_1_Pip);
 INITFORM_FUNC(winForm);
+INITFORM_FUNC(initForm_1_1_to_1_2);
 
 #ifndef INITFORMFUNC_HPP
 #define INITFORMFUNC_HPP
@@ -515,7 +516,8 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (11) });
 
 	for (auto& it : Blocks) {
-		MyFM.addObject(Form_1_1_Pipe, it);
+		it->SetVisible(false);
+		//MyFM.addObject(Form_1_1_Pipe, it);
 	}
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
@@ -561,6 +563,45 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+}
+
+INITFORM_FUNC(initForm_1_1_to_1_2) {
+	auto& MyFM = self->GetFormManger();
+	std::shared_ptr<Brick> Block = std::make_shared<Brick>("brick", BlockImagePath, 1);
+	std::vector<std::shared_ptr<Brick>> Blocks;
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", StairsBrickImagePath, 10) };
+
+	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 100);
+	mario->SetPosition({ GetX0(Block) + Block->GetSize().x * 2, GetY0(Block) - Block->GetSize().y * (12) });
+	MyFM.addObject(Form_1_1_to_1_2, mario);
+
+	auto img = std::make_shared<ImageObject>("Background", Background_1_1_to_1_2_ImagePath, 1);
+	img->SetPosition({ GetX0(img), 0 });
+	MyFM.addObject(Form_1_1_to_1_2, img);
+
+	doorarr[1] = doorarr[0];
+	doorarr[0]->SetPosition({ GetX0(Block) + Block->GetSize().x * 11, GetY0(Block) - Block->GetSize().y * (12) });
+	doorarr[0]->collisionable = false;
+	for (auto& it : doorarr) {
+		Blocks.push_back(it);
+	}
+
+	for (int i = 0; i < 20; ++i) {
+		Blocks.push_back(std::make_shared<Brick>("floor", FloorImagePath, 10));
+		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (i + 1), GetY0(Block) - Block->GetSize().y * (13) });
+	}
+
+	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
+
+	auto eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor);
+	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+
+	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+
+	MyFM.addObject(Form_1_1_to_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
 INITFORM_FUNC(initForm_1_2) {
