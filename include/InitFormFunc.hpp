@@ -355,6 +355,7 @@ INITFORM_FUNC(initForm_1_1) {
 	for (auto& it : coins) {
 		// std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
+		// MyFM.addObject(Form_1_1, it);
 	}
 
 	for (auto& it : Blocks) {
@@ -520,10 +521,24 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (11) });
 
+	for (int i = 0; i < 7; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			if ((i == 0 || i == 6) && j == 0)
+				continue;
+			coins.push_back(std::make_shared<Coin>("Coin", Coin::imgs[0], 10));
+			coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (5 + i), GetY0(Block) - Block->GetSize().y * (5 + j * 2) });
+		}
+	}
+
+	for (auto& it : coins) {
+		MyFM.addObject(Form_1_1_Pipe, it);
+	}
+
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
 		// MyFM.addObject(Form_1_1_Pipe, it);
 	}
+
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
@@ -669,6 +684,7 @@ INITFORM_FUNC(initForm_1_2) {
 	for (auto& it : coins) {
 		// std::cout << &it->imgs << '\n';
 		Blocks.push_back(it);
+		// MyFM.addObject(Form_1_2, it);
 	}
 
 	pipes.push_back(std::make_shared<Brick>("Pipe", BlockImagePath, 10));
@@ -1012,7 +1028,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (4 + i), GetY0(Block) - Block->GetSize().y * (9) });
 	}
 	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 5; ++j) {
+		for (int j = 0; j < 4; ++j) {
 			Blocks.push_back(std::make_shared<Brick>("brick", BlockImagePath, 10));
 			Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (4 + i), GetY0(Block) - Block->GetSize().y * (2 + j) });
 		}
@@ -1026,6 +1042,19 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	for (auto& it : Blocks) {
 		it->SetVisible(false);
 		// MyFM.addObject(Form_1_2_Pipe, it);
+	}
+
+	for (int i = 0; i < 9; ++i) {
+		coins.push_back(std::make_shared<Coin>("Coin", Coin::imgs[0], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (i + 4), GetY0(Block) - Block->GetSize().y * (12) });
+	}
+	for (int i = 0; i < 8; ++i) {
+		coins.push_back(std::make_shared<Coin>("Coin", Coin::imgs[0], 10));
+		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (i + 5), GetY0(Block) - Block->GetSize().y * (8) });
+	}
+
+	for (auto& it : coins) {
+		MyFM.addObject(Form_1_2_Pipe, it);
 	}
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
