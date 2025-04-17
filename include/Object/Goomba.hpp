@@ -30,7 +30,7 @@ public:
 	bool loop = true;
 
 
-	static constexpr char* const imgs[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+	static constexpr inline char* const imgs[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
 
 private:
 	

@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// ´V¼Æ¶°¦X
 	/// </summary>
-	static constexpr char* const imgs[] = { "imgs/super mario/1-1/CoinForBlueBG/frame0.png", "imgs/super mario/1-1/CoinForBlueBG/frame1.png", "imgs/super mario/1-1/CoinForBlueBG/frame2.png", "imgs/super mario/1-1/CoinForBlueBG/frame3.png", "imgs/super mario/1-1/CoinForBlueBG/frame4.png", "imgs/super mario/1-1/CoinForBlueBG/frame5.png" };
+	static constexpr inline char* const imgs[] = { "imgs/super mario/1-1/CoinForBlueBG/frame0.png", "imgs/super mario/1-1/CoinForBlueBG/frame1.png", "imgs/super mario/1-1/CoinForBlueBG/frame2.png", "imgs/super mario/1-1/CoinForBlueBG/frame3.png", "imgs/super mario/1-1/CoinForBlueBG/frame4.png", "imgs/super mario/1-1/CoinForBlueBG/frame5.png" };
 
 private:
 
@@ -58,7 +58,7 @@ private:
 	void PlayGIF() noexcept;
 
 	
-	//static constexpr char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
+	//static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 
 	int count{ 0 }, imgindex{ 0 };
 	bool play{ true };
