@@ -3,6 +3,7 @@
 
 #include "TextObject.hpp"
 #include "Util/Color.hpp"
+#include <functional>
 
 /// <summary>
 /// 按鈕事件 繼承TextObject
@@ -52,13 +53,13 @@ public:
 	/// 取得CallBack Function
 	/// </summary>
 	/// <returns></returns>
-	inline void* GetCallBackFunc() const noexcept { return (void*)CallBackFunc; }
+	inline std::function<void(Button* const, void*)> GetCallBackFunc() const noexcept { return CallBackFunc; }
 
 	/// <summary>
 	/// 設定CallBack Function
 	/// </summary>
 	/// <param name="CallBackFunc"></param>
-	inline void SetCallBackFunc(void (*CallBackFunc)(Button* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
+	inline void SetCallBackFunc(std::function<void(Button* const, void*)> CallBackFunc) noexcept { this->CallBackFunc = CallBackFunc; }
 
 	/// <summary>
 	/// 表單刷新時執行
@@ -70,7 +71,7 @@ public:
 	/// <summary>
 	/// CallBack Function
 	/// </summary>
-	void (*CallBackFunc)(Button* const self, void* data) = nullptr;
+	std::function<void(Button* const, void*)> CallBackFunc = nullptr;
 
 	/// <summary>
 	/// 點擊顏色
