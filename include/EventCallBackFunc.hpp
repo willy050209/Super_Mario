@@ -624,7 +624,21 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto& FM = GM->GetFormManger();
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
 	self->Enable = false;
+	if (*form == "Form_1_1") {
+		GM->bgm->LoadMedia(Ground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == "Form_1_1_Pipe") {
+		GM->bgm->LoadMedia(Underground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == "Form_1_2" || *form == "Form_1_2_Pipe") {
+		GM->bgm->LoadMedia(Underground_Theme);
+		GM->bgm->Play(-1);
+	}
 	FM.changeForm(*form);
+	// std::cout << "now form is:" <<  * form << '\n';
+	//auto& bgm = std::make_shared<Util::BGM>();
 }
 
 /// <summary>

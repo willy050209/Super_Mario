@@ -70,6 +70,9 @@ constexpr auto StairsBrickDarkImagePath = "imgs/super mario/StairsBrickDark.png"
 //constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/Blueblock.png";
 constexpr auto Ground_Theme = MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3";
 constexpr auto Lost_a_Life = MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3";
+constexpr auto Underground_Theme = MY_RESOURCE_DIR "/BGM/02. Underground Theme.mp3";
+//constexpr auto Underground_Theme_fix = MY_RESOURCE_DIR "/BGM/02 (mp3cut.net).mp3";
+
 //constexpr auto CheckPointPath = "imgs/super mario/CheckPoint.png";
 
 

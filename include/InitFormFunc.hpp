@@ -540,6 +540,9 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	}
 
 
+	/* auto& bgm = self->bgm = std::make_shared<Util::BGM>(Underground_Theme);
+	bgm->Play(-1);*/
+
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ -GetX0(text), GetY0(text) });
