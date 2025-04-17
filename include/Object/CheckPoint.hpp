@@ -40,7 +40,7 @@ public:
 	/// <summary>
 	/// ¹Ï¤ù¸ô®|
 	/// </summary>
-	static constexpr char* const CheckPointImagePath = "imgs/super mario/CheckPoint.png";
+	static constexpr inline char* const CheckPointImagePath = "imgs/super mario/CheckPoint.png";
 
 	bool Enable = true;
 };

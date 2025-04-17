@@ -2,6 +2,7 @@
 #define EVENTOBJECT_HPP
 
 #include "Object.hpp"
+#include <functional>
 
 /// <summary>
 /// 事件物件 繼承Object
@@ -28,13 +29,13 @@ public:
     /// 取得CallBack Function
     /// </summary>
     /// <returns></returns>
-    inline void* GetCallBackFunc() const noexcept { return (void*)CallBackFunc; }
+	inline std::function<void(EventObject* const, void*)> GetCallBackFunc() const noexcept { return CallBackFunc; }
 
     /// <summary>
     /// 設定CallBack Function
     /// </summary>
     /// <param name="CallBackFunc"></param>
-    inline void SetCallBackFunc(void (*CallBackFunc)(EventObject* const self, void* data)) noexcept { this->CallBackFunc = CallBackFunc; }
+	inline void SetCallBackFunc(std::function<void(EventObject* const, void*)> CallBackFunc) noexcept { this->CallBackFunc = CallBackFunc; }
 
     /// <summary>
     /// 表單刷新時執行
@@ -50,7 +51,8 @@ public:
     /// </summary>
     bool Enable = true;
 
-    void (*CallBackFunc)(EventObject* const self, void* data) = nullptr;
+    std::function<void(EventObject* const, void*)> CallBackFunc = nullptr;
+    //void (*CallBackFunc)(EventObject* const self, void* data) = nullptr;
 };
 
 #endif

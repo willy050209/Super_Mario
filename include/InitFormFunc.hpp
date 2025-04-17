@@ -211,7 +211,7 @@ INITFORM_FUNC(initForm_1_1) {
 
 	auto img = std::make_shared<ImageObject>("Background", Background_1_1_ImagePath, 1);
 	img->SetPosition({ GetX0(img), 0 });
-	MyFM.addObject(Form_1_1, img);
+	MyFM.addObject(Form_1_1, std::move(img));
 
 	auto mario = std::make_shared<Mario>("Mario", marioImagePath, 100);
 	mario->SetPosition({ 0, 100 });
@@ -406,59 +406,59 @@ INITFORM_FUNC(initForm_1_1) {
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1_pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(Form_1_1_Pipe);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(enemys, pieps);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	// eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
 	// eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
-	// MyFM.addObject(Form_1_1, eventobj);
+	// MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
 	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
 
 	eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
 	eventobj->userdata = ptr;
-	MyFM.addObject(Form_1_1, eventobj);
+	MyFM.addObject(Form_1_1, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(Form_1_1, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
@@ -558,23 +558,23 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(enemys, pipes);
-	MyFM.addObject(Form_1_1_Pipe, eventobj);
+	MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
-	MyFM.addObject(Form_1_1_Pipe, eventobj);
+	MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_1_Pipe, eventobj);
+	MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	// eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	// eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
-	// MyFM.addObject(Form_1_1_Pipe, eventobj);
+	// MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
-	MyFM.addObject(Form_1_1_Pipe, eventobj);
+	MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
 
@@ -582,7 +582,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
-	MyFM.addObject(Form_1_1_Pipe, eventobj);
+	MyFM.addObject(Form_1_1_Pipe, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(Form_1_1_Pipe, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
@@ -622,19 +622,19 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1", freeForm);
 	eventobj->userdata = std::make_shared<std::string>(Form_1_1);
-	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+	MyFM.addObject(Form_1_1_to_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent);
 	eventobj->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(30, std::vector<bool>());
-	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+	MyFM.addObject(Form_1_1_to_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+	MyFM.addObject(Form_1_1_to_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_1_to_1_2, eventobj);
+	MyFM.addObject(Form_1_1_to_1_2, std::move(eventobj));
 
 	MyFM.addObject(Form_1_1_to_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
@@ -934,55 +934,55 @@ INITFORM_FUNC(initForm_1_2) {
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2_Pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(Form_1_2_Pipe);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(enemys, pipes);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Character>>>(enemys);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	/*eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
-	MyFM.addObject(Form_1_2, eventobj);*/
+	MyFM.addObject(Form_1_2, std::move(eventobj));*/
 
 	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
 	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
 
 	/*eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
-	MyFM.addObject(Form_1_2, eventobj);*/
+	MyFM.addObject(Form_1_2, std::move(eventobj));*/
 
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
 	eventobj->userdata = ptr;
-	MyFM.addObject(Form_1_2, eventobj);
+	MyFM.addObject(Form_1_2, std::move(eventobj));
 
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(Form_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
@@ -1075,19 +1075,19 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(enemys, pipes);
-	MyFM.addObject(Form_1_2_Pipe, eventobj);
+	MyFM.addObject(Form_1_2_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
-	MyFM.addObject(Form_1_2_Pipe, eventobj);
+	MyFM.addObject(Form_1_2_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(Form_1_2_Pipe, eventobj);
+	MyFM.addObject(Form_1_2_Pipe, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
-	MyFM.addObject(Form_1_2_Pipe, eventobj);
+	MyFM.addObject(Form_1_2_Pipe, std::move(eventobj));
 
 	MyFM.addObject(Form_1_2_Pipe, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
 
@@ -1095,7 +1095,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	MyFM.addObject(Form_1_2_Pipe, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
-	MyFM.addObject(Form_1_2_Pipe, eventobj);
+	MyFM.addObject(Form_1_2_Pipe, std::move(eventobj));
 
 	MyFM.addObject(Form_1_2_Pipe, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(Form_1_2_Pipe, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
