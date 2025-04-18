@@ -393,7 +393,7 @@ INITFORM_FUNC(initForm_1_1) {
 		it->userdata = mario->userdata;
 		MyFM.addObject(Form_1_1, it);
 	}
-
+	auto& sfx = self->sfx = std::make_shared<Util::SFX>(Game_Over);
 	auto& bgm = self->bgm = std::make_shared<Util::BGM>(Ground_Theme);
 	bgm->Play(-1);
 

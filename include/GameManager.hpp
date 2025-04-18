@@ -6,6 +6,7 @@
 #include "Form/FormManger.hpp"
 #include "MyBGM.hpp"
 #include "FilePath.hpp"
+#include "Util/SFX.hpp"
 
 #include <memory>
 
@@ -134,6 +135,8 @@ public:
 	/// ¹CÀ¸BGM
 	/// </summary>
 	std::shared_ptr<Util::BGM> bgm;
+	std::shared_ptr<Util::SFX> sfx;
+
 
 private:
 

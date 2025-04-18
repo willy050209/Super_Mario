@@ -6,7 +6,8 @@
 #include "util/Input.hpp"
 #include "Position.hpp"
 
-
+#include <thread>
+#include <chrono>
 #include <vector>
 #include <iostream>
 #include <chrono>
@@ -314,12 +315,20 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 				}
 				else {
 					// std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
-					GM->bgm->LoadMedia(Lost_a_Life);
-					GM->bgm->Play(1);
+					/*GM->bgm->LoadMedia(Lost_a_Life);
+					GM->bgm->Play(1);*/
 					GM->DecHP();
 					mario->died();
+					GM->bgm->Pause();
+					GM->sfx->LoadMedia(Lost_a_Life);
+					GM->sfx->Play(0);
 					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
 					if (GM->GetHP() == 0) {
+						GM->bgm->LoadMedia(Game_Over);
+						auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
+						sleepevent->Enable = true;
+						sleepevent->userdata.reset();
+						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP*3, std::vector<bool>());
 						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
 					}
 					else {
@@ -329,6 +338,8 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 						sleepevent->userdata.reset();
 						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
 					}
+					//std::this_thread::sleep_for(std::chrono::seconds(4));
+					//GM->bgm->Resume();
 				}
 			}
 		}
@@ -344,15 +355,16 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto& bgm = static_cast<GameManager*>(data)->bgm;
-	bgm->LoadMedia(Lost_a_Life);
-	bgm->Play(1);
+	auto& sfx = static_cast<GameManager*>(data)->sfx;
 	/*mario->changeState("DIED");
 	mario->changeImg();*/
 	auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
 	for (auto& eventobj : objandform.m_Events) {
 		eventobj->Enable = false;
 	}
-	// static_cast<GameManager*>(data)->pause = true;
+	static_cast<GameManager*>(data)->pause = true;
+	//std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+	bgm->Play(1);
 	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
@@ -445,6 +457,9 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
+	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+	auto GM = static_cast<GameManager*>(data);
+	GM->bgm->Play();
 	auto& allobj = FM.GetFormAndObject(FM.GetNowForm());
 	int gobackposx = 0;
 	mario->SetPosition(static_cast<GameManager*>(data)->GetCheckPointPos());
