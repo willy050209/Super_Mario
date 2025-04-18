@@ -1,3 +1,4 @@
+#pragma once
 #ifndef FORM_HPP
 #define FORM_HPP
 
@@ -13,7 +14,7 @@ public:
 	/// 加入表單
 	/// </summary>
 	/// <param name="obj">物件</param>
-	inline void addForm(std::shared_ptr<Object>& obj) noexcept {
+	inline void addForm(std::shared_ptr<Object> obj) noexcept {
 		m_Root.AddChild(obj);
 		m_Events.push_back(obj);
 	}
@@ -22,7 +23,7 @@ public:
 	/// 移除表單
 	/// </summary>
 	/// <param name="obj">物件</param>
-	inline void removeFormObj(std::shared_ptr<Object>& obj) noexcept {
+	inline void removeFormObj(std::shared_ptr<Object> obj) noexcept {
 		m_Root.RemoveChild(obj);
 		m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj),m_Events.end());
 	}

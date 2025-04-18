@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -14,8 +15,8 @@ namespace fs = std::filesystem;
 
 //int total = 0, current = 0;
 
-inline int get_all_files(const fs::path& directory) {
-	int result{0};
+inline auto get_all_files(const fs::path& directory) {
+	auto result{0};
 	for (const auto& entry : fs::recursive_directory_iterator(directory)) {
 		if (fs::is_regular_file(entry) && entry.path().extension() == ".png") {
 			result++;
@@ -24,7 +25,7 @@ inline int get_all_files(const fs::path& directory) {
 	return result;
 }
 
-inline std::vector<std::string> getSubdirectoriesRecursive(const std::string& path) noexcept {
+[[nodiscard]] inline auto getSubdirectoriesRecursive(const std::string& path) noexcept {
 	std::vector<std::string> subdirectories{ path };
 	std::error_code ec; // 用於處理可能發生的錯誤
 
@@ -34,7 +35,7 @@ inline std::vector<std::string> getSubdirectoriesRecursive(const std::string& pa
 			continue; // 發生錯誤則跳過當前項目
 		}
 		if (entry.is_directory()) {
-			subdirectories.push_back(entry.path().string());
+			subdirectories.push_back(std::move(entry.path().string()));
 		}
 	}
 	return subdirectories;

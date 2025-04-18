@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CHECKPOINT_HPP
 #define CHECKPOINT_HPP
 

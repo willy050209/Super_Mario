@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUTTONCALLBACKFUNC_hpp
 #define BUTTONCALLBACKFUNC_hpp
 
@@ -18,7 +19,7 @@ BUTTONCALLBACKFUNCTION(callBackTest) {
 
 BUTTONCALLBACKFUNCTION(RestaetButtonEvent) {
 	auto gm = static_cast<GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	// auto& fm = gm->GetFormManger();
 	gm->SetRestart(true);
 	gm->End();
 }

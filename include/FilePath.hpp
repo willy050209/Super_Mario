@@ -1,3 +1,4 @@
+#pragma once
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
 
@@ -13,7 +14,7 @@ constexpr auto marioImagePath = "imgs/super mario/Mario/frame0.png";
 /// <summary>
 /// 1-1地圖圖片路徑
 /// </summary>
-constexpr auto Background_1_1_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1main-up.png";
+constexpr auto Background_1_1_ImagePath = R"(imgs\super mario\Maps\SuperMarioBrosMap1-1main-up.png)";
 
 /// <summary>
 /// 1-1水管地圖圖片路徑

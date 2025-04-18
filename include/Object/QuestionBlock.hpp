@@ -1,3 +1,4 @@
+#pragma once
 #ifndef QUESTIONBLOCK_HPP
 #define QUESTIONBLOCK_HPP
 

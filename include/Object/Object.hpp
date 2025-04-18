@@ -1,3 +1,4 @@
+#pragma once
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
@@ -5,6 +6,9 @@
 #include "Util/Image.hpp"
 #include "ObjectType.hpp"
 
+/// <summary>
+/// 提供所以物件的父類
+/// </summary>
 class Object : public Util::GameObject {
 public:
 	Object() = delete;
@@ -61,7 +65,7 @@ public:
 	/// <param name="Position">矩形中心座標</param>
 	/// <param name="size">矩形大小</param>
 	/// <returns></returns>
-	inline bool inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
+	inline auto inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
 		const auto& mpos = GetPosition();
 		const auto& msize = GetSize();
 		const auto&& _ml = mpos.x - (((int)msize.x) >> 1);
@@ -100,11 +104,6 @@ public:
 	virtual void behavior(void* data = nullptr) {}
 
 	/// <summary>
-	/// 是否可碰撞
-	/// </summary>
-	bool collisionable{ true };
-
-	/// <summary>
 	/// 自身 ID
 	/// </summary>
 	std::string name;
@@ -118,6 +117,11 @@ public:
 	/// 自身資料類型
 	/// </summary>
 	ObjectType MyType = ObjectType::Object;
+
+	/// <summary>
+	/// 是否可碰撞
+	/// </summary>
+	bool collisionable{ true };
 };
 
 #endif

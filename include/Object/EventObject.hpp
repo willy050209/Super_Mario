@@ -1,3 +1,4 @@
+#pragma once
 #ifndef EVENTOBJECT_HPP
 #define EVENTOBJECT_HPP
 
@@ -29,13 +30,13 @@ public:
     /// 取得CallBack Function
     /// </summary>
     /// <returns></returns>
-	inline std::function<void(EventObject* const, void*)> GetCallBackFunc() const noexcept { return CallBackFunc; }
+	inline decltype(auto) GetCallBackFunc() const noexcept { return CallBackFunc; }
 
     /// <summary>
     /// 設定CallBack Function
     /// </summary>
     /// <param name="CallBackFunc"></param>
-	inline void SetCallBackFunc(std::function<void(EventObject* const, void*)> CallBackFunc) noexcept { this->CallBackFunc = CallBackFunc; }
+	inline void SetCallBackFunc(std::function<void(EventObject* const, void*)> CallBackFunc_) noexcept { this->CallBackFunc = CallBackFunc_; }
 
     /// <summary>
     /// 表單刷新時執行

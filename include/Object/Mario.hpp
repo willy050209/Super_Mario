@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MARIO_HPP
 #define MARIO_HPP
 #include "config.hpp"

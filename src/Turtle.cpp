@@ -22,7 +22,7 @@ void Turtle::died() noexcept {
 void Turtle::ChangeImg() noexcept {
 	if (!diedFlag) {
 		imageChangeDelay++;
-		if (imageChangeDelay >= FPS_CAP / 6) {
+		if (imageChangeDelay >= (FPS_CAP & 15)) {
 			imgIndex++;
 			imgIndex &= 1;
 			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? imgs[imgIndex] : imgs_r[imgIndex]));
@@ -41,7 +41,7 @@ void Turtle::comeDown() noexcept {
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(tmp, MySize)) {
 				flag = false;
-				tmp.y = it->GetPosition().y + it->GetSize().y / 2 + MySize.y / 2;
+				tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
 				break;
 			}
 		}

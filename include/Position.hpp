@@ -1,3 +1,4 @@
+#pragma once
 #ifndef POSITION_HPP
 #define POSITION_HPP
 
@@ -9,8 +10,8 @@
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
-inline static float GetX0(std::shared_ptr<Object> obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
+inline static int GetX0(std::shared_ptr<Object> obj) noexcept {
+	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
 }
 
 /// <summary>
@@ -18,8 +19,8 @@ inline static float GetX0(std::shared_ptr<Object> obj) noexcept {
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
-inline static float GetY0(std::shared_ptr<Object> obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
+inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
+	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
 }
 
 /// <summary>
@@ -28,8 +29,8 @@ inline static float GetY0(std::shared_ptr<Object> obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
 template<class T>
-inline static float GetX0(T& obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - obj->GetSize().x / 2);
+inline static int GetX0(T& obj) noexcept {
+	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
 }
 
 /// <summary>
@@ -38,8 +39,8 @@ inline static float GetX0(T& obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
 template<class T>
-inline static float GetY0(T& obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - obj->GetSize().y / 2);
+inline static int GetY0(T& obj) noexcept {
+	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
 }
 
 /// <summary>
@@ -48,8 +49,8 @@ inline static float GetY0(T& obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
 template<class T>
-inline static float GetX0(T* obj) noexcept {
-	return -(WINDOW_WIDTH / 2 - (*obj)->GetSize().x / 2);
+inline static int GetX0(T* obj) noexcept {
+	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>((*obj)->GetSize().x) >> 1));
 }
 
 /// <summary>
@@ -58,8 +59,8 @@ inline static float GetX0(T* obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
 template<class T>
-inline static float GetY0(T* obj) noexcept {
-	return (WINDOW_HEIGHT / 2 - (*obj)->GetSize().y / 2);
+inline static int GetY0(T* obj) noexcept {
+	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>((*obj)->GetSize().y) >> 1));
 }
 
 #endif

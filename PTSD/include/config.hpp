@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -17,7 +18,7 @@ extern int WINDOW_HEIGHT;
 extern int new_WINDOW_WIDTH;
 extern int new_WINDOW_HEIGHT;
 
-constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
+constexpr auto DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
 
 /**
  * @brief FPS limit

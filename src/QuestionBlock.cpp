@@ -16,7 +16,7 @@ void QuestionBlock::behavior(void* data) {
 void QuestionBlock::PlayGIF() noexcept {
 	if (play) {
 		++(count);
-		if (count >= FPS_CAP / 6) {
+		if (count >= (FPS_CAP & 15)) {
 			++imgindex;
 			imgindex %= 6;
 			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(imgs[imgindex]);

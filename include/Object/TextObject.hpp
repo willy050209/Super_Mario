@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TEXTOBJECT_HPP
 #define TEXTOBJECT_HPP
 

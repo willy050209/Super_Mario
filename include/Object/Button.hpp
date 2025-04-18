@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
@@ -53,13 +54,13 @@ public:
 	/// 取得CallBack Function
 	/// </summary>
 	/// <returns></returns>
-	inline std::function<void(Button* const, void*)> GetCallBackFunc() const noexcept { return CallBackFunc; }
+	inline auto GetCallBackFunc() const noexcept { return CallBackFunc; }
 
 	/// <summary>
 	/// 設定CallBack Function
 	/// </summary>
 	/// <param name="CallBackFunc"></param>
-	inline void SetCallBackFunc(std::function<void(Button* const, void*)> CallBackFunc) noexcept { this->CallBackFunc = CallBackFunc; }
+	inline void SetCallBackFunc(std::function<void(Button* const, void*)> CallBackFunc_) noexcept { this->CallBackFunc = CallBackFunc_; }
 
 	/// <summary>
 	/// 表單刷新時執行

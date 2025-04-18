@@ -1,3 +1,4 @@
+#pragma once
 #ifndef IMAGEOBJECT_HPP
 #define IMAGEOBJECT_HPP
 

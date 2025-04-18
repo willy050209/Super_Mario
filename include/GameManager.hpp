@@ -1,5 +1,6 @@
+#pragma once
 #ifndef GAMEMANGER_HPP
-#define GAMEMANGER_HPP 
+#define GAMEMANGER_HPP
 
 #include "MyContext.hpp"
 #include "Util/BGM.hpp"
@@ -23,8 +24,7 @@ constexpr auto Form_1_2_Pipe = "Form_1_2_Pipe";
 /// <summary>
 /// 管理遊戲開始、執行、暫停、結束
 /// </summary>
-class GameManager
-{
+class GameManager {
 
 public:
 	GameManager() = default;
@@ -50,25 +50,25 @@ public:
 	/// 取得遊戲是否結束
 	/// </summary>
 	/// <returns></returns>
-	inline bool isEnd() const noexcept { return endstate; }
+	inline auto isEnd() const noexcept { return endstate; }
 
 	/// <summary>
 	/// 取得FormManger
 	/// </summary>
 	/// <returns></returns>
-	inline FormManger& GetFormManger() noexcept { return MyFM; }
+	inline auto& GetFormManger() noexcept { return MyFM; }
 
 	/// <summary>
 	/// 使否需要重啟
 	/// </summary>
 	/// <returns></returns>
-	inline bool GetRestart() const noexcept { return m_Restart; }
+	inline auto GetRestart() const noexcept { return m_Restart; }
 
 	/// <summary>
 	/// 取得存檔點座標
 	/// </summary>
 	/// <returns>CheckPoint Position</returns>
-	inline const glm::vec2& GetCheckPointPos() const noexcept {
+	inline const auto& GetCheckPointPos() const noexcept {
 		return checkPointPos;
 	}
 
@@ -76,48 +76,48 @@ public:
 	/// 取得玩家血量
 	/// </summary>
 	/// <returns>HP</returns>
-	inline const int& GetHP() const noexcept { return HP; }
+	inline const auto& GetHP() const noexcept { return HP; }
 
 	/// <summary>
 	/// 取得玩家分數
 	/// </summary>
 	/// <returns>Point</returns>
-	inline const int& GetPoint() const noexcept { return point; }
+	inline const auto& GetPoint() const noexcept { return point; }
 
 	/// <summary>
 	/// 增加分數
 	/// </summary>
 	/// <param name="val">lvalue ref</param>
-	inline void addPoint(const int& val) noexcept { point += val; }
+	inline auto addPoint(const int& val) noexcept { point += val; }
 	/// <summary>
 	/// 增加分數
 	/// </summary>
 	/// <param name="val">rvalue ref</param>
-	inline void addPoint(int&& val) noexcept { point += val; }
+	inline auto addPoint(int&& val) noexcept { point += val; }
 
 	/// <summary>
 	/// 血量遞增
 	/// </summary>
-	inline void IncHP() noexcept { ++HP; }
+	inline auto IncHP() noexcept { ++HP; }
 
 	/// <summary>
 	/// 血量遞減
 	/// </summary>
-	inline void DecHP() noexcept { --HP; }
+	inline auto DecHP() noexcept { --HP; }
 
-	//inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
-	
+	// inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
+
 	/// <summary>
 	/// 設定是否要重啟
 	/// </summary>
 	/// <param name="val"></param>
-	inline void SetRestart(bool val) noexcept { m_Restart = val; }
+	inline auto SetRestart(bool val) noexcept { m_Restart = val; }
 
 	/// <summary>
 	/// 儲存位置
 	/// </summary>
 	/// <param name="pos">Position</param>
-	inline void SaveCheckPointPos(const glm::vec2& pos) noexcept {
+	inline auto SaveCheckPointPos(const glm::vec2& pos) noexcept {
 		checkPointPos = pos;
 	}
 
@@ -134,16 +134,15 @@ public:
 	/// <summary>
 	/// 遊戲BGM
 	/// </summary>
-	std::shared_ptr<Util::BGM> bgm;
-	std::shared_ptr<Util::SFX> sfx;
+	std::shared_ptr<Util::BGM> bgm = nullptr;
+	std::shared_ptr<Util::SFX> sfx = nullptr;
 
 
 private:
-
 	/// <summary>
 	/// 管理所有表單
 	/// </summary>
-	FormManger MyFM;
+	FormManger MyFM{};
 
 	/// <summary>
 	/// 玩家HP
@@ -154,7 +153,7 @@ private:
 	/// 玩家分數
 	/// </summary>
 	int point = 0;
-	//std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
+	// std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 
 	/// <summary>
 	/// 結束狀態
@@ -169,10 +168,8 @@ private:
 	/// <summary>
 	/// 上一個存檔點座標
 	/// </summary>
-	glm::vec2 checkPointPos;
+	glm::vec2 checkPointPos{ 0, 0 };
 };
 
 
 #endif // !GAMEMANGER_HPP
-
-

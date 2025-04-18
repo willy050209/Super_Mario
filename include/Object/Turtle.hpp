@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TURTLE_HPP
 #define TURTLE_HPP
 

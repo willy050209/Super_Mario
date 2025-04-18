@@ -1,5 +1,7 @@
+#pragma once
+#ifndef INITFORM_FUNC
 #define INITFORM_FUNC(func_name) static void func_name(GameManager* self) noexcept
-
+#endif // !INITFORM_FUNC
 
 INITFORM_FUNC(initForm_1_2);
 INITFORM_FUNC(initForm_1_1_Pip);
@@ -367,7 +369,7 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 	// outfile.close();
 
-	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
+	mario->userdata = img->userdata = std::move(std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks));
 
 	auto texttime = std::make_shared<TextObject>("Timetext", MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });

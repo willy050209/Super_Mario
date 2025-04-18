@@ -1,3 +1,4 @@
+#pragma once
 #ifndef COIN_HPP
 #define COIN_HPP
 
