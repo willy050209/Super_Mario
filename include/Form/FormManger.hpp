@@ -45,21 +45,21 @@ class FormManger {
 public:
 	FormManger() : nowForm("null") {}
 
-	FormManger(const std::string& formName) : nowForm(formName) {}
+	FormManger(std::string_view formName) : nowForm(formName) {}
 
-	FormManger(std::string&& formName) : nowForm(formName) {}
+	//FormManger(std::string_view formName) : nowForm(formName) {}
 
 	/// <summary>
 	/// 取得目前表單名稱
 	/// </summary>
 	/// <returns>表單名稱</returns>
-	inline const std::string GetNowForm() const noexcept { return nowForm; }
+	inline const std::string_view GetNowForm() const noexcept { return nowForm; }
 
 	/// <summary>
 	/// 取得前一個表單名稱
 	/// </summary>
 	/// <returns>表單名稱</returns>
-	inline const std::string GetPrevForm() const noexcept { return prevForm.back(); }
+	inline const std::string_view GetPrevForm() const noexcept { return prevForm.back(); }
 
 	/// <summary>
 	/// 取得表單物件
@@ -71,7 +71,7 @@ public:
 	/// 類別為objtype
 	/// ID=objName
 	/// 的物件</returns>
-	inline std::shared_ptr<Object> GetFormObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
+	inline std::shared_ptr<Object> GetFormObject(std::string_view formName, ObjectType objtype, std::string_view objName) noexcept {
 		switch (objtype) {
 		case ObjectType::Mario:
 		case ObjectType::Goomba:
@@ -105,7 +105,7 @@ public:
 	/// <param name="formName">物件所在的表單名稱</param>
 	/// <param name="objtype">物件類別</param>
 	/// <param name="objName">物件ID</param>
-	inline void removeObject(const std::string& formName, ObjectType objtype, const std::string& objName) noexcept {
+	inline void removeObject(std::string_view formName, ObjectType objtype, std::string_view objName) noexcept {
 		m_Forms[formName].m_Form.removeFormObj(GetFormObject(formName, objtype, objName));
 		switch (objtype) {
 		case ObjectType::Character:
@@ -134,7 +134,7 @@ public:
 	/// </summary>
 	/// <param name="formName">表單名稱</param>
 	/// <returns>指定表單</returns>
-	inline FormAndObject& GetFormAndObject(const std::string& formName) noexcept {
+	inline FormAndObject& GetFormAndObject(std::string_view formName) noexcept {
 		return m_Forms[formName];
 	}
 
@@ -143,7 +143,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="event">事件物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>& event) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<EventObject>& event) noexcept {
 		m_Forms[formName].m_Events.push_back(event);
 		addForm(formName, event);
 	}
@@ -153,7 +153,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="event">事件物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<EventObject>&& event) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<EventObject>&& event) noexcept {
 		m_Forms[formName].m_Events.push_back(event);
 		addForm(formName, event);
 	}
@@ -163,7 +163,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="button">按鈕物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<Button>& button) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<Button>& button) noexcept {
 		m_Forms[formName].m_Buttons.push_back(button);
 		addForm(formName, button);
 	}
@@ -173,7 +173,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="button">按鈕物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<Button>&& button) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<Button>&& button) noexcept {
 		m_Forms[formName].m_Buttons.push_back(button);
 		addForm(formName, button);
 	}
@@ -183,7 +183,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="image">圖片物件加</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<ImageObject>& image) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<ImageObject>& image) noexcept {
 		m_Forms[formName].m_Images.push_back(image);
 		addForm(formName, image);
 	}
@@ -193,7 +193,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="image">圖片物件加</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<ImageObject>&& image) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<ImageObject>&& image) noexcept {
 		m_Forms[formName].m_Images.push_back(image);
 		addForm(formName, image);
 	}
@@ -203,7 +203,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="character">角色物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<Character>& character) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<Character>& character) noexcept {
 		m_Forms[formName].m_Characters.push_back(character);
 		addForm(formName, character);
 	}
@@ -213,7 +213,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="character">角色物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<Character>&& character) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<Character>&& character) noexcept {
 		m_Forms[formName].m_Characters.push_back(character);
 		addForm(formName, character);
 	}
@@ -223,7 +223,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="text">文字物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<TextObject>& text) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<TextObject>& text) noexcept {
 		m_Forms[formName].m_Texts.push_back(text);
 		addForm(formName, text);
 	}
@@ -233,7 +233,7 @@ public:
 	/// </summary>
 	/// <param name="formName">要加入的表單</param>
 	/// <param name="text">文字物件</param>
-	inline void addObject(const std::string& formName, std::shared_ptr<TextObject>&& text) noexcept {
+	inline void addObject(std::string_view formName, std::shared_ptr<TextObject>&& text) noexcept {
 		m_Forms[formName].m_Texts.push_back(text);
 		addForm(formName, text);
 	}
@@ -249,22 +249,33 @@ public:
 		}
 	}
 
-	/// <summary>
-	/// 改變顯示表單
-	/// </summary>
-	/// <param name="formname">表單名稱</param>
-	inline void changeForm(const std::string& formname) noexcept {
-		if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
-			prevForm.push_back(nowForm);
-		}
-		nowForm = formname;
-	}
+	///// <summary>
+	///// 改變顯示表單
+	///// </summary>
+	///// <param name="formname">表單名稱</param>
+	//inline void changeForm(std::string_view formname) noexcept {
+	//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+	//		prevForm.push_back(nowForm);
+	//	}
+	//	nowForm = formname;
+	//}
+
+	///// <summary>
+	///// 改變顯示表單
+	///// </summary>
+	///// <param name="formname">表單名稱</param>
+	//inline void changeForm(std::string_view formname) noexcept {
+	//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+	//		prevForm.push_back(nowForm);
+	//	}
+	//	nowForm = formname;
+	//}
 
 	/// <summary>
 	/// 改變顯示表單
 	/// </summary>
 	/// <param name="formname">表單名稱</param>
-	inline void changeForm(std::string&& formname) noexcept {
+	inline void changeForm(std::string_view formname) noexcept {
 		if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 			prevForm.push_back(nowForm);
 		}
@@ -297,7 +308,7 @@ public:
 	/// 釋放表單
 	/// </summary>
 	/// <param name="formName">表單名稱</param>
-	inline void freeForm(const std::string& formName) {
+	inline void freeForm(std::string_view formName) {
 		for (auto& it : m_Forms[formName].m_Buttons) {
 			it.reset();
 		}
@@ -329,7 +340,7 @@ private:
 	/// </summary>
 	/// <param name="formName">表單名稱</param>
 	/// <param name="data">GameManager *</param>
-	inline void doFormEvent(const std::string& formName, void* data) noexcept {
+	inline void doFormEvent(std::string_view formName, void* data) noexcept {
 		if (!isPause)
 			m_Forms[formName].m_Form.doAllEvent(data);
 	}
@@ -339,7 +350,7 @@ private:
 	/// </summary>
 	/// <param name="formName">表單名稱</param>
 	/// <param name="obj">物件共同父類別</param>
-	inline void addForm(const std::string& formName, std::shared_ptr<Object> obj) noexcept {
+	inline void addForm(std::string_view formName, std::shared_ptr<Object> obj) noexcept {
 		m_Forms[formName].m_Form.addForm(obj);
 	}
 
@@ -350,7 +361,7 @@ protected:
 	/// <summary>
 	/// 表單名稱與表班物件對應序列
 	/// </summary>
-	std::unordered_map<std::string, FormAndObject> m_Forms;
+	std::unordered_map<std::string_view, FormAndObject> m_Forms;
 	/// <summary>
 	/// 目前表單
 	/// </summary>
@@ -358,7 +369,7 @@ protected:
 	/// <summary>
 	/// 表單切換堆疊
 	/// </summary>
-	std::vector<std::string> prevForm;
+	std::vector<std::string_view> prevForm;
 	/// <summary>
 	/// 暫停旗標
 	/// </summary>

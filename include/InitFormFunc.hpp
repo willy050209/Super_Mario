@@ -7,6 +7,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2);
 INITFORM_FUNC(initForm_1_2_Pipe);
 INITFORM_FUNC(winForm);
 
+
 #ifndef INITFORMFUNC_HPP
 #define INITFORMFUNC_HPP
 
