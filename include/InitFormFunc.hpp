@@ -928,9 +928,14 @@ INITFORM_FUNC(initForm_1_2) {
 	for (int i = 10; i < 15; ++i) {
 		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", StairsBrickImagePath, 10));
 		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - 9 * Block->GetSize().y });
-		QuestionBlocks.back()->setDark();
 	}
-	std::copy(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(Blocks));
+
+	std::transform(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(Blocks),
+		[](auto& it) {
+			it->setDark();
+			return it;
+		});
+	//std::copy(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(Blocks));
 	//for (auto& it : QuestionBlocks) {
 	//	//it->setDark();
 	//	Blocks.push_back(it);
