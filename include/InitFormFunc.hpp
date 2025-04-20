@@ -227,10 +227,10 @@ INITFORM_FUNC(initForm_1_1) {
 	checkPointArray[0]->SetVisible(false);
 	checkPointArray[0]->SetPosition({ 0, 0 });
 
-
-	for (auto& it : checkPointArray) {
+	std::copy(checkPointArray.begin(), checkPointArray.end(), std::back_inserter(Blocks));
+	/*for (auto& it : checkPointArray) {
 		Blocks.push_back(it);
-	}
+	}*/
 	// std::ofstream outfile("map.txt");
 
 	/*init door*/
@@ -263,9 +263,10 @@ INITFORM_FUNC(initForm_1_1) {
 		pieps.back()->collisionable = false;
 	}
 	inp.close();
-	for (auto& it : pieps) {
+	std::copy(pieps.begin(), pieps.end(), std::back_inserter(Blocks));
+	/*for (auto& it : pieps) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 	/*Flagpole collision box*/
 	std::vector<std::shared_ptr<Brick>> flagpole;
@@ -280,9 +281,10 @@ INITFORM_FUNC(initForm_1_1) {
 		flagpole.back()->collisionable = false;
 	}
 	inp.close();
-	for (auto& it : flagpole) {
+	std::copy(flagpole.begin(), flagpole.end(), std::back_inserter(Blocks));
+	/*for (auto& it : flagpole) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 	/*init floor*/
 	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_floor.txt");
@@ -300,10 +302,10 @@ INITFORM_FUNC(initForm_1_1) {
 		Blocks.push_back(std::make_shared<Brick>("Brick", StairsBrickImagePath, 10));
 		Blocks.back()->SetPosition({ GetX0(Block) - Block->GetSize().x, GetY0(Block) - Block->GetSize().y * (i) });
 	}
-
-	for (auto& it : Blocks) {
+	std::for_each(Blocks.begin(), Blocks.end(), [](auto& it) { it->SetVisible(false); });
+	/*for (auto& it : Blocks) {
 		it->SetVisible(false);
-	}
+	}*/
 
 	/*init QuestionBlock*/
 	std::vector<std::shared_ptr<QuestionBlock>> QuestionBlocks;
@@ -318,10 +320,10 @@ INITFORM_FUNC(initForm_1_1) {
 		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
 	}
 	inp.close();
-
-	for (auto& it : QuestionBlocks) {
+	std::copy(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(Blocks));
+	/*for (auto& it : QuestionBlocks) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 	/*init Brick*/
 	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_Brick.txt");
@@ -355,18 +357,20 @@ INITFORM_FUNC(initForm_1_1) {
 		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
 	}
-	for (auto& it : coins) {
-		// std::cout << &it->imgs << '\n';
-		Blocks.push_back(it);
-		// MyFM.addObject(Form_1_1, it);
-	}
+	std::copy(coins.begin(), coins.end(), std::back_inserter(Blocks));
+	//for (auto& it : coins) {
+	//	// std::cout << &it->imgs << '\n';
+	//	Blocks.push_back(it);
+	//	// MyFM.addObject(Form_1_1, it);
+	//}
 
-	for (auto& it : Blocks) {
-		MyFM.addObject(Form_1_1, it);
-		/*char tmpstr[512];
-		std::snprintf(tmpstr, sizeof(tmpstr), "%d %d ", (int)((it->GetPosition().x - GetX0(Block)) / Block->GetSize().x), (int)(-(it->GetPosition().y - GetY0(Block)) / Block->GetSize().y));
-		outfile << tmpstr;*/
-	}
+	std::for_each(Blocks.begin(), Blocks.end(), [&](auto& it) { MyFM.addObject(Form_1_1, it); });
+	//for (auto& it : Blocks) {
+	//	MyFM.addObject(Form_1_1, it);
+	//	/*char tmpstr[512];
+	//	std::snprintf(tmpstr, sizeof(tmpstr), "%d %d ", (int)((it->GetPosition().x - GetX0(Block)) / Block->GetSize().x), (int)(-(it->GetPosition().y - GetY0(Block)) / Block->GetSize().y));
+	//	outfile << tmpstr;*/
+	//}
 	// outfile.close();
 
 	mario->userdata = img->userdata = std::move(std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks));
@@ -387,14 +391,21 @@ INITFORM_FUNC(initForm_1_1) {
 	std::vector<std::shared_ptr<Turtle>> turtles;
 	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::imgs[0], 50));
 	turtles.back()->SetPosition({ -GetX0(enemys[0]) + 64, 0 });
-	for (auto& it : turtles) {
+	std::copy(turtles.begin(), turtles.end(), std::back_inserter(enemys));
+	/*for (auto& it : turtles) {
 		enemys.push_back(it);
-	}
+	}*/
 
-	for (auto& it : enemys) {
+	std::for_each(enemys.begin(), enemys.end(),
+		[&](auto& it) {
+			it->userdata = mario->userdata;
+			MyFM.addObject(Form_1_1, it); 
+		});
+	/*for (auto& it : enemys) {
 		it->userdata = mario->userdata;
 		MyFM.addObject(Form_1_1, it);
-	}
+	}*/
+
 	auto& sfx = self->sfx = std::make_shared<Util::SFX>(Game_Over);
 	auto& bgm = self->bgm = std::make_shared<Util::BGM>(Ground_Theme);
 	bgm->Play(-1);
@@ -492,9 +503,10 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	doorarr[1] = doorarr[0];
 	doorarr[0]->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (12) });
 	doorarr[0]->collisionable = false;
-	for (auto& it : doorarr) {
+	std::copy(doorarr.begin(), doorarr.end(), std::back_inserter(Blocks));
+	/*for (auto& it : doorarr) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 
 	for (int i = 0; i < 17; ++i) {
@@ -533,14 +545,23 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 		}
 	}
 
-	for (auto& it : coins) {
+	std::for_each(coins.begin(), coins.end(),
+		[&](auto& it) {
+			MyFM.addObject(Form_1_1_Pipe, it);
+		});
+	/*for (auto& it : coins) {
 		MyFM.addObject(Form_1_1_Pipe, it);
-	}
+	}*/
 
-	for (auto& it : Blocks) {
-		it->SetVisible(false);
-		// MyFM.addObject(Form_1_1_Pipe, it);
-	}
+	std::for_each(Blocks.begin(), Blocks.end(),
+		[&](auto& it) {
+			it->SetVisible(false);
+			MyFM.addObject(Form_1_1_Pipe, it);
+		});
+	//for (auto& it : Blocks) {
+	//	it->SetVisible(false);
+	//	// MyFM.addObject(Form_1_1_Pipe, it);
+	//}
 
 
 	/* auto& bgm = self->bgm = std::make_shared<Util::BGM>(Underground_Theme);
@@ -612,9 +633,10 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	doorarr[1] = doorarr[0];
 	doorarr[0]->SetPosition({ GetX0(Block) + Block->GetSize().x * 11, GetY0(Block) - Block->GetSize().y * (12) });
 	doorarr[0]->collisionable = false;
-	for (auto& it : doorarr) {
+	std::copy(doorarr.begin(), doorarr.end(), std::back_inserter(Blocks));
+	/*for (auto& it : doorarr) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 	for (int i = 0; i < 20; ++i) {
 		Blocks.push_back(std::make_shared<Brick>("floor", FloorImagePath, 10));
@@ -676,10 +698,10 @@ INITFORM_FUNC(initForm_1_2) {
 	checkPointArray[0]->SetVisible(false);
 	checkPointArray[0]->SetPosition({ 0, 0 });
 
-
-	for (auto& it : checkPointArray) {
+	std::copy(checkPointArray.begin(), checkPointArray.end(), std::back_inserter(Blocks));
+	/*for (auto& it : checkPointArray) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 	for (int i = 0; i < 2; ++i) {
 		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
@@ -687,11 +709,12 @@ INITFORM_FUNC(initForm_1_2) {
 		coins.push_back(std::make_shared<Coin>("coin", Coin::imgs[1], 10));
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
 	}
-	for (auto& it : coins) {
-		// std::cout << &it->imgs << '\n';
-		Blocks.push_back(it);
-		// MyFM.addObject(Form_1_2, it);
-	}
+	std::copy(coins.begin(), coins.end(), std::back_inserter(Blocks));
+	//for (auto& it : coins) {
+	//	// std::cout << &it->imgs << '\n';
+	//	Blocks.push_back(it);
+	//	// MyFM.addObject(Form_1_2, it);
+	//}
 
 	pipes.push_back(std::make_shared<Brick>("Pipe", BlockImagePath, 10));
 	pipes[0]->SetPosition({ GetX0(Block) + 104.5 * Block->GetSize().x, GetY0(Block) - 9 * Block->GetSize().y });
@@ -903,25 +926,36 @@ INITFORM_FUNC(initForm_1_2) {
 	for (int i = 10; i < 15; ++i) {
 		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", StairsBrickImagePath, 10));
 		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * i, GetY0(Block) - 9 * Block->GetSize().y });
+		QuestionBlocks.back()->setDark();
 	}
-	for (auto& it : QuestionBlocks) {
-		it->setDark();
-		Blocks.push_back(it);
-	}
+	std::copy(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(Blocks));
+	//for (auto& it : QuestionBlocks) {
+	//	//it->setDark();
+	//	Blocks.push_back(it);
+	//}
 
-	for (auto& it : Blocks) {
+	std::for_each(Blocks.begin(), Blocks.end(),
+		[&](auto& it) {
+			MyFM.addObject(Form_1_2, it);
+		});
+	/*for (auto& it : Blocks) {
 		MyFM.addObject(Form_1_2, it);
-	}
+	}*/
 
 	mario->userdata = img->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 
 	/*enemys.push_back(std::make_shared<Goomba>("Goomba", Goomba::imgs[0], 50));
 	enemys[0]->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x, 0 });*/
 
-	for (auto& it : enemys) {
+	std::for_each(enemys.begin(), enemys.end(),
+		[&](auto& it) {
+			it->userdata = mario->userdata;
+			MyFM.addObject(Form_1_2, it);
+		});
+	/*for (auto& it : enemys) {
 		it->userdata = mario->userdata;
 		MyFM.addObject(Form_1_2, it);
-	}
+	}*/
 
 	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ -GetX0(text), GetY0(text) });
@@ -1016,9 +1050,10 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	doorarr[1] = doorarr[0];
 	doorarr[0]->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (12) });
 	doorarr[0]->collisionable = false;
-	for (auto& it : doorarr) {
+	std::copy(doorarr.begin(), doorarr.end(), std::back_inserter(Blocks));
+	/*for (auto& it : doorarr) {
 		Blocks.push_back(it);
-	}
+	}*/
 
 
 	for (int i = 0; i < 17; ++i) {
@@ -1044,11 +1079,14 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (14), GetY0(Block) - Block->GetSize().y * (2 + i) });
 	}
 
-
-	for (auto& it : Blocks) {
-		it->SetVisible(false);
-		// MyFM.addObject(Form_1_2_Pipe, it);
-	}
+	std::for_each(Blocks.begin(), Blocks.end(),
+		[](auto& it) {
+			it->SetVisible(false);
+		});
+	//for (auto& it : Blocks) {
+	//	it->SetVisible(false);
+	//	// MyFM.addObject(Form_1_2_Pipe, it);
+	//}
 
 	for (int i = 0; i < 9; ++i) {
 		coins.push_back(std::make_shared<Coin>("Coin", Coin::imgs[0], 10));
@@ -1058,10 +1096,13 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		coins.push_back(std::make_shared<Coin>("Coin", Coin::imgs[0], 10));
 		coins.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (i + 5), GetY0(Block) - Block->GetSize().y * (8) });
 	}
-
-	for (auto& it : coins) {
+	std::for_each(coins.begin(), coins.end(),
+		[&](auto& it) {
+			MyFM.addObject(Form_1_2_Pipe, it);
+		});
+	/*for (auto& it : coins) {
 		MyFM.addObject(Form_1_2_Pipe, it);
-	}
+	}*/
 
 	img->userdata = mario->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks);
 	auto text = std::make_shared<TextObject>("HPText", MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);

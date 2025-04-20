@@ -284,6 +284,8 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "freeForm_1_1_pipe"))->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1);
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "UpdatePointText"))->Enable = true;
 			}
 			else if (FM.GetNowForm() == Form_1_1_to_1_2) {
 				initForm_1_2(static_cast<GameManager*>(data));
@@ -304,6 +306,8 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_2, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "freeForm_1_2_Pipe"))->Enable = true;
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "UpdatePointText"))->Enable = true;
 			}
 			else {
 				winForm(static_cast<GameManager*>(data));
