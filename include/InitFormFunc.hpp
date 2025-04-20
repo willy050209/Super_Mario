@@ -20,6 +20,8 @@ INITFORM_FUNC(winForm);
 #include "config.hpp"
 #include "ProgressBar.hpp"
 
+#include <algorithm>
+#include <execution>
 #include <memory>
 #include <tuple>
 #include <fstream>
