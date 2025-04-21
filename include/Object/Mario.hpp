@@ -40,8 +40,9 @@ public:
 		if(jumpDelay == 0)
 		{
 			state = State::UP;
-			displacement = 2 * DEFAULTDISPLACEMENT;
+			displacement = WINDOW_HEIGHT / 15.f * 4.5f / 10;
 			index = 0;
+			jumpcount = 10;
 			changeImg();
 		}
 	}
@@ -121,13 +122,12 @@ private:
 	/// </summary>
 	virtual void comeDown() noexcept override;
 
-
-	int index = 0;
 	
 	State state = State::MOVE;
 	float displacement = DEFAULTDISPLACEMENT;
-
+	int index = 0;
 	int jumpDelay = 0;
+	int jumpcount = 0;
 	unsigned imgChangeDelay = 0;
 	bool diedflag = false;
 

@@ -26,6 +26,12 @@ public:
 
 	virtual void died() noexcept override;
 
+	virtual void move() noexcept override;
+
+	inline void setMoveFlag(bool flag) noexcept {
+		moveFlag = flag;
+	}
+
 	bool diedFlag = false;
 
 	//static constexpr inline char* const imgs[][2] = { { "imgs/super mario/1-1/TurtleGreen/frame0.png", "imgs/super mario/1-1/TurtleGreen/frame1.png" }, { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" } };
@@ -37,6 +43,8 @@ public:
 
 private:
 	int imgIndex{ 0 }, imageChangeDelay{ 0 };
+
+	bool moveFlag = true;
 
 	void ChangeImg() noexcept;
 

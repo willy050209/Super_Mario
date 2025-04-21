@@ -6,7 +6,7 @@
 #include "Object.hpp"
 #include "config.hpp"
 
-const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 2;
+const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f * 0.15f;
 
 /// <summary>
 /// 所有角色的父類別 繼承Object

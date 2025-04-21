@@ -318,7 +318,7 @@ INITFORM_FUNC(initForm_1_1) {
 		exit(-1);
 	}
 	while (inp >> posx >> posy) {
-		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", StairsBrickImagePath, 10));
+		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", "imgs/super mario/QuestionBlock/frame0.png", 10));
 		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
 	}
 	inp.close();

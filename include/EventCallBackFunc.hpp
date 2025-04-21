@@ -344,6 +344,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 					// std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
 					/*GM->bgm->LoadMedia(Lost_a_Life);
 					GM->bgm->Play(1);*/
+					//if (it->MyType == ObjectType::Turtle && )
 					GM->DecHP();
 					mario->died();
 					GM->bgm->Pause();
@@ -667,10 +668,12 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
 			auto turtlePos{ it->GetPosition() };
 			if (it->GetPosition().x > marioPos.x) {
-				turtlePos.x += it->GetSize().x;
+				it->left = 1;
+				it->setMoveFlag(true);
 			}
 			else {
-				turtlePos.x -= it->GetSize().x;
+				it->left = 0;
+				it->setMoveFlag(false);
 			}
 			it->SetPosition(turtlePos);
 		}
