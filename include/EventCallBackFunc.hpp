@@ -91,6 +91,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
 				flag = false;
+				//marioPos.x -= ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
 				break;
 			}
 		}
@@ -99,20 +100,20 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		else if (pos.x > -GetX0(background) && flag) {
 			pos.x -= Displacement;
-			std::for_each(std::execution::par_unseq, block->begin(), block->end(), 
+			std::for_each(std::execution::par, block->begin(), block->end(), 
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y }); 
 				});
-			std::for_each(std::execution::par_unseq, enemys.begin(), enemys.end(),
+			std::for_each(std::execution::par, enemys.begin(), enemys.end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
 			/*thread_object_move.push_back(std::thread([&]() {for (auto& it : *block) {
-	it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
-} }));
-thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
-	it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
-} }));*/
+				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+			} }));
+			thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
+				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+			} }));*/
 		}
 		else if (mario->GetPosition().x < ((static_cast<int>(WINDOW_WIDTH) >> 1)) - mario->GetSize().x && flag) {
 			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
@@ -127,6 +128,8 @@ thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
 				flag = false;
+				marioPos = it->GetPosition();
+				//marioPos.x += ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
 				break;
 			}
 		}
@@ -135,11 +138,11 @@ thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
 		}
 		else if (pos.x < GetX0(background) && flag) {
 			pos.x += Displacement;
-			std::for_each(std::execution::par_unseq, block->begin(), block->end(),
+			std::for_each(std::execution::par, block->begin(), block->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par_unseq, enemys.begin(), enemys.end(),
+			std::for_each(std::execution::par, enemys.begin(), enemys.end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
@@ -497,14 +500,14 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	for (int i = checkPoints->size() - 1; i >= 0; --i) {
 		if (!(*checkPoints)[i]->Enable) {
 			gobackposx = (*checkPoints)[i]->GetPosition().x;
-			std::for_each(std::execution::par_unseq, allobj.m_Images.begin(), allobj.m_Images.end(),
+			std::for_each(std::execution::par, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::CheckPoint) {
 					auto pos = obj->GetPosition();
 					pos.x -= gobackposx;
 					obj->SetPosition(pos);
 				} });
-			std::for_each(std::execution::par_unseq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
+			std::for_each(std::execution::par, allobj.m_Characters.begin(), allobj.m_Characters.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::Mario) {
 					auto pos = obj->GetPosition();
@@ -529,7 +532,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			break;
 		}
 	}
-	std::for_each(std::execution::par_unseq, checkPoints->begin(), checkPoints->end(),
+	std::for_each(std::execution::par, checkPoints->begin(), checkPoints->end(),
 		[&](auto& it) {
 			auto pos = it->GetPosition();
 			pos.x -= gobackposx;
