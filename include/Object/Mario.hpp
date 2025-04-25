@@ -18,6 +18,14 @@ public:
 		UP, MOVE, DOWN, DIED
 	};
 
+	enum class Mario_type {
+		Mario, SuperMario, FieryMario
+	};
+
+	enum class Mario_Invincible {
+		Invincible, notInvincible
+	};
+
 	explicit Mario(const std::string& name, const std::string& ImagePath,int zindex) 
 		: Character(name, ImagePath, zindex) {
 		MyType = ObjectType::Mario;
@@ -26,12 +34,9 @@ public:
 	/// <summary>
 	/// 取得目前狀態
 	/// </summary>
-	/// <returns>enum class State
-	/// {
-	/// 	UP, MOVE, DOWN, DIED
-	/// };
-	/// </returns>
 	inline State GetState() const noexcept { return state; }
+	inline Mario_type GetMario_type() const noexcept { return mario_type; }
+	inline Mario_Invincible GetMario_Invincible() const noexcept { return mario_invincible; }
 
 	/// <summary>
 	/// 準備跳躍
@@ -124,6 +129,8 @@ private:
 
 	
 	State state = State::MOVE;
+	Mario_type mario_type = Mario_type::Mario;
+	Mario_Invincible mario_invincible = Mario_Invincible::notInvincible;
 	float displacement = DEFAULTDISPLACEMENT;
 	int index = 0;
 	int jumpDelay = 0;
