@@ -13,20 +13,25 @@
 /// </summary>
 class Mario : public Character {
 public:
-	enum class State
-	{
-		UP, MOVE, DOWN, DIED
+	enum class State {
+		UP,
+		MOVE,
+		DOWN,
+		DIED
 	};
 
 	enum class Mario_type {
-		Mario, SuperMario, FieryMario
+		Mario,
+		SuperMario,
+		FieryMario
 	};
 
 	enum class Mario_Invincible {
-		Invincible, notInvincible
+		Invincible,
+		notInvincible
 	};
 
-	explicit Mario(const std::string& name, const std::string& ImagePath,int zindex) 
+	explicit Mario(const std::string& name, const std::string& ImagePath, int zindex)
 		: Character(name, ImagePath, zindex) {
 		MyType = ObjectType::Mario;
 	}
@@ -42,8 +47,7 @@ public:
 	/// 準備跳躍
 	/// </summary>
 	inline void jump() noexcept {
-		if(jumpDelay == 0)
-		{
+		if (jumpDelay == 0) {
 			state = State::UP;
 			displacement = WINDOW_HEIGHT / 15.f * 4.5f / 10;
 			index = 0;
@@ -58,7 +62,7 @@ public:
 	/// <param name="data">GameManager * </param>
 	virtual void behavior(void* data = nullptr) override;
 
-	//virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
+	// virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
 	/// <summary>
 	/// 移動事件
@@ -73,7 +77,7 @@ public:
 	/// <summary>
 	/// 死亡跳躍事件
 	/// </summary>
-	//void diedjump() noexcept;
+	// void diedjump() noexcept;
 
 	/// <summary>
 	/// 死亡事件
@@ -108,10 +112,24 @@ public:
 	}
 
 	/// <summary>
-	/// 重設狀態
+	/// 設定mario_type
+	/// </summary>
+	/// <param name="type_"></param>
+	inline void changeType(Mario_type type_) noexcept;
+
+	/// <summary>
+	/// 是否是無敵
+	/// </summary>
+	/// <param name="flag"></param>
+	inline void isInvincible(bool flag) noexcept;
+
+	/// <summary>
+	/// 重設所有狀態
 	/// </summary>
 	inline void Reset() noexcept {
 		state = State::MOVE;
+		mario_type = Mario_type::Mario;
+		mario_invincible = Mario_Invincible::notInvincible;
 		diedflag = false;
 	}
 
