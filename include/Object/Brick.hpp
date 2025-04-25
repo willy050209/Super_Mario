@@ -10,6 +10,11 @@
 /// </summary>
 class Brick : public ImageObject {
 public:
+
+	enum class State {
+		null, jump, down
+	};
+
 	explicit Brick(const std::string& name, const std::string& ImagePath,
 		const float zIndex,
 		const glm::vec2& pivot = { 0, 0 })
@@ -33,10 +38,41 @@ public:
 
 	Brick() = delete;
 
+	virtual void behavior(void* data = nullptr) override;
+
 	/// <summary>
 	/// 被敲擊事件
 	/// </summary>
 	virtual void bonk() noexcept;
+
+	/// <summary>
+	/// 跳躍觸發
+	/// </summary>
+	virtual void bonkJump() noexcept;
+
+	/// <summary>
+	/// 取得方塊目前狀態
+	/// </summary>
+	/// <returns></returns>
+	inline auto getState() const noexcept { return state; }
+
+protected:
+
+	/// <summary>
+	/// 執行跳躍
+	/// </summary>
+	void dojump() noexcept;
+
+	/// <summary>
+	/// 墜落事件
+	/// </summary>
+	void comeDown() noexcept;
+
+	State state{ State::null };
+	//bool jumpFlag{ false }, comeDownFlag{ false };
+	int jumpcount = 0;
+	glm::vec2 pos{ 0, 0 };
+
 };
 
 #endif // !BRICK_HPP
