@@ -366,6 +366,9 @@ INITFORM_FUNC(initForm_1_1) {
 	//	// MyFM.addObject(Form_1_1, it);
 	//}
 
+	Blocks.push_back(std::make_shared<HiddenBrick>("HiddenBrick", HiddenBrick::EmptyBlockImagePath, 10));
+	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().x * 8 });
+
 	std::for_each(Blocks.begin(), Blocks.end(), [&](auto& it) { MyFM.addObject(Form_1_1, it); });
 	//for (auto& it : Blocks) {
 	//	MyFM.addObject(Form_1_1, it);

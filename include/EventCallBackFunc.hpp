@@ -376,6 +376,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 						sleepevent->userdata.reset();
 						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP*3, std::vector<bool>());
 						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+						break;
 					}
 					else {
 						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
@@ -383,6 +384,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 						sleepevent->Enable = true;
 						sleepevent->userdata.reset();
 						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+						break;
 					}
 					//std::this_thread::sleep_for(std::chrono::seconds(4));
 					//GM->bgm->Resume();
@@ -514,20 +516,22 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	mario->Reset();
 	for (int i = checkPoints->size() - 1; i >= 0; --i) {
 		if (!(*checkPoints)[i]->Enable) {
-			gobackposx = (*checkPoints)[i]->GetPosition().x;
+			gobackposx = -(*checkPoints)[i]->GetPosition().x;
 			std::for_each(std::execution::par, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::CheckPoint) {
-					auto pos = obj->GetPosition();
+					/*auto pos = obj->GetPosition();
 					pos.x -= gobackposx;
-					obj->SetPosition(pos);
+					obj->SetPosition(pos);*/
+					obj->incPositionX(gobackposx);
 				} });
 			std::for_each(std::execution::par, allobj.m_Characters.begin(), allobj.m_Characters.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::Mario) {
-					auto pos = obj->GetPosition();
+					/*auto pos = obj->GetPosition();
 					pos.x -= gobackposx;
-					obj->SetPosition(pos);
+					obj->SetPosition(pos);*/
+					obj->incPositionX(gobackposx);
 				} });
 			/*for (auto& obj : allobj.m_Images) {
 				if (obj->MyType != ObjectType::CheckPoint) {

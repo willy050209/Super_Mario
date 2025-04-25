@@ -43,7 +43,7 @@ public:
 	/// </summary>
 	/// <param name="data">GameManager *</param>
 	inline void doAllEvent(void* data = nullptr) noexcept {
-		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) {it->behavior(data); });
+		std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) { it->behavior(data); });
 	}
 
 	/// <summary>
