@@ -11,6 +11,8 @@ void QuestionBlock::bonk() noexcept {
 
 void QuestionBlock::behavior(void* data) {
 	PlayGIF();
+	dojump();
+	comeDown();
 }
 
 void QuestionBlock::PlayGIF() noexcept {

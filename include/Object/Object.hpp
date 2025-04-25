@@ -59,6 +59,14 @@ public:
 	/// <param name="ImagePath">圖片路徑</param>
 	void setImage(const std::string& ImagePath) noexcept { m_Drawable = std::make_shared<Util::Image>(ImagePath); }
 
+	inline void incPositionX(int Displacement) noexcept {
+		m_Transform.translation.x += Displacement;
+	}
+
+	inline void incPositionY(int Displacement) noexcept {
+		m_Transform.translation.y += Displacement;
+	}
+
 	/// <summary>
 	/// 判斷輸入的矩形是否與自身重疊
 	/// </summary>
