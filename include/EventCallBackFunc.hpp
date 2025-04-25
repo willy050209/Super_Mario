@@ -95,7 +95,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				break;
 			}
 		}
-		if (abs(mario->GetPosition().x) >= mariosize.x && pos.x == GetX0(background) && flag) {
+		if (abs(mario->GetPosition().x) >= mariosize.x  && flag) {
 			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
 		}
 		else if (pos.x > -GetX0(background) && flag) {
@@ -128,12 +128,12 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
 				flag = false;
-				marioPos = it->GetPosition();
+				//marioPos = it->GetPosition();
 				//marioPos.x += ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
 				break;
 			}
 		}
-		if (abs(mario->GetPosition().x) >= mariosize.x && pos.x == -GetX0(background) && flag) {
+		if (abs(mario->GetPosition().x) >= mariosize.x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
 		}
 		else if (pos.x < GetX0(background) && flag) {
@@ -185,6 +185,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	if (Util::Input::IsKeyDown(Util::Keycode::O)) {
 		opmode = !opmode;
 		std::cout << "opmode : " << (opmode ? "true" : "false") << '\n';
+	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::T)) {
+		mario->died();
 	}
 	if (opmode) {
 		if (Util::Input::IsKeyDown(Util::Keycode::W)) {
@@ -274,17 +277,23 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			else if (FM.GetNowForm() == Form_1_1_Pipe) {
 				auto& form_1_1_OBJ = FM.GetFormAndObject(Form_1_1);
-				for (auto& it : form_1_1_OBJ.m_Characters) {
+				std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+					it->incPositionX(displacement);
+				});
+				std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+					it->incPositionX(displacement);
+				});
+				/*for (auto& it : form_1_1_OBJ.m_Characters) {
 					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (104);
+					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
 					it->SetPosition(tmp);
-				}
-				for (auto& it : form_1_1_OBJ.m_Images) {
+				}*/
+				/*for (auto& it : form_1_1_OBJ.m_Images) {
 					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (104);
+					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
 					it->SetPosition(tmp);
-				}
-				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				}*/
+				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "freeForm_1_1_pipe"))->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1);
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "UpdateHPText"))->Enable = true;
@@ -296,7 +305,13 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			else if (FM.GetNowForm() == Form_1_2_Pipe) {
 				auto& form_1_2_OBJ = FM.GetFormAndObject(Form_1_2);
-				for (auto& it : form_1_2_OBJ.m_Characters) {
+				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-10)](auto& it) {
+					it->incPositionX(displacement);
+				});
+				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-10)](auto& it) {
+					it->incPositionX(displacement);
+				});
+				/*for (auto& it : form_1_2_OBJ.m_Characters) {
 					auto tmp = it->GetPosition();
 					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
 					it->SetPosition(tmp);
@@ -305,7 +320,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					auto tmp = it->GetPosition();
 					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
 					it->SetPosition(tmp);
-				}
+				}*/
 				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_2, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
 				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "freeForm_1_2_Pipe"))->Enable = true;
@@ -671,14 +686,14 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
 			auto turtlePos{ it->GetPosition() };
 			if (it->GetPosition().x > marioPos.x) {
-				it->left = 1;
+				it->left = 0;
 				it->setMoveFlag(true);
 			}
 			else {
-				it->left = 0;
-				it->setMoveFlag(false);
+				it->left = 1;
+				it->setMoveFlag(true);
 			}
-			it->SetPosition(turtlePos);
+			//it->SetPosition(turtlePos);
 		}
 	}
 }

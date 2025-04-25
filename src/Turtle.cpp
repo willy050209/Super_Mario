@@ -6,13 +6,15 @@
 #include <memory>
 
 void Turtle::behavior(void* data) {
-	if (moveFlag) {
-		move();
-	}
 	if (!static_cast<GameManager*>(data)->pause) {
-		ChangeImg();
-		
-		comeDown();
+		if (moveFlag) {
+			move();
+		}
+		if (!static_cast<GameManager*>(data)->pause) {
+			ChangeImg();
+
+			comeDown();
+		}
 	}
 }
 
@@ -47,7 +49,12 @@ void Turtle::move() noexcept {
 				return;
 			}
 		}
-		left ^= 1;
+		if (diedFlag) {
+			moveFlag = false;
+		}
+		else {
+			left ^= 1;
+		}
 	}
 }
 

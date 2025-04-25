@@ -127,6 +127,7 @@ void Mario::died() noexcept{
 		displacement = 2.5 * DEFAULTDISPLACEMENT;
 		index = 0;
 		jumpDelay = 0;
+		jumpcount = 10;
 		changeImg();
 		//state = State::UP;
 }

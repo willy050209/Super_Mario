@@ -14,6 +14,7 @@ enum class ObjectType {
 	ImageObject,
 	Brick,
 	QuestionBlock,
+	HiddenBrick,
 	Coin,
 	CheckPoint,
 	TextObject,
