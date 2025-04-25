@@ -699,6 +699,16 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 }
 
 /// <summary>
+/// 道具碰撞事件
+/// </summary>
+/// <param name=""></param>
+EVENTCALLCALLBACKFUN(CheckPropsCollision) {
+	
+}
+
+
+
+/// <summary>
 /// 改變表單事件
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>

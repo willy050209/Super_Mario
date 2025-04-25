@@ -13,12 +13,25 @@
 /// </summary>
 class Mario : public Character {
 public:
-	enum class State
-	{
-		UP, MOVE, DOWN, DIED
+	enum class State {
+		UP,
+		MOVE,
+		DOWN,
+		DIED
 	};
 
-	explicit Mario(const std::string& name, const std::string& ImagePath,int zindex) 
+	enum class Mario_type {
+		Mario,
+		SuperMario,
+		FieryMario
+	};
+
+	enum class Mario_Invincible {
+		Invincible,
+		notInvincible
+	};
+
+	explicit Mario(const std::string& name, const std::string& ImagePath, int zindex)
 		: Character(name, ImagePath, zindex) {
 		MyType = ObjectType::Mario;
 	}
@@ -26,19 +39,15 @@ public:
 	/// <summary>
 	/// 取得目前狀態
 	/// </summary>
-	/// <returns>enum class State
-	/// {
-	/// 	UP, MOVE, DOWN, DIED
-	/// };
-	/// </returns>
 	inline State GetState() const noexcept { return state; }
+	inline Mario_type GetMario_type() const noexcept { return mario_type; }
+	inline Mario_Invincible GetMario_Invincible() const noexcept { return mario_invincible; }
 
 	/// <summary>
 	/// 準備跳躍
 	/// </summary>
 	inline void jump() noexcept {
-		if(jumpDelay == 0)
-		{
+		if (jumpDelay == 0) {
 			state = State::UP;
 			displacement = WINDOW_HEIGHT / 15.f * 4.5f / 10;
 			index = 0;
@@ -53,7 +62,7 @@ public:
 	/// <param name="data">GameManager * </param>
 	virtual void behavior(void* data = nullptr) override;
 
-	//virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
+	// virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
 	/// <summary>
 	/// 移動事件
@@ -68,7 +77,7 @@ public:
 	/// <summary>
 	/// 死亡跳躍事件
 	/// </summary>
-	//void diedjump() noexcept;
+	// void diedjump() noexcept;
 
 	/// <summary>
 	/// 死亡事件
@@ -103,10 +112,24 @@ public:
 	}
 
 	/// <summary>
-	/// 重設狀態
+	/// 設定mario_type
+	/// </summary>
+	/// <param name="type_"></param>
+	inline void changeType(Mario_type type_) noexcept;
+
+	/// <summary>
+	/// 是否是無敵
+	/// </summary>
+	/// <param name="flag"></param>
+	inline void isInvincible(bool flag) noexcept;
+
+	/// <summary>
+	/// 重設所有狀態
 	/// </summary>
 	inline void Reset() noexcept {
 		state = State::MOVE;
+		mario_type = Mario_type::Mario;
+		mario_invincible = Mario_Invincible::notInvincible;
 		diedflag = false;
 	}
 
@@ -124,6 +147,8 @@ private:
 
 	
 	State state = State::MOVE;
+	Mario_type mario_type = Mario_type::Mario;
+	Mario_Invincible mario_invincible = Mario_Invincible::notInvincible;
 	float displacement = DEFAULTDISPLACEMENT;
 	int index = 0;
 	int jumpDelay = 0;
