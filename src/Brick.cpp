@@ -11,7 +11,7 @@ void Brick::bonk() noexcept {
 }
 
 void Brick::bonkJump() noexcept {
-	if (state == State::null) {
+	if (jumpenable && state == State::null) {
 		pos = GetPosition();
 		state = State::jump;
 		jumpcount = 10;
@@ -37,6 +37,9 @@ void Brick::comeDown() noexcept {
 		}
 		else {
 			state = State::null;
+			if (MyType != ObjectType::Brick) {
+				jumpenable = false;
+			}
 		}
 	}
 }
