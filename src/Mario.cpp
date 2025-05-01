@@ -28,12 +28,14 @@ void Mario::doJump() noexcept
 		auto tmp1 = tmp.y += displacement;
         
 		if (state != State::DIED) {
-			std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick>& it) {
+			std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
 				if ((it)->collisionable && (it)->inRange(tmp, GetSize())) {
 
 					/*{
 						std::lock_guard<std::mutex> lock(test);
 						tmp1 = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
+						(it)->bonk();
+						(it)->bonkJump();
 					}*/
 					// if ((*it)->MyType == ObjectType::QuestionBlock) {
 					//	std::static_pointer_cast<QuestionBlock>(*it)->bonk();

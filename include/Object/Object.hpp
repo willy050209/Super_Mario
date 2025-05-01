@@ -6,6 +6,7 @@
 #include "Util/Image.hpp"
 #include "ObjectType.hpp"
 
+
 /// <summary>
 /// 提供所以物件的父類
 /// </summary>
