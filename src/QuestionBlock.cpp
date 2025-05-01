@@ -1,11 +1,12 @@
 #include "Object/QuestionBlock.hpp"
 #include "config.hpp"
+#include <iostream>
 
 void QuestionBlock::bonk() noexcept {
 	if (play) {
 		SetVisible(true);
 		play = false;
-		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? EmptyBlockImagePath : EmptyBlockDarkImagePath));
+		std::dynamic_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? EmptyBlockImagePath : EmptyBlockDarkImagePath));
 	}
 }
 

@@ -33,7 +33,7 @@ public:
 	/// 取得 Core::Drawable
 	/// </summary>
 	/// <returns>Core::Drawable</returns>
-	inline std::shared_ptr<Core::Drawable> GetDrawable() const noexcept { return m_Drawable; }
+	inline auto GetDrawable() const noexcept { return m_Drawable; }
 
 	/// <summary>
 	/// 取得座標
@@ -102,7 +102,7 @@ public:
 	/// </summary>
 	/// <returns>矩形大小</returns>
 	virtual inline glm::vec2 GetSize() const noexcept {
-		return std::dynamic_pointer_cast<Util::Image>(m_Drawable)->GetSize();
+		return std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize();
 	}
 
 	/// <summary>

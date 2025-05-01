@@ -20,15 +20,21 @@ void Mario::behavior(void* data)
 void Mario::doJump() noexcept
 {
 	if (jumpcount >0 && (state == State::UP || (state == State::DIED && !diedflag)) && jumpDelay == 0) {
-		std::mutex displacement_mutex;
+		/*std::mutex displacement_mutex;
 		std::mutex jumpDelay_mutex;
+		std::mutex test;*/
         auto tmp = GetPosition();
         auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
-        tmp.y += displacement;
+		auto tmp1 = tmp.y += displacement;
+        
 		if (state != State::DIED) {
-			std::for_each(std::execution::seq,blocks->begin(), blocks->end(), [&](auto& it) {
+			std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick>& it) {
 				if ((it)->collisionable && (it)->inRange(tmp, GetSize())) {
-					tmp.y = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
+
+					/*{
+						std::lock_guard<std::mutex> lock(test);
+						tmp1 = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
+					}*/
 					// if ((*it)->MyType == ObjectType::QuestionBlock) {
 					//	std::static_pointer_cast<QuestionBlock>(*it)->bonk();
 					//	/*(*it)->SetVisible(true);
@@ -36,21 +42,24 @@ void Mario::doJump() noexcept
 					//	(*it)->name = "EmptyBlock";*/
 					//	// block->erase(it);
 					// }
+					tmp1 = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
 					(it)->bonk();
 					(it)->bonkJump();
-
-					{
+					displacement = 0;
+					jumpDelay = 0;
+					/*{
 						std::lock_guard<std::mutex> lock(displacement_mutex);
 						displacement = 0;
 					}
 					{
 						std::lock_guard<std::mutex> lock(jumpDelay_mutex);
 						jumpDelay = 0;
-					}
+					}*/
 					//break;
 				}
 			});
 		}
+		tmp.y = tmp1;
 		//changeImg();
         SetPosition(tmp);
         /*displacement -= (float)(DEFAULTDISPLACEMENT / 5);*/
