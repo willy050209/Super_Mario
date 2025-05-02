@@ -19,5 +19,7 @@
 #include "Object/ObjectType.hpp"
 #include "Object/Props/Props.hpp"
 #include "Object/Props/FireFlower.hpp"
+#include "Object/Props/Mushroom.hpp"
+#include "Object/Props/Starman.hpp"
 
 #endif

@@ -71,6 +71,9 @@ void GameManager::init() noexcept {
 	for (auto& it : bgms) {
 		it->SetLoop(false);
 	}*/
+
+
+
 }
 
 void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {

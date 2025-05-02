@@ -1,14 +1,15 @@
-#include "Object/Props/FireFlower.hpp"
+#include "Object/Props/Starman.hpp"
 #include "config.hpp"
 #include "GameManager.hpp"
+
 #include <iostream>
 
-void FireFlower::behavior(void* data) {
+void Starman::behavior(void* data) {
 	playFrames();
 	touch(data);
 }
 
-void FireFlower::playFrames() {
+void Starman::playFrames() {
 	++(count);
 	if (count >= (FPS_CAP / 3)) {
 		++imgindex;
@@ -18,13 +19,14 @@ void FireFlower::playFrames() {
 	}
 }
 
-void FireFlower::touch(void* gm) {
+void Starman::touch(void* gm) {
 	if (m_Visible) {
 		auto& fm = static_cast<GameManager*>(gm)->GetFormManger();
 		auto& mario = fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
-			std::cout << "touch FireFlower\n";
+			std::cout << "touch Starman\n";
 			m_Visible = false;
 		}
+		
 	}
 }

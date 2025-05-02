@@ -64,7 +64,7 @@ void Turtle::move() noexcept {
 void Turtle::ChangeImg() noexcept {
 	if (!diedFlag) {
 		imageChangeDelay++;
-		if (imageChangeDelay >= (FPS_CAP & 15)) {
+		if (imageChangeDelay >= (FPS_CAP / 3)) {
 			imgIndex++;
 			imgIndex &= 1;
 			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? Frames[imgIndex] : imgs_r[imgIndex]));

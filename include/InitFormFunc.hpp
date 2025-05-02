@@ -413,6 +413,15 @@ INITFORM_FUNC(initForm_1_1) {
 
 	std::vector<std::shared_ptr<Props>> props;
 	props.push_back(std::make_shared<FireFlower>("FireFlower",10));
+	props.back()->SetPosition({ GetX0(Block), 0 });
+	props.push_back(std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), 10));
+	props.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 2, 0 });
+	props.push_back(std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::MushroomDark>(), 10));
+	props.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 3, 0 });
+	props.push_back(std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), 10));
+	props.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 4, 0 });
+	props.push_back(std::make_shared<Starman>("Starman",  10));
+	props.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 6, 0 });
 	std::for_each(std::execution::seq, props.begin(), props.end(), [&](auto& it) { MyFM.addObject(Form_1_1, it); });
 
 	auto& sfx = self->sfx = std::make_shared<Util::SFX>(Game_Over);

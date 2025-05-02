@@ -23,7 +23,7 @@ void Goomba::died() noexcept {
 
 void Goomba::ChangeImg() noexcept {
 	imageChangeDelay++;
-	if (imageChangeDelay >= (FPS_CAP & 15)) {
+	if (imageChangeDelay >= (FPS_CAP / 3)) {
 		imgIndex++;
 		imgIndex &= 1;
 		std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(Frames[imgIndex]);
