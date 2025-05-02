@@ -41,9 +41,9 @@ public:
 
 	TextObject() = delete;
 
-	inline const Util::Color& GetColor()const noexcept { return textColor; }
+	inline const auto& GetColor()const noexcept { return textColor; }
 
-	inline const std::string& GetText() const noexcept { return text; }
+	inline const auto& GetText() const noexcept { return text; }
 
 	inline void setText(const std::string& text) noexcept;
 

@@ -21,7 +21,8 @@ enum class ObjectType {
 	Button,
 	EventObject,
 	Props,
-	FireFlower
+	FireFlower,
+	Mushroom
 };
 
 #endif // !OBJECTTYPE_HPP

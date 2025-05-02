@@ -38,6 +38,14 @@ public:
 
 	virtual void behavior(void* data = nullptr) override;
 
+	static constexpr auto GetFrames() noexcept {
+		return Frames;
+	}
+
+	static constexpr auto GetEmptyBlockImagePath() noexcept { return EmptyBlockImagePath; }
+
+	static constexpr auto GetEmptyBlockDarkImagePath() noexcept { return EmptyBlockDarkImagePath; }
+
 
 	private:
 

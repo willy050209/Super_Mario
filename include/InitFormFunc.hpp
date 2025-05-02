@@ -394,7 +394,7 @@ INITFORM_FUNC(initForm_1_1) {
 	}*/
 
 	std::vector<std::shared_ptr<Turtle>> turtles;
-	turtles.push_back(std::make_shared<Turtle>("Turtle", Turtle::Frames[0], 50));
+	turtles.push_back(std::make_shared<Turtle>("Turtle", 50));
 	turtles.back()->SetPosition({ -GetX0(enemys[0]) + 64, 0 });
 	std::copy(turtles.begin(), turtles.end(), std::back_inserter(enemys));
 	/*for (auto& it : turtles) {

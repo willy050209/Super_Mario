@@ -8,8 +8,8 @@
 
 class Turtle : public Character {
 public:
-	Turtle(const std::string& name, const std::string& ImagePath, int zindex)
-		: Character(name, ImagePath, zindex) {
+	Turtle(const std::string& name, int zindex)
+		: Character(name, *Frames, zindex) {
 		MyType = ObjectType::Turtle;
 		left = 1;
 	}
@@ -36,10 +36,9 @@ public:
 
 	//static constexpr inline char* const imgs[][2] = { { "imgs/super mario/1-1/TurtleGreen/frame0.png", "imgs/super mario/1-1/TurtleGreen/frame1.png" }, { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" } };
 	
-	static constexpr inline char* const Frames[2] =  { "imgs/super mario/TurtleGreen_faceleft/frame0.png", "imgs/super mario/TurtleGreen_faceleft/frame1.png" } ;
-	static constexpr inline char* const imgs_r[2] = { "imgs/super mario/TurtleGreen/frame0.png", "imgs/super mario/TurtleGreen/frame1.png" };
-	
-	static constexpr inline char* const TortoiseShell[] = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
+	static constexpr auto GetFrames() noexcept { return Frames; }
+	static constexpr auto GetFrames_R() noexcept { return imgs_r; }
+	static constexpr auto GetTortoiseShellImagePath() noexcept { return Frames; }
 
 private:
 	int imgIndex{ 0 }, imageChangeDelay{ 0 };
@@ -49,6 +48,10 @@ private:
 	void ChangeImg() noexcept;
 
 	virtual void comeDown() noexcept override;
+
+	static constexpr inline char* const Frames[] = { "imgs/super mario/TurtleGreen_faceleft/frame0.png", "imgs/super mario/TurtleGreen_faceleft/frame1.png" };
+	static constexpr inline char* const imgs_r[] = { "imgs/super mario/TurtleGreen/frame0.png", "imgs/super mario/TurtleGreen/frame1.png" };
+	static constexpr inline char* const TortoiseShell[] = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
 
 };
 

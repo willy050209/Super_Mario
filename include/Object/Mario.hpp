@@ -51,9 +51,9 @@ public:
 	inline void jump() noexcept {
 		if (jumpDelay == 0) {
 			state = State::UP;
-			displacement = WINDOW_HEIGHT / 15.f * 4.5f / 10;
+			displacement = WINDOW_HEIGHT / 15.f * 4.5f / 15;
 			index = 0;
-			jumpcount = 10;
+			jumpcount = 15;
 			changeImg();
 		}
 	}
@@ -131,6 +131,9 @@ public:
 	inline void Reset() noexcept {
 		state = State::MOVE;
 		mario_type = Mario_type::Mario;
+		index = 0;
+		left = 0;
+		changeImg();
 		//mario_invincible = Mario_Invincible::notInvincible;
 		diedflag = false;
 	}
