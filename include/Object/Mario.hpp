@@ -33,8 +33,8 @@ public:
 		notInvincible
 	};*/
 
-	explicit Mario(const std::string& name, const std::string& ImagePath, int zindex)
-		: Character(name, ImagePath, zindex) {
+	explicit Mario(const std::string& name,  int zindex)
+		: Character(name, R"(imgs\super mario\1-1\Mario\frame0.png)", zindex) {
 		MyType = ObjectType::Mario;
 	}
 
@@ -172,13 +172,6 @@ private:
 								 { State::Invincible, {} } } 
 		}
 	};
-
-	/*std::unordered_map<State, std::vector<std::vector<const char*>>> imgs = 
-	{ { State::MOVE, { { "imgs/super mario/1-1/Mario/frame0.png", "imgs/super mario/1-1/Mario/frame1.png", "imgs/super mario/1-1/Mario/frame2.png" }, { "imgs/super mario/1-1/Mario/Filp_frame0.png", "imgs/super mario/1-1/Mario/Filp_frame1.png", "imgs/super mario/1-1/Mario/Filp_frame2.png" } } },
-		{ State::UP, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
-		{ State::DOWN, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
-		{ State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
-		{ State::Invincible, {  } } };*/
 
 
 };

@@ -43,7 +43,7 @@ public:
 
 		void PlayGIF() noexcept;
 
-		static constexpr inline char* const imgs[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
+		static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 		
 		static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		static constexpr inline char* const EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };

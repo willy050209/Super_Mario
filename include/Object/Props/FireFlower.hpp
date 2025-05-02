@@ -28,7 +28,7 @@ public:
 
 	virtual void behavior(void* data = nullptr) override;
 
-	static constexpr auto GetFrame0() noexcept { return frames[0]; }
+	static constexpr auto GetFrames() noexcept { return frames; }
 
 protected:
 	virtual void playFrames() override;

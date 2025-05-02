@@ -66,8 +66,8 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
-	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>>>(self->userdata);
-	auto& [enemys, pipes] = (*tuplePtr);
+	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>, std::vector<std::shared_ptr<Props>>>>(self->userdata);
+	auto& [enemys, pipes, props] = (*tuplePtr);
 	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
 	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
@@ -108,6 +108,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
+			std::for_each(std::execution::par, props.begin(), props.end(),
+				[&](auto& it) {
+					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+				});
 			/*thread_object_move.push_back(std::thread([&]() {for (auto& it : *block) {
 				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 			} }));
@@ -143,6 +147,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
 			std::for_each(std::execution::par, enemys.begin(), enemys.end(),
+				[&](auto& it) {
+					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+				});
+			std::for_each(std::execution::par, props.begin(), props.end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});

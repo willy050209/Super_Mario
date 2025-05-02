@@ -8,6 +8,12 @@
 
 
 void GameManager::init() noexcept {
+	//auto gobj = std::make_shared<Util::GameObject>(std::make_shared<Util::Image>(StairsBrickDarkImagePath), 10);
+	//std::unique_ptr<Util::Image> _;
+	/*std::thread t1([&gobj]() { auto _ = std::make_shared<Util::Image>(StairsBrickDarkImagePath); });
+	t1.join();*/
+	//auto _ = std::make_shared<Util::GameObject>(std::make_shared<Util::Image>(StairsBrickDarkImagePath), 0);
+
 	/*test BGM*/
 	/*bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm", "D:\\program\\C++\\Super_Mario\\Resources\\BGM\\12. Ground Theme (Hurry!).wav"));
 	bgms.push_back(std::make_shared<MyBGM::BGM>("Bgm1", "D:/program/C++/Super_Mario/Resources/BGM/wakeup music.wav"));*/

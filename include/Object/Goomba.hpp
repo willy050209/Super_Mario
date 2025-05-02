@@ -11,8 +11,8 @@
 /// </summary>
 class Goomba : public Character {
 public:
-	Goomba(const std::string& name, const std::string& ImagePath, int zindex)
-		: Character(name, ImagePath, zindex) {
+	Goomba(const std::string& name, int zindex)
+		: Character(name, Frames[0], zindex) {
 		MyType = ObjectType::Goomba;
 	}
 
@@ -28,18 +28,24 @@ public:
 
 	virtual void died() noexcept override;
 
-	bool loop = true;
+	inline auto IsLoop() const noexcept { return loop; }
 
+	inline void SetLoop(bool val) noexcept { loop = val; }
 
-	static constexpr inline char* const imgs[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+	static constexpr auto GetFrames() noexcept { return Frames; }
+
 
 private:
-	
+
+	bool loop = true;
+
 	int imgIndex{ 0 }, imageChangeDelay{ 0 };
 
 	void ChangeImg() noexcept;
 
 	virtual void comeDown() noexcept override;
+
+	static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
 
 };
 

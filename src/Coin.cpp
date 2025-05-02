@@ -19,7 +19,7 @@ void Coin::PlayGIF() noexcept {
 		if (count >= (FPS_CAP & 15)) {
 			++imgindex;
 			imgindex %= 6;
-			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(imgs[imgindex]);
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(Frames[imgindex]);
 			count = 0;
 		}
 	}

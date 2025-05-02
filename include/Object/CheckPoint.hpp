@@ -15,10 +15,10 @@ public:
 	/// </summary>
 	/// <param name="name">ID</param>
 	/// <param name="ImagePath">圖片路徑(預設 CheckPoint::CheckPointImagePath)</param>
-	explicit CheckPoint(const std::string& name, const std::string& ImagePath = CheckPointImagePath,
+	explicit CheckPoint(const std::string& name,
 		const float zIndex = -10,
 		const glm::vec2& pivot = { 0, 0 })
-		: Brick(name, ImagePath, zIndex, pivot) {
+		: Brick(name, CheckPointImagePath, zIndex, pivot) {
 		MyType = ObjectType::CheckPoint;
 	}
 

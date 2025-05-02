@@ -26,7 +26,7 @@ void Goomba::ChangeImg() noexcept {
 	if (imageChangeDelay >= (FPS_CAP & 15)) {
 		imgIndex++;
 		imgIndex &= 1;
-		std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[imgIndex]);
+		std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(Frames[imgIndex]);
 		imageChangeDelay = 0;
 	}
 }
