@@ -107,8 +107,8 @@ void Mario::comeDown() noexcept
 }
 
 void Mario::changeImg() noexcept {
-	index %= imgs[state][left].size();
-	std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[state][left][index]);
+	index %= imgs[mario_type][state][left].size();
+	std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[mario_type][state][left][index]);
 }
 
 void Mario::move() noexcept
@@ -139,8 +139,8 @@ void Mario::changeType(Mario_type type_) noexcept {
 
 void Mario::isInvincible(bool flag) noexcept {
 	if (flag)
-		mario_invincible = Mario_Invincible::Invincible;
+		mario_invincible = State::Invincible;
 	else
-		mario_invincible = Mario_Invincible::notInvincible;
+		mario_invincible = State::MOVE;
 	changeImg();
 }

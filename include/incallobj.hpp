@@ -13,7 +13,7 @@
 #include "Object/Turtle.hpp"
 #include "Object/Brick.hpp"
 #include "Object/QuestionBlock.hpp"
-#include "Object/HiddenBrick.hpp"
+//#include "Object/HiddenBrick.hpp"
 #include "Object/Coin.hpp"
 #include "Object/CheckPoint.hpp"
 #include "Object/ObjectType.hpp"
