@@ -19,7 +19,9 @@ enum class ObjectType {
 	CheckPoint,
 	TextObject,
 	Button,
-	EventObject
+	EventObject,
+	Props,
+	FireFlower
 };
 
 #endif // !OBJECTTYPE_HPP
