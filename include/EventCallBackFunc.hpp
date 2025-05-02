@@ -553,9 +553,10 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	}
 	std::for_each(std::execution::par, checkPoints->begin(), checkPoints->end(),
 		[&](auto& it) {
-			auto pos = it->GetPosition();
+			it->incPositionX(gobackposx);
+			/*auto pos = it->GetPosition();
 			pos.x -= gobackposx;
-			it->SetPosition(pos); 
+			it->SetPosition(pos); */
 		});
 	/*for (auto& it : *checkPoints) {
 		auto pos = it->GetPosition();
