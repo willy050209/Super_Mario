@@ -17,7 +17,7 @@ public:
 		UP,
 		MOVE,
 		DOWN,
-		SQUAT,
+		CROUCH,
 		DIED,
 		Invincible,
 	};
@@ -43,7 +43,7 @@ public:
 	/// </summary>
 	inline State GetState() const noexcept { return state; }
 	inline Mario_type GetMario_type() const noexcept { return mario_type; }
-	//inline Mario_Invincible GetMario_Invincible() const noexcept { return mario_invincible; }
+	// inline Mario_Invincible GetMario_Invincible() const noexcept { return mario_invincible; }
 
 	/// <summary>
 	/// ∑«≥∆∏ı≈D
@@ -139,7 +139,6 @@ public:
 	}
 
 private:
-
 	/// <summary>
 	/// ∞ı¶Ê∏ı≈D
 	/// </summary>
@@ -150,7 +149,7 @@ private:
 	/// </summary>
 	virtual void comeDown() noexcept override;
 
-	
+
 	State state = State::MOVE;
 	Mario_type mario_type = Mario_type::Mario;
 	State mario_invincible = State::MOVE;
@@ -161,22 +160,36 @@ private:
 	unsigned imgChangeDelay = 0;
 	bool diedflag = false;
 
-	std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = 
-{
+	std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = {
 		{ Mario_type::Mario, { { State::MOVE, { { "imgs/super mario/1-1/Mario/frame0.png", "imgs/super mario/1-1/Mario/frame1.png", "imgs/super mario/1-1/Mario/frame2.png" }, { "imgs/super mario/1-1/Mario/Filp_frame0.png", "imgs/super mario/1-1/Mario/Filp_frame1.png", "imgs/super mario/1-1/Mario/Filp_frame2.png" } } },
 								 { State::UP, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
 								 { State::DOWN, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
+								 { State::CROUCH, { { "imgs/super mario/1-1/Mario/frame0.png", "imgs/super mario/1-1/Mario/frame1.png", "imgs/super mario/1-1/Mario/frame2.png" }, { "imgs/super mario/1-1/Mario/Filp_frame0.png", "imgs/super mario/1-1/Mario/Filp_frame1.png", "imgs/super mario/1-1/Mario/Filp_frame2.png" } } },
 								 { State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
-								 { State::Invincible, {} } } },
-		{ Mario_type::SuperMario, { { State::MOVE, { { "imgs/super mario/1-1/Mario/frame0.png", "imgs/super mario/1-1/Mario/frame1.png", "imgs/super mario/1-1/Mario/frame2.png" }, { "imgs/super mario/1-1/Mario/Filp_frame0.png", "imgs/super mario/1-1/Mario/Filp_frame1.png", "imgs/super mario/1-1/Mario/Filp_frame2.png" } } },
-								 { State::UP, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
-								 { State::DOWN, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
-								 { State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
-								 { State::Invincible, {} } } 
+								 { State::Invincible, {} } } } ,
+		{ Mario_type::SuperMario, { { State::MOVE, { { "imgs/super mario/1-1/SuperMario/frame0.png", "imgs/super mario/1-1/SuperMario/frame1.png", "imgs/super mario/1-1/SuperMario/frame2.png" }, { "imgs/super mario/1-1/SuperMario/Filp_frame0.png", "imgs/super mario/1-1/SuperMario/Filp_frame1.png", "imgs/super mario/1-1/SuperMario/Filp_frame2.png" } } },
+									  { State::UP, { { "imgs/super mario/1-1/SuperMarioJumping.png" }, { "imgs/super mario/1-1/Flip_SuperMarioJumping.png" } } },
+									  { State::DOWN, { { "imgs/super mario/1-1/SuperMarioJumping.png" }, { "imgs/super mario/1-1/Flip_SuperMarioJumping.png" } } },
+									  { State::CROUCH, { { "imgs/super mario/1-1/SuperMarioCrouching.png" }, { "imgs/super mario/1-1/Flip_SuperMarioCrouching.png" } } },
+										  { State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
+										  { State::Invincible, {} } } },
+		{ Mario_type::FieryMario, { { State::MOVE, { { "imgs/super mario/1-1/FieryMario/frame0.png", "imgs/super mario/1-1/FieryMario/frame1.png", "imgs/super mario/1-1/FieryMario/frame2.png" }, { "imgs/super mario/1-1/FieryMario/Filp_frame0.png", "imgs/super mario/1-1/FieryMario/Filp_frame1.png", "imgs/super mario/1-1/FieryMario/Filp_frame2.png" } } },
+									  { State::UP, { { "imgs/super mario/1-1/FieryMarioJumping.png" }, { "imgs/super mario/1-1/Flip_FieryMarioJumping.png" } } },
+									  { State::DOWN, { { "imgs/super mario/1-1/FieryMarioJumping.png" }, { "imgs/super mario/1-1/Flip_FieryMarioJumping.png" } } },
+									  { State::CROUCH, { { "imgs/super mario/1-1/FieryMarioCrouching.png" }, { "imgs/super mario/1-1/Flip_FieryMarioCrouching.png" } } },
+									  { State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
+									  { State::Invincible, { { "imgs/super mario/1-1/InvincibleFieryMario/frame0.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/frame1.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/frame2.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/fram3.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/Flip_frame0.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/Flip_frame1.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/Flip_frame2.png" }, { "imgs/super mario/1-1/InvincibleFieryMario/Flip_frame3.png" } } } }
 		}
+
+		/*std::unordered_map<State, std::vector<std::vector<const char*>>> imgs =
+		{ { State::MOVE, { { "imgs/super mario/1-1/Mario/frame0.png", "imgs/super mario/1-1/Mario/frame1.png", "imgs/super mario/1-1/Mario/frame2.png" }, { "imgs/super mario/1-1/Mario/Filp_frame0.png", "imgs/super mario/1-1/Mario/Filp_frame1.png", "imgs/super mario/1-1/Mario/Filp_frame2.png" } } },
+			{ State::UP, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
+			{ State::DOWN, { { "imgs/super mario/1-1/MarioJumping.png" }, { "imgs/super mario/1-1/Flip_MarioJumping.png" } } },
+			{ State::DIED, { { "imgs/super mario/1-1/MarioDied.png" }, { "imgs/super mario/1-1/MarioDied.png" } } },
+			{ State::Invincible, {  } } };*/
+
+
 	};
 
-
 };
-
 #endif // !MARIO_HPP
