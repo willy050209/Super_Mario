@@ -68,6 +68,7 @@ protected:
 	/// </summary>
 	void comeDown() noexcept;
 
+	bool jumpenable{ true };
 	State state{ State::null };
 	//bool jumpFlag{ false }, comeDownFlag{ false };
 	int jumpcount = 0;

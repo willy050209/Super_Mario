@@ -54,13 +54,13 @@ public:
 	/// 取得目前表單名稱
 	/// </summary>
 	/// <returns>表單名稱</returns>
-	inline const std::string& GetNowForm() const noexcept { return nowForm; }
+	inline const auto& GetNowForm() const noexcept { return nowForm; }
 
 	/// <summary>
 	/// 取得前一個表單名稱
 	/// </summary>
 	/// <returns>表單名稱</returns>
-	inline const std::string& GetPrevForm() const noexcept { return prevForm.back(); }
+	inline const auto& GetPrevForm() const noexcept { return prevForm.back(); }
 
 	/// <summary>
 	/// 取得表單物件
@@ -135,7 +135,7 @@ public:
 	/// </summary>
 	/// <param name="formName">表單名稱</param>
 	/// <returns>指定表單</returns>
-	inline FormAndObject& GetFormAndObject(const std::string& formName) noexcept {
+	inline auto& GetFormAndObject(const std::string& formName) noexcept {
 		return m_Forms[formName];
 	}
 

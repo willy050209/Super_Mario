@@ -30,7 +30,7 @@ public:
     /// 取得CallBack Function
     /// </summary>
     /// <returns></returns>
-	inline decltype(auto) GetCallBackFunc() const noexcept { return CallBackFunc; }
+	inline auto& GetCallBackFunc() const noexcept { return CallBackFunc; }
 
     /// <summary>
     /// 設定CallBack Function

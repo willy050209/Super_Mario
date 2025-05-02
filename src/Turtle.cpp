@@ -4,6 +4,8 @@
 #include "GameManager.hpp"
 
 #include <memory>
+#include <execution>
+#include <algorithm>
 
 void Turtle::behavior(void* data) {
 	if (!static_cast<GameManager*>(data)->pause) {
@@ -78,19 +80,32 @@ void Turtle::comeDown() noexcept {
 	if (tmp.y < WINDOW_HEIGHT) {
 		tmp.y -= DEFAULTDISPLACEMENT;
 		const auto MySize = GetSize();
-		for (auto& it : *bricks) {
+		std::for_each(std::execution::par, bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->collisionable && it->inRange(tmp, MySize)) {
 				if (it->getState() == Brick::State::jump) {
 					died();
-					break;
+					tmp = GetPosition();
+					//break;
 				}
-				else if (it->collisionable && it->inRange(tmp, MySize)) {
-					flag = false;
-					tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
-					break;
-				}
+				flag = false;
+				tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+				// break;
 			}
-		}
+		});
+		//for (auto& it : *bricks) {
+		//	if (it->collisionable && it->inRange(tmp, MySize)) {
+		//		if (it->collisionable && it->inRange(tmp, MySize)) {
+		//			if (it->getState() == Brick::State::jump) {
+		//				died();
+		//				tmp = GetPosition();
+		//				break;
+		//			}
+		//			flag = false;
+		//			tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+		//			//break;
+		//		}
+		//	}
+		//}
 		SetPosition(tmp);
 	}
 }
