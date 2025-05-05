@@ -1,6 +1,8 @@
 #include "Util/Input.hpp"
 
 #include <SDL_events.h> // for SDL_Event
+#include <execution>
+#include <algorithm>
 
 #include "config.hpp"
 
@@ -87,9 +89,11 @@ void Input::Update() {
 
     s_Scroll = s_MouseMoving = false;
 
-    for (auto &[_, i] : s_KeyState) {
+    /*for (auto &[_, i] : s_KeyState) {
         i.first = i.second;
-    }
+    }*/
+    std::for_each(std::execution::par, s_KeyState.begin(), s_KeyState.end(),
+                  [](auto &it) { it.second.first = it.second.second; });
 
     s_Io = ImGui::GetIO();
 
