@@ -143,15 +143,15 @@ void Mario::died() noexcept{
 		//state = State::UP;
 }
 
-void Mario::changeType(Mario_type type_) noexcept {
-	mario_type = type_;
-	changeImg();
-}
+//void Mario::changeType(Mario_type type_) noexcept {
+//	mario_type = type_;
+//	changeImg();
+//}
 
-void Mario::isInvincible(bool flag) noexcept {
-	if (flag)
-		mario_invincible = State::Invincible;
-	else
-		mario_invincible = State::MOVE;
-	changeImg();
-}
+//void Mario::isInvincible(bool flag) noexcept {
+//	if (flag)
+//		mario_invincible = State::Invincible;
+//	else
+//		mario_invincible = State::MOVE;
+//	changeImg();
+//}

@@ -11,7 +11,20 @@ void Mushroom::touch(void* gm) {
 		auto& fm = static_cast<GameManager*>(gm)->GetFormManger();
 		auto& mario = fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
-			std::cout << "touch Mushroom\n";
+			switch (MyCategory) {
+			case Mushroom::Category::Mushroom:
+				std::cout << "touch Mushroom\n";
+				break;
+			case Mushroom::Category::MushroomDark:
+				std::cout << "touch MushroomDark\n";
+				break;
+			case Mushroom::Category::BigMushroom:
+				std::cout << "touch BigMushroom\n";
+				break;
+			default:
+				break;
+			}
+			
 			m_Visible = false;
 		}
 	}

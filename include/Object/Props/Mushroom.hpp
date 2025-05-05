@@ -18,12 +18,20 @@ public:
 		BigMushroom
 	};
 
-	explicit Mushroom(const std::string& name, const std::string& img,
+	/*explicit Mushroom(const std::string& name, const std::string& img, Category Category_,
 		const float zIndex,
 		const glm::vec2& pivot = { 0, 0 })
-		: Props(name, img, zIndex, pivot) {
+		: Props(name, img, zIndex, pivot), MyCategory(Category_) {
+		MyType = ObjectType::Mushroom;
+	}*/
+
+	explicit Mushroom(const std::string& name, const std::string& img, Category Category_,
+		const float zIndex,
+		const glm::vec2& pivot = { 0, 0 })
+		: Props(name, img, zIndex, pivot), MyCategory(Category_) {
 		MyType = ObjectType::Mushroom;
 	}
+
 
 	Mushroom(const Mushroom& other) = delete;
 
@@ -54,6 +62,7 @@ protected:
 
 private:
 
+	Category MyCategory;
 	static constexpr inline char* const Images[] = { R"(imgs\super mario\1upMushroom.png)", R"(imgs\super mario\1upMushroomDark.png)", R"(imgs\super mario\BigMushroom.png)" };
 };
 

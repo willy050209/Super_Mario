@@ -21,8 +21,9 @@ void FireFlower::playFrames() {
 void FireFlower::touch(void* gm) {
 	if (m_Visible) {
 		auto& fm = static_cast<GameManager*>(gm)->GetFormManger();
-		auto& mario = fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario");
+		auto& mario = std::static_pointer_cast<Mario>(fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario"));
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
+			mario->changeType(Mario::Mario_type::FieryMario);
 			std::cout << "touch FireFlower\n";
 			m_Visible = false;
 		}

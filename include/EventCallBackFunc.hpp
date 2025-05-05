@@ -361,7 +361,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	if (!GM->opMode) {
 		for (auto& it : *eneys) {
 			if (it->collisionable && it->inRange(marioPos, marioSize)) {
-				if (marioPos.y > it->GetPosition().y) {
+				if (mario->isInvincible() ||  marioPos.y > it->GetPosition().y) {
 					it->died();
 					/*it->collisionable = false;
 					it->SetVisible(false);*/
