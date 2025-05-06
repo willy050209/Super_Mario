@@ -10,7 +10,7 @@
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
-inline static int GetX0(std::shared_ptr<Object> obj) noexcept {
+inline static int GetX0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
 	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
 }
 
@@ -19,7 +19,7 @@ inline static int GetX0(std::shared_ptr<Object> obj) noexcept {
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
-inline static int GetY0(std::shared_ptr<Object> obj) noexcept {
+inline static int GetY0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
 	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
 }
 

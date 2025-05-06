@@ -88,7 +88,7 @@ int main(int, char** argc) {
 	
     auto context = Core::Context::GetInstance();
 
-    GameManager gameManger;
+    MyAPP::GameManager gameManger;
     
     context->SetWindowIcon(ICOP_PATH);
 

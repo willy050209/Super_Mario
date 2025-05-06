@@ -4,10 +4,11 @@
 #include "config.hpp"
 #include "ProgressBar.hpp"
 #include "InitFormFunc.hpp"
+#include "Form/FormNames.hpp"
 
 
 
-void GameManager::init() noexcept {
+void MyAPP::GameManager::init() noexcept {
 	//auto gobj = std::make_shared<Util::GameObject>(std::make_shared<Util::Image>(StairsBrickDarkImagePath), 10);
 	//std::unique_ptr<Util::Image> _;
 	/*std::thread t1([&gobj]() { auto _ = std::make_shared<Util::Image>(StairsBrickDarkImagePath); });
@@ -63,7 +64,7 @@ void GameManager::init() noexcept {
 	//initForm_1_1_to_1_2(this);
 	//initForm_1_2_Pipe(this);
 
-	MyFM.changeForm(FormTitel /*FormBackground*/);
+	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel /*FormBackground*/);
 	//MyFM.changeForm(Form_1_2_Pipe);
 	showProgressBar(total, current);
 	puts("");
@@ -76,7 +77,7 @@ void GameManager::init() noexcept {
 
 }
 
-void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
+void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
 	/*time_try*/
 	// MyFM.
 	// time_t now = time(0);
@@ -89,7 +90,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
 	// MyFM.addObject(Form_1_1, texttime);
 
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
-		MyFM.changeForm(FormOptions);
+		MyFM.changeForm(MyAPP::Form::FormNames::FormOptions);
 		//if (MyFM.GetPrevForm() != "null") {
 		//	MyFM.returnPrevForm();
 		//}
@@ -103,7 +104,7 @@ void GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
 	MyFM.UpdateForm(this);
 }
 
-void GameManager::End() noexcept {
+void MyAPP::GameManager::End() noexcept {
 	endstate = true;
 	/*for (auto& bgm : bgms) {
 		bgm->Stop();
