@@ -56,8 +56,8 @@ namespace MyAPP {
 
 				static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 
-				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockImagePath) EmptyBlockImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockImagePath };
-				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) EmptyBlockDarkImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath };
+				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockImagePath) EmptyBlockImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockImagePath };
+				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath) EmptyBlockDarkImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath };
 
 				int count{ 0 }, imgindex{ 0 };
 				bool play{ true };

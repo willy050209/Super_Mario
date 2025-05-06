@@ -41,17 +41,17 @@ namespace MyAPP {
 
 				virtual void behavior(void* data = nullptr) override;
 
-				static constexpr decltype(MyAPP::ResourcesFilePath::EmptyBlockImagePath) GetDefultImagePath() noexcept { return *DefultImagePath; }
+				static constexpr decltype(MyAPP::MyResourcesFilePath::EmptyBlockImagePath) GetDefultImagePath() noexcept { return *DefultImagePath; }
 
-				static constexpr decltype(MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) GetDefultDarkImagePath() noexcept { return *DefultDarkImagePath; }
+				static constexpr decltype(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath) GetDefultDarkImagePath() noexcept { return *DefultDarkImagePath; }
 
 			private:
 				enum class EmptyBlockState {
 					normal,
 					Dark
 				} blockState = EmptyBlockState::normal;
-				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockImagePath) DefultImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockImagePath };
-				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) DefultDarkImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath };
+				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockImagePath) DefultImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockImagePath };
+				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath) DefultDarkImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath };
 			};
 		}
 	}

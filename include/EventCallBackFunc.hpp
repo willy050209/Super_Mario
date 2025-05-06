@@ -376,11 +376,11 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 					GM->DecHP();
 					mario->died();
 					GM->bgm->Pause();
-					GM->sfx->LoadMedia(MyAPP::ResourcesFilePath::Lost_a_Life);
+					GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
 					GM->sfx->Play(0);
 					(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
 					if (GM->GetHP() == 0) {
-						GM->bgm->LoadMedia(MyAPP::ResourcesFilePath::Game_Over);
+						GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
 						auto& sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
 						sleepevent->Enable = true;
 						sleepevent->userdata.reset();
@@ -423,7 +423,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 	static_cast<MyAPP::GameManager*>(data)->pause = true;
 	//std::this_thread::sleep_for(std::chrono::milliseconds(2500));
 	bgm->Play(1);
-	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyAPP::ResourcesFilePath::MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
+	FM.addObject(FM.GetNowForm(), std::make_shared<TextObject>("Finishtext", MyAPP::MyResourcesFilePath::MyFontPath, 20, "GameOver", Util::Color::FromName(Util::Colors::WHITE), 100));
 	puts("Game Over");
 }
 
@@ -735,15 +735,15 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
 	self->Enable = false;
 	if (*form == "Form_1_1") {
-		GM->bgm->LoadMedia(MyAPP::ResourcesFilePath::Ground_Theme);
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
 	else if (*form == "Form_1_1_Pipe") {
-		GM->bgm->LoadMedia(MyAPP::ResourcesFilePath::Underground_Theme);
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
 		GM->bgm->Play(-1);
 	}
 	else if (*form == "Form_1_2" || *form == "Form_1_2_Pipe") {
-		GM->bgm->LoadMedia(MyAPP::ResourcesFilePath::Underground_Theme);
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
 		GM->bgm->Play(-1);
 	}
 	FM.changeForm(*form);

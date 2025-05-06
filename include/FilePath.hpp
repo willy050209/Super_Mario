@@ -2,7 +2,10 @@
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
 namespace MyAPP {
-	struct ResourcesFilePath {
+	/// <summary>
+	/// ÀÉ®×¸ô®|
+	/// </summary>
+	struct MyResourcesFilePath {
 	
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
 		/// <summary>
@@ -74,6 +77,8 @@ namespace MyAPP {
 		// static constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";
 		// static constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";
 		// static constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/Blueblock.png";
+
+
 		static constexpr auto Ground_Theme = MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3";
 		static constexpr auto Lost_a_Life = MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3";
 		static constexpr auto Underground_Theme = MY_RESOURCE_DIR "/BGM/02. Underground Theme.mp3";
