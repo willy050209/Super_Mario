@@ -9,7 +9,7 @@ void Mushroom::behavior(void* data) {
 void Mushroom::touch(void* gm) {
 	if (m_Visible) {
 		auto& fm = static_cast<GameManager*>(gm)->GetFormManger();
-		auto& mario = fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario");
+		auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			switch (MyCategory) {
 			case Mushroom::Category::Mushroom:

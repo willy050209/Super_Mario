@@ -23,8 +23,8 @@
 
 // inline void loadCheckpoint(GameManager* const GM, std::shared_ptr<std::vector<std::shared_ptr<CheckPoint>>> checkPoints) noexcept {
 //	auto& FM = GM->GetFormManger();
-//	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-//	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
+//	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+//	auto& background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
 //	//auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
 //	auto& allobj = FM.GetFormAndObject(FM.GetNowForm());
 //	auto marioPos = mario->GetPosition();
@@ -68,8 +68,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<Character>>, std::vector<std::shared_ptr<Brick>>, std::vector<std::shared_ptr<Props>>>>(self->userdata);
 	auto& [enemys, pipes, props] = (*tuplePtr);
-	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(background->userdata);
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
@@ -173,14 +173,14 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
 				if (FM.GetNowForm() == Form_1_1) {
 					initForm_1_1_Pip(static_cast<GameManager*>(data));
-					auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
+					auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
 					ChangeFormEventObject->Enable = true;
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1_Pipe);
 					return;
 				}
 				else {
 					initForm_1_2_Pipe(static_cast<GameManager*>(data));
-					auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
+					auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
 					ChangeFormEventObject->Enable = true;
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2_Pipe);
 					return;
@@ -236,7 +236,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 		std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
 		(num) = 0;
 		if (nowtime == 0) {
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
 		}
 	}
 }
@@ -268,7 +268,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	for (auto& it : *doorarrPtr) {
@@ -277,7 +277,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			for (auto& eventobj : objandform.m_Events) {
 				eventobj->Enable = false;
 			}
-			auto ChangeFormEventObject = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "ChangeFormEvent"));
+			auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
 			ChangeFormEventObject->Enable = true;
 			if (FM.GetNowForm() == Form_1_1) {
 				initForm_1_1_to_1_2(static_cast<GameManager*>(data));
@@ -301,11 +301,11 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
 					it->SetPosition(tmp);
 				}*/
-				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_1, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "freeForm_1_1_pipe"))->Enable = true;
+				(FM.GetFormObject<Mario>(Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				(FM.GetFormObject<EventObject>(Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_1);
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "UpdateHPText"))->Enable = true;
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_1, ObjectType::EventObject, "UpdatePointText"))->Enable = true;
+				(FM.GetFormObject<EventObject>(Form_1_1, "UpdateHPText"))->Enable = true;
+				(FM.GetFormObject<EventObject>(Form_1_1, "UpdatePointText"))->Enable = true;
 			}
 			else if (FM.GetNowForm() == Form_1_1_to_1_2) {
 				initForm_1_2(static_cast<GameManager*>(data));
@@ -329,11 +329,11 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
 					it->SetPosition(tmp);
 				}*/
-				std::static_pointer_cast<Mario>(FM.GetFormObject(Form_1_2, ObjectType::Character, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				(FM.GetFormObject<Mario>(Form_1_2,  "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(Form_1_2);
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "freeForm_1_2_Pipe"))->Enable = true;
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "UpdateHPText"))->Enable = true;
-				std::static_pointer_cast<EventObject>(FM.GetFormObject(Form_1_2, ObjectType::EventObject, "UpdatePointText"))->Enable = true;
+				(FM.GetFormObject<EventObject>(Form_1_2,  "freeForm_1_2_Pipe"))->Enable = true;
+				(FM.GetFormObject<EventObject>(Form_1_2,  "UpdateHPText"))->Enable = true;
+				(FM.GetFormObject<EventObject>(Form_1_2,  "UpdatePointText"))->Enable = true;
 			}
 			else {
 				winForm(static_cast<GameManager*>(data));
@@ -354,7 +354,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& eneys = std::static_pointer_cast<std::vector<std::shared_ptr<Character>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -367,7 +367,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 					it->SetVisible(false);*/
 				}
 				else {
-					// std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+					// (FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
 					/*GM->bgm->LoadMedia(Lost_a_Life);
 					GM->bgm->Play(1);*/
 					//if (it->MyType == ObjectType::Turtle && )
@@ -376,19 +376,19 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 					GM->bgm->Pause();
 					GM->sfx->LoadMedia(Lost_a_Life);
 					GM->sfx->Play(0);
-					std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+					(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
 					if (GM->GetHP() == 0) {
 						GM->bgm->LoadMedia(Game_Over);
-						auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
+						auto& sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
 						sleepevent->Enable = true;
 						sleepevent->userdata.reset();
 						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP*3, std::vector<bool>());
-						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
 						break;
 					}
 					else {
-						std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
-						auto& sleepevent = std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "SleepAllevent"));
+						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
+						auto& sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
 						sleepevent->Enable = true;
 						sleepevent->userdata.reset();
 						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
@@ -409,7 +409,7 @@ EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& bgm = static_cast<GameManager*>(data)->bgm;
 	auto& sfx = static_cast<GameManager*>(data)->sfx;
 	/*mario->changeState("DIED");
@@ -434,7 +434,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -445,9 +445,9 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			static_cast<GameManager*>(data)->addPoint(1000 * f_height);
 			printf("FlagpoleCollision.\nTouch height:%d", f_height);
 			self->Enable = false;
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdatePointText"))->Enable = true;
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveToDoor"))->Enable = true;
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "moveEvent"))->Enable = false;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveEvent"))->Enable = false;
 			static_cast<GameManager*>(data)->opMode = false;
 			break;
 		}
@@ -463,7 +463,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	auto&& Displacement = (int)marioSize.x >> 3;
@@ -489,8 +489,8 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(CheckPointCollision) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
-	auto& background = std::static_pointer_cast<ImageObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::ImageObject, "Background"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+	auto& background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
 	auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -513,7 +513,7 @@ EVENTCALLCALLBACKFUN(CheckPointCollision) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<GameManager*>(data)->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
 	auto GM = static_cast<GameManager*>(data);
@@ -581,7 +581,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 EVENTCALLCALLBACKFUN(UpdateHPText) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto& text = FM.GetFormObject(FM.GetNowForm(), ObjectType::TextObject, "HPText");
+	auto& text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "HPText");
 	char textstr[10] = "";
 	snprintf(textstr, sizeof(textstr), "HP:%d", GM->GetHP());
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
@@ -596,15 +596,15 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 EVENTCALLCALLBACKFUN(CheckMArioPosition) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Character, "Mario"));
+	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT)) && mario->GetPosition().y < 0) {
 		GM->DecHP();
-		std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+		(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
 		if (GM->GetHP() == 0) {
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "FinifhEvent"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
 		}
 		else {
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "GoBackCheckPoint"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
 		}
 	}
 }
@@ -653,7 +653,7 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto& mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Mario, "Mario"));
+	auto& mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
 	auto& coins = std::static_pointer_cast<std::vector<std::shared_ptr<Coin>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -661,7 +661,7 @@ EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
 			it->bonk();
 			GM->addPoint(100);
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdatePointText"))->Enable = true;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
 		}
 	}
 }
@@ -674,7 +674,7 @@ EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto& text = FM.GetFormObject(FM.GetNowForm(), ObjectType::TextObject, "PointText");
+	auto& text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
 	/// <summary>¤À¼Æ¤å¦r</summary>
 	char textstr[128] = "";
 	snprintf(textstr, sizeof(textstr), "Point:%d", GM->GetPoint());
@@ -691,7 +691,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	auto mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Mario, "Mario"));
+	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
 	auto turtles = std::static_pointer_cast<std::vector<std::shared_ptr<Turtle>>>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();

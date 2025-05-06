@@ -54,7 +54,7 @@ BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
 	int volume = MyBGM::GetVolume();
 	if (volume == 15) return;
 	MyBGM::SetVolume(++volume);
-	auto text =fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
+	auto text = fm.GetFormObject<TextObject>(FormSetting,  "VolumeValueText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(MyBGM::GetVolume()));
 }
 
@@ -66,7 +66,7 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 	if (volume == 0) return;
 	MyBGM::SetVolume(--volume);
 	
-	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "VolumeValueText");
+	auto text = fm.GetFormObject<TextObject>(FormSetting,  "VolumeValueText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(MyBGM::GetVolume()));
 }
 
@@ -85,7 +85,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 	else {
 		return;
 	}
-	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	auto text = fm.GetFormObject<TextObject>(FormSetting,"ScreenSizeText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 
@@ -104,7 +104,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 	else {
 		return;
 	}
-	auto text = fm.GetFormObject(FormSetting, ObjectType::TextObject, "ScreenSizeText");
+	auto text = fm.GetFormObject<TextObject>(FormSetting, "ScreenSizeText");
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(std::to_string(new_WINDOW_WIDTH) + "\n" + std::to_string(new_WINDOW_HEIGHT));
 }
 

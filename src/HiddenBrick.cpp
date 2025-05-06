@@ -7,13 +7,13 @@ void HiddenBrick::behavior(void* data) {
 	if (!m_Visible) {
 		auto GM = static_cast<GameManager*>(data);
 		auto& FM = GM->GetFormManger();
-		auto mario = std::static_pointer_cast<Mario>(FM.GetFormObject(FM.GetNowForm(), ObjectType::Mario, "Mario"));
+		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (mario->inRange(this->m_Transform.translation, GetSize())) {
 			bonkJump();
 			m_Visible = true;
 			collisionable = true;
 			GM->IncHP();
-			std::static_pointer_cast<EventObject>(FM.GetFormObject(FM.GetNowForm(), ObjectType::EventObject, "UpdateHPText"))->Enable = true;
+			FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText")->Enable = true;
 		}
 	}
 	//dojump();

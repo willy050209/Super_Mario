@@ -23,7 +23,7 @@ void Starman::playFrames() {
 void Starman::touch(void* gm) {
 	if (m_Visible) {
 		auto& fm = static_cast<GameManager*>(gm)->GetFormManger();
-		auto& mario = std::static_pointer_cast<Mario>(fm.GetFormObject(fm.GetNowForm(), ObjectType::Mario, "Mario"));
+		auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			std::cout << "touch Starman\n";
 			//mario->changeType(Mario::Mario_type::SuperMario);

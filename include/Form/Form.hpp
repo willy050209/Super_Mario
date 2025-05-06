@@ -32,9 +32,9 @@ public:
 	/// 釋放表單事件
 	/// </summary>
 	inline void free() noexcept {
-		for (auto& it : m_Events) {
-			it.reset();
-		}
+		//for (auto& it : m_Events) {
+		//	it.reset();
+		//}
 		m_Events.clear();
 	}
 
