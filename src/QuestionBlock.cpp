@@ -7,7 +7,7 @@ namespace MyAPP {
 				if (play) {
 					SetVisible(true);
 					play = false;
-					std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? EmptyBlockImagePath : EmptyBlockDarkImagePath));
+					std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? *EmptyBlockImagePath : *EmptyBlockDarkImagePath));
 				}
 			}
 

@@ -4,6 +4,7 @@
 
 #include "Brick.hpp"
 #include "ObjectType.hpp"
+#include "FilePath.hpp"
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
@@ -40,14 +41,17 @@ namespace MyAPP {
 
 				virtual void behavior(void* data = nullptr) override;
 
-				static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
-				static constexpr inline char* const EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };
+				static constexpr decltype(MyAPP::ResourcesFilePath::EmptyBlockImagePath) GetDefultImagePath() noexcept { return *DefultImagePath; }
+
+				static constexpr decltype(MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) GetDefultDarkImagePath() noexcept { return *DefultDarkImagePath; }
 
 			private:
 				enum class EmptyBlockState {
 					normal,
 					Dark
 				} blockState = EmptyBlockState::normal;
+				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockImagePath) DefultImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockImagePath };
+				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) DefultDarkImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath };
 			};
 		}
 	}

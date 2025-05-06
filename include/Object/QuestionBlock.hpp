@@ -4,6 +4,8 @@
 
 #include "Brick.hpp"
 #include "ObjectType.hpp"
+#include "FilePath.hpp"
+
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
@@ -44,9 +46,9 @@ namespace MyAPP {
 					return Frames;
 				}
 
-				static constexpr auto GetEmptyBlockImagePath() noexcept { return EmptyBlockImagePath; }
+				static constexpr auto GetEmptyBlockImagePath() noexcept { return *EmptyBlockImagePath; }
 
-				static constexpr auto GetEmptyBlockDarkImagePath() noexcept { return EmptyBlockDarkImagePath; }
+				static constexpr auto GetEmptyBlockDarkImagePath() noexcept { return *EmptyBlockDarkImagePath; }
 
 
 			private:
@@ -54,8 +56,8 @@ namespace MyAPP {
 
 				static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 
-				static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
-				static constexpr inline char* const EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };
+				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockImagePath) EmptyBlockImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockImagePath };
+				static constexpr inline decltype(&MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath) EmptyBlockDarkImagePath{ &MyAPP::ResourcesFilePath::EmptyBlockDarkImagePath };
 
 				int count{ 0 }, imgindex{ 0 };
 				bool play{ true };
