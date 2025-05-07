@@ -52,9 +52,9 @@ namespace MyAPP {
 				/// </summary>
 				inline void jump() noexcept {
 					state = State::UP;
-					displacement = WINDOW_HEIGHT / 15.f * 4.5f / 15;
+					displacement = WINDOW_HEIGHT / 15.f * 4.5f / 18;
 					index = 0;
-					jumpcount = 15;
+					jumpcount = 18;
 					changeImg();
 				}
 
