@@ -11,7 +11,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// 火柱物件 繼承Brick
+			/// 火柱物件 繼承Brick，請勿單獨適用
 			/// </summary>
 			class FireBalls : public Brick {
 			public:

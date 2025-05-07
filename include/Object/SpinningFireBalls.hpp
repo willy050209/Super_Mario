@@ -12,10 +12,17 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// 火柱磚頭物件 繼承Brick
+			/// 火柱磚頭物件 繼承Brick，需搭配FireBalls以同使用。make_SpinningFireBalls建立完整物件
 			/// </summary>
 			class SpinningFireBalls : public Brick {
 			public:
+
+				/// <summary>
+				/// 不建議用來建立 SpinningFireBalls 建議改用 make_SpinningFireBalls
+				/// </summary>
+				/// <param name="name"></param>
+				/// <param name="zIndex"></param>
+				/// <param name="pivot"></param>
 				explicit SpinningFireBalls(const std::string& name,
 					const float zIndex,
 					const glm::vec2& pivot = { 0, 0 })
@@ -52,6 +59,14 @@ namespace MyAPP {
 					return R"(imgs\super mario\SpinningFireBalls\frame)" + std::to_string(imgindex) + ".png";
 				}
 
+				/// <summary>
+				/// 建立包含火球的火柱方塊
+				/// </summary>
+				/// <param name="name">物件ID</param>
+				/// <param name="zindex">圖層</param>
+				/// <returns></returns>
+				[[nodiscard]] static std::shared_ptr<SpinningFireBalls> make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", int zindex = 100) noexcept;
+
 			private:
 				/// <summary>
 				/// 播放圖片
@@ -82,7 +97,6 @@ namespace MyAPP {
 				bool play{ true };
 			};
 
-			[[nodiscard]] std::shared_ptr<SpinningFireBalls> make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", int zindex = 100) noexcept;
 		}
 	}
 }

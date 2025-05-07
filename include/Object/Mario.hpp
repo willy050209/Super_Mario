@@ -126,7 +126,7 @@ namespace MyAPP {
 				/// 是否是無敵
 				/// </summary>
 				inline auto isInvincible() const noexcept {
-					return mario_invincible == State::Invincible;
+					return mario_invincible == State::Invincible || state == State::DIED;
 				}
 
 
@@ -153,7 +153,6 @@ namespace MyAPP {
 				/// 墜落事件
 				/// </summary>
 				virtual void comeDown() noexcept override;
-
 
 				State state = State::MOVE;
 				Mario_type mario_type = Mario_type::Mario;

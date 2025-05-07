@@ -12,6 +12,7 @@ void MyAPP::Form::Object::SpinningFireBalls::behavior(void* data) {
 	//moveFrieBalls();
 }
 
+
 void MyAPP::Form::Object::SpinningFireBalls::PlayGIF() noexcept {
 	if (std::abs(GetPosition().x) <= WINDOW_WIDTH  && std::abs(GetPosition().y) <= WINDOW_HEIGHT ) {
 		if (play) {
@@ -40,7 +41,7 @@ void MyAPP::Form::Object::SpinningFireBalls::moveFrieBalls() noexcept {
 	});
 }
 
-[[nodiscard]] std::shared_ptr<MyAPP::Form::Object::SpinningFireBalls> MyAPP::Form::Object::make_SpinningFireBalls(const std::string& name, int zindex) noexcept {
+[[nodiscard]] std::shared_ptr<MyAPP::Form::Object::SpinningFireBalls> MyAPP::Form::Object::SpinningFireBalls::make_SpinningFireBalls(const std::string& name, int zindex) noexcept {
 	auto result = std::make_shared<SpinningFireBalls>(name, zindex);
 	std::vector<std::shared_ptr<FireBalls>> fireballs;
 	for (int i = 0; i < 6; ++i) {

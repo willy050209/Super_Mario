@@ -135,6 +135,7 @@ namespace MyAPP {
 				//jumpDelay = 0;
 				jumpcount = 10;
 				changeImg();
+
 				// state = State::UP;
 			}
 

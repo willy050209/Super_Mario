@@ -371,7 +371,7 @@ INITFORM_FUNC(initForm_1_1) {
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().x * 8 });
 
 
-	Blocks.push_back(std::move(MyAPP::Form::Object::make_SpinningFireBalls()));
+	Blocks.push_back(std::move(SpinningFireBalls::make_SpinningFireBalls()));
 	Blocks.back()->SetPosition({ -200, -200 });
 
 
@@ -430,8 +430,10 @@ INITFORM_FUNC(initForm_1_1) {
 	props.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 6, 0 });
 	std::for_each(std::execution::seq, props.begin(), props.end(), [&](auto& it) { MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); });
 
-	auto& sfx = self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
-	auto& bgm = self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
+	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
+	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
+	auto& sfx = self->sfx;
+	auto& bgm = self->bgm;
 	bgm->Play(-1);
 
 	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);

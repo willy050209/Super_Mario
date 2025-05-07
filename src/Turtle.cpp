@@ -44,6 +44,7 @@ namespace MyAPP {
 								return;
 							}
 							left ^= 1;
+							imageChangeDelay = FPS_CAP;
 							return;
 						}
 					}
@@ -58,6 +59,7 @@ namespace MyAPP {
 					}
 					else {
 						left ^= 1;
+						imageChangeDelay = FPS_CAP;
 					}
 				}
 			}

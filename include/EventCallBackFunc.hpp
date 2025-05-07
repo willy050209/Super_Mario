@@ -599,7 +599,7 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 /// </summary>
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
-EVENTCALLCALLBACKFUN(CheckMArioPosition) {
+EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
@@ -703,7 +703,7 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	auto marioSize = mario->GetSize();
 	for (auto& it : *turtles) {
 		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
-			auto turtlePos{ it->GetPosition() };
+			//auto turtlePos{ it->GetPosition() };
 			if (it->GetPosition().x > marioPos.x) {
 				it->SetLeft<false>();
 				it->setMoveFlag(true);
