@@ -19,6 +19,7 @@ namespace MyAPP {
 				HiddenBrick,
 				Coin,
 				CheckPoint,
+				SpinningFireBalls,
 				TextObject,
 				Button,
 				EventObject,

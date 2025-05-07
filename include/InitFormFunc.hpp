@@ -370,6 +370,8 @@ INITFORM_FUNC(initForm_1_1) {
 	Blocks.push_back(std::make_shared<HiddenBrick>("HiddenBrick", HiddenBrick::GetDefultImagePath(), 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().x * 8 });
 
+	Blocks.push_back(std::make_shared<SpinningFireBalls>("SpinningFireBalls", 10));
+	Blocks.back()->SetPosition({ 0, 0 });
 	std::for_each(Blocks.begin(), Blocks.end(), [&](auto& it) { MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); });
 	//for (auto& it : Blocks) {
 	//	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it);
