@@ -66,6 +66,8 @@ namespace MyAPP {
 		/// </summary>
 		static constexpr auto StairsBrickImagePath = "imgs/super mario/StairsBrick.png";
 
+
+
 		/// <summary>
 		/// 階梯圖片路徑(深色)
 		/// </summary>
@@ -73,6 +75,8 @@ namespace MyAPP {
 
 		static constexpr inline auto EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		static constexpr inline auto EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };
+
+		static constexpr inline auto FrieBall{ R"(imgs\super mario\FireBall.png)" };
 
 		// static constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";
 		// static constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";

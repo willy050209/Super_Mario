@@ -20,6 +20,7 @@ namespace MyAPP {
 				Coin,
 				CheckPoint,
 				SpinningFireBalls,
+				FireBalls,
 				TextObject,
 				Button,
 				EventObject,

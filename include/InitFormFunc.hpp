@@ -370,8 +370,11 @@ INITFORM_FUNC(initForm_1_1) {
 	Blocks.push_back(std::make_shared<HiddenBrick>("HiddenBrick", HiddenBrick::GetDefultImagePath(), 10));
 	Blocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().x * 8 });
 
-	Blocks.push_back(std::make_shared<SpinningFireBalls>("SpinningFireBalls", 10));
-	Blocks.back()->SetPosition({ 0, 0 });
+
+	Blocks.push_back(std::move(MyAPP::Form::Object::make_SpinningFireBalls()));
+	Blocks.back()->SetPosition({ -200, -200 });
+
+
 	std::for_each(Blocks.begin(), Blocks.end(), [&](auto& it) { MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); });
 	//for (auto& it : Blocks) {
 	//	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it);
@@ -479,7 +482,7 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
 	eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
@@ -621,7 +624,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::move(eventobj));
 
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
@@ -1031,7 +1034,7 @@ INITFORM_FUNC(initForm_1_2) {
 	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::move(eventobj));
 
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
 	/*eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Turtle>>>(turtles);
@@ -1159,7 +1162,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Coin>>>(coins);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::move(eventobj));
 
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::make_shared<EventObject>("CheckMArioPosition", CheckMArioPosition));
+	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));

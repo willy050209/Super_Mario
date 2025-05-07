@@ -17,6 +17,7 @@
 #include "Object/Coin.hpp"
 #include "Object/CheckPoint.hpp"
 #include "Object/SpinningFireBalls.hpp"
+#include "Object/FireBall.hpp"
 #include "Object/ObjectType.hpp"
 #include "Object/Props/Props.hpp"
 #include "Object/Props/FireFlower.hpp"

@@ -5,6 +5,8 @@
 #include "Brick.hpp"
 #include "ObjectType.hpp"
 #include <string>
+#include <cmath>
+
 
 namespace MyAPP {
 	namespace Form {
@@ -39,10 +41,6 @@ namespace MyAPP {
 
 				SpinningFireBalls() = delete;
 
-				/// <summary>
-				/// 被敲擊事件
-				/// </summary>
-				virtual void bonk() noexcept override;
 
 				/// <summary>
 				/// 表單刷新時執行
@@ -60,6 +58,8 @@ namespace MyAPP {
 				/// </summary>
 				void PlayGIF() noexcept;
 
+				void moveFrieBalls() noexcept;
+
 				/*template<size_t N>
 				static constexpr auto init_Frames() noexcept {
 					std::array<std::string, N> _{};
@@ -74,9 +74,15 @@ namespace MyAPP {
 				/// 幀數集合
 				/// </summary>
 				//std::array<std::string, 103> Frames; // = init_Frames<103>();
+
+				// std::acos(-1);
+				static constexpr double PI{ 3.1415926535897931 };
+				
 				int count{ 0 }, imgindex{ 0 };
 				bool play{ true };
 			};
+
+			[[nodiscard]] std::shared_ptr<SpinningFireBalls> make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", int zindex = 100) noexcept;
 		}
 	}
 }
