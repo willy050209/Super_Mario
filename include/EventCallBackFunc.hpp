@@ -89,11 +89,11 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	}
 	if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
 		auto pos = (background)->GetPosition();
-		mario->left = 0;
+		mario->SetLeft<false>();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
 				flag = false;
-				//marioPos.x -= ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
+				marioPos.x = it->GetPosition().x - ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
 				break;
 			}
 		}
@@ -126,16 +126,18 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		if (flag)
 			(background)->SetPosition(pos);
+		else
+			mario->SetPosition(marioPos);
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-		mario->left = 1;
+		mario->SetLeft<true>();
 		auto pos = (background)->GetPosition();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
 				flag = false;
 				//marioPos = it->GetPosition();
-				//marioPos.x += ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
+				marioPos.x = it->GetPosition().x + ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
 				break;
 			}
 		}
@@ -168,6 +170,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		if (flag)
 			(background)->SetPosition(pos);
+		else
+			mario->SetPosition(marioPos);
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
@@ -315,10 +319,10 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 				auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-10)](auto& it) {
+				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
 					it->incPositionX(displacement);
 				});
-				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-10)](auto& it) {
+				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
 					it->incPositionX(displacement);
 				});
 				/*for (auto& it : form_1_2_OBJ.m_Characters) {
@@ -331,7 +335,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
 					it->SetPosition(tmp);
 				}*/
-				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 12, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
@@ -472,11 +476,11 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	if (mario->GetState() == Mario::State::MOVE) {
 		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
 			marioPos.x -= Displacement;
-			mario->left = 1;
+			mario->SetLeft<true>();
 		}
 		else {
 			marioPos.x += Displacement;
-			mario->left = 0;
+			mario->SetLeft<false>();
 		}
 	}
 	mario->SetPosition(marioPos);
@@ -701,11 +705,11 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
 			auto turtlePos{ it->GetPosition() };
 			if (it->GetPosition().x > marioPos.x) {
-				it->left = 0;
+				it->SetLeft<false>();
 				it->setMoveFlag(true);
 			}
 			else {
-				it->left = 1;
+				it->SetLeft<true>();
 				it->setMoveFlag(true);
 			}
 			//it->SetPosition(turtlePos);

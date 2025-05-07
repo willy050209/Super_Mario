@@ -36,6 +36,28 @@ namespace MyAPP {
 				}*/
 
 				/// <summary>
+				/// 是否面向左邊
+				/// </summary>
+				/// <returns></returns>
+				inline auto isLeft() const noexcept {
+					return left == 1;
+				}
+
+				/// <summary>
+				/// 設定向左向右
+				/// </summary>
+				/// <typeparam name="val">true 向左 false 向右</typeparam>
+				template<bool T_or_F>
+				inline void SetLeft() noexcept {
+					if constexpr (T_or_F) {
+						left = 1;
+					}
+					else {
+						left = 0;
+					}
+				}
+
+				/// <summary>
 				/// 死亡事件
 				/// </summary>
 				virtual void died() noexcept = 0;
@@ -45,12 +67,8 @@ namespace MyAPP {
 				/// </summary>
 				virtual void move() noexcept;
 
-				/// <summary>
-				/// 向左旗標
-				/// </summary>
-				int left = 0;
 
-			private:
+			protected:
 				/// <summary>
 				/// 重設座標
 				/// </summary>
@@ -60,6 +78,11 @@ namespace MyAPP {
 				/// 墜落事件
 				/// </summary>
 				virtual void comeDown() noexcept = 0;
+
+				/// <summary>
+				/// 向左旗標
+				/// </summary>
+				int left = 0;
 			};
 		}
 	}

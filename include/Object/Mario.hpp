@@ -51,13 +51,11 @@ namespace MyAPP {
 				/// ∑«≥∆∏ı≈D
 				/// </summary>
 				inline void jump() noexcept {
-					if (jumpDelay == 0) {
-						state = State::UP;
-						displacement = WINDOW_HEIGHT / 15.f * 4.5f / 15;
-						index = 0;
-						jumpcount = 15;
-						changeImg();
-					}
+					state = State::UP;
+					displacement = WINDOW_HEIGHT / 15.f * 4.5f / 15;
+					index = 0;
+					jumpcount = 15;
+					changeImg();
 				}
 
 				/// <summary>
@@ -162,7 +160,7 @@ namespace MyAPP {
 				State mario_invincible = State::MOVE;
 				float displacement = DEFAULTDISPLACEMENT;
 				int index = 0;
-				int jumpDelay = 0;
+				//int jumpDelay = 0;
 				int jumpcount = 0;
 				unsigned imgChangeDelay = 0;
 				bool diedflag = false;

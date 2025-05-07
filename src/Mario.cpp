@@ -19,7 +19,7 @@ namespace MyAPP {
 			}
 
 			void Mario::doJump() noexcept {
-				if (jumpcount > 0 && (state == State::UP || (state == State::DIED && !diedflag)) && jumpDelay == 0) {
+				if (jumpcount > 0 && (state == State::UP || (state == State::DIED && !diedflag))) {
 					/*std::mutex displacement_mutex;
 					std::mutex jumpDelay_mutex;
 					std::mutex test;*/
@@ -48,7 +48,7 @@ namespace MyAPP {
 								(it)->bonk();
 								(it)->bonkJump();
 								displacement = 0;
-								jumpDelay = 0;
+								//jumpDelay = 0;
 								/*{
 									std::lock_guard<std::mutex> lock(displacement_mutex);
 									displacement = 0;
@@ -75,9 +75,9 @@ namespace MyAPP {
 						displacement = DEFAULTDISPLACEMENT;
 					}
 				}
-				else if (jumpDelay > 0) {
+				/*else if (jumpDelay > 0) {
 					--jumpDelay;
-				}
+				}*/
 			}
 
 			void Mario::comeDown() noexcept {
@@ -132,7 +132,7 @@ namespace MyAPP {
 				state = State::DIED;
 				displacement = 2.5 * DEFAULTDISPLACEMENT;
 				index = 0;
-				jumpDelay = 0;
+				//jumpDelay = 0;
 				jumpcount = 10;
 				changeImg();
 				// state = State::UP;
