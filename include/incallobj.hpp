@@ -24,4 +24,6 @@
 #include "Object/Props/Mushroom.hpp"
 #include "Object/Props/Starman.hpp"
 
+#include "Object/MakeObject.hpp"
+
 #endif
