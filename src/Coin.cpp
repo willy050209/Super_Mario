@@ -1,31 +1,43 @@
 #include "Object/Coin.hpp"
 #include "config.hpp"
-namespace MyAPP {
-	namespace Form {
-		namespace Object {
-			void Coin::bonk() noexcept {
-				if (play) {
-					SetVisible(false);
-					play = false;
-					// std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(EmptyBlockImagePath);
-				}
-			}
+#include "GameManager.hpp"
 
-			void Coin::behavior(void* data) {
-				PlayFrames();
-			}
+#include <memory>
 
-			void Coin::PlayFrames() noexcept {
-				if (play) {
-					++(count);
-					if (count >= (FPS_CAP / 5)) {
-						++imgindex;
-						imgindex %= 6;
-						std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(Frames[imgindex]);
-						count = 0;
-					}
-				}
-			}
+void MyAPP::Form::Object::Coin::bonk() noexcept {
+	if (play) {
+		SetVisible(false);
+		play = false;
+		// std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(EmptyBlockImagePath);
+	}
+}
+
+void MyAPP::Form::Object::Coin::behavior(void* data) {
+	PlayFrames();
+	touch(data);
+}
+
+void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
+	if (play) {
+		++(count);
+		if (count >= (FPS_CAP / 5)) {
+			++imgindex;
+			imgindex %= 6;
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(Frames[imgindex]);
+			count = 0;
 		}
+	}
+}
+void MyAPP::Form::Object::Coin::touch(void* data) noexcept {
+	using namespace MyAPP::Form::Object;
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	if (GetVisibility() && inRange(marioPos, marioSize)) {
+		bonk();
+		GM->addPoint(100);
+		FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText")->Enable = true;
 	}
 }

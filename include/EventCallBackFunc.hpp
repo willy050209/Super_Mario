@@ -656,21 +656,21 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Coin)) </param>
-EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
-	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
-	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
-	auto coins = std::static_pointer_cast<std::vector<std::shared_ptr<Coin>>>(self->userdata);
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	for (auto& it : *coins) {
-		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
-			it->bonk();
-			GM->addPoint(100);
-			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
-		}
-	}
-}
+//EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
+//	auto GM = static_cast<MyAPP::GameManager*>(data);
+//	auto& FM = GM->GetFormManger();
+//	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
+//	auto coins = std::static_pointer_cast<std::vector<std::shared_ptr<Coin>>>(self->userdata);
+//	auto marioPos = mario->GetPosition();
+//	auto marioSize = mario->GetSize();
+//	for (auto& it : *coins) {
+//		if (it->GetVisibility() && it->inRange(marioPos, marioSize)) {
+//			it->bonk();
+//			GM->addPoint(100);
+//			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
+//		}
+//	}
+//}
 
 /// <summary>
 /// 更新分數事件
