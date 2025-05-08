@@ -6,6 +6,10 @@ namespace MyAPP {
 	/// ÀÉ®×¸ô®|
 	/// </summary>
 	struct MyResourcesFilePath {
+
+		struct MAP {
+			static constexpr auto Form_1_1_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Images.txt";
+		};
 	
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
 		/// <summary>

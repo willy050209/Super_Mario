@@ -2,7 +2,6 @@
 #ifndef FORMPROFILE_HPP
 #define FORMPROFILE_HPP
 
-#include "FormProfile.hpp"
 #include "MyContext.hpp"
 
 constexpr auto FORMPROFILE_FILE = "Form Profile";

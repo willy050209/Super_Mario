@@ -23,6 +23,7 @@
 #include "Object/Props/FireFlower.hpp"
 #include "Object/Props/Mushroom.hpp"
 #include "Object/Props/Starman.hpp"
+#include "Object/PipeBrick.hpp"
 
 #include "Object/MakeObject.hpp"
 

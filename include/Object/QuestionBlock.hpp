@@ -14,9 +14,13 @@ namespace MyAPP {
 			public:
 				explicit QuestionBlock(const std::string& name, const std::string& ImagePath,
 					const float zIndex,
+					bool isDark = false,
 					const glm::vec2& pivot = { 0, 0 })
 					: Brick(name, ImagePath, zIndex, pivot) {
 					MyType = ObjectType::QuestionBlock;
+					if (isDark) {
+						setDark();
+					}
 				}
 
 

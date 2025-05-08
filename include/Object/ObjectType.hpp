@@ -27,7 +27,8 @@ namespace MyAPP {
 				Props,
 				FireFlower,
 				Mushroom,
-				Starman
+				Starman,
+				PipeBrick
 			};
 		}
 	}

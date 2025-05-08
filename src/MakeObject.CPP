@@ -1,7 +1,11 @@
 #include "MakeObject.hpp"
 #include "ImageObject.hpp"
 #include "Mario.hpp"
-#include <Position.hpp>
+#include "Position.hpp"
+
+#include <memory>
+#include <fstream>
+
 
 using namespace MyAPP::Form::Object;
 
@@ -16,11 +20,13 @@ std::shared_ptr<MyAPP::Form::Object::SpinningFireBalls> MyAPP::Form::Object::Mak
 	return result;
 }
 
-std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Object::MakeObject::make_Background_And_Mario(std::string&& backgrount_FilePath, glm::vec2 marioPos, int backgroundZindex, int marioZindex) noexcept {
+std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Object::MakeObject::make_Background_And_Mario(
+	std::string&& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks,
+	glm::vec2 marioPos, int backgroundZindex, int marioZindex) noexcept {
 
 	auto background = std::make_shared<ImageObject>("Background", backgrount_FilePath, backgroundZindex);
 	background->SetPosition({ GetX0(background), 0 });
-	background->userdata = make_Bricks();
+	background->userdata = Bricks;
 
 	auto mario = std::make_shared<Mario>("Mario", marioZindex);
 	mario->SetPosition(marioPos);
@@ -31,6 +37,64 @@ std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Obj
 
 std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks() noexcept {
 	return std::make_shared<std::vector<std::shared_ptr<Brick>>>();
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks(std::string&& filename, bool isDark = false) noexcept {
+	Fileinfo fileinfo;
+	auto result = MakeObject::make_Bricks();
+	std::ifstream inp(filename);
+	while (!inp.eof()) {
+		fileinfo.GetFileDate(inp);
+		fileinfo.ChangeXY();
+		auto ptr = make_BrickPtr(fileinfo, isDark);
+		if (ptr) {
+			result->push_back(ptr);
+		}
+	}
+	return result;
+}
+
+std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo, bool isDark) noexcept {
+	std::shared_ptr<Brick> BrickPtr = nullptr;
+	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Brick) {
+		BrickPtr = std::make_shared<Brick>("",
+			((isDark) ? MyAPP::MyResourcesFilePath::BlockDarkImagePath : MyAPP::MyResourcesFilePath::BlockImagePath), 1);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(true);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::QuestionBlock) {
+		BrickPtr = std::make_shared<QuestionBlock>("", (*QuestionBlock::GetFrames()), 10);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::HiddenBrick) {
+		BrickPtr = std::make_shared<HiddenBrick>("",
+			((isDark) ? HiddenBrick::GetDefultDarkImagePath() : HiddenBrick::GetDefultDarkImagePath()), 10);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Coin) {
+		BrickPtr = std::make_shared<Coin>("", 10);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::CheckPoint) {
+		BrickPtr = std::make_shared<CheckPoint>("");
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::SpinningFireBalls) {
+		BrickPtr = make_SpinningFireBalls();
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	return BrickPtr;
 }
 
 std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Characters() noexcept {
