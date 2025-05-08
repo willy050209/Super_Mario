@@ -24,17 +24,6 @@ namespace MyAPP {
 					m_Visible = false;
 				}
 
-				// explicit Coin(
-				//	const std::string& name,
-				//	const std::shared_ptr<Core::Drawable>& drawable,
-				//	const float zIndex,
-				//	const glm::vec2& pivot = { 0, 0 },
-				//	const bool visible = true,
-				//	const std::vector<std::shared_ptr<GameObject>>& children = std::vector<std::shared_ptr<GameObject>>()) : Brick(name, drawable, zIndex, pivot, visible, children) {
-				//	MyType = ObjectType::Coin;
-				//	collisionable = false;
-				// }
-
 				FireBalls(const FireBalls& other) = delete;
 
 				FireBalls(FireBalls&& other) = delete;

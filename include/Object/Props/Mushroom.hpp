@@ -5,6 +5,7 @@
 #include "Props.hpp"
 #include "ObjectType.hpp"
 
+
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
@@ -44,6 +45,7 @@ namespace MyAPP {
 
 					virtual void behavior(void* data = nullptr) override;
 
+
 					template <Category category>
 					static constexpr auto GetImages() noexcept { return Images[0]; }
 
@@ -57,7 +59,6 @@ namespace MyAPP {
 					static constexpr auto GetImages<Category::BigMushroom>() noexcept { return Images[2]; }
 
 				protected:
-					virtual void playFrames() override {};
 
 					virtual void touch(void* gm) override;
 

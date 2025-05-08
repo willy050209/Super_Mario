@@ -4,13 +4,15 @@
 
 #include "Brick.hpp"
 #include "ObjectType.hpp"
+#include "Interface/IFrames.hpp"
+
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
 			/// 金幣物件 繼承Brick
 			/// </summary>
-			class Coin : public Brick {
+			class Coin : Interface::Iframes, public Brick {
 			public:
 				explicit Coin(const std::string& name,
 					const float zIndex,
@@ -50,11 +52,14 @@ namespace MyAPP {
 
 				static constexpr auto GetFrames() noexcept { return Frames; }
 
+				virtual std::string GetFrame() const noexcept override { return Frames[imgindex]; }
+				
+
 			private:
 				/// <summary>
 				/// 播放圖片
 				/// </summary>
-				void PlayGIF() noexcept;
+				virtual void PlayFrames() noexcept override;
 
 
 				// static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };

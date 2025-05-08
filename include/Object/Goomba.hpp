@@ -4,6 +4,7 @@
 
 #include "config.hpp"
 #include "Character.hpp"
+#include "Interface/IFrames.hpp"
 #include <string>
 namespace MyAPP {
 	namespace Form {

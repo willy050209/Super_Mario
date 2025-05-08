@@ -37,7 +37,6 @@ namespace MyAPP {
 					// static constexpr auto GetFrame0() const noexcept { return frames[0]; }
 
 				protected:
-					virtual void playFrames() = 0;
 
 					virtual void touch(void* gm) = 0;
 

@@ -9,11 +9,11 @@ namespace MyAPP {
 		namespace Object {
 			namespace Props {
 				void Starman::behavior(void* data) {
-					playFrames();
+					PlayFrames();
 					touch(data);
 				}
 
-				void Starman::playFrames() {
+				void Starman::PlayFrames() noexcept {
 					++(count);
 					if (count >= (FPS_CAP / 3)) {
 						++imgindex;

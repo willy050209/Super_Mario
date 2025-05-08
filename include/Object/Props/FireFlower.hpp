@@ -4,6 +4,7 @@
 
 #include "Props.hpp"
 #include "ObjectType.hpp"
+#include "Object/Interface/IFrames.hpp"
 
 namespace MyAPP {
 	namespace Form {
@@ -12,7 +13,7 @@ namespace MyAPP {
 				/// <summary>
 				/// 所有道具的父類別 繼承ImageObject
 				/// </summary>
-				class FireFlower : public Props {
+				class FireFlower : Interface::Iframes, public Props {
 				public:
 					explicit FireFlower(const std::string& name,
 						const float zIndex,
@@ -28,12 +29,13 @@ namespace MyAPP {
 					FireFlower() = delete;
 
 
-					virtual void behavior(void* data = nullptr) override;
-
 					static constexpr auto GetFrames() noexcept { return frames; }
 
+					virtual void behavior(void* data = nullptr) override;
+					virtual std::string GetFrame() const noexcept { return frames[imgindex]; }
+
 				protected:
-					virtual void playFrames() override;
+					virtual void PlayFrames() noexcept override;
 
 					virtual void touch(void* gm) override;
 

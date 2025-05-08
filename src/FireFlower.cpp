@@ -7,11 +7,11 @@ namespace MyAPP {
 		namespace Object {
 			namespace Props {
 				void FireFlower::behavior(void* data) {
-					playFrames();
+					PlayFrames();
 					touch(data);
 				}
 
-				void FireFlower::playFrames() {
+				void FireFlower::PlayFrames() noexcept {
 					++(count);
 					if (count >= (FPS_CAP / 3)) {
 						++imgindex;

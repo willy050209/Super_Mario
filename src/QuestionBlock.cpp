@@ -12,12 +12,12 @@ namespace MyAPP {
 			}
 
 			void QuestionBlock::behavior(void* data) {
-				PlayGIF();
+				PlayFrames();
 				dojump();
 				comeDown();
 			}
 
-			void QuestionBlock::PlayGIF() noexcept {
+			void QuestionBlock::PlayFrames() noexcept {
 				if (play) {
 					++(count);
 					if (count >= (FPS_CAP / 5)) {

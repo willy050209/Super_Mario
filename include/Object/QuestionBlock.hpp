@@ -5,11 +5,12 @@
 #include "Brick.hpp"
 #include "ObjectType.hpp"
 #include "FilePath.hpp"
+#include "Interface/IFrames.hpp"
 
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
-			class QuestionBlock : public Brick {
+			class QuestionBlock : Interface::Iframes, public Brick {
 			public:
 				explicit QuestionBlock(const std::string& name, const std::string& ImagePath,
 					const float zIndex,
@@ -18,15 +19,6 @@ namespace MyAPP {
 					MyType = ObjectType::QuestionBlock;
 				}
 
-				/*QuestionBlock(
-					const std::string& name,
-					const std::shared_ptr<Core::Drawable>& drawable,
-					const float zIndex,
-					const glm::vec2& pivot = { 0, 0 },
-					const bool visible = true,
-					const std::vector<std::shared_ptr<GameObject>>& children = std::vector<std::shared_ptr<GameObject>>()) : Brick(name, drawable, zIndex, pivot, visible, children) {
-					MyType = ObjectType::QuestionBlock;
-				}*/
 
 				QuestionBlock(const QuestionBlock& other) = delete;
 
@@ -50,9 +42,11 @@ namespace MyAPP {
 
 				static constexpr auto GetEmptyBlockDarkImagePath() noexcept { return *EmptyBlockDarkImagePath; }
 
+				virtual std::string GetFrame() const noexcept { return Frames[imgindex]; }
+				
 
 			private:
-				void PlayGIF() noexcept;
+				virtual void PlayFrames() noexcept;
 
 				static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 

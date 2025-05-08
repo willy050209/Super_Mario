@@ -12,10 +12,10 @@ namespace MyAPP {
 			}
 
 			void Coin::behavior(void* data) {
-				PlayGIF();
+				PlayFrames();
 			}
 
-			void Coin::PlayGIF() noexcept {
+			void Coin::PlayFrames() noexcept {
 				if (play) {
 					++(count);
 					if (count >= (FPS_CAP / 5)) {

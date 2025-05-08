@@ -4,6 +4,7 @@
 
 #include "Props.hpp"
 #include "ObjectType.hpp"
+#include "Object/Interface/IFrames.hpp"
 
 namespace MyAPP {
 	namespace Form {
@@ -12,7 +13,7 @@ namespace MyAPP {
 				/// <summary>
 				/// 所有道具的父類別 繼承ImageObject
 				/// </summary>
-				class Starman : public Props {
+				class Starman : Interface::Iframes, public Props {
 				public:
 					explicit Starman(const std::string& name,
 						const float zIndex,
@@ -30,10 +31,12 @@ namespace MyAPP {
 
 					virtual void behavior(void* data = nullptr) override;
 
+					virtual std::string GetFrame() const noexcept { return *frames; }
+
 					static constexpr auto GetFrames() noexcept { return frames; }
 
 				protected:
-					virtual void playFrames() override;
+					virtual void PlayFrames() noexcept override;
 
 					virtual void touch(void* gm) override;
 

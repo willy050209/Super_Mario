@@ -4,6 +4,7 @@
 
 #include "Brick.hpp"
 #include "ObjectType.hpp"
+#include "Object/Interface/IFrames.hpp"
 #include <string>
 #include <cmath>
 
@@ -14,7 +15,7 @@ namespace MyAPP {
 			/// <summary>
 			/// 火柱磚頭物件 繼承Brick，需搭配FireBalls以同使用。make_SpinningFireBalls建立完整物件
 			/// </summary>
-			class SpinningFireBalls : public Brick {
+			class SpinningFireBalls : Interface::Iframes,  public Brick {
 			public:
 
 				/// <summary>
@@ -55,23 +56,16 @@ namespace MyAPP {
 				/// <param name="data"></param>
 				virtual void behavior(void* data = nullptr) override;
 
-				inline auto GetFrame() const noexcept {
+				virtual std::string GetFrame() const noexcept override {
 					return R"(imgs\super mario\SpinningFireBalls\frame)" + std::to_string(imgindex) + ".png";
 				}
 
-				/// <summary>
-				/// 建立包含火球的火柱方塊
-				/// </summary>
-				/// <param name="name">物件ID</param>
-				/// <param name="zindex">圖層</param>
-				/// <returns></returns>
-				[[nodiscard]] static std::shared_ptr<SpinningFireBalls> make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", int zindex = 100) noexcept;
-
+				
 			private:
 				/// <summary>
 				/// 播放圖片
 				/// </summary>
-				void PlayGIF() noexcept;
+				virtual void PlayFrames() noexcept override;
 
 				void moveFrieBalls() noexcept;
 
@@ -92,8 +86,10 @@ namespace MyAPP {
 
 				// std::acos(-1);
 				static constexpr double PI{ 3.1415926535897931 };
+				static constexpr unsigned Last_Frame{ 103 };
 				
-				int count{ 0 }, imgindex{ 0 };
+				int Frame_count{ 0 };
+				int imgindex{ 0 };
 				bool play{ true };
 			};
 
