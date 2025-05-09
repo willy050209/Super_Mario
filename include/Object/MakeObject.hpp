@@ -13,27 +13,31 @@ namespace MyAPP::Form::Object {
 
 	struct MakeObject {
 
+		/// <summary>
+		/// 地圖檔格式
+		/// </summary>
 		struct Fileinfo {
 			glm::vec2 XY{};
 			int Type{};
 			int Visibility{};
 			int Collisionable{};
 
+			/// <summary>
+			/// 從檔案讀取資料
+			/// </summary>
+			/// <param name="inp"></param>
 			void GetFileDate(std::ifstream& inp) {
 				if (inp.good()) {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
 				}
 			}
 
+			/// <summary>
+			/// 將XY轉為實際座標
+			/// </summary>
 			void ChangeXY() {
-				auto op = [](const glm::vec2& a, const glm::vec2& b, const glm::vec2& c) {
-					auto ans = a * b;
-					ans.x += c.x;
-					ans.y = c.y + ans.y;
-					return ans;
-				};
 				auto brick = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
-				XY = op(XY, brick->GetSize(), { GetX0(brick), GetY0(brick) });				
+				XY = XY * brick->GetSize() + glm::vec2{ GetX0(brick), GetY0(brick) };				
 			}
 		};
 
@@ -63,11 +67,17 @@ namespace MyAPP::Form::Object {
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(std::string&& filename, bool isDark = false) noexcept;
 
 		/// <summary>
-		/// 建立 Brick vector 指標
+		/// 建立 Brick 指標陣列
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks() noexcept;
 
+		/// <summary>
+		/// 建立 Brick 指標
+		/// </summary>
+		/// <param name="fileinfo"></param>
+		/// <param name="isDark"></param>
+		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<Brick> make_BrickPtr(const Fileinfo& fileinfo, bool isDark) noexcept;
 
 		/// <summary>
@@ -89,12 +99,22 @@ namespace MyAPP::Form::Object {
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> make_GameText() noexcept;
 
 		/// <summary>
-		/// 從檔案建立 enemys vector 指標
+		/// 從檔案建立 enemys 指標陣列
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(std::string&& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks) noexcept;
 	
+		/// <summary>
+		/// 建立 Character 指標
+		/// </summary>
+		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<Character> make_EnemysPtr(const Fileinfo& fileinfo) noexcept;
+
+		/// <summary>
+		/// 建立 Props 指標陣列
+		/// </summary>
+		/// <returns></returns>
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Props::Props>>> make_Props() noexcept;
 	
 	};
 

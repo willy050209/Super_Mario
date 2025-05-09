@@ -69,7 +69,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
-	auto tuplePtr = std::static_pointer_cast<std::tuple<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>, std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>, std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>(self->userdata);
+	auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>, std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>, std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(self->userdata);
 	auto& [enemys, pipes, props] = (*tuplePtr);
 	auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 	auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
@@ -106,11 +106,11 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y }); 
 				});
-			std::for_each(std::execution::par, enemys.begin(), enemys.end(),
+			std::for_each(std::execution::par, enemys->begin(), enemys->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, props.begin(), props.end(),
+			std::for_each(std::execution::par, props->begin(), props->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
@@ -150,11 +150,11 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, enemys.begin(), enemys.end(),
+			std::for_each(std::execution::par, enemys->begin(), enemys->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, props.begin(), props.end(),
+			std::for_each(std::execution::par, props->begin(), props->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
@@ -175,7 +175,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
-		for (auto& it : pipes) {
+		for (auto& it : *pipes) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
 				if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
 					initForm_1_1_Pip(static_cast<MyAPP::GameManager*>(data));
@@ -494,23 +494,23 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
-EVENTCALLCALLBACKFUN(CheckPointCollision) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
-	auto checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	auto pos = background->GetPosition();
-	for (auto& it = checkPoints->begin(); it < checkPoints->end(); ++it) {
-		if ((*it)->Enable && (*it)->inRange(marioPos, marioSize)) {
-			(*it)->Enable = false;
-			puts("CheckPoint");
-			static_cast<MyAPP::GameManager*>(data)->SaveCheckPointPos(marioPos);
-			break;
-		}
-	}
-}
+//EVENTCALLCALLBACKFUN(CheckPointCollision) {
+//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+//	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+//	auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
+//	auto checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
+//	auto marioPos = mario->GetPosition();
+//	auto marioSize = mario->GetSize();
+//	auto pos = background->GetPosition();
+//	for (auto& it = checkPoints->begin(); it < checkPoints->end(); ++it) {
+//		if ((*it)->Enable && (*it)->inRange(marioPos, marioSize)) {
+//			(*it)->Enable = false;
+//			puts("CheckPoint");
+//			static_cast<MyAPP::GameManager*>(data)->SaveCheckPointPos(marioPos);
+//			break;
+//		}
+//	}
+//}
 
 /// <summary>
 /// 返回存檔點事件

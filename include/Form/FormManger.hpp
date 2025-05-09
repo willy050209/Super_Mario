@@ -64,7 +64,7 @@ namespace MyAPP {
 			/// 取得前一個表單名稱
 			/// </summary>
 			/// <returns>表單名稱</returns>
-			inline const auto& GetPrevForm() const noexcept { return prevForm.back(); }
+			inline const auto GetPrevForm() const noexcept { return prevForm.back(); }
 
 			/// <summary>
 			/// 取得表單物件

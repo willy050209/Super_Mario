@@ -13,7 +13,7 @@ namespace MyAPP::Form::Object {
 	class Floor : public Brick {
 	public:
 		explicit Floor(const std::string& name, const std::string& filename,
-			const float zIndex = -10,
+			const float zIndex = 10,
 			const glm::vec2& pivot = { 0, 0 })
 			: Brick(name, filename,
 				  zIndex, pivot) {

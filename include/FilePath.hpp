@@ -12,6 +12,11 @@ namespace MyAPP {
 			static constexpr auto Form_1_1_Characters = MY_RESOURCE_DIR "/MAP/Form_1_1_Characters.txt";
 			static constexpr auto Form_1_1_Pipe_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Pipe_Images.txt";
 			static constexpr auto Form_1_1_Pipe_Characters = MY_RESOURCE_DIR "/MAP/Form_1_1_Pipe_Characters.txt";
+			static constexpr auto Form_1_1_to_1_2_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_to_1_2_Images.txt";
+			static constexpr auto Form_1_2_Images = MY_RESOURCE_DIR "/MAP/Form_1_2_Images.txt";
+			static constexpr auto Form_1_2_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Characters.txt";
+			static constexpr auto Form_1_2_Pipe_Images = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Images.txt";
+			static constexpr auto Form_1_2_Pipe_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Characters.txt";
 		};
 	
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";

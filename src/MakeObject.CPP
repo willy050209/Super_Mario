@@ -2,6 +2,7 @@
 #include "ImageObject.hpp"
 #include "Mario.hpp"
 #include "Position.hpp"
+#include "config.hpp"
 
 #include <memory>
 #include <fstream>
@@ -68,6 +69,9 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
+		if (isDark) {
+			std::static_pointer_cast<QuestionBlock>(BrickPtr)->setDark();
+		}
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::HiddenBrick) {
 		BrickPtr = std::make_shared<HiddenBrick>("HiddenBrick",
@@ -115,7 +119,7 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Stairs) {
-		BrickPtr = std::make_shared<Floor>("Stairs",
+		BrickPtr = std::make_shared<Stairs>("Stairs",
 			(isDark) ? MyAPP::MyResourcesFilePath::StairsBrickDarkImagePath : MyAPP::MyResourcesFilePath::StairsBrickImagePath);
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
@@ -134,15 +138,15 @@ std::shared_ptr<std::vector<std::shared_ptr<Coin>>> MyAPP::Form::Object::MakeObj
 
 std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
 	auto result = std::make_shared<std::vector<std::shared_ptr<TextObject>>>();
-	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
 	result->push_back(texttime);
 
-	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ -GetX0(text), GetY0(text) });
 	result->push_back(text);
 
-	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20, "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
 	pointtext->SetPosition({ 0, GetY0(pointtext) });
 	result->push_back(pointtext);
 
@@ -185,6 +189,10 @@ std::shared_ptr<Character> MyAPP::Form::Object::MakeObject::make_EnemysPtr(const
 	}
 	
 	return enemy;
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<Props::Props>>> MyAPP::Form::Object::MakeObject::make_Props() noexcept {
+	return std::make_shared<std::vector<std::shared_ptr<Props::Props>>>();
 }
 
 

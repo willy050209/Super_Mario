@@ -78,28 +78,9 @@ void MyAPP::GameManager::init() noexcept {
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
-	/*time_try*/
-	// MyFM.
-	// time_t now = time(0);
-	// std::string tm = ctime(&now);
-	////std::cout << tm << '\n';
-	// auto texttime = std::make_shared<TextObject>("Timetext", ArialFontPath, 20, tm, Util::Color::FromName(Util::Colors::WHITE), 100);
-	// texttime->SetPosition({ 100,100 });
-	// texttime->SetPosition({ GetX0(texttime),GetY0(texttime) });
-	// MyFM.removeObject(Form_1_1, ObjectType::TextObject, "Timetext");
-	// MyFM.addObject(Form_1_1, texttime);
-
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
 		MyFM.changeForm(MyAPP::Form::FormNames::FormOptions);
-		//if (MyFM.GetPrevForm() != "null") {
-		//	MyFM.returnPrevForm();
-		//}
-		///*else if (MyFM.GetNowForm() == FormTitel) {
-		//	MyFM.changeForm(FormOptions);
-		//}*/
-		//else {
-		//	MyFM.changeForm(FormOptions);
-		//}
+
 	}
 	MyFM.UpdateForm(this);
 }

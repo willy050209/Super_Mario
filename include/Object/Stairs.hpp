@@ -12,7 +12,7 @@ namespace MyAPP::Form::Object {
 	/// </summary>
 	class Stairs : public Brick {
 	public:
-		explicit Stairs(const std::string& name, const std::string& filename, const float zIndex = -10,
+		explicit Stairs(const std::string& name, const std::string& filename, const float zIndex = 10,
 			const glm::vec2& pivot = { 0, 0 })
 			: Brick(name, filename,
 				  zIndex, pivot) {
