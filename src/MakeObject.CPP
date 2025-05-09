@@ -39,7 +39,7 @@ std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeOb
 	return std::make_shared<std::vector<std::shared_ptr<Brick>>>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_All_Bricks(std::string&& filename, bool isDark) noexcept {
+std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(std::string&& filename, bool isDark) noexcept {
 	Fileinfo fileinfo;
 	auto bricks = MakeObject::make_Bricks();
 	std::ifstream inp(filename);
@@ -130,6 +130,57 @@ std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::Ma
 
 std::shared_ptr<std::vector<std::shared_ptr<Coin>>> MyAPP::Form::Object::MakeObject::make_Coins() noexcept {
 	return std::make_shared<std::vector<std::shared_ptr<Coin>>>();
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
+	auto result = std::make_shared<std::vector<std::shared_ptr<TextObject>>>();
+	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
+	result->push_back(texttime);
+
+	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
+	text->SetPosition({ -GetX0(text), GetY0(text) });
+	result->push_back(text);
+
+	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20, "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
+	pointtext->SetPosition({ 0, GetY0(pointtext) });
+	result->push_back(pointtext);
+
+	return result;
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Enemys_From_File(std::string&& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks) noexcept {
+	Fileinfo fileinfo;
+	auto enemys = MakeObject::make_Characters();
+	std::ifstream inp(filename);
+	while (!inp.eof()) {
+		fileinfo.GetFileDate(inp);
+		fileinfo.ChangeXY();
+		auto ptr = make_EnemysPtr(fileinfo);
+		if (ptr) {
+			ptr->userdata = Bricks;
+			enemys->push_back(ptr);
+		}
+	}
+	return enemys;
+}
+
+std::shared_ptr<Character> MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fileinfo) noexcept {
+	std::shared_ptr<Character> enemy = nullptr;
+	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Goomba) {
+		enemy = std::make_shared<Goomba>("Goomba", 1);
+		enemy->SetPosition(fileinfo.XY);
+		enemy->SetVisible(true);
+		enemy->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Turtle) {
+		enemy = std::make_shared<Turtle>("Turtle", 1);
+		enemy->SetPosition(fileinfo.XY);
+		enemy->SetVisible(true);
+		enemy->collisionable = fileinfo.Collisionable;
+	}
+	
+	return enemy;
 }
 
 

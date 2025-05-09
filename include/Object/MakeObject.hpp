@@ -60,7 +60,7 @@ namespace MyAPP::Form::Object {
 		/// 從檔案建立 Brick vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_All_Bricks(std::string&& filename, bool isDark = false) noexcept;
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(std::string&& filename, bool isDark = false) noexcept;
 
 		/// <summary>
 		/// 建立 Brick vector 指標
@@ -81,6 +81,21 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Coin>>> make_Coins() noexcept;
+	
+		/// <summary>
+		/// 建立時間、分數、生命文字方塊
+		/// </summary>
+		/// <returns></returns>
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> make_GameText() noexcept;
+
+		/// <summary>
+		/// 從檔案建立 enemys vector 指標
+		/// </summary>
+		/// <returns></returns>
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(std::string&& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks) noexcept;
+	
+		[[nodiscard]] static std::shared_ptr<Character> make_EnemysPtr(const Fileinfo& fileinfo) noexcept;
+	
 	};
 
 }

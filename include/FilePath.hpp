@@ -9,6 +9,7 @@ namespace MyAPP {
 
 		struct MAP {
 			static constexpr auto Form_1_1_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Images.txt";
+			static constexpr auto Form_1_1_Characters = MY_RESOURCE_DIR "/MAP/Form_1_1_Characters.txt";
 		};
 	
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";

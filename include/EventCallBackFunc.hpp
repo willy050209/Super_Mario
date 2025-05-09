@@ -235,7 +235,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 /// <param name="self->userdata"> *std::tuple(int, int, std::shared_ptr(TextObject))) </param>
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto& [num, nowtime, timetext] = (*(std::static_pointer_cast<std::tuple<int, int, std::shared_ptr<MyAPP::Form::Object::TextObject>>>(self->userdata)));
+	auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(self->userdata)));
+	auto timetext = FM.GetFormObject<TextObject>(FM.GetNowForm(), "Timetext");
 	if ((num)++ >= FPS_CAP) {
 		// auto& timetext = std::get<std::shared_ptr<MyAPP::Form::Object::TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<MyAPP::Form::Object::TextObject>>>(self->userdata));
 		// auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<MyAPP::Form::Object::TextObject>>>(self->userdata)));
@@ -468,7 +469,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
