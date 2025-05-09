@@ -39,19 +39,19 @@ std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeOb
 	return std::make_shared<std::vector<std::shared_ptr<Brick>>>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks(std::string&& filename, bool isDark = false) noexcept {
+std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_All_Bricks(std::string&& filename, bool isDark) noexcept {
 	Fileinfo fileinfo;
-	auto result = MakeObject::make_Bricks();
+	auto bricks = MakeObject::make_Bricks();
 	std::ifstream inp(filename);
 	while (!inp.eof()) {
 		fileinfo.GetFileDate(inp);
 		fileinfo.ChangeXY();
 		auto ptr = make_BrickPtr(fileinfo, isDark);
 		if (ptr) {
-			result->push_back(ptr);
+			bricks->push_back(ptr);
 		}
 	}
-	return result;
+	return bricks;
 }
 
 std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo, bool isDark) noexcept {
@@ -64,32 +64,59 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::QuestionBlock) {
-		BrickPtr = std::make_shared<QuestionBlock>("", (*QuestionBlock::GetFrames()), 10);
+		BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", (*QuestionBlock::GetFrames()), 10);
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::HiddenBrick) {
-		BrickPtr = std::make_shared<HiddenBrick>("",
-			((isDark) ? HiddenBrick::GetDefultDarkImagePath() : HiddenBrick::GetDefultDarkImagePath()), 10);
+		BrickPtr = std::make_shared<HiddenBrick>("HiddenBrick",
+			((isDark) ? HiddenBrick::GetDefultDarkImagePath() : HiddenBrick::GetDefultImagePath()), 10);
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Coin) {
-		BrickPtr = std::make_shared<Coin>("", 10);
+		BrickPtr = std::make_shared<Coin>("Coin", 10);
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::CheckPoint) {
-		BrickPtr = std::make_shared<CheckPoint>("");
+		BrickPtr = std::make_shared<CheckPoint>("CheckPoint");
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::SpinningFireBalls) {
 		BrickPtr = make_SpinningFireBalls();
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::PipeBrick) {
+		BrickPtr = std::make_shared<PipeBrick>("PipeBrick",0);
+		BrickPtr->SetPosition(fileinfo.XY);
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Door) {
+		BrickPtr = std::make_shared<Door>("Door");
+		BrickPtr->SetPosition(fileinfo.XY);
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Flagpole) {
+		BrickPtr = std::make_shared<Flagpole>("Flagpole");
+		BrickPtr->SetPosition(fileinfo.XY);
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Floor) {
+		BrickPtr = std::make_shared<Floor>("Floor",
+			(isDark) ? MyAPP::MyResourcesFilePath::FloorDarkImagePath :
+					   MyAPP::MyResourcesFilePath::FloorImagePath);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Stairs) {
+		BrickPtr = std::make_shared<Floor>("Stairs",
+			(isDark) ? MyAPP::MyResourcesFilePath::StairsBrickDarkImagePath : MyAPP::MyResourcesFilePath::StairsBrickImagePath);
 		BrickPtr->SetPosition(fileinfo.XY);
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;

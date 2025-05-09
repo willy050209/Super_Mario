@@ -28,7 +28,11 @@ namespace MyAPP {
 				FireFlower,
 				Mushroom,
 				Starman,
-				PipeBrick
+				PipeBrick,
+				Door,
+				Flagpole,
+				Floor,
+				Stairs
 			};
 		}
 	}

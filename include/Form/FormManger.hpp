@@ -426,6 +426,72 @@ namespace MyAPP {
 				m_Forms.erase(formName);
 			}
 
+			//template<class T>
+			//std::vector<std::shared_ptr<T>> GetAllObject(const std::string& formName, std::string_view objName) {
+			//	auto form_it = m_Forms.find(formName);
+			//	if (form_it == m_Forms.end()) {
+			//		return nullptr; // 表單不存在
+			//	}
+			//	auto& form = form_it->second;
+			//	std::vector<std::shared_ptr<T>> result;
+			//	if constexpr (std::is_same_v<Object::Mario, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+			//	else if constexpr (std::is_base_of_v<Object::Character, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+			//	else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+			//	else if constexpr (std::is_same_v<Object::TextObject, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+			//	else if constexpr (std::is_same_v<Object::Button, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+			//	else if constexpr (std::is_same_v<Object::EventObject, T>) {
+			//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+			//			[&](auto& it) {
+			//				if (it->name == objName) {
+			//					return std::static_pointer_cast<T>(it);
+			//				}
+			//			});
+			//		return result;
+			//	}
+
+			//	return nullptr;
+			//}
+
 		private:
 			/// <summary>
 			/// 執行表單內的所有事件

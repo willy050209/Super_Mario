@@ -29,7 +29,7 @@ INITFORM_FUNC(winForm);
 
 using namespace MyAPP::Form::Object;
 
-void writeForm(MyAPP::Form::FormManger& FM,std::string&& formName) {
+inline void writeForm(MyAPP::Form::FormManger& FM,std::string&& formName) {
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 	auto size = Block->GetSize();
 	auto x0 = GetX0(Block);
@@ -76,6 +76,46 @@ void writeForm(MyAPP::Form::FormManger& FM,std::string&& formName) {
 	fout.close();
 
 
+}
+
+inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	auto result = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>();
+	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+		if (it->MyType == ObjectType::CheckPoint) {
+			result->push_back(std::static_pointer_cast<CheckPoint>(it));
+		}
+	});
+	return result;
+}
+
+inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	auto result = MakeObject::make_Bricks();
+	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+		if (it->MyType == ObjectType::PipeBrick) {
+			result->push_back(std::static_pointer_cast<PipeBrick>(it));
+		}
+	});
+	return result;
+}
+
+inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	auto result = MakeObject::make_Bricks();
+	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+		if (it->MyType == ObjectType::Flagpole) {
+			result->push_back(std::static_pointer_cast<Flagpole>(it));
+		}
+	});
+	return result;
+}
+
+inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	auto result = MakeObject::make_Bricks();
+	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+		if (it->MyType == ObjectType::Door) {
+			result->push_back(std::static_pointer_cast<Door>(it));
+		}
+	});
+	return result;
 }
 
 
@@ -266,206 +306,39 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& MyFM = self->GetFormManger();
 
 	auto enemys = MakeObject::make_Characters();
-	auto pipes = MakeObject::make_Bricks();
-
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 
-	auto Blocks = MakeObject::make_Bricks(); //(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images,false);
+	auto& Blocks = MakeObject::make_All_Bricks(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
+	auto pipes = GetPipeBricks(Blocks);
+	auto flagpole = GetFlagpoles(Blocks);
+	auto checkPointArray = GetCheckPoints(Blocks);
+
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_ImagePath,Blocks);
 	auto& img = BMptr.first;
 	auto& mario = BMptr.second;
-	//auto& Blocks = *(std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(img->userdata));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(img));
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, mario);
 
-	//std::for_each(Blocks->begin(), Blocks->end(), [&](auto& it) { MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); });
-
-	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
-	checkPointArray.push_back(std::make_shared<CheckPoint>("checkpoint"));
-	checkPointArray[0]->collisionable = false;
-	checkPointArray[0]->SetVisible(false);
-	checkPointArray[0]->SetPosition({ 0, 0 });
-
-	std::copy(checkPointArray.begin(), checkPointArray.end(), std::back_inserter(*Blocks));
-	/*for (auto& it : checkPointArray) {
-		Blocks.push_back(it);
-	}*/
-	// std::ofstream outfile("map.txt");
-
-	/*init door*/
-	std::ifstream inp(MY_RESOURCE_DIR "/MAP/map1_1_door.txt");
-	float posx = 0, posy = 0;
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_door.txt";
-		exit(-1);
-	}
-	std::array<std::shared_ptr<Brick>, 2> doorarr{ std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, -10), std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, -10) };
-	for (int k = 0; k < 2; ++k) {
-		doorarr[k]->collisionable = false;
-		doorarr[k]->SetVisible(false);
-		inp >> posx >> posy;
-		doorarr[k]->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-		Blocks->push_back(doorarr[k]);
-	}
-	inp.close();
-
-	/*init pipe*/
-	//std::vector<std::shared_ptr<Brick>> pieps;
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_pipe.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_pipe.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		pipes->push_back(std::make_shared<PipeBrick>("pipe", 10));
-		pipes->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-		//pipes->back()->collisionable = false;
-	}
-	inp.close();
-	std::copy(pipes->begin(), pipes->end(), std::back_inserter(*Blocks));
-	/*for (auto& it : pieps) {
-		Blocks.push_back(it);
-	}*/
-
-	/*Flagpole collision box*/
-	std::vector<std::shared_ptr<Brick>> flagpole;
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_Flagpole.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_Flagpole.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		flagpole.push_back(std::make_shared<Brick>("Flagpole", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10));
-		flagpole.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-		flagpole.back()->collisionable = false;
-	}
-	inp.close();
-	std::copy(flagpole.begin(), flagpole.end(), std::back_inserter(*Blocks));
-	/*for (auto& it : flagpole) {
-		Blocks.push_back(it);
-	}*/
-
-	/*init floor*/
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_floor.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_floor.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		Blocks->push_back(std::make_shared<Brick>("Brick", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10));
-		Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-	}
-	inp.close();
-
-	for (int i = 0; i < 15; ++i) {
-		Blocks->push_back(std::make_shared<Brick>("Brick", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10));
-		Blocks->back()->SetPosition({ GetX0(Block) - Block->GetSize().x, GetY0(Block) - Block->GetSize().y * (i) });
-	}
-	std::for_each(Blocks->begin(), Blocks->end(), [](auto& it) { it->SetVisible(false); });
-	/*for (auto& it : Blocks) {
-		it->SetVisible(false);
-	}*/
-
-	/*init QuestionBlock*/
-	std::vector<std::shared_ptr<QuestionBlock>> QuestionBlocks;
-
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_QuestionBlock.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_QuestionBlock.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		QuestionBlocks.push_back(std::make_shared<QuestionBlock>("QuestionBlock", "imgs/super mario/QuestionBlock/frame0.png", 10));
-		QuestionBlocks.back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-	}
-	inp.close();
-	std::copy(QuestionBlocks.begin(), QuestionBlocks.end(), std::back_inserter(*Blocks));
-	/*for (auto& it : QuestionBlocks) {
-		Blocks.push_back(it);
-	}*/
-
-	/*init Brick*/
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_Brick.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_Brick.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		Blocks->push_back(std::make_shared<Brick>("Brick", MyAPP::MyResourcesFilePath::BlockImagePath, 10));
-		Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-	}
-	inp.close();
-
-	/*init Stairs*/
-	inp.open(MY_RESOURCE_DIR "/MAP/map1_1_StairsBrick.txt");
-	if (!inp.is_open()) {
-		std::cerr << "can't open" MY_RESOURCE_DIR "/MAP/map1_1_StairsBrick.txt";
-		exit(-1);
-	}
-	while (inp >> posx >> posy) {
-		Blocks->push_back(std::make_shared<Brick>("StairsBrick", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10));
-		Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (posx), GetY0(Block) - Block->GetSize().y * (posy) });
-	}
-	inp.close();
-
-	///*init Coin*/
-	for (int i = 0; i < 10; ++i) {
-		Blocks->push_back(std::make_shared<Coin>("coin", 10));
-		Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 11 });
-		Blocks->push_back(std::make_shared<Coin>("coin", 10));
-		Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (12 + i), GetY0(Block) - Block->GetSize().x * 10 });
-	}
-
-
-	Blocks->push_back(std::make_shared<HiddenBrick>("HiddenBrick", HiddenBrick::GetDefultImagePath(), 10));
-	Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * (64), GetY0(Block) - Block->GetSize().x * 8 });
-
-
-	Blocks->push_back(std::move(MakeObject::make_SpinningFireBalls("", { -200, -200 })));
-
-
 	std::for_each(Blocks->begin(), Blocks->end(), [&](auto& it) { MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); });
-	//for (auto& it : Blocks) {
-	//	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it);
-	//	/*char tmpstr[512];
-	//	std::snprintf(tmpstr, sizeof(tmpstr), "%d %d ", (int)((it->GetPosition().x - GetX0(Block)) / Block->GetSize().x), (int)(-(it->GetPosition().y - GetY0(Block)) / Block->GetSize().y));
-	//	outfile << tmpstr;*/
-	//}
-	// outfile.close();
-
-	//mario->userdata = img->userdata = std::move(std::make_shared<std::vector<std::shared_ptr<Brick>>>(Blocks));
 
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, texttime);
 
-	//std::vector<std::shared_ptr<Character>> enemys;
-
 	enemys->push_back(std::make_shared<Goomba>("Goomba", 50));
 	(*enemys)[0]->SetPosition({ -GetX0((*enemys)[0]), 0 });
-	/*for (int i = 0; i < 2; ++i) {
-		enemys.push_back(std::make_shared<Goomba>("Goomba", Goomba::imgs[0], 50));
-		enemys.back()->SetPosition({ GetX0(enemys[0]) + enemys[0]->GetSize().x * i, 0 });
-	}*/
 
 	std::vector<std::shared_ptr<Turtle>> turtles;
 	turtles.push_back(std::make_shared<Turtle>("Turtle", 50));
 	turtles.back()->SetPosition({ -GetX0((*enemys)[0]) + 64, 0 });
 	std::copy(turtles.begin(), turtles.end(), std::back_inserter(*enemys));
-	/*for (auto& it : turtles) {
-		enemys.push_back(it);
-	}*/
 
 	std::for_each(enemys->begin(), enemys->end(),
 		[&](auto& it) {
 			it->userdata = mario->userdata;
 			MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it); 
 		});
-	/*for (auto& it : enemys) {
-		it->userdata = mario->userdata;
-		MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, it);
-	}*/
 
 	std::vector<std::shared_ptr<Props::Props>> props;
 	props.push_back(std::make_shared<Props::FireFlower>("FireFlower", 10));
@@ -506,32 +379,16 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
-
-	// eventobj = std::make_shared<EventObject>("QuestionBlockPlayGIF", QuestionBlockPlayGIF);
-	// eventobj->userdata = std::make_shared<std::tuple<std::shared_ptr<int>, std::shared_ptr<int>, std::vector<std::shared_ptr<Object::ImageObject>>>>(std::make_shared<int>(0), std::make_shared<int>(0), QuestionBlocks);
-	// MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
-
 	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::move(enemys);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
-	eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Brick>>>(flagpole);
+	eventobj->userdata =(flagpole);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
-
-	//eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
-	//eventobj->userdata = std::move(coins);
-	//MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
-
-	eventobj = std::make_shared<EventObject>("CheckPointCollision", CheckPointCollision, true);
-	auto& ptr = eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>(checkPointArray);
+	eventobj->userdata = Getdoors(Blocks);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
@@ -547,13 +404,13 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
-	eventobj->userdata = ptr;
+	eventobj->userdata = checkPointArray;
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::move(eventobj));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 
-	writeForm(MyFM, MyAPP::Form::FormNames::Form_1_1);
+	//writeForm(MyFM, MyAPP::Form::FormNames::Form_1_1);
 }
 
 /// <summary>
@@ -566,7 +423,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	auto enemys = MakeObject::make_Characters();
 	auto pipes = MakeObject::make_Bricks();
 
-	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
+	std::array<std::shared_ptr<Brick>,2> doorarr = { std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_Pipe_ImagePath, MakeObject::make_Bricks(), { GetX0(Block) + Block->GetSize().x * 3, 100 });
@@ -577,14 +434,8 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::move(img));
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, mario);
 
-	doorarr[1] = doorarr[0];
-	doorarr[0]->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (12) });
-	doorarr[0]->collisionable = false;
-	std::copy(doorarr.begin(), doorarr.end(), std::back_inserter(*Blocks));
-	/*for (auto& it : doorarr) {
-		Blocks.push_back(it);
-	}*/
-
+	Blocks->push_back(std::make_shared<Door>("door", 0));
+	Blocks->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 14, GetY0(Block) - Block->GetSize().y * (12) });
 
 	for (int i = 0; i < 17; ++i) {
 		Blocks->push_back(std::make_shared<Brick>("floor", MyAPP::MyResourcesFilePath::FloorImagePath, 10));
@@ -669,9 +520,9 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	//eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	//MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_Pipe, std::move(eventobj));
 
 	// eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	// eventobj->userdata = std::make_shared<std::vector<std::shared_ptr<Object::Character>>>(enemys);
@@ -700,7 +551,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto& MyFM = self->GetFormManger();
 
-	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Door>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_to_1_2_ImagePath, MakeObject::make_Bricks(), { GetX0(Block) + Block->GetSize().x * 2, GetY0(Block) - Block->GetSize().y * (12) });
@@ -736,9 +587,9 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_to_1_2, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_to_1_2, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	//eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	//MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_to_1_2, std::move(eventobj));
 
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_1_to_1_2, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
@@ -752,7 +603,7 @@ INITFORM_FUNC(initForm_1_2) {
 
 	auto enemys = MakeObject::make_Characters();
 	auto pipes = MakeObject::make_Bricks();
-	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, -10) };
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Door>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, -10) };
 	std::vector<std::shared_ptr<CheckPoint>> checkPointArray;
 
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
@@ -1063,9 +914,9 @@ INITFORM_FUNC(initForm_1_2) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	//eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	//MyFM.addObject(MyAPP::Form::FormNames::Form_1_2, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	eventobj->userdata = std::move(enemys);
@@ -1116,7 +967,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	auto enemys = MakeObject::make_Characters();
 	auto pipes = MakeObject::make_Bricks();
-	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Brick>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
+	std::array<std::shared_ptr<Brick>, 2> doorarr = { std::make_shared<Door>("door", MyAPP::MyResourcesFilePath::StairsBrickImagePath, 10) };
 
 	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 
@@ -1200,9 +1051,9 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int, std::shared_ptr<TextObject>>>(0, 300, texttime);
 	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
-	eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
-	MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckDoor", CheckDoors);
+	//eventobj->userdata = std::make_shared<std::array<std::shared_ptr<Brick>, 2>>(doorarr);
+	//MyFM.addObject(MyAPP::Form::FormNames::Form_1_2_Pipe, std::move(eventobj));
 
 	//eventobj = std::make_shared<EventObject>("CheckCoinsCollision", CheckCoinsCollision);
 	//eventobj->userdata = std::move(coins);

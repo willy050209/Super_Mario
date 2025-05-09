@@ -39,6 +39,8 @@ namespace MyAPP {
 
 				// CheckPoint() = delete;
 
+				virtual void behavior(void* data = nullptr) override;
+
 				/// <summary>
 				/// ¹Ï¤ù¸ô®|
 				/// </summary>

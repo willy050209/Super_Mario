@@ -1,6 +1,5 @@
 #pragma once
 namespace MyAPP {
-
 	namespace Form {
 		struct FormNames {
 			static constexpr auto FormBackground = "Background";

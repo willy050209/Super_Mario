@@ -55,17 +55,18 @@ namespace MyAPP::Form::Object {
 		/// <returns> first : 背景圖 second : Mario</returns>
 		[[nodiscard]] static std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> make_Background_And_Mario(std::string&& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks = nullptr, glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
-		/// <summary>
-		/// 建立 Brick vector 指標
-		/// </summary>
-		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks() noexcept;
 
 		/// <summary>
 		/// 從檔案建立 Brick vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks(std::string&& filename, bool isDark) noexcept;
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_All_Bricks(std::string&& filename, bool isDark = false) noexcept;
+
+		/// <summary>
+		/// 建立 Brick vector 指標
+		/// </summary>
+		/// <returns></returns>
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks() noexcept;
 
 		[[nodiscard]] static std::shared_ptr<Brick> make_BrickPtr(const Fileinfo& fileinfo, bool isDark) noexcept;
 

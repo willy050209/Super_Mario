@@ -273,7 +273,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::array<std::shared_ptr<Brick>, 2>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();

@@ -50,7 +50,7 @@ inline static int GetY0(T& obj) noexcept {
 /// <returns>X軸做座標</returns>
 template<class T>
 inline static int GetX0(T* obj) noexcept {
-	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>((*obj)->GetSize().x) >> 1));
+	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>((obj)->GetSize().x) >> 1));
 }
 
 /// <summary>
@@ -60,7 +60,7 @@ inline static int GetX0(T* obj) noexcept {
 /// <returns>Y軸做座標</returns>
 template<class T>
 inline static int GetY0(T* obj) noexcept {
-	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>((*obj)->GetSize().y) >> 1));
+	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>((obj)->GetSize().y) >> 1));
 }
 
 #endif

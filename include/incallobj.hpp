@@ -24,7 +24,11 @@
 #include "Object/Props/Mushroom.hpp"
 #include "Object/Props/Starman.hpp"
 #include "Object/PipeBrick.hpp"
-
+#include "Object/Door.hpp"
+#include "Object/Flagpole.hpp"
+#include "Object/Floor.hpp"
+#include "Object/Stairs.hpp"
 #include "Object/MakeObject.hpp"
+
 
 #endif
