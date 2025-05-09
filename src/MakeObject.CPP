@@ -60,7 +60,7 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 		BrickPtr = std::make_shared<Brick>("",
 			((isDark) ? MyAPP::MyResourcesFilePath::BlockDarkImagePath : MyAPP::MyResourcesFilePath::BlockImagePath), 1);
 		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(true);
+		BrickPtr->SetVisible(fileinfo.Visibility);
 		BrickPtr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::QuestionBlock) {
@@ -154,7 +154,11 @@ std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::Ma
 	auto enemys = MakeObject::make_Characters();
 	std::ifstream inp(filename);
 	while (!inp.eof()) {
+		fileinfo.XY = { INFINITY, INFINITY };
 		fileinfo.GetFileDate(inp);
+		if (fileinfo.XY.x == INFINITY || fileinfo.XY.y == INFINITY) {
+			break;
+		}
 		fileinfo.ChangeXY();
 		auto ptr = make_EnemysPtr(fileinfo);
 		if (ptr) {
