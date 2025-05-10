@@ -1,4 +1,4 @@
-#include "Character.hpp"
+#include "Object/Character/Character.hpp"
 #include "Object/ImageObject.hpp"
 
 namespace MyAPP {

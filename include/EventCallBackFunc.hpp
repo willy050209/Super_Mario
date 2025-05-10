@@ -191,6 +191,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 					return;
 				}
+				mario->SetLeft<false>();
 			}
 		}
 	}

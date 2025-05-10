@@ -1,4 +1,4 @@
-#include "Object/HiddenBrick.hpp"
+#include "Object/Brick/HiddenBrick.hpp"
 #include "Object/ObjectType.hpp"
 #include "GameManager.hpp"
 #include <memory>

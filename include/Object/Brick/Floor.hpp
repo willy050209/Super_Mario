@@ -2,7 +2,7 @@
 #ifndef Foor_HPP
 #define Foor_HPP
 
-#include "Object/Brick.hpp"
+#include "Object/Brick/Brick.hpp"
 #include "Object/ObjectType.hpp"
 #include "FilePath.hpp"
 

@@ -1,4 +1,4 @@
-#include "Object/Brick.hpp"
+#include "Object/Brick/Brick.hpp"
 namespace MyAPP {
 	namespace Form {
 		namespace Object {

@@ -1,11 +1,11 @@
-#include "Mario.hpp"
+#include "Object/Character/Mario.hpp"
 #include "Object/ImageObject.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
 #include "FilePath.hpp"
 #include "GameManager.hpp"
 #include <execution>
-#include <mutex>
+
 namespace MyAPP {
 	namespace Form {
 		namespace Object {

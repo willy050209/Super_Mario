@@ -78,7 +78,7 @@ namespace MyAPP {
 		/// </summary>
 		static constexpr auto StairsBrickImagePath = "imgs/super mario/StairsBrick.png";
 
-
+		static constexpr auto MovingPlatform = R"(imgs\super mario\MovingPlatform.png)";
 
 		/// <summary>
 		/// 階梯圖片路徑(深色)

@@ -1,6 +1,4 @@
-#include "MakeObject.hpp"
-#include "ImageObject.hpp"
-#include "Mario.hpp"
+#include "incallobj.hpp"
 #include "Position.hpp"
 #include "config.hpp"
 

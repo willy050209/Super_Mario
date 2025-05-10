@@ -1,5 +1,5 @@
-#include "SpinningFireBalls.hpp"
-#include "FireBall.hpp"
+#include "Object/Brick/SpinningFireBalls.hpp"
+#include "Object/Brick/FireBall.hpp"
 #include "config.hpp"
 #include <memory>
 #include <cmath>

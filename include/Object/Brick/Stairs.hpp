@@ -2,7 +2,7 @@
 #ifndef Stairs_HPP
 #define Stairs_HPP
 
-#include "Object/Brick.hpp"
+#include "Object/Brick/Brick.hpp"
 #include "Object/ObjectType.hpp"
 #include "FilePath.hpp"
 

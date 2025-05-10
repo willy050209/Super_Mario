@@ -32,7 +32,8 @@ namespace MyAPP {
 				Door,
 				Flagpole,
 				Floor,
-				Stairs
+				Stairs,
+				MovingPlatform
 			};
 		}
 	}

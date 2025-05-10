@@ -29,159 +29,161 @@ INITFORM_FUNC(winForm);
 
 using namespace MyAPP::Form::Object;
 
-/// <summary>
-/// 將表單寫入文字檔
-/// </summary>
-/// <param name="FM"></param>
-/// <param name="formName"></param>
-inline void writeForm(MyAPP::Form::FormManger& FM,std::string&& formName) {
-	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
-	auto size = Block->GetSize();
-	auto x0 = GetX0(Block);
-	auto y0 = GetY0(Block);
-	auto& allobj = FM.GetFormAndObject(formName);
-	std::ofstream fout("map/" + formName + "_Images.txt");
-	if (fout.bad()) {
-		return;
-	}
-	std::for_each(allobj.m_Images.begin(), allobj.m_Images.end(), [&](auto& img) {
-		if (img->name != "Background") {
-			auto& tmp = img->GetPosition();
-			
-			fout << (tmp.x - x0) / size.x << ' ' << (tmp.y - y0) / size.y << ' ' << (int)img->MyType << ' ' 
-				<< img->GetVisibility() << ' ' << img->collisionable << '\n';
-		}
-	});
-	fout.close();
+namespace MyAPP::Form {
 
-	fout.open("map/" + formName + "_Characters.txt");
-	if (fout.bad()) {
-		return;
-	}
-	std::for_each(allobj.m_Characters.begin(), allobj.m_Characters.end(), [&](auto& it) {
-		if (it->name != "Mario") {
+	/// <summary>
+	/// 將表單寫入文字檔
+	/// </summary>
+	/// <param name="FM"></param>
+	/// <param name="formName"></param>
+	inline void writeForm(MyAPP::Form::FormManger& FM, std::string&& formName) {
+		std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
+		auto size = Block->GetSize();
+		auto x0 = GetX0(Block);
+		auto y0 = GetY0(Block);
+		auto& allobj = FM.GetFormAndObject(formName);
+		std::ofstream fout("map/" + formName + "_Images.txt");
+		if (fout.bad()) {
+			return;
+		}
+		std::for_each(allobj.m_Images.begin(), allobj.m_Images.end(), [&](auto& img) {
+			if (img->name != "Background") {
+				auto& tmp = img->GetPosition();
+
+				fout << (tmp.x - x0) / size.x << ' ' << (tmp.y - y0) / size.y << ' ' << (int)img->MyType << ' '
+					 << img->GetVisibility() << ' ' << img->collisionable << '\n';
+			}
+		});
+		fout.close();
+
+		fout.open("map/" + formName + "_Characters.txt");
+		if (fout.bad()) {
+			return;
+		}
+		std::for_each(allobj.m_Characters.begin(), allobj.m_Characters.end(), [&](auto& it) {
+			if (it->name != "Mario") {
+				auto& tmp = it->GetPosition();
+
+				fout << (tmp.x - x0) / size.x << ' ' << (tmp.y - y0) / size.y << ' ' << (int)it->MyType << ' '
+					 << it->GetVisibility() << ' ' << it->collisionable << '\n';
+			}
+		});
+		fout.close();
+
+		fout.open("map/" + formName + "_Texts.txt");
+		if (fout.bad()) {
+			return;
+		}
+		std::for_each(allobj.m_Texts.begin(), allobj.m_Texts.end(), [&](auto& it) {
 			auto& tmp = it->GetPosition();
 
 			fout << (tmp.x - x0) / size.x << ' ' << (tmp.y - y0) / size.y << ' ' << (int)it->MyType << ' '
 				 << it->GetVisibility() << ' ' << it->collisionable << '\n';
-		}
-	});
-	fout.close();
-
-	fout.open("map/" + formName + "_Texts.txt");
-	if (fout.bad()) {
-		return;
+		});
+		fout.close();
 	}
-	std::for_each(allobj.m_Texts.begin(), allobj.m_Texts.end(), [&](auto& it) {
-		auto& tmp = it->GetPosition();
 
-		fout << (tmp.x - x0) / size.x << ' ' << (tmp.y - y0) / size.y << ' ' << (int)it->MyType << ' '
-			 << it->GetVisibility() << ' ' << it->collisionable << '\n';
-	});
-	fout.close();
+	/// <summary>
+	/// 取得 bricks 中 Type == ObjectType::CheckPoint 的所有物件
+	/// </summary>
+	/// <param name="bricks"></param>
+	/// <returns></returns>
+	inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+		auto result = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>();
+		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::CheckPoint) {
+				result->push_back(std::static_pointer_cast<CheckPoint>(it));
+			}
+		});
+		return result;
+	}
 
+	/// <summary>
+	/// 取得 bricks 中 Type == ObjectType::PipeBrick 的所有物件
+	/// </summary>
+	/// <param name="bricks"></param>
+	/// <returns></returns>
+	inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+		auto result = MakeObject::make_Bricks();
+		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::PipeBrick) {
+				result->push_back(std::static_pointer_cast<PipeBrick>(it));
+			}
+		});
+		return result;
+	}
 
+	/// <summary>
+	/// 取得 bricks 中 Type == ObjectType::Flagpole 的所有物件
+	/// </summary>
+	/// <param name="bricks"></param>
+	/// <returns></returns>
+	inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+		auto result = MakeObject::make_Bricks();
+		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::Flagpole) {
+				result->push_back(std::static_pointer_cast<Flagpole>(it));
+			}
+		});
+		return result;
+	}
+
+	/// <summary>
+	/// 取得 bricks 中 Type == ObjectType::Door 的所有物件
+	/// </summary>
+	/// <param name="bricks"></param>
+	/// <returns></returns>
+	inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+		auto result = MakeObject::make_Bricks();
+		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::Door) {
+				result->push_back(std::static_pointer_cast<Door>(it));
+			}
+		});
+		return result;
+	}
+
+	/// <summary>
+	/// 取得 enemys 中 Type == ObjectType::Turtle 的所有物件
+	/// </summary>
+	/// <param name="bricks"></param>
+	/// <returns></returns>
+	inline auto GetTurtless(std::shared_ptr<std::vector<std::shared_ptr<Character>>> enemys) noexcept {
+		auto result = MakeObject::make_Characters();
+		std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::Turtle) {
+				result->push_back(std::static_pointer_cast<Turtle>(it));
+			}
+		});
+		return result;
+	}
+
+	/// <summary>
+	/// 將物件陣列放入表單
+	/// </summary>
+	/// <typeparam name="T">物件陣列的共同父類</typeparam>
+	/// <param name="FM"></param>
+	/// <param name="formname"></param>
+	/// <param name="objlist"></param>
+	template <class T>
+	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>> objlist) noexcept {
+		std::for_each(objlist->begin(), objlist->end(), [&](auto& it) { FM.addObject(formname, it); });
+	}
+
+	/// <summary>
+	/// 將物件陣列放入表單
+	/// </summary>
+	/// <typeparam name="T">物件陣列的共同父類</typeparam>
+	/// <param name="FM"></param>
+	/// <param name="formname"></param>
+	/// <param name="objlist"></param>
+	template <class T>
+	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>> objlist) noexcept {
+		std::for_each(objlist.begin(), objlist.end(), [&](auto& it) { FM.addObject(formname, it); });
+	}
 }
 
-/// <summary>
-/// 取得 bricks 中 Type == ObjectType::CheckPoint 的所有物件
-/// </summary>
-/// <param name="bricks"></param>
-/// <returns></returns>
-inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
-	auto result = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>();
-	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
-		if (it->MyType == ObjectType::CheckPoint) {
-			result->push_back(std::static_pointer_cast<CheckPoint>(it));
-		}
-	});
-	return result;
-}
-
-/// <summary>
-/// 取得 bricks 中 Type == ObjectType::PipeBrick 的所有物件
-/// </summary>
-/// <param name="bricks"></param>
-/// <returns></returns>
-inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
-	auto result = MakeObject::make_Bricks();
-	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
-		if (it->MyType == ObjectType::PipeBrick) {
-			result->push_back(std::static_pointer_cast<PipeBrick>(it));
-		}
-	});
-	return result;
-}
-
-/// <summary>
-/// 取得 bricks 中 Type == ObjectType::Flagpole 的所有物件
-/// </summary>
-/// <param name="bricks"></param>
-/// <returns></returns>
-inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
-	auto result = MakeObject::make_Bricks();
-	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
-		if (it->MyType == ObjectType::Flagpole) {
-			result->push_back(std::static_pointer_cast<Flagpole>(it));
-		}
-	});
-	return result;
-}
-
-/// <summary>
-/// 取得 bricks 中 Type == ObjectType::Door 的所有物件
-/// </summary>
-/// <param name="bricks"></param>
-/// <returns></returns>
-inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
-	auto result = MakeObject::make_Bricks();
-	std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
-		if (it->MyType == ObjectType::Door) {
-			result->push_back(std::static_pointer_cast<Door>(it));
-		}
-	});
-	return result;
-}
-
-/// <summary>
-/// 取得 enemys 中 Type == ObjectType::Turtle 的所有物件
-/// </summary>
-/// <param name="bricks"></param>
-/// <returns></returns>
-inline auto GetTurtless(std::shared_ptr<std::vector<std::shared_ptr<Character>>> enemys) noexcept {
-	auto result = MakeObject::make_Characters();
-	std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
-		if (it->MyType == ObjectType::Turtle) {
-			result->push_back(std::static_pointer_cast<Turtle>(it));
-		}
-	});
-	return result;
-}
-
-/// <summary>
-/// 將物件陣列放入表單
-/// </summary>
-/// <typeparam name="T">物件陣列的共同父類</typeparam>
-/// <param name="FM"></param>
-/// <param name="formname"></param>
-/// <param name="objlist"></param>
-template<class T>
-inline void AddToFoemManger(MyAPP::Form::FormManger& FM,const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>> objlist) noexcept {
-	std::for_each(objlist->begin(), objlist->end(), [&](auto& it) { FM.addObject(formname, it); });
-}
-
-/// <summary>
-/// 將物件陣列放入表單
-/// </summary>
-/// <typeparam name="T">物件陣列的共同父類</typeparam>
-/// <param name="FM"></param>
-/// <param name="formname"></param>
-/// <param name="objlist"></param>
-template <class T>
-inline void AddToFoemManger(MyAPP::Form::FormManger& FM,const std::string& formname, std::vector<std::shared_ptr<T>> objlist) noexcept {
-	std::for_each(objlist.begin(), objlist.end(), [&](auto& it) { FM.addObject(formname, it); });
-}
-
+using namespace MyAPP::Form;
 
 /*init Titel Form*/
 INITFORM_FUNC(initFormTitle) {
@@ -211,7 +213,7 @@ INITFORM_FUNC(initFormTitle) {
 
 /*init Options Form*/
 INITFORM_FUNC(initFormOptions) {
-	const auto textSize = 50 * (WINDOW_HEIGHT / 480);
+	const auto textSize = 50 * ((float)WINDOW_HEIGHT / 480);
 	auto& MyFM = self->GetFormManger();
 	auto tmpbutton = std::make_shared<Button>("ExitButton", MyAPP::MyResourcesFilePath::MyFontPath, textSize, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
 	tmpbutton->SetPosition({ 0,
@@ -308,6 +310,8 @@ INITFORM_FUNC(initForm_1_1) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
+	Blocks->push_back(std::make_shared<MovingPlatform>(""));
+	Blocks->back()->SetPosition({ 0, 0 });
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_ImagePath, Blocks);

@@ -1,4 +1,4 @@
-#include "Object/CheckPoint.hpp"
+#include "Object/Brick/CheckPoint.hpp"
 #include "GameManager.hpp"
 
 void MyAPP::Form::Object::CheckPoint::behavior(void* data) {

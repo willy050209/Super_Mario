@@ -1,4 +1,4 @@
-#include "Object/Coin.hpp"
+#include "Object/Brick/Coin.hpp"
 #include "config.hpp"
 #include "GameManager.hpp"
 

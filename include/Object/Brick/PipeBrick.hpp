@@ -2,7 +2,7 @@
 #ifndef PIPEBRICK_HPP
 #define PIPEBRICK_HPP
 
-#include "Object/Brick.hpp"
+#include "Object/Brick/Brick.hpp"
 #include "ObjectType.hpp"
 #include "FilePath.hpp"
 
