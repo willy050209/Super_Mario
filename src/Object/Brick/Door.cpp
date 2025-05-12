@@ -39,10 +39,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 			auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-12)](auto& it) {
+			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-7)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-12)](auto& it) {
+			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-7)](auto& it) {
 				it->incPositionX(displacement);
 			});
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetY0(this) - GetSize().y * 10 });
@@ -50,6 +50,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
+		}
+		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2) {
+			initForm_1_4(static_cast<MyAPP::GameManager*>(data));
+			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_4);
 		}
 		else {
 			winForm(static_cast<MyAPP::GameManager*>(data));

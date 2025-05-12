@@ -64,8 +64,10 @@ void MyAPP::GameManager::init() noexcept {
 	//initForm_1_1_to_1_2(this);
 	//initForm_1_2_Pipe(this);
 
+	//initForm_1_4(this);
+
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel /*FormBackground*/);
-	//MyFM.changeForm(Form_1_2_Pipe);
+	//MyFM.changeForm(MyAPP::Form::FormNames::Form_1_4);
 	showProgressBar(total, current);
 	puts("");
 	/*system("pause");

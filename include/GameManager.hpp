@@ -114,6 +114,12 @@ namespace MyAPP {
 		}
 
 		/// <summary>
+		/// 遊戲BGM
+		/// </summary>
+		std::shared_ptr<Util::BGM> bgm = nullptr;
+		std::shared_ptr<Util::SFX> sfx = nullptr;
+
+		/// <summary>
 		/// 是否於暫停狀態
 		/// </summary>
 		bool pause{ false };
@@ -123,14 +129,18 @@ namespace MyAPP {
 		/// </summary>
 		bool opMode = false;
 
-		/// <summary>
-		/// 遊戲BGM
-		/// </summary>
-		std::shared_ptr<Util::BGM> bgm = nullptr;
-		std::shared_ptr<Util::SFX> sfx = nullptr;
-
-
 	private:
+
+		/// <summary>
+		/// 結束狀態
+		/// </summary>
+		bool endstate = false;
+
+		/// <summary>
+		/// 重啟狀態
+		/// </summary>
+		bool m_Restart = false;
+
 		/// <summary>
 		/// 管理所有表單
 		/// </summary>
@@ -147,15 +157,6 @@ namespace MyAPP {
 		int point = 0;
 		// std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 
-		/// <summary>
-		/// 結束狀態
-		/// </summary>
-		bool endstate = false;
-
-		/// <summary>
-		/// 重啟狀態
-		/// </summary>
-		bool m_Restart = false;
 
 		/// <summary>
 		/// 上一個存檔點座標

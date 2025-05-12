@@ -6,6 +6,12 @@
 #include "ObjectType.hpp"
 
 namespace MyAPP::Form::Object {
+
+	enum class BrickColor {
+		normal,
+		dark,
+		grey
+	};
 	/// <summary>
 	/// 所有磚頭的父類別 繼承ImageObject
 	/// </summary>

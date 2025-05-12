@@ -64,7 +64,7 @@ namespace MyAPP::Form::Object {
 		/// 從檔案建立 Brick vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(std::string&& filename, bool isDark = false) noexcept;
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(std::string&& filename, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
 		/// 建立 Brick 指標陣列
@@ -78,7 +78,7 @@ namespace MyAPP::Form::Object {
 		/// <param name="fileinfo"></param>
 		/// <param name="isDark"></param>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<Brick> make_BrickPtr(const Fileinfo& fileinfo, bool isDark) noexcept;
+		[[nodiscard]] static std::shared_ptr<Brick> make_BrickPtr(const Fileinfo& fileinfo, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
 		/// 建立 Character vector 指標

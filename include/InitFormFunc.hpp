@@ -7,6 +7,7 @@ INITFORM_FUNC(initForm_1_2);
 INITFORM_FUNC(initForm_1_1_Pip);
 INITFORM_FUNC(initForm_1_1_to_1_2);
 INITFORM_FUNC(initForm_1_2_Pipe);
+INITFORM_FUNC(initForm_1_4);
 INITFORM_FUNC(winForm);
 
 
@@ -36,7 +37,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="FM"></param>
 	/// <param name="formName"></param>
-	inline void writeForm(MyAPP::Form::FormManger& FM, std::string&& formName) {
+	inline void writeForm(MyAPP::Form::FormManger& FM,const std::string& formName) {
 		std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
 		auto size = Block->GetSize();
 		auto x0 = GetX0(Block);
@@ -310,11 +311,9 @@ INITFORM_FUNC(initForm_1_1) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
-	Blocks->push_back(std::make_shared<MovingPlatform>(""));
-	Blocks->back()->SetPosition({ 0, 0 });
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_ImagePath, Blocks);
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 	
@@ -376,7 +375,7 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = GetTurtless(enemys);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -401,13 +400,13 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_Pipe;
 	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, true);
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -430,7 +429,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -451,13 +450,13 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_to_1_2;
 	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_to_1_2_Images, false);
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_to_1_2_Images, BrickColor::normal);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 2, GetY0(Block) - Block->GetSize().x * 12 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 2, GetY0(Block) - Block->GetSize().x * 12 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -487,13 +486,13 @@ INITFORM_FUNC(initForm_1_2) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2;
 	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Images, true);
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 5, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 5, 100 });
 	auto& img = BMptr.first;
 	auto& mario = BMptr.second;
 
@@ -527,7 +526,7 @@ INITFORM_FUNC(initForm_1_2) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -552,13 +551,13 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_Pipe;
 	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Pipe_Images, true);
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::Background_1_2_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -579,7 +578,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -589,6 +588,67 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 	
 	//writeForm(MyFM, MyAPP::Form::FormNames::Form_1_2_Pipe);
+}
+
+INITFORM_FUNC(initForm_1_4) {
+	auto& MyFM = self->GetFormManger();
+	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_4;
+	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Images, BrickColor::grey);
+	auto pipes = GetPipeBricks(Blocks);
+	auto flagpole = GetFlagpoles(Blocks);
+	auto checkPointArray =  GetCheckPoints(Blocks);
+	AddToFoemManger(MyFM, formName, Blocks);
+
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x, GetY0(Block) - Block->GetSize().y *6 });
+	auto& img = BMptr.first;
+	auto& mario = BMptr.second;
+
+	MyFM.addObject(formName, std::move(img));
+	MyFM.addObject(formName, std::move(mario));
+
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+
+	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Characters, Blocks);
+	AddToFoemManger(MyFM, formName, enemys);
+
+	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
+	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	eventobj->userdata = std::make_shared<
+		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
+			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
+			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, pipes, MakeObject::make_Props());
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
+	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	eventobj->userdata = std::move(enemys);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+
+	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = GetCheckPoints(Blocks);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+
+	//writeForm(MyFM, formName);
 }
 
 #endif // !INITFORMFUNC_HPP

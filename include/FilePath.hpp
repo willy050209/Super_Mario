@@ -8,6 +8,33 @@ namespace MyAPP {
 	struct MyResourcesFilePath {
 
 		struct MAP {
+			/// <summary>
+			/// 1-1地圖圖片路徑
+			/// </summary>
+			static constexpr auto Background_1_1_ImagePath = R"(imgs\super mario\Maps\SuperMarioBrosMap1-1main-up.png)";
+
+			/// <summary>
+			/// 1-1水管地圖圖片路徑
+			/// </summary>
+			static constexpr auto Background_1_1_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1inpipe.png";
+
+			/// <summary>
+			/// 1-1到1-2過場圖片路徑
+			/// </summary>
+			static constexpr auto Background_1_1_to_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1 to 1-2.png";
+
+			///// <summary>
+			/// 1-2地圖圖片路徑
+			/// </summary>
+			static constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main_new.png";
+
+			/// <summary>
+			/// 1-2水管地圖圖片路徑
+			/// </summary>
+			static constexpr auto Background_1_2_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BG in pipe.png";
+
+			static constexpr auto Background_1_4_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-4BG.png";
+			
 			static constexpr auto Form_1_1_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Images.txt";
 			static constexpr auto Form_1_1_Characters = MY_RESOURCE_DIR "/MAP/Form_1_1_Characters.txt";
 			static constexpr auto Form_1_1_Pipe_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Pipe_Images.txt";
@@ -17,6 +44,8 @@ namespace MyAPP {
 			static constexpr auto Form_1_2_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Characters.txt";
 			static constexpr auto Form_1_2_Pipe_Images = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Images.txt";
 			static constexpr auto Form_1_2_Pipe_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Characters.txt";
+			static constexpr auto Form_1_4_Images = MY_RESOURCE_DIR "/MAP/Form_1_4_Images.txt";
+			static constexpr auto Form_1_4_Characters = MY_RESOURCE_DIR "/MAP/Form_1_4_Characters.txt";
 		};
 	
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
@@ -29,39 +58,16 @@ namespace MyAPP {
 		static constexpr auto marioImagePath = "imgs/super mario/Mario/frame0.png";
 
 		/// <summary>
-		/// 1-1地圖圖片路徑
-		/// </summary>
-		static constexpr auto Background_1_1_ImagePath = R"(imgs\super mario\Maps\SuperMarioBrosMap1-1main-up.png)";
-
-		/// <summary>
-		/// 1-1水管地圖圖片路徑
-		/// </summary>
-		static constexpr auto Background_1_1_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1inpipe.png";
-
-		/// <summary>
-		/// 1-1到1-2過場圖片路徑
-		/// </summary>
-		static constexpr auto Background_1_1_to_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1 to 1-2.png";
-
-		///// <summary>
-		/// 1-2地圖圖片路徑
-		/// </summary>
-		static constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main_new.png";
-
-		/// <summary>
-		/// 1-2水管地圖圖片路徑
-		/// </summary>
-		static constexpr auto Background_1_2_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BG in pipe.png";
-
-		/// <summary>
 		/// 磚頭圖片路徑
 		/// </summary>
-		static constexpr auto BlockImagePath = /*"imgs/super mario/floor.png";*/ "imgs/super mario/1-1/BrickBlockBrown.png";
+		static constexpr auto BlockImagePath = "imgs/super mario/1-1/BrickBlockBrown.png";
 
 		/// <summary>
 		/// 磚頭圖片路徑(深色)
 		/// </summary>
 		static constexpr auto BlockDarkImagePath = "imgs/super mario/BrickBlockDark.png";
+
+		static constexpr auto BlockGreyImagePath = "imgs/super mario/BrickBlockCastle.png";
 
 		/// <summary>
 		/// 地板圖片路徑
@@ -72,6 +78,8 @@ namespace MyAPP {
 		/// 地板圖片路徑(深色)
 		/// </summary>
 		static constexpr auto FloorDarkImagePath = "imgs/super mario/floordark.png";
+
+		static constexpr auto FloorGreyImagePath = "imgs/super mario/floorCastle.png";
 
 		/// <summary>
 		/// 階梯圖片路徑
@@ -87,6 +95,7 @@ namespace MyAPP {
 
 		static constexpr inline auto EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		static constexpr inline auto EmptyBlockDarkImagePath{ "imgs/super mario/EmptyBlockDark.png" };
+		static constexpr inline auto EmptyBlockGreyImagePath{ "imgs/super mario/EmptyBlockGrey.png" };
 
 		static constexpr inline auto FrieBall{ R"(imgs\super mario\FireBall.png)" };
 

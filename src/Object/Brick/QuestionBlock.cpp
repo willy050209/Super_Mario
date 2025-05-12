@@ -7,12 +7,27 @@ namespace MyAPP {
 				if (play) {
 					SetVisible(true);
 					play = false;
-					std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(((blockState == EmptyBlockState::normal) ? *EmptyBlockImagePath : *EmptyBlockDarkImagePath));
+					switch (color) {
+					case MyAPP::Form::Object::BrickColor::normal:
+						std::static_pointer_cast<Util::Image>(GetDrawable())
+							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockImagePath);
+						break;
+					case MyAPP::Form::Object::BrickColor::dark:
+						std::static_pointer_cast<Util::Image>(GetDrawable())
+							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath);
+						break;
+					case MyAPP::Form::Object::BrickColor::grey:
+						std::static_pointer_cast<Util::Image>(GetDrawable())
+							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockGreyImagePath);
+						break;
+					default:
+						break;
+					}
 				}
 			}
 
 			void QuestionBlock::behavior(void* data) {
-				PlayFrames();
+				 ();
 				dojump();
 				comeDown();
 			}
@@ -23,7 +38,7 @@ namespace MyAPP {
 					if (count >= (FPS_CAP / 5)) {
 						++imgindex;
 						imgindex %= 6;
-						std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(Frames[imgindex]);
+						std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
 						count = 0;
 					}
 				}

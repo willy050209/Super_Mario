@@ -549,20 +549,6 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 					obj->SetPosition(pos);*/
 					obj->incPositionX(gobackposx);
 				} });
-			/*for (auto& obj : allobj.m_Images) {
-				if (obj->MyType != ObjectType::CheckPoint) {
-					auto pos = obj->GetPosition();
-					pos.x -= gobackposx;
-					obj->SetPosition(pos);
-				}
-			}
-			for (auto& obj : allobj.m_Characters) {
-				if (obj->MyType != ObjectType::Mario) {
-					auto pos = obj->GetPosition();
-					pos.x -= gobackposx;
-					obj->SetPosition(pos);
-				}
-			}*/
 			self->Enable = false;
 			break;
 		}
@@ -719,13 +705,13 @@ EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 	}
 }
 
-/// <summary>
-/// 道具碰撞事件
-/// </summary>
-/// <param name=""></param>
-EVENTCALLCALLBACKFUN(CheckPropsCollision) {
-	
-}
+///// <summary>
+///// 道具碰撞事件
+///// </summary>
+///// <param name=""></param>
+//EVENTCALLCALLBACKFUN(CheckPropsCollision) {
+//	
+//}
 
 
 

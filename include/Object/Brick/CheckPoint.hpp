@@ -21,17 +21,9 @@ namespace MyAPP {
 					const glm::vec2& pivot = { 0, 0 })
 					: Brick(name, CheckPointImagePath, zIndex, pivot) {
 					MyType = ObjectType::CheckPoint;
+					collisionable = false;
 				}
 
-				// CheckPoint(
-				//	const std::string& name,
-				//	const std::shared_ptr<Core::Drawable>& drawable,
-				//	const float zIndex,
-				//	const glm::vec2& pivot = { 0, 0 },
-				//	const bool visible = true,
-				//	const std::vector<std::shared_ptr<GameObject>>& children = std::vector<std::shared_ptr<GameObject>>()) : Brick(name, drawable, zIndex, pivot, visible, children) {
-				//	MyType = ObjectType::CheckPoint;
-				// }
 
 				CheckPoint(const Brick& CheckPoint) = delete;
 

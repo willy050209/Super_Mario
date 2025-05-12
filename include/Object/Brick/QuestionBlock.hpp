@@ -12,15 +12,14 @@ namespace MyAPP {
 		namespace Object {
 			class QuestionBlock : Interface::Iframes, public Brick {
 			public:
-				explicit QuestionBlock(const std::string& name, const std::string& ImagePath,
-					const float zIndex,
+				explicit QuestionBlock(const std::string& name,
+					BrickColor color_,
+					const float zIndex = 10,
 					bool isDark = false,
 					const glm::vec2& pivot = { 0, 0 })
-					: Brick(name, ImagePath, zIndex, pivot) {
+					: Brick(name, Frames[0], zIndex, pivot), color(color_) {
 					MyType = ObjectType::QuestionBlock;
-					if (isDark) {
-						setDark();
-					}
+
 				}
 
 
@@ -30,9 +29,6 @@ namespace MyAPP {
 
 				QuestionBlock() = delete;
 
-				inline void setDark() noexcept {
-					blockState = EmptyBlockState::Dark;
-				}
 
 				virtual void bonk() noexcept override;
 
@@ -42,10 +38,6 @@ namespace MyAPP {
 					return Frames;
 				}
 
-				static constexpr auto GetEmptyBlockImagePath() noexcept { return *EmptyBlockImagePath; }
-
-				static constexpr auto GetEmptyBlockDarkImagePath() noexcept { return *EmptyBlockDarkImagePath; }
-
 				virtual std::string GetFrame() const noexcept { return Frames[imgindex]; }
 				
 
@@ -54,16 +46,10 @@ namespace MyAPP {
 
 				static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 
-				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockImagePath) EmptyBlockImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockImagePath };
-				static constexpr inline decltype(&MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath) EmptyBlockDarkImagePath{ &MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath };
-
 				int count{ 0 }, imgindex{ 0 };
 				bool play{ true };
 
-				enum class EmptyBlockState {
-					normal,
-					Dark
-				} blockState = EmptyBlockState::normal;
+				BrickColor color{ BrickColor::normal };
 			};
 		}
 	}

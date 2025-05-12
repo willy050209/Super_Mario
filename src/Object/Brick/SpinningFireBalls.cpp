@@ -1,6 +1,7 @@
 #include "Object/Brick/SpinningFireBalls.hpp"
 #include "Object/Brick/FireBall.hpp"
 #include "config.hpp"
+#include "GameManager.hpp"
 #include <memory>
 #include <cmath>
 #include <algorithm>
@@ -8,7 +9,8 @@
 
 
 void MyAPP::Form::Object::SpinningFireBalls::behavior(void* data) {
-	PlayFrames();
+	if (!static_cast<MyAPP::GameManager*>(data)->pause)
+		PlayFrames();
 	//moveFrieBalls();
 }
 
