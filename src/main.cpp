@@ -25,6 +25,7 @@ int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
 constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
 
+
 int main(int, char** argc) {
 	puts(argc[0]);
     readFormProfile();

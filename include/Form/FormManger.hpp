@@ -402,28 +402,8 @@ namespace MyAPP {
 			/// </summary>
 			/// <param name="formName">ªí³æ¦WºÙ</param>
 			inline void freeForm(const std::string& formName) {
-				for (auto& it : m_Forms[formName].m_Buttons) {
-					it.reset();
-				}
-				m_Forms[formName].m_Buttons.clear();
-				for (auto& it : m_Forms[formName].m_Characters) {
-					it.reset();
-				}
-				m_Forms[formName].m_Characters.clear();
-				for (auto& it : m_Forms[formName].m_Events) {
-					it.reset();
-				}
-				m_Forms[formName].m_Events.clear();
-				for (auto& it : m_Forms[formName].m_Images) {
-					it.reset();
-				}
-				m_Forms[formName].m_Images.clear();
-				for (auto& it : m_Forms[formName].m_Texts) {
-					it.reset();
-				}
-				m_Forms[formName].m_Texts.clear();
-				m_Forms[formName].m_Form.free();
 				m_Forms.erase(formName);
+				prevForm.erase(std::remove(prevForm.begin(), prevForm.end(), formName), prevForm.end());
 			}
 
 			//template<class T>

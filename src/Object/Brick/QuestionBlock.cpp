@@ -27,7 +27,7 @@ namespace MyAPP {
 			}
 
 			void QuestionBlock::behavior(void* data) {
-				 ();
+				PlayFrames();
 				dojump();
 				comeDown();
 			}

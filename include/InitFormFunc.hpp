@@ -493,11 +493,8 @@ INITFORM_FUNC(initForm_1_2) {
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 5, 100 });
-	auto& img = BMptr.first;
-	auto& mario = BMptr.second;
-
-	MyFM.addObject(formName, std::move(img));
-	MyFM.addObject(formName, std::move(mario));
+	MyFM.addObject(formName, std::move(BMptr.first));
+	MyFM.addObject(formName, std::move(BMptr.second));
 
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
@@ -596,17 +593,12 @@ INITFORM_FUNC(initForm_1_4) {
 	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
 	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Images, BrickColor::grey);
-	auto pipes = GetPipeBricks(Blocks);
-	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x, GetY0(Block) - Block->GetSize().y *6 });
-	auto& img = BMptr.first;
-	auto& mario = BMptr.second;
-
-	MyFM.addObject(formName, std::move(img));
-	MyFM.addObject(formName, std::move(mario));
+	MyFM.addObject(formName, std::move(BMptr.first));
+	MyFM.addObject(formName, std::move(BMptr.second));
 
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
@@ -622,7 +614,7 @@ INITFORM_FUNC(initForm_1_4) {
 	eventobj->userdata = std::make_shared<
 		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, pipes, MakeObject::make_Props());
+			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, MakeObject::make_Bricks(), MakeObject::make_Props());
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);

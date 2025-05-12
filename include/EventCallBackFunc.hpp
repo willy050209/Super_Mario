@@ -755,6 +755,7 @@ EVENTCALLCALLBACKFUN(freeForm) {
 	FM.freeForm(*std::static_pointer_cast<std::string>(self->userdata));
 	self->Enable = false;
 	auto& m_Events = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+	
 	// m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [&](auto& i) { return i->name == self->name; }));
 }
 

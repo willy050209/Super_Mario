@@ -81,8 +81,14 @@ void MyAPP::GameManager::init() noexcept {
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
 	if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
+		if (MyFM.GetNowForm() == MyAPP::Form::FormNames::FormOptions)
+			MyFM.changeForm(MyFM.GetPrevForm());
+		else
 		MyFM.changeForm(MyAPP::Form::FormNames::FormOptions);
 
+	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::H)) {
+		IncHP();
 	}
 	MyFM.UpdateForm(this);
 }
