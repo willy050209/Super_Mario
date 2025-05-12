@@ -92,7 +92,7 @@ void Input::Update() {
     /*for (auto &[_, i] : s_KeyState) {
         i.first = i.second;
     }*/
-    std::for_each(std::execution::par, s_KeyState.begin(), s_KeyState.end(),
+    std::for_each(std::execution::seq, s_KeyState.begin(), s_KeyState.end(),
                   [](auto &it) { it.second.first = it.second.second; });
 
     s_Io = ImGui::GetIO();

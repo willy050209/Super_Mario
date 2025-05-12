@@ -84,7 +84,7 @@ namespace MyAPP {
 				if (tmp.y < WINDOW_HEIGHT) {
 					tmp.y -= DEFAULTDISPLACEMENT;
 					const auto MySize = GetSize();
-					std::for_each(std::execution::par, bricks->begin(), bricks->end(), [&](auto& it) {
+					std::for_each(std::execution::seq, bricks->begin(), bricks->end(), [&](auto& it) {
 						if (it->collisionable && it->inRange(tmp, MySize)) {
 							if (it->getState() == Brick::State::jump) {
 								died();

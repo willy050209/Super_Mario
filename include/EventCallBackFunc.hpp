@@ -102,15 +102,15 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		else if (pos.x > -GetX0(background) && flag) {
 			pos.x -= Displacement;
-			std::for_each(std::execution::par, block->begin(), block->end(), 
+			std::for_each(std::execution::seq, block->begin(), block->end(), 
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y }); 
 				});
-			std::for_each(std::execution::par, enemys->begin(), enemys->end(),
+			std::for_each(std::execution::seq, enemys->begin(), enemys->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, props->begin(), props->end(),
+			std::for_each(std::execution::seq, props->begin(), props->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
@@ -146,15 +146,15 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		else if (pos.x < GetX0(background) && flag) {
 			pos.x += Displacement;
-			std::for_each(std::execution::par, block->begin(), block->end(),
+			std::for_each(std::execution::seq, block->begin(), block->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, enemys->begin(), enemys->end(),
+			std::for_each(std::execution::seq, enemys->begin(), enemys->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
-			std::for_each(std::execution::par, props->begin(), props->end(),
+			std::for_each(std::execution::seq, props->begin(), props->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
@@ -293,10 +293,10 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_Pipe) {
 				auto& form_1_1_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_1);
-				std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+				std::for_each(std::execution::seq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
 					it->incPositionX(displacement);
 				});
-				std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+				std::for_each(std::execution::seq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
 					it->incPositionX(displacement);
 				});
 				/*for (auto& it : form_1_1_OBJ.m_Characters) {
@@ -321,10 +321,10 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 			}
 			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 				auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
+				std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
 					it->incPositionX(displacement);
 				});
-				std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
+				std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
 					it->incPositionX(displacement);
 				});
 				/*for (auto& it : form_1_2_OBJ.m_Characters) {
@@ -533,7 +533,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	for (int i = checkPoints->size() - 1; i >= 0; --i) {
 		if (!(*checkPoints)[i]->Enable) {
 			gobackposx = -(*checkPoints)[i]->GetPosition().x;
-			std::for_each(std::execution::par, allobj.m_Images.begin(), allobj.m_Images.end(),
+			std::for_each(std::execution::seq, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::CheckPoint) {
 					/*auto pos = obj->GetPosition();
@@ -541,7 +541,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 					obj->SetPosition(pos);*/
 					obj->incPositionX(gobackposx);
 				} });
-			std::for_each(std::execution::par, allobj.m_Characters.begin(), allobj.m_Characters.end(),
+			std::for_each(std::execution::seq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::Mario) {
 					/*auto pos = obj->GetPosition();
@@ -553,7 +553,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			break;
 		}
 	}
-	std::for_each(std::execution::par, checkPoints->begin(), checkPoints->end(),
+	std::for_each(std::execution::seq, checkPoints->begin(), checkPoints->end(),
 		[&](auto& it) {
 			it->incPositionX(gobackposx);
 			/*auto pos = it->GetPosition();

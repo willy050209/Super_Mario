@@ -266,12 +266,6 @@ namespace MyAPP {
 			inline void addObject(const std::string& formName, std::shared_ptr<Object::ImageObject>& image) noexcept {
 				m_Forms[formName].m_Images.push_back(image);
 				addForm(formName, image);
-				if (image->MyType == Object::ObjectType::SpinningFireBalls) {
-					auto vecptr = std::static_pointer_cast<std::vector<std::shared_ptr<Object::FireBalls>>>(image->userdata);
-					for (auto& ptr : (*vecptr)) {
-						addForm(formName, ptr);
-					}
-				}
 			}
 
 			/// <summary>
@@ -282,12 +276,6 @@ namespace MyAPP {
 			inline void addObject(const std::string& formName, std::shared_ptr<Object::ImageObject>&& image) noexcept {
 				m_Forms[formName].m_Images.push_back(image);
 				addForm(formName, image);
-				if (image->MyType == Object::ObjectType::SpinningFireBalls) {
-					auto vecptr = std::static_pointer_cast<std::vector<std::shared_ptr<Object::FireBalls>>>(image->userdata);
-					for (auto& ptr : (*vecptr)) {
-						addForm(formName, ptr);
-					}
-				}
 			}
 
 			/// <summary>

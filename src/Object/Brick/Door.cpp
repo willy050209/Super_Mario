@@ -21,10 +21,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_Pipe) {
 			auto& form_1_1_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_1);
-			std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = GetSize().x * (-107)](auto& it) {
+			std::for_each(std::execution::seq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = GetSize().x * (-107)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			std::for_each(std::execution::par_unseq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = GetSize().x * (-107)](auto& it) {
+			std::for_each(std::execution::seq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = GetSize().x * (-107)](auto& it) {
 				it->incPositionX(displacement);
 			});
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 9, GetY0(this) - GetSize().y * 10 });
@@ -39,10 +39,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 			auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-7)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			std::for_each(std::execution::par_unseq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-7)](auto& it) {
 				it->incPositionX(displacement);
 			});
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetY0(this) - GetSize().y * 10 });
