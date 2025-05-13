@@ -59,6 +59,7 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 			winForm(static_cast<MyAPP::GameManager*>(data));
 			ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 		}
+		mario->SetLeft<false>();
 		// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
 	}
 }
