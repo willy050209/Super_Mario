@@ -12,15 +12,15 @@ std::shared_ptr<MyAPP::Form::Object::SpinningFireBalls> MyAPP::Form::Object::Mak
 	auto result = std::make_shared<SpinningFireBalls>(name, zindex);
 	std::vector<std::shared_ptr<FireBalls>> fireballs;
 	for (int i = 0; i < 6; ++i) {
-		fireballs.push_back(std::make_shared<FireBalls>("", 0));
+		fireballs.push_back(std::move(std::make_shared<FireBalls>("", 0)));
 	}
-	result->userdata = std::make_shared<std::vector<std::shared_ptr<FireBalls>>>(fireballs);
+	result->userdata = std::make_shared<std::vector<std::shared_ptr<FireBalls>>>(std::move(fireballs));
 	result->SetPosition(pos);
 	return result;
 }
 
 std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Object::MakeObject::make_Background_And_Mario(
-	std::string&& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks,
+	const std::string& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks,
 	glm::vec2 marioPos, int backgroundZindex, int marioZindex) noexcept {
 
 	auto background = std::make_shared<ImageObject>("Background", backgrount_FilePath, backgroundZindex);
@@ -38,7 +38,7 @@ std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeOb
 	return std::make_shared<std::vector<std::shared_ptr<Brick>>>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(std::string&& filename, BrickColor color) noexcept {
+std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(const std::string& filename, BrickColor color) noexcept {
 	Fileinfo fileinfo;
 	auto bricks = MakeObject::make_Bricks();
 	std::ifstream inp(filename);
@@ -47,7 +47,7 @@ std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeOb
 		fileinfo.ChangeXY();
 		auto ptr = make_BrickPtr(fileinfo, color);
 		if (ptr) {
-			bricks->push_back(ptr);
+			bricks->push_back(std::move(ptr));
 		}
 	}
 	return bricks;
@@ -84,7 +84,7 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::dark, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::dark, 10);
+			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::grey, 10);
 			break;
 		default:
 			return BrickPtr;
@@ -198,20 +198,20 @@ std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::M
 	auto result = std::make_shared<std::vector<std::shared_ptr<TextObject>>>();
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
-	result->push_back(texttime);
+	result->push_back(std::move(texttime));
 
 	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ -GetX0(text), GetY0(text) });
-	result->push_back(text);
+	result->push_back(std::move(text));
 
 	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
 	pointtext->SetPosition({ 0, GetY0(pointtext) });
-	result->push_back(pointtext);
+	result->push_back(std::move(pointtext));
 
 	return result;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Enemys_From_File(std::string&& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks) noexcept {
+std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Enemys_From_File(const std::string& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks) noexcept {
 	Fileinfo fileinfo;
 	auto enemys = MakeObject::make_Characters();
 	std::ifstream inp(filename);
@@ -225,7 +225,7 @@ std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::Ma
 		auto ptr = make_EnemysPtr(fileinfo);
 		if (ptr) {
 			ptr->userdata = Bricks;
-			enemys->push_back(ptr);
+			enemys->push_back(std::move(ptr));
 		}
 	}
 	return enemys;

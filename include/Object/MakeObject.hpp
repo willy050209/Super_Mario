@@ -11,6 +11,18 @@
 
 namespace MyAPP::Form::Object {
 
+	struct PositionReference {
+		/// <summary>
+		/// 回傳作為座標參考的方塊
+		/// </summary>
+		/// <returns></returns>
+		static std::unique_ptr<Brick>& GetPositionReference() {
+			static std::unique_ptr<Brick> BrickPositionReference = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+
+			return BrickPositionReference;
+		}
+	};
+
 	struct MakeObject {
 
 		/// <summary>
@@ -36,10 +48,11 @@ namespace MyAPP::Form::Object {
 			/// 將XY轉為實際座標
 			/// </summary>
 			void ChangeXY() {
-				auto brick = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+				auto& brick = PositionReference::GetPositionReference();
 				XY = XY * brick->GetSize() + glm::vec2{ GetX0(brick), GetY0(brick) };				
 			}
 		};
+
 
 		/// <summary>
 		/// 建立包含火球的火柱方塊
@@ -57,14 +70,14 @@ namespace MyAPP::Form::Object {
 		/// <param name="backgroundZindex">背景圖Zindex</param>
 		/// <param name="marioZindex">MarioZindex</param>
 		/// <returns> first : 背景圖 second : Mario</returns>
-		[[nodiscard]] static std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> make_Background_And_Mario(std::string&& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks = nullptr, glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
+		[[nodiscard]] static std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks , glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
 
 		/// <summary>
 		/// 從檔案建立 Brick vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(std::string&& filename, BrickColor color = BrickColor::normal) noexcept;
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(const std::string& filename, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
 		/// 建立 Brick 指標陣列
@@ -102,7 +115,7 @@ namespace MyAPP::Form::Object {
 		/// 從檔案建立 enemys 指標陣列
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(std::string&& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>> Bricks) noexcept;
+		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(const std::string& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks) noexcept;
 	
 		/// <summary>
 		/// 建立 Character 指標

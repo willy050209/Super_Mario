@@ -103,7 +103,6 @@ int main(int, char** argc) {
 	gameManger.init();
     
 
-
     while (!context->GetExit()) {
         
         if (gameManger.isEnd()) {

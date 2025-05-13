@@ -38,7 +38,7 @@ namespace MyAPP::Form {
 	/// <param name="FM"></param>
 	/// <param name="formName"></param>
 	inline void writeForm(MyAPP::Form::FormManger& FM,const std::string& formName) {
-		std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
+		auto& Block = PositionReference::GetPositionReference();
 		auto size = Block->GetSize();
 		auto x0 = GetX0(Block);
 		auto y0 = GetY0(Block);
@@ -89,7 +89,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
 		auto result = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::CheckPoint) {
@@ -104,7 +104,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::PipeBrick) {
@@ -119,7 +119,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Flagpole) {
@@ -134,7 +134,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>> bricks) noexcept {
+	inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Door) {
@@ -149,7 +149,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetTurtless(std::shared_ptr<std::vector<std::shared_ptr<Character>>> enemys) noexcept {
+	inline auto GetTurtless(std::shared_ptr<std::vector<std::shared_ptr<Character>>>& enemys) noexcept {
 		auto result = MakeObject::make_Characters();
 		std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Turtle) {
@@ -167,7 +167,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>> objlist) noexcept {
+	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>>& objlist) noexcept {
 		std::for_each(objlist->begin(), objlist->end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 
@@ -179,7 +179,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>> objlist) noexcept {
+	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>>& objlist) noexcept {
 		std::for_each(objlist.begin(), objlist.end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 }
@@ -304,7 +304,7 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1;
 	// 作為座標參考
-	std::unique_ptr<Brick> Block = std::make_unique<Brick>("brick", MyAPP::MyResourcesFilePath::BlockImagePath, 1);
+	auto& Block = PositionReference::GetPositionReference();
 
 	// 從地圖檔取得所有方塊
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
@@ -398,7 +398,7 @@ INITFORM_FUNC(initForm_1_1) {
 INITFORM_FUNC(initForm_1_1_Pip) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_Pipe;
-	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+	auto& PositionReference = PositionReference::GetPositionReference();
 
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
@@ -406,7 +406,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -448,7 +448,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_to_1_2;
-	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+	auto& PositionReference = PositionReference::GetPositionReference();
 
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_to_1_2_Images, BrickColor::normal);
 	auto pipes = GetPipeBricks(Blocks);
@@ -456,7 +456,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 2, GetY0(Block) - Block->GetSize().x * 12 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 2, GetY0(PositionReference) - PositionReference->GetSize().x * 12 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -484,7 +484,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 INITFORM_FUNC(initForm_1_2) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2;
-	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+	auto& PositionReference = PositionReference::GetPositionReference();
 
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
@@ -492,7 +492,7 @@ INITFORM_FUNC(initForm_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 5, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 5, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -546,7 +546,7 @@ INITFORM_FUNC(initForm_1_2) {
 INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_Pipe;
-	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+	auto& Block = PositionReference::GetPositionReference();
 
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
@@ -590,13 +590,13 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 INITFORM_FUNC(initForm_1_4) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_4;
-	auto Block = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+	auto& PositionReference = PositionReference::GetPositionReference();
 
 	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Images, BrickColor::grey);
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x, GetY0(Block) - Block->GetSize().y *6 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x, GetY0(PositionReference) - PositionReference->GetSize().y *6 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 
@@ -607,14 +607,14 @@ INITFORM_FUNC(initForm_1_4) {
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
-	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
+	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, MakeObject::make_Bricks(), MakeObject::make_Props());
+			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, std::move(MakeObject::make_Bricks()), std::move(MakeObject::make_Props()));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -634,7 +634,7 @@ INITFORM_FUNC(initForm_1_4) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
-	eventobj->userdata = GetCheckPoints(Blocks);
+	eventobj->userdata = std::move(GetCheckPoints(Blocks));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
