@@ -1,13 +1,16 @@
 #pragma once
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
+#include "MyDefine.hpp"
 namespace MyAPP {
 	/// <summary>
 	/// 檔案路徑
 	/// </summary>
 	struct MyResourcesFilePath {
-
+		CANNOTCREATE(MyResourcesFilePath);
 		struct MAP {
+			CANNOTCREATE(MAP);
+
 			/// <summary>
 			/// 1-1地圖圖片路徑
 			/// </summary>
@@ -26,7 +29,7 @@ namespace MyAPP {
 			///// <summary>
 			/// 1-2地圖圖片路徑
 			/// </summary>
-			static constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main_new.png";
+			static constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main.png";
 
 			/// <summary>
 			/// 1-2水管地圖圖片路徑

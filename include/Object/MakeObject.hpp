@@ -3,6 +3,7 @@
 #define MAKEOBJECT_HPP
 #include "Position.hpp"
 #include "incallobj.hpp"
+#include "MyDefine.hpp"
 
 
 #include <tuple>
@@ -16,14 +17,18 @@ namespace MyAPP::Form::Object {
 		/// 回傳作為座標參考的方塊
 		/// </summary>
 		/// <returns></returns>
-		static std::unique_ptr<Brick>& GetPositionReference() {
-			static std::unique_ptr<Brick> BrickPositionReference = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+		static const std::unique_ptr<const Brick>& GetPositionReference() {
+			static std::unique_ptr<const Brick> BrickPositionReference = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
 			return BrickPositionReference;
 		}
+
+		CANNOTCREATE(PositionReference);
 	};
 
 	struct MakeObject {
+
+		CANNOTCREATE(MakeObject);
 
 		/// <summary>
 		/// 地圖檔格式

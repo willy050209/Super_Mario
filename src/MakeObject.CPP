@@ -31,7 +31,7 @@ std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Obj
 	mario->SetPosition(marioPos);
 	mario->userdata = background->userdata;
 	
-	return std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>(background, mario);
+	return std::make_pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>(std::move(background), std::move(mario));
 }
 
 std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks() noexcept {

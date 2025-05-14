@@ -1,7 +1,9 @@
 #pragma once
+#include "MyDefine.hpp"
 namespace MyAPP {
 	namespace Form {
 		struct FormNames {
+			CANNOTCREATE(FormNames);
 			static constexpr auto FormBackground = "Background";
 			static constexpr auto FormOptions = "Options";
 			static constexpr auto FormSetting = "Setting";
