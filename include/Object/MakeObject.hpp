@@ -48,8 +48,8 @@ namespace MyAPP::Form::Object {
 			/// 將XY轉為實際座標
 			/// </summary>
 			void ChangeXY() {
-				auto& brick = PositionReference::GetPositionReference();
-				XY = XY * brick->GetSize() + glm::vec2{ GetX0(brick), GetY0(brick) };				
+				auto& PositionReference = PositionReference::GetPositionReference();
+				XY = XY * PositionReference->GetSize() + glm::vec2{ GetX0(PositionReference), GetY0(PositionReference) };				
 			}
 		};
 

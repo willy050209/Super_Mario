@@ -4,6 +4,10 @@
 #include "InitFormFunc.hpp"
 
 void MyAPP::Form::Object::Door::behavior(void* data) {
+	checkMarioTouch(data);
+}
+
+void MyAPP::Form::Object::Door::checkMarioTouch(void*& data) noexcept {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
@@ -39,10 +43,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 			auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-			std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-6)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-6)](auto& it) {
 				it->incPositionX(displacement);
 			});
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetY0(this) - GetSize().y * 10 });
@@ -60,6 +64,7 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 			ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 		}
 		mario->SetLeft<false>();
-		// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
 	}
 }
+
+

@@ -32,6 +32,10 @@ namespace MyAPP::Form::Object {
 		virtual void behavior(void* data = nullptr) override;
 
 		bool Enable = true;
+
+	private:
+
+		void checkMarioTouch(void*&data) noexcept;
 	};
 }
 
