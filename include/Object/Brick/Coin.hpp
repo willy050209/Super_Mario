@@ -5,12 +5,13 @@
 #include "Brick.hpp"
 #include "ObjectType.hpp"
 #include "Interface/IFrames.hpp"
+#include "Interface/ICollisionable.hpp"
 
 namespace MyAPP::Form::Object {
 	/// <summary>
 	/// ª÷¹ôª«¥ó Ä~©ÓBrick
 	/// </summary>
-	class Coin : Interface::Iframes, public Brick {
+	class Coin :Interface::ICollisionable, Interface::Iframes, public Brick {
 	public:
 		explicit Coin(const std::string& name,
 			const float zIndex,
@@ -20,20 +21,9 @@ namespace MyAPP::Form::Object {
 			collisionable = false;
 		}
 
-		// explicit Coin(
-		//	const std::string& name,
-		//	const std::shared_ptr<Core::Drawable>& drawable,
-		//	const float zIndex,
-		//	const glm::vec2& pivot = { 0, 0 },
-		//	const bool visible = true,
-		//	const std::vector<std::shared_ptr<GameObject>>& children = std::vector<std::shared_ptr<GameObject>>()) : Brick(name, drawable, zIndex, pivot, visible, children) {
-		//	MyType = ObjectType::Coin;
-		//	collisionable = false;
-		// }
+		Coin(const Coin& ) = delete;
 
-		Coin(const Coin& other) = delete;
-
-		Coin(Coin&& other) = delete;
+		Coin(Coin&&) = delete;
 
 		Coin() = delete;
 
@@ -59,7 +49,7 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		virtual void PlayFrames() noexcept override;
 
-		void touch(void*) noexcept;
+		void CheckCollision(void*) noexcept;
 
 		// static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		/// <summary>

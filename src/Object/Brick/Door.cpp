@@ -4,10 +4,10 @@
 #include "InitFormFunc.hpp"
 
 void MyAPP::Form::Object::Door::behavior(void* data) {
-	checkMarioTouch(data);
+	CheckCollision(data);
 }
 
-void MyAPP::Form::Object::Door::checkMarioTouch(void*& data) noexcept {
+void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
@@ -64,6 +64,7 @@ void MyAPP::Form::Object::Door::checkMarioTouch(void*& data) noexcept {
 			ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 		}
 		mario->SetLeft<false>();
+		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();
 	}
 }
 

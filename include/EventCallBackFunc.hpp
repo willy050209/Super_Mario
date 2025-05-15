@@ -175,6 +175,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
+		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();
 		for (auto& it : *pipes) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
 				if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
@@ -359,56 +360,56 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Character)) </param>
-EVENTCALLCALLBACKFUN(CheckEneyCollision) {
-	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
-	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	auto eneys = std::static_pointer_cast<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>(self->userdata);
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	if (!GM->opMode) {
-		for (auto& it : *eneys) {
-			if (it->collisionable && it->inRange(marioPos, marioSize)) {
-				if (mario->isInvincible() ||  marioPos.y > it->GetPosition().y) {
-					it->died();
-					/*it->collisionable = false;
-					it->SetVisible(false);*/
-				}
-				else {
-					// (FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
-					/*GM->bgm->LoadMedia(Lost_a_Life);
-					GM->bgm->Play(1);*/
-					//if (it->MyType == ObjectType::Turtle && )
-					GM->DecHP();
-					mario->died();
-					GM->bgm->Pause();
-					GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
-					GM->sfx->Play(0);
-					(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
-					if (GM->GetHP() == 0) {
-						GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
-						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
-						sleepevent->Enable = true;
-						sleepevent->userdata.reset();
-						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP*3, std::vector<bool>());
-						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
-						break;
-					}
-					else {
-						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
-						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
-						sleepevent->Enable = true;
-						sleepevent->userdata.reset();
-						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
-						break;
-					}
-					//std::this_thread::sleep_for(std::chrono::seconds(4));
-					//GM->bgm->Resume();
-				}
-			}
-		}
-	}
-}
+//EVENTCALLCALLBACKFUN(CheckEneyCollision) {
+//	auto GM = static_cast<MyAPP::GameManager*>(data);
+//	auto& FM = GM->GetFormManger();
+//	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+//	auto eneys = std::static_pointer_cast<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>(self->userdata);
+//	auto marioPos = mario->GetPosition();
+//	auto marioSize = mario->GetSize();
+//	if (!GM->opMode) {
+//		for (auto& it : *eneys) {
+//			if (it->collisionable && it->inRange(marioPos, marioSize)) {
+//				if (mario->isInvincible() ||  marioPos.y > it->GetPosition().y) {
+//					it->died();
+//					/*it->collisionable = false;
+//					it->SetVisible(false);*/
+//				}
+//				else {
+//					// (FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
+//					/*GM->bgm->LoadMedia(Lost_a_Life);
+//					GM->bgm->Play(1);*/
+//					//if (it->MyType == ObjectType::Turtle && )
+//					GM->DecHP();
+//					mario->died();
+//					GM->bgm->Pause();
+//					GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
+//					GM->sfx->Play(0);
+//					(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
+//					if (GM->GetHP() == 0) {
+//						GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
+//						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
+//						sleepevent->Enable = true;
+//						sleepevent->userdata.reset();
+//						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP*3, std::vector<bool>());
+//						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
+//						break;
+//					}
+//					else {
+//						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
+//						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
+//						sleepevent->Enable = true;
+//						sleepevent->userdata.reset();
+//						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+//						break;
+//					}
+//					//std::this_thread::sleep_for(std::chrono::seconds(4));
+//					//GM->bgm->Resume();
+//				}
+//			}
+//		}
+//	}
+//}
 
 /// <summary>
 /// Game Over Event

@@ -129,6 +129,8 @@ namespace MyAPP {
 		/// </summary>
 		bool opMode = false;
 
+		MyAPP::Form::Object::Mario::Mario_type mariotype{ MyAPP::Form::Object::Mario::Mario_type::Mario };
+
 	private:
 
 		/// <summary>

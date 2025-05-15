@@ -4,6 +4,7 @@
 
 #include "ImageObject.hpp"
 #include "ObjectType.hpp"
+#include "Interface/ICollisionable.hpp"
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
@@ -11,13 +12,8 @@ namespace MyAPP {
 				/// <summary>
 				/// 所有道具的父類別 繼承ImageObject
 				/// </summary>
-				class Props : public ImageObject {
+				class Props :public ImageObject {
 				public:
-					/*enum class State {
-						null,
-						jump,
-						down
-					};*/
 
 					explicit Props(const std::string& name, const std::string& ImagePath,
 						const float zIndex,
@@ -33,12 +29,7 @@ namespace MyAPP {
 					Props() = delete;
 
 
-
-					// static constexpr auto GetFrame0() const noexcept { return frames[0]; }
-
 				protected:
-
-					virtual void touch(void* gm) = 0;
 
 					int count{ 0 }, imgindex{ 0 };
 					// static constexpr char* const frames[] = { R"(imgs\super mario\FireFlower\frame0.png)", R"(imgs\super mario\FireFlower\frame1.png)", R"(imgs\super mario\FireFlower\frame2.png)", R"(imgs\super mario\FireFlower\frame3.png)" };

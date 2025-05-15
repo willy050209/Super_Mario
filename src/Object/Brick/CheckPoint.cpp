@@ -2,6 +2,10 @@
 #include "GameManager.hpp"
 
 void MyAPP::Form::Object::CheckPoint::behavior(void* data) {
+	CheckCollision(data);
+}
+
+void MyAPP::Form::Object::CheckPoint::CheckCollision(void* data) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
@@ -13,6 +17,4 @@ void MyAPP::Form::Object::CheckPoint::behavior(void* data) {
 		puts("CheckPoint");
 		static_cast<MyAPP::GameManager*>(data)->SaveCheckPointPos(marioPos);
 	}
-	dojump();
-	comeDown();
 }

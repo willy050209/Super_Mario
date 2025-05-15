@@ -14,11 +14,9 @@ namespace MyAPP {
 					if (moveFlag) {
 						move();
 					}
-					if (!static_cast<MyAPP::GameManager*>(data)->pause) {
-						ChangeImg();
-
-						comeDown();
-					}
+					ChangeImg();
+					comeDown();
+					CheckCollision(data);
 				}
 			}
 
@@ -111,6 +109,44 @@ namespace MyAPP {
 					//	}
 					// }
 					SetPosition(tmp);
+				}
+			}
+			void Turtle::CheckCollision(void* data) {
+				using namespace MyAPP::Form::Object;
+				auto GM = static_cast<MyAPP::GameManager*>(data);
+				auto& FM = GM->GetFormManger();
+				auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+				auto marioPos = mario->GetPosition();
+				auto marioSize = mario->GetSize();
+				if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
+					if (collisionable && inRange(marioPos, marioSize)) {
+						if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
+							died();
+						}
+						else {
+							GM->DecHP();
+							mario->died();
+							GM->bgm->Pause();
+							GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
+							GM->sfx->Play(0);
+							(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
+							if (GM->GetHP() == 0) {
+								GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
+								auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
+								sleepevent->Enable = true;
+								sleepevent->userdata.reset();
+								sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP * 3, std::vector<bool>());
+								(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
+							}
+							else {
+								(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
+								auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
+								sleepevent->Enable = true;
+								sleepevent->userdata.reset();
+								sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+							}
+						}
+					}
 				}
 			}
 		}

@@ -8,7 +8,7 @@ namespace MyAPP {
 			namespace Props {
 				void FireFlower::behavior(void* data) {
 					PlayFrames();
-					touch(data);
+					CheckCollision(data);
 				}
 
 				void FireFlower::PlayFrames() noexcept {
@@ -21,9 +21,9 @@ namespace MyAPP {
 					}
 				}
 
-				void FireFlower::touch(void* gm) {
+				void FireFlower::CheckCollision(void* data) {
 					if (m_Visible) {
-						auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManger();
+						auto& fm = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 						auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 						if (inRange(mario->GetPosition(), mario->GetSize())) {
 							mario->changeType(Mario::Mario_type::FieryMario);

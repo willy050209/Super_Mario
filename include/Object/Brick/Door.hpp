@@ -5,12 +5,13 @@
 #include "Object/Brick/Brick.hpp"
 #include "Object/ObjectType.hpp"
 #include "FilePath.hpp"
+#include "Interface/ICollisionable.hpp"
 
 namespace MyAPP::Form::Object {
 	/// <summary>
 	/// 存檔點物件 繼承Brick
 	/// </summary>
-	class Door : public Brick {
+	class Door :Interface::ICollisionable, public Brick {
 	public:
 
 		explicit Door(const std::string& name,
@@ -23,9 +24,9 @@ namespace MyAPP::Form::Object {
 			collisionable = false;
 		}
 
-		Door(const Door& door) = delete;
+		Door(const Door&) = delete;
 
-		Door(Door&& door) = delete;
+		Door(Door&&) = delete;
 
 		// CheckPoint() = delete;
 
@@ -35,7 +36,7 @@ namespace MyAPP::Form::Object {
 
 	private:
 
-		void checkMarioTouch(void*&data) noexcept;
+		void CheckCollision(void* data) noexcept;
 	};
 }
 

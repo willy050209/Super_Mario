@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// 存檔點物件 繼承Brick
+	/// 旗桿物件 繼承Brick
 	/// </summary>
 	class Flagpole : public Brick {
 	public:
@@ -22,11 +22,11 @@ namespace MyAPP::Form::Object {
 			collisionable = false;
 		}
 
-		Flagpole(const Flagpole& flagpole) = delete;
+		Flagpole(const Flagpole& ) = delete;
 
-		Flagpole(Flagpole&& flagpole) = delete;
+		Flagpole(Flagpole&& ) = delete;
 
-		// CheckPoint() = delete;
+		Flagpole() = delete;
 
 		virtual void behavior(void* data = nullptr) override {};
 
