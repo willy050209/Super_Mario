@@ -3,20 +3,25 @@
 #include "Form/FormNames.hpp"
 #include "InitFormFunc.hpp"
 
+
 void MyAPP::Form::Object::Door::behavior(void* data) {
 	CheckCollision(data);
 }
 
 void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
+
+	auto allEventDiseable = [](std::vector<std::shared_ptr<MyAPP::Form::Object::EventObject>>& Events) {
+		std::for_each(Events.begin(), Events.end(), [](auto& eventobj) { eventobj->Enable = false; });
+	};
+
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
+
 	if (inRange(marioPos, marioSize)) {
 		auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
-		for (auto& eventobj : objandform.m_Events) {
-			eventobj->Enable = false;
-		}
+		allEventDiseable(objandform.m_Events);
 		auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
 		ChangeFormEventObject->Enable = true;
 		if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
