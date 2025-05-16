@@ -46,9 +46,9 @@ namespace MyAPP {
 				void ChangeImg() noexcept;
 
 				virtual void comeDown() noexcept override;
-				//static constexpr inline char* const Frames[] = { R"(C:\Users\paula\Desktop\change img color\Flip_frame0.png)", R"(C:\Users\paula\Desktop\change img color\Flip_frame0_1.png)", R"(C:\Users\paula\Desktop\change img color\transparent_replaced_Flip_frame0_1.png)" };
+				static constexpr inline char* const Frames[] = { R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe0.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe1.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe2.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe3.png)" };
 				// use frame / 7 up
-				static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+				//static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
 			};
 		}
 	}

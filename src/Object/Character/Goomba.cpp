@@ -25,7 +25,7 @@ namespace MyAPP {
 
 			void Goomba::ChangeImg() noexcept {
 				imageChangeDelay++;
-				if (imageChangeDelay >= (FPS_CAP / 3)) {
+				if (imageChangeDelay >= (FPS_CAP / 7)) {
 					imgIndex++;
 					imgIndex &= 1;
 					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(Frames[imgIndex]);
