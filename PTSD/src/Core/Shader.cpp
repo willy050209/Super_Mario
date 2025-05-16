@@ -39,7 +39,7 @@ void Shader::CheckStatus(const std::string &filepath) const {
 
     glGetShaderiv(m_ShaderId, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE) {
-        int infoLogLength;
+        int infoLogLength{};
         glGetShaderiv(m_ShaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
 
         std::vector<char> message(infoLogLength + 1);

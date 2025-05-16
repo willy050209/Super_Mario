@@ -5,6 +5,7 @@
 #include "Props.hpp"
 #include "ObjectType.hpp"
 #include "Object/Interface/IFrames.hpp"
+#include "Interface/ICollisionable.hpp"
 
 namespace MyAPP {
 	namespace Form {
@@ -13,7 +14,7 @@ namespace MyAPP {
 				/// <summary>
 				/// 所有道具的父類別 繼承ImageObject
 				/// </summary>
-				class FireFlower : Interface::Iframes, public Props {
+				class FireFlower : Interface::ICollisionable, Interface::Iframes, public Props {
 				public:
 					explicit FireFlower(const std::string& name,
 						const float zIndex,
@@ -37,7 +38,7 @@ namespace MyAPP {
 				protected:
 					virtual void PlayFrames() noexcept override;
 
-					virtual void touch(void* gm) override;
+					virtual void CheckCollision(void* data) override;
 
 				private:
 					int count{ 0 }, imgindex{ 0 };

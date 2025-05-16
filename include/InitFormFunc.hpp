@@ -305,7 +305,7 @@ INITFORM_FUNC(initForm_1_1) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1;
 	// 作為座標參考
 	auto& Block = PositionReference::GetPositionReference();
-
+	
 	// 從地圖檔取得所有方塊
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
 	auto pipes = GetPipeBricks(Blocks);
@@ -313,13 +313,16 @@ INITFORM_FUNC(initForm_1_1) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
+	// 取得地圖與馬力歐
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
 	MyFM.addObject(formName, std::move(BMptr.first));
 	MyFM.addObject(formName, std::move(BMptr.second));
 	
+	// 取得時間、分數、生命文字方塊
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
 	
+	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
@@ -342,6 +345,8 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& bgm = self->bgm;
 	bgm->Play(-1);
 
+
+	// 設定表單事件
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1_pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -357,9 +362,9 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	eventobj->userdata = enemys;
-	MyFM.addObject(formName, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	//eventobj->userdata = enemys;
+	//MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata =(flagpole);
@@ -398,21 +403,28 @@ INITFORM_FUNC(initForm_1_1) {
 INITFORM_FUNC(initForm_1_1_Pip) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_Pipe;
+	// 取得座標參考
 	auto& PositionReference = PositionReference::GetPositionReference();
 
+	// 建立地圖方塊
 	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
+	// 建立地圖與馬力歐
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	auto& mario = std::move(BMptr.second);
+	mario->changeType(self->mariotype);
+	MyFM.addObject(formName, std::move(mario));
 
+	// 取得時間、分數、生命文字方塊
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
 
+	// 建立所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
@@ -424,7 +436,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
-	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
+	eventobj->userdata = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateTimeTextEvent")->userdata;
 	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
@@ -458,7 +470,9 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 2, GetY0(PositionReference) - PositionReference->GetSize().x * 12 });
 	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	auto& mario = std::move(BMptr.second);
+	mario->changeType(self->mariotype);
+	MyFM.addObject(formName, std::move(mario));
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1", freeForm);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
@@ -494,7 +508,9 @@ INITFORM_FUNC(initForm_1_2) {
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 5, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	auto& mario = std::move(BMptr.second);
+	mario->changeType(self->mariotype);
+	MyFM.addObject(formName, std::move(mario));
 
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
@@ -517,9 +533,9 @@ INITFORM_FUNC(initForm_1_2) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	eventobj->userdata = std::move(enemys);
-	MyFM.addObject(formName, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	//eventobj->userdata = std::move(enemys);
+	//MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
@@ -556,7 +572,9 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	auto& mario = std::move(BMptr.second);
+	mario->changeType(self->mariotype);
+	MyFM.addObject(formName, std::move(mario));
 
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
@@ -570,7 +588,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
-	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
+	eventobj->userdata = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateTimeTextEvent")->userdata;
 	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
@@ -598,7 +616,9 @@ INITFORM_FUNC(initForm_1_4) {
 
 	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x, GetY0(PositionReference) - PositionReference->GetSize().y *6 });
 	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	auto& mario = std::move(BMptr.second);
+	mario->changeType(self->mariotype);
+	MyFM.addObject(formName, std::move(mario));
 
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
@@ -621,9 +641,9 @@ INITFORM_FUNC(initForm_1_4) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	eventobj->userdata = std::move(enemys);
-	MyFM.addObject(formName, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
+	//eventobj->userdata = std::move(enemys);
+	//MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 

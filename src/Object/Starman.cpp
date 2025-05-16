@@ -10,7 +10,7 @@ namespace MyAPP {
 			namespace Props {
 				void Starman::behavior(void* data) {
 					PlayFrames();
-					touch(data);
+					CheckCollision(data);
 				}
 
 				void Starman::PlayFrames() noexcept {
@@ -23,7 +23,7 @@ namespace MyAPP {
 					}
 				}
 
-				void Starman::touch(void* gm) {
+				void Starman::CheckCollision(void* gm) {
 					if (m_Visible) {
 						auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManger();
 						auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");

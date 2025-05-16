@@ -6,10 +6,10 @@ namespace MyAPP {
 		namespace Object {
 			namespace Props {
 				void Mushroom::behavior(void* data) {
-					touch(data);
+					CheckCollision(data);
 				}
 
-				void Mushroom::touch(void* gm) {
+				void Mushroom::CheckCollision(void* gm) {
 					if (m_Visible) {
 						auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManger();
 						auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");

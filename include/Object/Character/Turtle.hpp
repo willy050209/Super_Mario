@@ -4,11 +4,12 @@
 
 #include "config.hpp"
 #include "Character.hpp"
+#include "Interface/ICollisionable.hpp"
 #include <string>
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
-			class Turtle : public Character {
+			class Turtle : Interface::ICollisionable, public Character {
 			public:
 				Turtle(const std::string& name, int zindex)
 					: Character(name, *Frames, zindex) {
@@ -50,6 +51,8 @@ namespace MyAPP {
 				void ChangeImg() noexcept;
 
 				virtual void comeDown() noexcept override;
+				
+				virtual void CheckCollision(void* data) override;
 
 				static constexpr inline char* const Frames[] = { "imgs/super mario/TurtleGreen_faceleft/frame0.png", "imgs/super mario/TurtleGreen_faceleft/frame1.png" };
 				static constexpr inline char* const imgs_r[] = { "imgs/super mario/TurtleGreen/frame0.png", "imgs/super mario/TurtleGreen/frame1.png" };

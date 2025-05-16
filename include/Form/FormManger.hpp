@@ -264,7 +264,12 @@ namespace MyAPP {
 			/// <param name="formName">要加入的表單</param>
 			/// <param name="image">圖片物件加</param>
 			inline void addObject(const std::string& formName, std::shared_ptr<Object::ImageObject>& image) noexcept {
-				m_Forms[formName].m_Images.push_back(image);
+				if (image->name == "Background") {
+					m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
+				}
+				else {
+					m_Forms[formName].m_Images.push_back(image);
+				}
 				addForm(formName, image);
 			}
 
@@ -274,7 +279,12 @@ namespace MyAPP {
 			/// <param name="formName">要加入的表單</param>
 			/// <param name="image">圖片物件加</param>
 			inline void addObject(const std::string& formName, std::shared_ptr<Object::ImageObject>&& image) noexcept {
-				m_Forms[formName].m_Images.push_back(image);
+				if (image->name == "Background") {
+					m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
+				}
+				else {
+					m_Forms[formName].m_Images.push_back(image);
+				}
 				addForm(formName, image);
 			}
 

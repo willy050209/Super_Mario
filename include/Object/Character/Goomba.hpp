@@ -5,6 +5,7 @@
 #include "config.hpp"
 #include "Character.hpp"
 #include "Interface/IFrames.hpp"
+#include "Interface/ICollisionable.hpp"
 #include <string>
 namespace MyAPP {
 	namespace Form {
@@ -12,7 +13,7 @@ namespace MyAPP {
 			/// <summary>
 			/// ®ßÄ_Ä_ª«¥ó Ä~©ÓCharacter
 			/// </summary>
-			class Goomba : public Character {
+			class Goomba : Interface::ICollisionable, public Character {
 			public:
 				Goomba(const std::string& name, int zindex)
 					: Character(name, Frames[0], zindex) {
@@ -44,6 +45,8 @@ namespace MyAPP {
 				int imgIndex{ 0 }, imageChangeDelay{ 0 };
 
 				void ChangeImg() noexcept;
+
+				virtual void CheckCollision(void* data) override;
 
 				virtual void comeDown() noexcept override;
 				static constexpr inline char* const Frames[] = { R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe0.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe1.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe2.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe3.png)" };

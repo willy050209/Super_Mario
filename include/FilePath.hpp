@@ -1,13 +1,16 @@
 #pragma once
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
+#include "MyDefine.hpp"
 namespace MyAPP {
 	/// <summary>
 	/// 檔案路徑
 	/// </summary>
 	struct MyResourcesFilePath {
-
+		CANNOTCREATE(MyResourcesFilePath);
 		struct MAP {
+			CANNOTCREATE(MAP);
+
 			/// <summary>
 			/// 1-1地圖圖片路徑
 			/// </summary>

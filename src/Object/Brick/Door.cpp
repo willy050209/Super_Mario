@@ -3,16 +3,25 @@
 #include "Form/FormNames.hpp"
 #include "InitFormFunc.hpp"
 
+
 void MyAPP::Form::Object::Door::behavior(void* data) {
+	CheckCollision(data);
+}
+
+void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
+
+	auto allEventDiseable = [](std::vector<std::shared_ptr<MyAPP::Form::Object::EventObject>>& Events) {
+		std::for_each(Events.begin(), Events.end(), [](auto& eventobj) { eventobj->Enable = false; });
+	};
+
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
+
 	if (inRange(marioPos, marioSize)) {
 		auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
-		for (auto& eventobj : objandform.m_Events) {
-			eventobj->Enable = false;
-		}
+		allEventDiseable(objandform.m_Events);
 		auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
 		ChangeFormEventObject->Enable = true;
 		if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
@@ -39,10 +48,10 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
 			auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-			std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = GetSize().x * (-6)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-7)](auto& it) {
+			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-6)](auto& it) {
 				it->incPositionX(displacement);
 			});
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetY0(this) - GetSize().y * 10 });
@@ -60,6 +69,8 @@ void MyAPP::Form::Object::Door::behavior(void* data) {
 			ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 		}
 		mario->SetLeft<false>();
-		// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
+		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();
 	}
 }
+
+

@@ -14,7 +14,7 @@ void MyAPP::Form::Object::Coin::bonk() noexcept {
 
 void MyAPP::Form::Object::Coin::behavior(void* data) {
 	PlayFrames();
-	touch(data);
+	CheckCollision(data);
 }
 
 void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
@@ -28,7 +28,7 @@ void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
 		}
 	}
 }
-void MyAPP::Form::Object::Coin::touch(void* data) noexcept {
+void MyAPP::Form::Object::Coin::CheckCollision(void* data) noexcept {
 	using namespace MyAPP::Form::Object;
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();

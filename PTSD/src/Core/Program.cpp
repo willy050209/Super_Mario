@@ -53,7 +53,7 @@ void Program::Validate() const {
     glValidateProgram(m_ProgramId);
     glGetProgramiv(m_ProgramId, GL_VALIDATE_STATUS, &status);
     if (status != GL_TRUE) {
-        int infoLogLength;
+        int infoLogLength{};
         glGetProgramiv(m_ProgramId, GL_INFO_LOG_LENGTH, &infoLogLength);
 
         std::vector<char> message(infoLogLength + 1);
@@ -70,7 +70,7 @@ void Program::CheckStatus() const {
 
     glGetProgramiv(m_ProgramId, GL_LINK_STATUS, &status);
     if (status != GL_TRUE) {
-        int infoLogLength;
+        int infoLogLength{};
         glGetProgramiv(m_ProgramId, GL_INFO_LOG_LENGTH, &infoLogLength);
 
         std::vector<char> message(infoLogLength + 1);
