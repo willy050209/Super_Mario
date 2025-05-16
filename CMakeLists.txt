@@ -48,6 +48,8 @@ endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE MY_RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Resources")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE PTSD_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/PTSD/assets")
+    
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(${PROJECT_NAME} PRIVATE MY_RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Resources")
 else()
