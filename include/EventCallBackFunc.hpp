@@ -205,6 +205,20 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	else if (Util::Input::IsKeyDown(Util::Keycode::T)) {
 		mario->died();
 	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::B)) {
+		auto GetBriges = [&]() -> std::vector<std::shared_ptr<Brick>> {
+			std::vector<std::shared_ptr<Brick>> Briges;
+			std::copy_if(block->begin(), block->end(), std::back_inserter(Briges), [](auto& it) {
+				return it->MyType == ObjectType::Bridge;
+			});
+			return Briges;
+		};
+		auto Briges = GetBriges();
+		for (auto& it : Briges) {
+			it->SetVisible(true);
+			it->collisionable = false;
+		}
+	}
 	if (opmode) {
 		if (Util::Input::IsKeyDown(Util::Keycode::W)) {
 			marioPos.y += mariosize.y;

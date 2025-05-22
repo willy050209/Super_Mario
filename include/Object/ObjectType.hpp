@@ -33,7 +33,10 @@ namespace MyAPP {
 				Flagpole,
 				Floor,
 				Stairs,
-				MovingPlatform
+				MovingPlatform,
+				Koopa,
+				Bridge,
+				Axe
 			};
 		}
 	}

@@ -102,6 +102,8 @@ namespace MyAPP {
 
 		static constexpr inline auto FrieBall{ R"(imgs\super mario\FireBall.png)" };
 
+		static constexpr inline auto BlabkBrick{ R"(imgs\super mario\blackBrick.png)" };
+
 		// static constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";
 		// static constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";
 		// static constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/Blueblock.png";

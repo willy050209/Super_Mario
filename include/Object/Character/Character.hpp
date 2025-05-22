@@ -77,7 +77,7 @@ namespace MyAPP {
 				/// <summary>
 				/// 墜落事件
 				/// </summary>
-				virtual void comeDown() noexcept = 0;
+				virtual void comeDown() noexcept;
 
 				/// <summary>
 				/// 向左旗標

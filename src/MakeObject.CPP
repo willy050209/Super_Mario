@@ -183,6 +183,18 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 		BrickPtr->SetVisible(fileinfo.Visibility);
 		std::static_pointer_cast<MovingPlatform>(BrickPtr)->up = fileinfo.Collisionable;
 	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Bridge) {
+		BrickPtr = std::make_shared<Bridge>("Bridge",  10);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Axe) {
+		BrickPtr = std::make_shared<Axe>("Axe", 10);
+		BrickPtr->SetPosition(fileinfo.XY);
+		BrickPtr->SetVisible(fileinfo.Visibility);
+		BrickPtr->collisionable = fileinfo.Collisionable;
+	}
 	return BrickPtr;
 }
 
@@ -234,13 +246,19 @@ std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::Ma
 std::shared_ptr<Character> MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fileinfo) noexcept {
 	std::shared_ptr<Character> enemy = nullptr;
 	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Goomba) {
-		enemy = std::make_shared<Goomba>("Goomba", 1);
+		enemy = std::make_shared<Goomba>("Goomba", 20);
 		enemy->SetPosition(fileinfo.XY);
 		enemy->SetVisible(true);
 		enemy->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Turtle) {
-		enemy = std::make_shared<Turtle>("Turtle", 1);
+		enemy = std::make_shared<Turtle>("Turtle", 20);
+		enemy->SetPosition(fileinfo.XY);
+		enemy->SetVisible(true);
+		enemy->collisionable = fileinfo.Collisionable;
+	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Koopa) {
+		enemy = std::make_shared<Koopa>("Koopa", 20);
 		enemy->SetPosition(fileinfo.XY);
 		enemy->SetVisible(true);
 		enemy->collisionable = fileinfo.Collisionable;

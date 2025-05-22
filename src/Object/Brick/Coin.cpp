@@ -23,7 +23,7 @@ void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
 		if (count >= (FPS_CAP / 5)) {
 			++imgindex;
 			imgindex %= 6;
-			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(Frames[imgindex]);
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
 			count = 0;
 		}
 	}

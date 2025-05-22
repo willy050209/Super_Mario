@@ -301,6 +301,7 @@ INITFORM_FUNC(winForm) {
 
 /*init 1-1*/
 INITFORM_FUNC(initForm_1_1) {
+	using namespace MyAPP::Form::Object;
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1;
 	// 作為座標參考
@@ -324,6 +325,9 @@ INITFORM_FUNC(initForm_1_1) {
 	
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
+	enemys->push_back(std::make_shared<Koopa>("Koopa", 10));
+	enemys->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, GetY0(Block) });
+	enemys->back()->userdata = Blocks;
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();
