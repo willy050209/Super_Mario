@@ -3,9 +3,10 @@
 #define KOOPA_HPP
 #include "Character.hpp"
 #include "Interface/ICollisionable.hpp"
+#include "Interface/IFrames.hpp"
 
 namespace MyAPP::Form::Object {
-	class Koopa : public Character, Interface::ICollisionable {
+	class Koopa : public Character, Interface::ICollisionable,Interface::Iframes {
 	public:
 		Koopa(const std::string& name, int zindex)
 			: Character(name, *Frames, zindex) {
@@ -28,6 +29,11 @@ namespace MyAPP::Form::Object {
 		virtual void move() noexcept override;
 
 		static constexpr auto GetFrames() noexcept { return Frames; }
+
+		virtual std::string GetFrame() const noexcept {
+			return Frames[imgIndex];
+		}
+		virtual void PlayFrames() noexcept;
 		
 		private:
 		void checkPosition() noexcept;

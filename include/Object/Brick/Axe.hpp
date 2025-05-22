@@ -55,7 +55,7 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		static constexpr inline char* const Frames[] = { "imgs/super mario/Axe/frame0.png", "imgs/super mario/Axe/frame1.png", "imgs/super mario/Axe/frame2.png", "imgs/super mario/Axe/frame3.png", "imgs/super mario/Axe/frame4.png", "imgs/super mario/Axe/frame5.png" };
 		int count{ 0 }, imgindex{ 0 };
-		bool play{ true };
+		bool play{ true }, enable{ true };
 	};
 }
 #endif

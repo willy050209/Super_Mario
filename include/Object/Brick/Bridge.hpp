@@ -15,10 +15,10 @@ namespace MyAPP::Form::Object {
 		explicit Bridge(const std::string& name,
 			const float zIndex = -10,
 			const glm::vec2& pivot = { 0, 0 })
-			: Brick(name, MyAPP::MyResourcesFilePath::BlabkBrick,
+			: Brick(name, MyAPP::MyResourcesFilePath::BridgeBrick,
 				  zIndex, pivot) {
 			MyType = ObjectType::Bridge;
-			m_Visible = false;
+			m_Visible = true;
 			collisionable = true;
 		}
 
