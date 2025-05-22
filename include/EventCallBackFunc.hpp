@@ -100,7 +100,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		if (abs(mario->GetPosition().x) >= mariosize.x  && flag) {
 			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
 		}
-		else if (pos.x > -GetX0(background) && flag) {
+		else if (pos.x > -GetLeftEdge(background) && flag) {
 			pos.x -= Displacement;
 			std::for_each(std::execution::seq, block->begin(), block->end(), 
 				[&](auto& it) {
@@ -144,7 +144,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		if (abs(mario->GetPosition().x) >= mariosize.x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
 		}
-		else if (pos.x < GetX0(background) && flag) {
+		else if (pos.x < GetLeftEdge(background) && flag) {
 			pos.x += Displacement;
 			std::for_each(std::execution::seq, block->begin(), block->end(),
 				[&](auto& it) {
@@ -310,7 +310,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
 					it->SetPosition(tmp);
 				}*/
-				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
@@ -338,7 +338,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
 					it->SetPosition(tmp);
 				}*/
-				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetY0((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
@@ -456,7 +456,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			self->Enable = false;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor"))->Enable = true;
-			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveEvent"))->Enable = false;
+			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent"))->Enable = false;
 			static_cast<MyAPP::GameManager*>(data)->opMode = false;
 			break;
 		}
@@ -592,7 +592,7 @@ EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	if (abs(mario->GetPosition().y) >= (((unsigned)WINDOW_HEIGHT)) && mario->GetPosition().y < 0) {
+	if (!isInWindow(mario) && mario->GetPosition().y < 0) {
 		GM->DecHP();
 		(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
 		if (GM->GetHP() == 0) {

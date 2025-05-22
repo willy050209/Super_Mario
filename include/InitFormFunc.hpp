@@ -40,8 +40,8 @@ namespace MyAPP::Form {
 	inline void writeForm(MyAPP::Form::FormManger& FM,const std::string& formName) {
 		auto& Block = PositionReference::GetPositionReference();
 		auto size = Block->GetSize();
-		auto x0 = GetX0(Block);
-		auto y0 = GetY0(Block);
+		auto x0 = GetLeftEdge(Block);
+		auto y0 = GetTopEdge(Block);
 		auto& allobj = FM.GetFormAndObject(formName);
 		std::ofstream fout("map/" + formName + "_Images.txt");
 		if (fout.bad()) {
@@ -218,7 +218,7 @@ INITFORM_FUNC(initFormOptions) {
 	auto& MyFM = self->GetFormManger();
 	auto tmpbutton = std::make_shared<Button>("ExitButton", MyAPP::MyResourcesFilePath::MyFontPath, textSize, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
 	tmpbutton->SetPosition({ 0,
-		GetY0(tmpbutton) - (WINDOW_HEIGHT - tmpbutton->GetSize().y) + textSize });
+		GetTopEdge(tmpbutton) - (WINDOW_HEIGHT - tmpbutton->GetSize().y) + textSize });
 	tmpbutton->SetCallBackFunc(exitCallBack);
 	MyFM.addObject(MyAPP::Form::FormNames::FormOptions, tmpbutton);
 
@@ -234,7 +234,7 @@ INITFORM_FUNC(initFormOptions) {
 	MyFM.addObject(MyAPP::Form::FormNames::FormOptions, tmpbutton);
 
 	tmpbutton = std::make_shared<Button>("BackButton", MyAPP::MyResourcesFilePath::MyFontPath, textSize, "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
-	tmpbutton->SetPosition({ GetX0(tmpbutton), GetY0(tmpbutton) });
+	tmpbutton->SetPosition({ GetLeftEdge(tmpbutton), GetTopEdge(tmpbutton) });
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(MyAPP::Form::FormNames::FormOptions, tmpbutton);
 }
@@ -243,7 +243,7 @@ INITFORM_FUNC(initFormSetting) {
 	const auto textSize = 30 * ((float)WINDOW_HEIGHT / 480);
 	auto& MyFM = self->GetFormManger();
 	auto tmpbutton = std::make_shared<Button>("BackButton", MyAPP::MyResourcesFilePath::MyFontPath, 40 * ((float)WINDOW_HEIGHT / 480), "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
-	tmpbutton->SetPosition({ GetX0(tmpbutton), GetY0(tmpbutton) });
+	tmpbutton->SetPosition({ GetLeftEdge(tmpbutton), GetTopEdge(tmpbutton) });
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, tmpbutton);
 
@@ -285,11 +285,11 @@ INITFORM_FUNC(initFormSetting) {
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, text);
 
 	text = std::make_shared<TextObject>("", MyAPP::MyResourcesFilePath::ArialFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Restart to apply screen settings", Util::Color::FromName(Util::Colors::WHITE), 10);
-	text->SetPosition({ GetX0(text), -GetY0(text) });
+	text->SetPosition({ GetLeftEdge(text), -GetTopEdge(text) });
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, text);
 
 	tmpbutton = std::make_shared<Button>("RestartButton", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Restart", Util::Color::FromName(Util::Colors::WHITE), 10);
-	tmpbutton->SetPosition({ -GetX0(tmpbutton), -GetY0(tmpbutton) });
+	tmpbutton->SetPosition({ -GetLeftEdge(tmpbutton), -GetTopEdge(tmpbutton) });
 	tmpbutton->SetCallBackFunc(RestaetButtonEvent);
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, tmpbutton);
 }
@@ -325,23 +325,20 @@ INITFORM_FUNC(initForm_1_1) {
 	
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
-	enemys->push_back(std::make_shared<Koopa>("Koopa", 10));
-	enemys->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 5, GetY0(Block) });
-	enemys->back()->userdata = Blocks;
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();
-	props->push_back(std::make_shared<Props::FireFlower>("FireFlower", 10));
-	props->back()->SetPosition({ GetX0(Block), 0 });
-	props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::Mushroom>(), Props::Mushroom::Category::Mushroom, 10));
-	props->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 2, 0 });
-	props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::MushroomDark>(), Props::Mushroom::Category::MushroomDark, 10));
-	props->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 3, 0 });
-	props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::BigMushroom>(), Props::Mushroom::Category::BigMushroom, 10));
-	props->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 4, 0 });
-	props->push_back(std::make_shared<Props::Starman>("Starman", 10));
-	props->back()->SetPosition({ GetX0(Block) + Block->GetSize().x * 6, 0 });
-	std::for_each(std::execution::seq, props->begin(), props->end(), [&](auto& it) { MyFM.addObject(formName, it); });
+	//props->push_back(std::make_shared<Props::FireFlower>("FireFlower", 10));
+	//props->back()->SetPosition({ GetLeftEdge(Block), 0 });
+	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::Mushroom>(), Props::Mushroom::Category::Mushroom, 10));
+	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 2, 0 });
+	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::MushroomDark>(), Props::Mushroom::Category::MushroomDark, 10));
+	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 3, 0 });
+	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::BigMushroom>(), Props::Mushroom::Category::BigMushroom, 10));
+	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 4, 0 });
+	//props->push_back(std::make_shared<Props::Starman>("Starman", 10));
+	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 6, 0 });
+	//std::for_each(std::execution::seq, props->begin(), props->end(), [&](auto& it) { MyFM.addObject(formName, it); });
 
 	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
@@ -355,7 +352,7 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
@@ -418,7 +415,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	// 建立地圖與馬力歐
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 3, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -432,7 +429,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
-	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 			std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
@@ -472,7 +469,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 2, GetY0(PositionReference) - PositionReference->GetSize().x * 12 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -510,7 +507,7 @@ INITFORM_FUNC(initForm_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x * 5, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -526,7 +523,7 @@ INITFORM_FUNC(initForm_1_2) {
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 			std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
@@ -574,7 +571,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetX0(Block) + Block->GetSize().x * 3, 100 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetLeftEdge(Block) + Block->GetSize().x * 3, 100 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -583,7 +580,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto texts = MakeObject::make_GameText();
 	AddToFoemManger(MyFM, formName, texts);
 
-	auto eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 		std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
@@ -618,7 +615,7 @@ INITFORM_FUNC(initForm_1_4) {
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetX0(PositionReference) + PositionReference->GetSize().x, GetY0(PositionReference) - PositionReference->GetSize().y *6 });
+	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y *6 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -634,7 +631,7 @@ INITFORM_FUNC(initForm_1_4) {
 	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2));
 	MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("moveEvent", moveEvent);
+	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<
 		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
 			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,

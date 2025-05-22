@@ -10,7 +10,7 @@
 
 
 void MyAPP::Form::Object::SpinningFireBalls::behavior(void* data) {
-	if (!static_cast<MyAPP::GameManager*>(data)->pause && inWindows(this)) {
+	if (!static_cast<MyAPP::GameManager*>(data)->pause && isInWindow(this)) {
 		PlayFrames();
 		auto vecptr = std::static_pointer_cast<std::vector<std::shared_ptr<FireBalls>>>(userdata);
 		auto& thispos = GetPosition();

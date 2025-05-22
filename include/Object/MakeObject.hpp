@@ -54,7 +54,7 @@ namespace MyAPP::Form::Object {
 			/// </summary>
 			void ChangeXY() {
 				auto& PositionReference = PositionReference::GetPositionReference();
-				XY = XY * PositionReference->GetSize() + glm::vec2{ GetX0(PositionReference), GetY0(PositionReference) };				
+				XY = XY * PositionReference->GetSize() + glm::vec2{ GetLeftEdge(PositionReference), GetTopEdge(PositionReference) };				
 			}
 		};
 

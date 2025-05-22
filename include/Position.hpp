@@ -1,30 +1,9 @@
 #pragma once
 
-//#ifndef POSITION_HPP
-//#define POSITION_HPP
+#ifndef POSITION_HPP
+#define POSITION_HPP
 
 
-/// <summary>
-/// 取得該物件要切齊畫面最左邊的X軸做座標
-/// </summary>
-/// <param name="obj"> 物件</param>
-/// <returns>X軸做座標</returns>
-template <class T>
-inline static int GetX0(T& obj) noexcept {
-	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
-}
-
-/// <summary>
-/// 取得該物件要切齊畫面最上面的Y軸做座標
-/// </summary>
-/// <param name="obj"> 物件</param>
-/// <returns>Y軸做座標</returns>
-template <class T>
-inline static int GetY0(T& obj) noexcept {
-	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
-}
-
-#include "incallobj.hpp"
 #include "config.hpp"
 
 /// <summary>
@@ -32,7 +11,29 @@ inline static int GetY0(T& obj) noexcept {
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
-inline static int GetX0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+template <class T>
+inline int GetLeftEdge(T& obj) noexcept {
+	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
+}
+
+/// <summary>
+/// 取得該物件要切齊畫面最上面的Y軸做座標
+/// </summary>
+/// <param name="obj"> 物件</param>
+/// <returns>Y軸做座標</returns>
+template <class T>
+inline int GetTopEdge(T& obj) noexcept {
+	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
+}
+
+#include "incallobj.hpp"
+
+/// <summary>
+/// 取得該物件要切齊畫面最左邊的X軸做座標
+/// </summary>
+/// <param name="obj"> 物件</param>
+/// <returns>X軸做座標</returns>
+inline int GetLeftEdge(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
 	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
 }
 
@@ -42,7 +43,7 @@ inline static int GetX0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexce
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
-inline static int GetY0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+inline int GetTopEdge(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
 	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
 }
 
@@ -53,7 +54,7 @@ inline static int GetY0(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexce
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
 template<class T>
-inline static int GetX0(T* obj) noexcept {
+inline int GetLeftEdge(T* obj) noexcept {
 	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>((obj)->GetSize().x) >> 1));
 }
 
@@ -63,21 +64,21 @@ inline static int GetX0(T* obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
 template<class T>
-inline static int GetY0(T* obj) noexcept {
+inline int GetTopEdge(T* obj) noexcept {
 	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>((obj)->GetSize().y) >> 1));
 }
 
 
-inline bool inWindows(MyAPP::Form::Object::Object* obj) {
+inline bool isInWindow(MyAPP::Form::Object::Object* obj) {
 	auto &pos = obj->GetPosition();
 	auto size = obj->GetSize();
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }
 
-inline bool inWindows(std::shared_ptr<MyAPP::Form::Object::Object> obj) {
+inline bool isInWindow(std::shared_ptr<MyAPP::Form::Object::Object> obj) {
 	auto& pos = obj->GetPosition();
 	auto size = obj->GetSize();
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }
 
-//#endif
+#endif

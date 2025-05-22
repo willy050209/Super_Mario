@@ -36,7 +36,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			std::for_each(std::execution::seq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = GetSize().x * (-107)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 9, GetY0(this) - GetSize().y * 10 });
+			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 9, GetTopEdge(this) - GetSize().y * 10 });
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
@@ -54,7 +54,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = GetSize().x * (-6)](auto& it) {
 				it->incPositionX(displacement);
 			});
-			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetY0(this) - GetSize().y * 10 });
+			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetTopEdge(this) - GetSize().y * 10 });
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;

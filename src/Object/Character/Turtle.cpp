@@ -73,28 +73,28 @@ namespace MyAPP::Form::Object {
 		}
 	}
 
-	//void Turtle::comeDown() noexcept {
-	//	auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
-	//	bool flag = true;
-	//	auto tmp = GetPosition();
-	//	if (tmp.y < WINDOW_HEIGHT) {
-	//		tmp.y -= DEFAULTDISPLACEMENT;
-	//		const auto MySize = GetSize();
-	//		std::for_each(std::execution::seq, bricks->begin(), bricks->end(), [&](auto& it) {
-	//			if (it->collisionable && it->inRange(tmp, MySize)) {
-	//				if (it->getState() == Brick::State::jump) {
-	//					died();
-	//					tmp = GetPosition();
-	//					// break;
-	//				}
-	//				flag = false;
-	//				tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
-	//				// break;
-	//			}
-	//		});
-	//		SetPosition(tmp);
-	//	}
-	//}
+	void Turtle::comeDown() noexcept {
+		auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
+		bool flag = true;
+		auto tmp = GetPosition();
+		if (tmp.y < WINDOW_HEIGHT) {
+			tmp.y -= DEFAULTDISPLACEMENT;
+			const auto MySize = GetSize();
+			std::for_each(std::execution::seq, bricks->begin(), bricks->end(), [&](auto& it) {
+				if (it->collisionable && it->inRange(tmp, MySize)) {
+					if (it->getState() == Brick::State::jump) {
+						died();
+						tmp = GetPosition();
+						// break;
+					}
+					flag = false;
+					tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+					// break;
+				}
+			});
+			SetPosition(tmp);
+		}
+	}
 	void Turtle::CheckCollision(void* data) {
 		using namespace MyAPP::Form::Object;
 		auto GM = static_cast<MyAPP::GameManager*>(data);

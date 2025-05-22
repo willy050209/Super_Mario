@@ -24,7 +24,7 @@ std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Obj
 	glm::vec2 marioPos, int backgroundZindex, int marioZindex) noexcept {
 
 	auto background = std::make_shared<ImageObject>("Background", backgrount_FilePath, backgroundZindex);
-	background->SetPosition({ GetX0(background), 0 });
+	background->SetPosition({ GetLeftEdge(background), 0 });
 	background->userdata = Bricks;
 
 	auto mario = std::make_shared<Mario>("Mario", marioZindex);
@@ -209,15 +209,15 @@ std::shared_ptr<std::vector<std::shared_ptr<Coin>>> MyAPP::Form::Object::MakeObj
 std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
 	auto result = std::make_shared<std::vector<std::shared_ptr<TextObject>>>();
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "300", Util::Color::FromName(Util::Colors::WHITE), 100);
-	texttime->SetPosition({ GetX0(texttime), GetY0(texttime) });
+	texttime->SetPosition({ GetLeftEdge(texttime), GetTopEdge(texttime) });
 	result->push_back(std::move(texttime));
 
 	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
-	text->SetPosition({ -GetX0(text), GetY0(text) });
+	text->SetPosition({ -GetLeftEdge(text), GetTopEdge(text) });
 	result->push_back(std::move(text));
 
 	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
-	pointtext->SetPosition({ 0, GetY0(pointtext) });
+	pointtext->SetPosition({ 0, GetTopEdge(pointtext) });
 	result->push_back(std::move(pointtext));
 
 	return result;

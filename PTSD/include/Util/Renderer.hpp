@@ -52,6 +52,9 @@ public:
      */
     void Update();
 
+    /// <summary>
+    /// clear Children
+    /// </summary>
     inline void clear() noexcept {
         m_Children.clear(); 
     }

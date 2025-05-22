@@ -4,9 +4,11 @@
 
 #include "Form/Form.hpp"
 #include "incallobj.hpp"
+#include "Position.hpp"
 #include <unordered_map>
 #include <string>
-
+#include <vector>
+#include <memory>
 #include <algorithm>
 #include <type_traits>
 
@@ -333,16 +335,16 @@ namespace MyAPP {
 			/// </summary>
 			/// <param name="data">GameManager *</param>
 			inline void UpdateForm(void* data) {
-				auto addRoot = [&](auto& it) {
-					if (inWindows(it))
+				auto addToRoot = [&](auto& it) {
+					if (isInWindow(it))
 						m_Forms[nowForm].m_Form.m_Root.AddChild(it);
 				};
 				if (m_Forms.count(nowForm)) {
 					doFormEvent(nowForm, data);
-					std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addRoot);
-					std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addRoot);
-					std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addRoot);
-					std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addRoot);
+					std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
+					std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
+					std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
+					std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
 					m_Forms[nowForm].m_Form.Update();
 					m_Forms[nowForm].m_Form.m_Root.clear();
 				}

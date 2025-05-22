@@ -5,13 +5,15 @@
 #include "Props.hpp"
 #include "ObjectType.hpp"
 #include "Interface/ICollisionable.hpp"
+#include "Interface/IMovable.hpp"
+#include "Interface/IComeDownable.hpp"
 
 
 namespace MyAPP::Form::Object::Props {
 	/// <summary>
 	/// 所有道具的父類別 繼承ImageObject
 	/// </summary>
-	class Mushroom :Interface::ICollisionable, public Props {
+	class Mushroom : Interface::ICollisionable, Interface::IMovable, Interface::IComeDownable, public Props {
 	public:
 		enum class Category {
 			Mushroom,
@@ -50,14 +52,27 @@ namespace MyAPP::Form::Object::Props {
 		template <>
 		static constexpr auto GetImages<Category::BigMushroom>() noexcept { return Images[2]; }
 
+		void SetUpDistance(int distance) { UpDistance = distance; }
+
+		virtual void Move(glm::vec2 distance) noexcept override;
+		virtual void MoveTo(glm::vec2 position) noexcept override {
+			SetPosition(position);
+		}
+
+		bool m_movable = false;
+
 	protected:
 
 		virtual void CheckCollision(void* gm) override;
 
 
 	private:
+		int UpDistance = 0;
 		Category MyCategory;
 		static constexpr inline char* const Images[] = { R"(imgs\super mario\1upMushroom.png)", R"(imgs\super mario\1upMushroomDark.png)", R"(imgs\super mario\BigMushroom.png)" };
+		void doUp() noexcept;
+
+		virtual void doDown() noexcept override;
 	};
 }
 

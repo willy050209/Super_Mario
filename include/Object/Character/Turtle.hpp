@@ -48,7 +48,7 @@ namespace MyAPP::Form::Object{
 
 		void ChangeImg() noexcept;
 
-		//virtual void comeDown() noexcept override;
+		virtual void comeDown() noexcept override;
 				
 		virtual void CheckCollision(void* data) override;
 

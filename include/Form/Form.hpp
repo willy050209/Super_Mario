@@ -46,8 +46,9 @@ namespace MyAPP{
 			/// </summary>
 			/// <param name="data">GameManager *</param>
 			inline void doAllEvent(void* data = nullptr) noexcept {
+				auto inWindows = [](const auto& it) { return isInWindow(it); };
 				decltype(m_Events) events;
-				std::copy_if(m_Events.begin(), m_Events.end(), std::back_inserter(events), [](const auto& it) { return inWindows(it); });
+				std::copy_if(m_Events.begin(), m_Events.end(), std::back_inserter(events), inWindows);
 				std::for_each(events.begin(), events.end(), [&data](const auto& it) { it->behavior(data); });
 			}
 
