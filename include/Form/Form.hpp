@@ -4,6 +4,7 @@
 
 #include "Util/Renderer.hpp"
 #include "Object/Object.hpp"
+#include "Position.hpp"
 
 namespace MyAPP{
 
@@ -17,7 +18,7 @@ namespace MyAPP{
 			/// </summary>
 			/// <param name="obj">物件</param>
 			inline void addForm(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
-				m_Root.AddChild(obj);
+				//m_Root.AddChild(obj);
 				m_Events.push_back(obj);
 			}
 
@@ -26,7 +27,7 @@ namespace MyAPP{
 			/// </summary>
 			/// <param name="obj">物件</param>
 			inline void removeFormObj(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
-				m_Root.RemoveChild(obj);
+				//m_Root.RemoveChild(obj);
 				m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj), m_Events.end());
 			}
 
@@ -45,7 +46,9 @@ namespace MyAPP{
 			/// </summary>
 			/// <param name="data">GameManager *</param>
 			inline void doAllEvent(void* data = nullptr) noexcept {
-				std::for_each(m_Events.begin(), m_Events.end(), [&data](const auto& it) { it->behavior(data); });
+				decltype(m_Events) events;
+				std::copy_if(m_Events.begin(), m_Events.end(), std::back_inserter(events), [](const auto& it) { return inWindows(it); });
+				std::for_each(events.begin(), events.end(), [&data](const auto& it) { it->behavior(data); });
 			}
 
 			/// <summary>
@@ -55,8 +58,8 @@ namespace MyAPP{
 				m_Root.Update();
 			}
 
-		protected:
 			Util::Renderer m_Root;
+		protected:
 			/// <summary>
 			/// 事件陣列
 			/// </summary>

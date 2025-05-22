@@ -74,4 +74,10 @@ inline bool inWindows(MyAPP::Form::Object::Object* obj) {
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }
 
+inline bool inWindows(std::shared_ptr<MyAPP::Form::Object::Object> obj) {
+	auto& pos = obj->GetPosition();
+	auto size = obj->GetSize();
+	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
+}
+
 //#endif

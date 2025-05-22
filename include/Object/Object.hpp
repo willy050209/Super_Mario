@@ -105,7 +105,7 @@ namespace MyAPP {
 				/// </summary>
 				/// <returns>¯x§Î¤j¤p</returns>
 				virtual inline glm::vec2 GetSize() const noexcept {
-					return std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize();
+					return (m_Drawable) ? std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize() : glm::vec2{ 0, 0 };
 				}
 
 				/// <summary>

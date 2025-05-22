@@ -52,6 +52,10 @@ public:
      */
     void Update();
 
+    inline void clear() noexcept {
+        m_Children.clear(); 
+    }
+
 private:
     std::vector<std::shared_ptr<GameObject>> m_Children;
 };

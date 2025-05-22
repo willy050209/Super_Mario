@@ -333,9 +333,18 @@ namespace MyAPP {
 			/// </summary>
 			/// <param name="data">GameManager *</param>
 			inline void UpdateForm(void* data) {
+				auto addRoot = [&](auto& it) {
+					if (inWindows(it))
+						m_Forms[nowForm].m_Form.m_Root.AddChild(it);
+				};
 				if (m_Forms.count(nowForm)) {
 					doFormEvent(nowForm, data);
+					std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addRoot);
+					std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addRoot);
+					std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addRoot);
+					std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addRoot);
 					m_Forms[nowForm].m_Form.Update();
+					m_Forms[nowForm].m_Form.m_Root.clear();
 				}
 			}
 
