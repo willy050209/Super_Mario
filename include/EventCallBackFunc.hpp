@@ -7,6 +7,7 @@
 #include "Position.hpp"
 #include "Form/FormNames.hpp"
 #include "Util/Input.hpp"
+#include "userType.hpp"
 
 #include <execution>
 #include <thread>
@@ -69,7 +70,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
-	auto tuplePtr = std::static_pointer_cast<std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>, std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>, std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(self->userdata);
+	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(self->userdata);
 	auto& [enemys, pipes, props] = (*tuplePtr);
 	auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 	auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");

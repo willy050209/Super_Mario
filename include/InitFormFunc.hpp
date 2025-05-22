@@ -20,7 +20,7 @@ INITFORM_FUNC(winForm);
 #include "Position.hpp"
 #include "config.hpp"
 #include "ProgressBar.hpp"
-
+#include "userType.hpp"
 
 #include <algorithm>
 #include <execution>
@@ -353,10 +353,7 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<
-		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, pipes, props);
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -430,10 +427,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<
-			std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props());
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -524,10 +518,7 @@ INITFORM_FUNC(initForm_1_2) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<
-			std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props());
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -581,11 +572,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	AddToFoemManger(MyFM, formName, texts);
 
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<
-		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
-		std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-		std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>
-		(MakeObject::make_Characters(), pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(MakeObject::make_Characters(), pipes, MakeObject::make_Props());
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -607,6 +594,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 }
 
 INITFORM_FUNC(initForm_1_4) {
+	using MyAPP::Form::Object::MakeObject;
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_4;
 	auto& PositionReference = PositionReference::GetPositionReference();
@@ -615,7 +603,7 @@ INITFORM_FUNC(initForm_1_4) {
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y *6 });
+	auto BMptr = MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y *6 });
 	MyFM.addObject(formName, std::move(BMptr.first));
 	auto& mario = std::move(BMptr.second);
 	mario->changeType(self->mariotype);
@@ -632,10 +620,7 @@ INITFORM_FUNC(initForm_1_4) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<
-		std::tuple<std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>,
-			std::shared_ptr<std::vector<std::shared_ptr<MyAPP::Form::Object::Props::Props>>>>>(enemys, std::move(MakeObject::make_Bricks()), std::move(MakeObject::make_Props()));
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, std::move(MakeObject::make_Bricks()), std::move(MakeObject::make_Props()));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);

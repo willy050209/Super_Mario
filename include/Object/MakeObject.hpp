@@ -4,6 +4,7 @@
 #include "Position.hpp"
 #include "incallobj.hpp"
 #include "MyDefine.hpp"
+#include "userType.hpp"
 
 
 #include <tuple>
@@ -17,8 +18,8 @@ namespace MyAPP::Form::Object {
 		/// 回傳作為座標參考的方塊
 		/// </summary>
 		/// <returns></returns>
-		static const std::unique_ptr<const Brick>& GetPositionReference() {
-			static std::unique_ptr<const Brick> BrickPositionReference = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
+		static const auto& GetPositionReference() {
+			static ConstUniqueBrickPtr BrickPositionReference = std::make_unique<Brick>("", MyAPP::MyResourcesFilePath::BlockImagePath, 0);
 
 			return BrickPositionReference;
 		}
@@ -54,7 +55,7 @@ namespace MyAPP::Form::Object {
 			/// </summary>
 			void ChangeXY() {
 				auto& PositionReference = PositionReference::GetPositionReference();
-				XY = XY * PositionReference->GetSize() + glm::vec2{ GetLeftEdge(PositionReference), GetTopEdge(PositionReference) };				
+				XY = XY * PositionReference->GetSize() + glm::vec2{ GetLeftEdge(PositionReference), GetTopEdge(PositionReference) };
 			}
 		};
 
@@ -65,7 +66,7 @@ namespace MyAPP::Form::Object {
 		/// <param name="name">物件ID</param>
 		/// <param name="zindex">圖層</param>
 		/// <returns>火柱方塊的指標</returns>
-		[[nodiscard]] static std::shared_ptr<SpinningFireBalls> make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", glm::vec2 pos = {0,0}, int zindex = 100) noexcept;
+		[[nodiscard]] static SpinningFireBallsPtr make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", glm::vec2 pos = { 0, 0 }, int zindex = 100) noexcept;
 
 		/// <summary>
 		/// 建立背景圖與Mario
@@ -75,20 +76,20 @@ namespace MyAPP::Form::Object {
 		/// <param name="backgroundZindex">背景圖Zindex</param>
 		/// <param name="marioZindex">MarioZindex</param>
 		/// <returns> first : 背景圖 second : Mario</returns>
-		[[nodiscard]] static std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks , glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
+		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
 
 		/// <summary>
 		/// 從檔案建立 Brick vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks_From_File(const std::string& filename, BrickColor color = BrickColor::normal) noexcept;
+		[[nodiscard]] static std::shared_ptr<BrickPtrVec> make_Bricks_From_File(const std::string& filename, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
 		/// 建立 Brick 指標陣列
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Brick>>> make_Bricks() noexcept;
+		[[nodiscard]] static std::shared_ptr<BrickPtrVec> make_Bricks() noexcept;
 
 		/// <summary>
 		/// 建立 Brick 指標
@@ -96,7 +97,7 @@ namespace MyAPP::Form::Object {
 		/// <param name="fileinfo"></param>
 		/// <param name="isDark"></param>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<Brick> make_BrickPtr(const Fileinfo& fileinfo, BrickColor color = BrickColor::normal) noexcept;
+		[[nodiscard]] static BrickPtr make_BrickPtr(const Fileinfo& fileinfo, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
 		/// 建立 Character vector 指標
@@ -109,7 +110,7 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Coin>>> make_Coins() noexcept;
-	
+
 		/// <summary>
 		/// 建立時間、分數、生命文字方塊
 		/// </summary>
@@ -121,7 +122,7 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(const std::string& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks) noexcept;
-	
+
 		/// <summary>
 		/// 建立 Character 指標
 		/// </summary>
@@ -133,7 +134,6 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Props::Props>>> make_Props() noexcept;
-	
 	};
 
 }

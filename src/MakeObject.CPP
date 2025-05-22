@@ -1,6 +1,7 @@
 #include "incallobj.hpp"
 #include "Position.hpp"
 #include "config.hpp"
+#include "userType.hpp"
 
 #include <memory>
 #include <fstream>
@@ -8,19 +9,19 @@
 
 using namespace MyAPP::Form::Object;
 
-std::shared_ptr<MyAPP::Form::Object::SpinningFireBalls> MyAPP::Form::Object::MakeObject::make_SpinningFireBalls(const std::string& name, glm::vec2 pos, int zindex) noexcept {
+SpinningFireBallsPtr MyAPP::Form::Object::MakeObject::make_SpinningFireBalls(const std::string& name, glm::vec2 pos, int zindex) noexcept {
 	auto result = std::make_shared<SpinningFireBalls>(name, zindex);
-	std::vector<std::shared_ptr<FireBalls>> fireballs;
+	FireBallsPtrVec fireballs;
 	for (int i = 0; i < 6; ++i) {
 		fireballs.push_back(std::move(std::make_shared<FireBalls>("", 0)));
 	}
-	result->userdata = std::make_shared<std::vector<std::shared_ptr<FireBalls>>>(std::move(fireballs));
+	result->userdata = std::make_shared<FireBallsPtrVec>(std::move(fireballs));
 	result->SetPosition(pos);
 	return result;
 }
 
-std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Object::MakeObject::make_Background_And_Mario(
-	const std::string& backgrount_FilePath, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks,
+BackgroundMarioPair MyAPP::Form::Object::MakeObject::make_Background_And_Mario(
+	const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks,
 	glm::vec2 marioPos, int backgroundZindex, int marioZindex) noexcept {
 
 	auto background = std::make_shared<ImageObject>("Background", backgrount_FilePath, backgroundZindex);
@@ -30,12 +31,12 @@ std::pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>> MyAPP::Form::Obj
 	auto mario = std::make_shared<Mario>("Mario", marioZindex);
 	mario->SetPosition(marioPos);
 	mario->userdata = background->userdata;
-	
-	return std::make_pair<std::shared_ptr<ImageObject>, std::shared_ptr<Mario>>(std::move(background), std::move(mario));
+
+	return std::make_pair<ImageObjectPtr, MarioPtr>(std::move(background), std::move(mario));
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks() noexcept {
-	return std::make_shared<std::vector<std::shared_ptr<Brick>>>();
+std::shared_ptr<BrickPtrVec> MyAPP::Form::Object::MakeObject::make_Bricks() noexcept {
+	return std::make_shared<BrickPtrVec>();
 }
 
 std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(const std::string& filename, BrickColor color) noexcept {
