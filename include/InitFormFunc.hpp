@@ -89,8 +89,8 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetCheckPoints(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
-		auto result = std::make_shared<std::vector<std::shared_ptr<CheckPoint>>>();
+	inline auto GetCheckPoints(std::shared_ptr<BrickPtrVec>& bricks) noexcept {
+		auto result = std::make_shared<CheckPointPtrVec>();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::CheckPoint) {
 				result->push_back(std::static_pointer_cast<CheckPoint>(it));
@@ -104,7 +104,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetPipeBricks(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
+	inline auto GetPipeBricks(std::shared_ptr<BrickPtrVec>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::PipeBrick) {
@@ -119,7 +119,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetFlagpoles(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
+	inline auto GetFlagpoles(std::shared_ptr<BrickPtrVec>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Flagpole) {
@@ -134,7 +134,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto Getdoors(std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& bricks) noexcept {
+	inline auto Getdoors(std::shared_ptr<BrickPtrVec>& bricks) noexcept {
 		auto result = MakeObject::make_Bricks();
 		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Door) {
@@ -149,7 +149,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
-	inline auto GetTurtless(std::shared_ptr<std::vector<std::shared_ptr<Character>>>& enemys) noexcept {
+	inline auto GetTurtless(std::shared_ptr<CharacterPtrVec>& enemys) noexcept {
 		auto result = MakeObject::make_Characters();
 		std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
 			if (it->MyType == ObjectType::Turtle) {

@@ -103,37 +103,37 @@ namespace MyAPP::Form::Object {
 		/// 建立 Character vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Characters() noexcept;
+		[[nodiscard]] static std::shared_ptr<CharacterPtrVec> make_Characters() noexcept;
 
 		/// <summary>
 		/// 建立 Coin vector 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Coin>>> make_Coins() noexcept;
+		[[nodiscard]] static std::shared_ptr<CoinPtrVec> make_Coins() noexcept;
 
 		/// <summary>
 		/// 建立時間、分數、生命文字方塊
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> make_GameText() noexcept;
+		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText() noexcept;
 
 		/// <summary>
 		/// 從檔案建立 enemys 指標陣列
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Character>>> make_Enemys_From_File(const std::string& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks) noexcept;
+		[[nodiscard]] static std::shared_ptr<CharacterPtrVec> make_Enemys_From_File(const std::string& filename, std::shared_ptr<BrickPtrVec>& Bricks) noexcept;
 
 		/// <summary>
 		/// 建立 Character 指標
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<Character> make_EnemysPtr(const Fileinfo& fileinfo) noexcept;
+		[[nodiscard]] static CharacterPtr make_EnemysPtr(const Fileinfo& fileinfo) noexcept;
 
 		/// <summary>
 		/// 建立 Props 指標陣列
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<std::vector<std::shared_ptr<Props::Props>>> make_Props() noexcept;
+		[[nodiscard]] static std::shared_ptr<PropsPtrVec> make_Props() noexcept;
 	};
 
 }

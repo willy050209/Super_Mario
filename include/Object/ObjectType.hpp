@@ -36,7 +36,8 @@ namespace MyAPP {
 				MovingPlatform,
 				Koopa,
 				Bridge,
-				Axe
+				Axe,
+				FlagFromPole
 			};
 		}
 	}

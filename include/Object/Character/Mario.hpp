@@ -59,6 +59,15 @@ namespace MyAPP {
 				}
 
 				/// <summary>
+				/// 執行下墜
+				/// </summary>
+				inline void down() noexcept {
+					state = State::DOWN;
+					jumpcount = 0;
+					changeImg();
+				}
+
+				/// <summary>
 				/// 表單刷新時執行
 				/// </summary>
 				/// <param name="data">GameManager * </param>

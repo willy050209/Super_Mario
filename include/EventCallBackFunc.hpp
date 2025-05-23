@@ -74,7 +74,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& [enemys, pipes, props] = (*tuplePtr);
 	auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 	auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
-	auto block = std::static_pointer_cast<std::vector<std::shared_ptr<MyAPP::Form::Object::Brick>>>(background->userdata);
+	auto block = std::static_pointer_cast<BrickPtrVec>(background->userdata);
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
@@ -277,7 +277,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(CheckDoors) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -445,7 +445,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	auto flagpole = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
+	auto flagpole = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 
@@ -454,11 +454,15 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			auto f_height = static_cast<int>(it - flagpole->begin());
 			static_cast<MyAPP::GameManager*>(data)->addPoint(1000 * f_height);
 			printf("FlagpoleCollision.\nTouch height:%d", f_height);
+			mario->down();
 			self->Enable = false;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent"))->Enable = false;
 			static_cast<MyAPP::GameManager*>(data)->opMode = false;
+			auto flagformpole = std::make_shared<FlagFromPole>("Flagpole", 100);
+			flagformpole->SetPosition((*it)->GetPosition() - glm::vec2{ flagformpole->GetSize().x / 2, 0 });
+			FM.addObject(FM.GetNowForm(), std::move(flagformpole));
 			break;
 		}
 	}
@@ -472,7 +476,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(self->userdata);
+	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -524,7 +528,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	auto checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
+	auto checkPoints = std::static_pointer_cast<CheckPointPtrVec>(self->userdata);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	GM->bgm->Play();
@@ -616,7 +620,7 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto& FM = GM->GetFormManger();
 	/// <summary> count 暫停的幀數 
 	/// bvec 原本事件的狀態 </summary>
-	auto& [count, bvec] = (*std::static_pointer_cast<std::tuple<int, std::vector<bool>>>(self->userdata));
+	auto& [count, bvec] = (*std::static_pointer_cast<SleepAllEventUserDataType>(self->userdata));
 	--count;
 	if (bvec.size() == 0) {
 		auto& allevent = FM.GetFormAndObject(FM.GetNowForm()).m_Events;

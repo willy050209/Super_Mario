@@ -39,7 +39,7 @@ std::shared_ptr<BrickPtrVec> MyAPP::Form::Object::MakeObject::make_Bricks() noex
 	return std::make_shared<BrickPtrVec>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(const std::string& filename, BrickColor color) noexcept {
+std::shared_ptr<BrickPtrVec> MyAPP::Form::Object::MakeObject::make_Bricks_From_File(const std::string& filename, BrickColor color) noexcept {
 	Fileinfo fileinfo;
 	auto bricks = MakeObject::make_Bricks();
 	std::ifstream inp(filename);
@@ -54,10 +54,10 @@ std::shared_ptr<std::vector<std::shared_ptr<Brick>>> MyAPP::Form::Object::MakeOb
 	return bricks;
 }
 
-std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo, BrickColor color) noexcept {
+BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo, BrickColor color) noexcept {
 	using namespace MyAPP;
 	using namespace MyAPP::Form::Object;
-	std::shared_ptr<Brick> BrickPtr = nullptr;
+	BrickPtr BrickPtr = nullptr;
 	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Brick) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
@@ -199,16 +199,16 @@ std::shared_ptr<Brick> MyAPP::Form::Object::MakeObject::make_BrickPtr(const File
 	return BrickPtr;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Characters() noexcept {
-	return std::make_shared<std::vector<std::shared_ptr<Character>>>();
+std::shared_ptr<CharacterPtrVec> MyAPP::Form::Object::MakeObject::make_Characters() noexcept {
+	return std::make_shared<CharacterPtrVec>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Coin>>> MyAPP::Form::Object::MakeObject::make_Coins() noexcept {
-	return std::make_shared<std::vector<std::shared_ptr<Coin>>>();
+std::shared_ptr<CoinPtrVec> MyAPP::Form::Object::MakeObject::make_Coins() noexcept {
+	return std::make_shared<CoinPtrVec>();
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
-	auto result = std::make_shared<std::vector<std::shared_ptr<TextObject>>>();
+std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
+	auto result = std::make_shared<TextObjectPtrVec>();
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ GetLeftEdge(texttime), GetTopEdge(texttime) });
 	result->push_back(std::move(texttime));
@@ -224,7 +224,7 @@ std::shared_ptr<std::vector<std::shared_ptr<TextObject>>> MyAPP::Form::Object::M
 	return result;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::MakeObject::make_Enemys_From_File(const std::string& filename, std::shared_ptr<std::vector<std::shared_ptr<Brick>>>& Bricks) noexcept {
+std::shared_ptr<CharacterPtrVec> MyAPP::Form::Object::MakeObject::make_Enemys_From_File(const std::string& filename, std::shared_ptr<BrickPtrVec>& Bricks) noexcept {
 	Fileinfo fileinfo;
 	auto enemys = MakeObject::make_Characters();
 	std::ifstream inp(filename);
@@ -244,8 +244,8 @@ std::shared_ptr<std::vector<std::shared_ptr<Character>>> MyAPP::Form::Object::Ma
 	return enemys;
 }
 
-std::shared_ptr<Character> MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fileinfo) noexcept {
-	std::shared_ptr<Character> enemy = nullptr;
+CharacterPtr MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fileinfo) noexcept {
+	CharacterPtr enemy = nullptr;
 	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Goomba) {
 		enemy = std::make_shared<Goomba>("Goomba", 20);
 		enemy->SetPosition(fileinfo.XY);
@@ -268,8 +268,8 @@ std::shared_ptr<Character> MyAPP::Form::Object::MakeObject::make_EnemysPtr(const
 	return enemy;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<Props::Props>>> MyAPP::Form::Object::MakeObject::make_Props() noexcept {
-	return std::make_shared<std::vector<std::shared_ptr<Props::Props>>>();
+std::shared_ptr<PropsPtrVec> MyAPP::Form::Object::MakeObject::make_Props() noexcept {
+	return std::make_shared<PropsPtrVec>();
 }
 
 
