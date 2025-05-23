@@ -33,6 +33,7 @@
 #include "Object/Brick/Stairs.hpp"
 #include "Object/Brick/MovingPlatform.hpp"
 #include "Object/FlagFromPole.hpp"
+#include "Object/Points.hpp"
 #include "Object/MakeObject.hpp"
 
 
