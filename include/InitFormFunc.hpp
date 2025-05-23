@@ -346,7 +346,6 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& bgm = self->bgm;
 	bgm->Play(-1);
 
-
 	// 設定表單事件
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1_pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_Pipe);

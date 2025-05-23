@@ -37,7 +37,8 @@ namespace MyAPP {
 				Koopa,
 				Bridge,
 				Axe,
-				FlagFromPole
+				FlagFromPole,
+				Points
 			};
 		}
 	}

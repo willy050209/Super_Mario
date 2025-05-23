@@ -172,40 +172,40 @@ namespace MyAPP {
 			/// <param name="formName">物件所在的表單名稱</param>
 			/// <param name="objName">物件ID</param>
 			template <typename T>
-			inline void removeObject(const std::string& formName, std::string_view objName) noexcept {
+			inline void removeObject(const std::string& formName, const std::string &objName) noexcept {
 				auto form_it = m_Forms.find(formName);
-				if (form_it == m_Forms.end()) {
-					return nullptr; // 表單不存在
-				}
+				//if (form_it == m_Forms.end()) {
+				//	return; // 表單不存在
+				//}
 				auto& form = form_it->second;
 
 				if constexpr (std::is_base_of_v<Object::Character, T>) {
-					form.m_Characters.erase(std::remove(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
-						it->name == objName;
+					form.m_Characters.erase(std::remove_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+						return it->name == objName;
 					}),
 						form.m_Characters.end());
 				}
 				else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
-					form.m_Images.erase(std::remove(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
-						it->name == objName;
+					form.m_Images.erase(std::remove_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+						return it->name == objName;
 					}),
 						form.m_Images.end());
 				}
 				else if constexpr (std::is_same_v<Object::TextObject, T>) {
-					form.m_Texts.erase(std::remove(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
-						it->name == objName;
+					form.m_Texts.erase(std::remove_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+						return it->name == objName;
 					}),
 						form.m_Texts.end());
 				}
 				else if constexpr (std::is_same_v<Object::Button, T>) {
-					form.m_Buttons.erase(std::remove(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
-						it->name == objName;
+					form.m_Buttons.erase(std::remove_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+						return it->name == objName;
 					}),
 						form.m_Buttons.end());
 				}
 				else if constexpr (std::is_same_v<Object::EventObject, T>) {
-					form.m_Events.erase(std::remove(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
-						it->name == objName;
+					form.m_Events.erase(std::remove_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+						return it->name == objName;
 					}),
 						form.m_Events.end());
 				}
