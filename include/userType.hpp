@@ -3,8 +3,7 @@
 #define USERTYPE_HPP
 
 #include <memory>
-#include <vector>
-#include <tuple>
+#include <utility>
 #include "incallobj.hpp"
 
 
@@ -45,6 +44,12 @@ typedef std::shared_ptr<MyAPP::Form::Object::Coin>
 typedef std::shared_ptr<MyAPP::Form::Object::CheckPoint>
 	CheckPointPtr;
 
+typedef std::shared_ptr<MyAPP::Form::Object::EventObject>
+	EventObjectPtr;
+
+typedef std::shared_ptr<MyAPP::Form::Object::Button>
+	ButtonPtr;
+
 typedef std::vector <FireBallsPtr>
 	FireBallsPtrVec;
 
@@ -65,6 +70,18 @@ typedef std::vector<TextObjectPtr>
 
 typedef std::vector<CheckPointPtr>
 	CheckPointPtrVec;
+
+typedef std::vector<EventObjectPtr>
+	EventObjectPtrVec;
+
+typedef std::vector<ObjectPtr>
+	ObjectPtrVec;
+
+typedef std::vector<ImageObjectPtr>
+	ImageObjectPtrVec;
+
+typedef std::vector<ButtonPtr>
+	ButtonPtrVec;
 
 typedef std::pair<ImageObjectPtr, MarioPtr>
 	BackgroundMarioPair;

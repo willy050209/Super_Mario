@@ -5,6 +5,7 @@
 #include "Util/Renderer.hpp"
 #include "Object/Object.hpp"
 #include "Position.hpp"
+#include "userType.hpp"
 
 namespace MyAPP{
 
@@ -17,7 +18,7 @@ namespace MyAPP{
 			/// 加入表單
 			/// </summary>
 			/// <param name="obj">物件</param>
-			inline void addForm(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+			inline void addForm(ObjectPtr obj) noexcept {
 				//m_Root.AddChild(obj);
 				m_Events.push_back(obj);
 			}
@@ -26,7 +27,7 @@ namespace MyAPP{
 			/// 移除表單
 			/// </summary>
 			/// <param name="obj">物件</param>
-			inline void removeFormObj(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+			inline void removeFormObj(ObjectPtr obj) noexcept {
 				//m_Root.RemoveChild(obj);
 				m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj), m_Events.end());
 			}
@@ -64,7 +65,7 @@ namespace MyAPP{
 			/// <summary>
 			/// 事件陣列
 			/// </summary>
-			std::vector<std::shared_ptr<MyAPP::Form::Object::Object>> m_Events;
+			ObjectPtrVec m_Events;
 		};
 	}
 }

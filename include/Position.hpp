@@ -33,7 +33,7 @@ inline int GetTopEdge(T& obj) noexcept {
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
-inline int GetLeftEdge(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+inline int GetLeftEdge(ObjectPtr obj) noexcept {
 	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
 }
 
@@ -43,7 +43,7 @@ inline int GetLeftEdge(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcep
 /// </summary>
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
-inline int GetTopEdge(std::shared_ptr<MyAPP::Form::Object::Object> obj) noexcept {
+inline int GetTopEdge(ObjectPtr obj) noexcept {
 	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
 }
 
@@ -75,7 +75,7 @@ inline bool isInWindow(MyAPP::Form::Object::Object* obj) {
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }
 
-inline bool isInWindow(std::shared_ptr<MyAPP::Form::Object::Object> obj) {
+inline bool isInWindow(ObjectPtr obj) {
 	auto& pos = obj->GetPosition();
 	auto size = obj->GetSize();
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
