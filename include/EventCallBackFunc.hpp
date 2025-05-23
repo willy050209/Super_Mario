@@ -82,7 +82,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	//std::vector<std::thread> thread_object_move;
 
-	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT)) {
+	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT) || Util::Input::IsKeyPressed(Util::Keycode::LSHIFT)) {
 		Displacement *= 2;
 	}
 	if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == MyAPP::Form::Object::Mario::State::MOVE) {
