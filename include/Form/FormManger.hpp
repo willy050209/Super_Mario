@@ -210,6 +210,45 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
+		/// 移除指定物件
+		/// </summary>
+		/// <typeparam name="T">物件類別</typeparam>
+		/// <param name="formName">物件所在的表單名稱</param>
+		/// <param name="objName">物件ID</param>
+		template <typename T>
+		inline void removeFirstObject(const std::string& formName, const std::string& objName) noexcept {
+			auto form_it = m_Forms.find(formName);
+
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::find_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::find_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::find_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::find_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+		}
+
+		/// <summary>
 		/// 取得完整表單
 		/// </summary>
 		/// <param name="formName">表單名稱</param>

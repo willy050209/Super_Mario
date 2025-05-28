@@ -36,15 +36,7 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 			case Mushroom::Category::Mushroom:
 				std::cout << "touch Mushroom\n";
 				GM->IncHP();
-				FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText")->Enable = true;
-				{
-					auto point = std::make_shared<Points>("Point");
-					if (point) {
-						point->setPoint(Points::Point::pts1up);
-						point->SetPosition(mario->GetPosition() + glm::vec2(0, mario->GetSize().y / 2));
-						FM.addObject(FM.GetNowForm(), std::move(point));
-					}
-				}
+				Points::UpdatePoint(FM, Points::Point::pts1up);
 				break;
 			case Mushroom::Category::MushroomDark:
 				std::cout << "touch MushroomDark\n";

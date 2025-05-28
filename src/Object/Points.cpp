@@ -1,5 +1,6 @@
 #include "Object/Points.hpp"
 #include "GameManager.hpp"
+#include "FormManger.hpp"
 
 void MyAPP::Form::Object::Points::behavior(void* data) {
 	using MyAPP::Form::Object::ImageObject;
@@ -7,7 +8,7 @@ void MyAPP::Form::Object::Points::behavior(void* data) {
 		if (count <= 0) {
 			auto GM = static_cast<GameManager*>(data);
 			auto& FM = GM->GetFormManger();
-			FM.removeObject<ImageObject>(FM.GetNowForm(), name);
+			FM.removeFirstObject<ImageObject>(FM.GetNowForm(), name);
 			m_Visible = false;
 			return;
 		}
@@ -19,4 +20,23 @@ void MyAPP::Form::Object::Points::setPoint(Point point) {
 	if (point < Point::pts100 || point > Point::pts1up) return;
 	setImage(PointsImage[(int)point]);
 	count = FPS_CAP / 2;
+}
+void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, Point point) {
+	using MyAPP::Form::Object::Mario;
+	using MyAPP::Form::Object::EventObject;
+	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+	{
+		auto event = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText");
+		if (event) {
+			event->Enable = true;
+		}
+	}
+	{
+		auto pointobj = std::make_shared<Points>("Point");
+		if (pointobj) {
+			pointobj->setPoint(point);
+			pointobj->SetPosition(mario->GetPosition() + glm::vec2(0, mario->GetSize().y / 2));
+			FM.addObject(FM.GetNowForm(), std::move(pointobj));
+		}
+	}
 };

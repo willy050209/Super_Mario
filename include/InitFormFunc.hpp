@@ -315,13 +315,17 @@ INITFORM_FUNC(initForm_1_1) {
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	// 取得地圖與馬力歐
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
-	MyFM.addObject(formName, std::move(BMptr.first));
-	MyFM.addObject(formName, std::move(BMptr.second));
+	{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
+		MyFM.addObject(formName, std::move(BMptr.first));
+		MyFM.addObject(formName, std::move(BMptr.second));
+	}
 	
 	// 取得時間、分數、生命文字方塊
-	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
 	
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
@@ -411,15 +415,19 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	// 建立地圖與馬力歐
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 3, 100 });
-	MyFM.addObject(formName, std::move(BMptr.first));
-	auto& mario = std::move(BMptr.second);
-	mario->changeType(self->mariotype);
-	MyFM.addObject(formName, std::move(mario));
+	{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 3, 100 });
+		MyFM.addObject(formName, std::move(BMptr.first));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
+	}
 
 	// 取得時間、分數、生命文字方塊
-	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
 
 	// 建立所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
@@ -462,11 +470,13 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
-	MyFM.addObject(formName, std::move(BMptr.first));
-	auto& mario = std::move(BMptr.second);
-	mario->changeType(self->mariotype);
-	MyFM.addObject(formName, std::move(mario));
+{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
+		MyFM.addObject(formName, std::move(BMptr.first));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
+	}
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1", freeForm);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
@@ -500,14 +510,18 @@ INITFORM_FUNC(initForm_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5, 100 });
-	MyFM.addObject(formName, std::move(BMptr.first));
-	auto& mario = std::move(BMptr.second);
-	mario->changeType(self->mariotype);
-	MyFM.addObject(formName, std::move(mario));
+	{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5, 100 });
+		MyFM.addObject(formName, std::move(BMptr.first));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
+	}
 
-	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
@@ -561,14 +575,18 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetLeftEdge(Block) + Block->GetSize().x * 3, 100 });
-	MyFM.addObject(formName, std::move(BMptr.first));
-	auto& mario = std::move(BMptr.second);
-	mario->changeType(self->mariotype);
-	MyFM.addObject(formName, std::move(mario));
+	{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetLeftEdge(Block) + Block->GetSize().x * 3, 100 });
+		MyFM.addObject(formName, std::move(BMptr.first));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
+	}
 
-	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
 
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<GameObjectTuple>(MakeObject::make_Characters(), pipes, MakeObject::make_Props());
@@ -602,14 +620,18 @@ INITFORM_FUNC(initForm_1_4) {
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
-	auto BMptr = MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y *6 });
-	MyFM.addObject(formName, std::move(BMptr.first));
-	auto& mario = std::move(BMptr.second);
-	mario->changeType(self->mariotype);
-	MyFM.addObject(formName, std::move(mario));
+	{
+		auto BMptr = MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 6 });
+		MyFM.addObject(formName, std::move(BMptr.first));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
+	}
 
-	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
@@ -625,10 +647,6 @@ INITFORM_FUNC(initForm_1_4) {
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
-
-	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	//eventobj->userdata = std::move(enemys);
-	//MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 

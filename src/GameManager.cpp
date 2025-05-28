@@ -46,7 +46,7 @@ void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcep
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::H)) {
 		IncHP();
-		MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "UpdateHPText")->Enable = true;
+		Points::UpdatePoint(MyFM, Points::Point::pts1up);
 	}
 	MyFM.UpdateForm(this);
 }

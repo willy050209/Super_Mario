@@ -7,9 +7,14 @@
 #include "ObjectType.hpp"
 #include "Util/Image.hpp"
 #include "config.hpp"
+#include "FormManger.hpp"
 #include <string>
 #include <memory>
 #include <glm/vec2.hpp>
+
+namespace MyAPP::Form {
+	class FormManger;
+}
 
 namespace MyAPP::Form::Object {
 
@@ -45,9 +50,11 @@ namespace MyAPP::Form::Object {
 
 		void setPoint(Point point);
 
-		int count = 0;
+		static void UpdatePoint(MyAPP::Form::FormManger& FM, Point point);
 
-		private:
+	private:
+		
+		int count = 0;
 
 		static constexpr inline char* const PointsImage[]{
 			R"(imgs\super mario\100pts.png)",
