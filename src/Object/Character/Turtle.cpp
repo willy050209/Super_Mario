@@ -2,6 +2,7 @@
 #include "config.hpp"
 #include "ImageObject.hpp"
 #include "GameManager.hpp"
+#include "userType.hpp"
 
 #include <memory>
 #include <execution>
@@ -24,7 +25,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Turtle::move() noexcept {
-		auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<ImageObject>>>(userdata);
+		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 		bool flag = true;
 		auto MyPos = GetPosition();
 		if (MyPos.y < WINDOW_HEIGHT) {
@@ -74,7 +75,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Turtle::comeDown() noexcept {
-		auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
+		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 		bool flag = true;
 		auto tmp = GetPosition();
 		if (tmp.y < WINDOW_HEIGHT) {
@@ -104,31 +105,23 @@ namespace MyAPP::Form::Object {
 		auto marioSize = mario->GetSize();
 		if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
 			if (collisionable && inRange(marioPos, marioSize)) {
-				if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
-					died();
-				}
-				else {
-					GM->DecHP();
-					mario->died();
-					GM->bgm->Pause();
-					GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
-					GM->sfx->Play(0);
-					(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
-					if (GM->GetHP() == 0) {
-						GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
-						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
-						sleepevent->Enable = true;
-						sleepevent->userdata.reset();
-						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP * 3, std::vector<bool>());
-						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
+				if (diedFlag && GetVisibility() && inRange(marioPos, marioSize)) {
+					if (GetPosition().x > marioPos.x) {
+						SetLeft<false>();
+						setMoveFlag(true);
 					}
 					else {
-						(FM.GetFormObject<EventObject>(FM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
-						auto sleepevent = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "SleepAllevent"));
-						sleepevent->Enable = true;
-						sleepevent->userdata.reset();
-						sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+						SetLeft<true>();
+						setMoveFlag(true);
 					}
+				}
+				else if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
+					died();
+					mario->jump(2.5);
+				}
+				else {
+					mario->died();
+					GM->LostALife();
 				}
 			}
 		}

@@ -27,6 +27,7 @@ inline int GetTopEdge(T& obj) noexcept {
 }
 
 #include "incallobj.hpp"
+#include "userType.hpp"
 
 /// <summary>
 /// 取得該物件要切齊畫面最左邊的X軸做座標

@@ -53,13 +53,7 @@ namespace MyAPP {
 				/// <summary>
 				/// 準備跳躍
 				/// </summary>
-				inline void jump() noexcept {
-					state = State::UP;
-					displacement = WINDOW_HEIGHT / 15.f * 4.5f / 18;
-					index = 0;
-					jumpcount = 18;
-					changeImg();
-				}
+				void jump(float d = 4.5) noexcept;
 
 				/// <summary>
 				/// 執行下墜

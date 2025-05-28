@@ -204,6 +204,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::T)) {
 		mario->died();
+		static_cast<MyAPP::GameManager*>(data)->LostALife();
 	}
 	if (opmode) {
 		if (Util::Input::IsKeyDown(Util::Keycode::W)) {
@@ -687,28 +688,28 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Turtle)) </param>
-EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
-	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
-	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
-	auto turtles = std::static_pointer_cast<std::vector<std::shared_ptr<Turtle>>>(self->userdata);
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	for (auto& it : *turtles) {
-		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
-			//auto turtlePos{ it->GetPosition() };
-			if (it->GetPosition().x > marioPos.x) {
-				it->SetLeft<false>();
-				it->setMoveFlag(true);
-			}
-			else {
-				it->SetLeft<true>();
-				it->setMoveFlag(true);
-			}
-			//it->SetPosition(turtlePos);
-		}
-	}
-}
+//EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
+//	auto GM = static_cast<MyAPP::GameManager*>(data);
+//	auto& FM = GM->GetFormManger();
+//	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
+//	auto turtles = std::static_pointer_cast<std::vector<std::shared_ptr<Turtle>>>(self->userdata);
+//	auto marioPos = mario->GetPosition();
+//	auto marioSize = mario->GetSize();
+//	for (auto& it : *turtles) {
+//		if (it->diedFlag && it->GetVisibility() && it->inRange(marioPos, marioSize)) {
+//			//auto turtlePos{ it->GetPosition() };
+//			if (it->GetPosition().x > marioPos.x) {
+//				it->SetLeft<false>();
+//				it->setMoveFlag(true);
+//			}
+//			else {
+//				it->SetLeft<true>();
+//				it->setMoveFlag(true);
+//			}
+//			//it->SetPosition(turtlePos);
+//		}
+//	}
+//}
 
 ///// <summary>
 ///// 道具碰撞事件

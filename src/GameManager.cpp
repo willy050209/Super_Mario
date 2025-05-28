@@ -54,3 +54,26 @@ void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcep
 void MyAPP::GameManager::End() noexcept {
 	endstate = true;
 }
+
+void MyAPP::GameManager::LostALife() noexcept {
+	DecHP();
+	bgm->Pause();
+	sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
+	sfx->Play(0);
+	(MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "UpdateHPText"))->Enable = true;
+	if (GetHP() == 0) {
+		bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
+		auto sleepevent = (MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "SleepAllevent"));
+		sleepevent->Enable = true;
+		sleepevent->userdata.reset();
+		sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP * 3, std::vector<bool>());
+		(MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "FinifhEvent"))->Enable = true;
+	}
+	else {
+		(MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "GoBackCheckPoint"))->Enable = true;
+		auto sleepevent = (MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "SleepAllevent"));
+		sleepevent->Enable = true;
+		sleepevent->userdata.reset();
+		sleepevent->userdata = std::make_shared<std::tuple<int, std::vector<bool>>>(FPS_CAP, std::vector<bool>());
+	}
+}

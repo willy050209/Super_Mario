@@ -373,9 +373,9 @@ INITFORM_FUNC(initForm_1_1) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
-	eventobj->userdata = GetTurtless(enemys);
-	MyFM.addObject(formName, std::move(eventobj));
+	//eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
+	//eventobj->userdata = GetTurtless(enemys);
+	//MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));

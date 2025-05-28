@@ -113,6 +113,8 @@ namespace MyAPP {
 			checkPointPos = pos;
 		}
 
+		void LostALife() noexcept;
+
 		/// <summary>
 		/// ¹CÀ¸BGM
 		/// </summary>

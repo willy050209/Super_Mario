@@ -1,4 +1,7 @@
 #include "Object/Character/Koopa.hpp"
+#include "Object/Character/MArio.hpp"
+#include "GameManager.hpp"
+#include "FilePath.hpp"
 #include "config.hpp"
 #include <iostream>
 
@@ -24,6 +27,18 @@ void MyAPP::Form::Object::Koopa::checkPosition() noexcept {
 }
 
 void MyAPP::Form::Object::Koopa::CheckCollision(void* data) {
+	using namespace MyAPP::Form::Object;
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+	auto marioPos = mario->GetPosition();
+	auto marioSize = mario->GetSize();
+	if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
+		if (collisionable && inRange(marioPos, marioSize)) {
+			mario->died();
+			GM->LostALife();
+		}
+	}
 }
 
 void MyAPP::Form::Object::Koopa::PlayFrames() noexcept {

@@ -7,6 +7,15 @@
 #include <execution>
 
 namespace MyAPP::Form::Object {
+
+	void Mario::jump(float d) noexcept {
+		state = State::UP;
+		displacement = WINDOW_HEIGHT / 15.f * d / 18;
+		index = 0;
+		jumpcount = 18;
+		changeImg();
+	}
+
 	void Mario::behavior(void* data) {
 		if (!static_cast<MyAPP::GameManager*>(data)->pause && !static_cast<MyAPP::GameManager*>(data)->opMode) {
 			// move();
