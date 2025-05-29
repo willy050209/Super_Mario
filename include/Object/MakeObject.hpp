@@ -39,6 +39,7 @@ namespace MyAPP::Form::Object {
 			int Type{};
 			int Visibility{};
 			int Collisionable{};
+			std::string data{};
 
 			/// <summary>
 			/// 從檔案讀取資料
@@ -47,6 +48,9 @@ namespace MyAPP::Form::Object {
 			void GetFileDate(std::ifstream& inp) {
 				if (inp.good()) {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
+					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock) {
+						inp >> data;
+					}
 				}
 			}
 

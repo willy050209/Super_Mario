@@ -35,7 +35,7 @@ namespace MyAPP::Form::Object {
 
 		virtual void behavior(void* data = nullptr) override;
 
-		enum class Point {
+		enum class PointType {
 			pts100 = 0,
 			pts200 = 1,
 			pts400 = 2,
@@ -48,9 +48,9 @@ namespace MyAPP::Form::Object {
 			pts1up = 9
 		};
 
-		void setPoint(Point point);
+		void setPoint(PointType pointtype);
 
-		static void UpdatePoint(MyAPP::Form::FormManger& FM, Point point);
+		static void UpdatePoint(MyAPP::Form::FormManger& FM, PointType pointtype);
 
 	private:
 		

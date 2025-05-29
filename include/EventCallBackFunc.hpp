@@ -178,6 +178,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();
 		for (auto& it : *pipes) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
+				mario->SetLeft<false>();
 				if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
 					initForm_1_1_Pip(static_cast<MyAPP::GameManager*>(data));
 					auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
@@ -192,7 +193,6 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 					return;
 				}
-				mario->SetLeft<false>();
 			}
 		}
 	}

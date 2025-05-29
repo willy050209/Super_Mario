@@ -14,6 +14,7 @@ namespace MyAPP::Form::Object {
 		index = 0;
 		jumpcount = 18;
 		changeImg();
+		jumpCobo++;
 	}
 
 	void Mario::behavior(void* data) {
@@ -27,13 +28,9 @@ namespace MyAPP::Form::Object {
 
 	void Mario::doJump() noexcept {
 		if (jumpcount > 0 && (state == State::UP || (state == State::DIED && !diedflag))) {
-			/*std::mutex displacement_mutex;
-			std::mutex jumpDelay_mutex;
-			std::mutex test;*/
 			auto tmp = GetPosition();
 			auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
 			auto tmp1 = tmp.y += displacement;
-			//tmp -= GetSize() / glm::vec2{ 16, 16 };
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
 					if ((it)->collisionable && (it)->inRange(tmp, GetSize())) {
@@ -42,23 +39,19 @@ namespace MyAPP::Form::Object {
 						(it)->bonk();
 						(it)->bonkJump();
 						displacement = 0;
-						// jumpDelay = 0;
-						/*{
-							std::lock_guard<std::mutex> lock(displacement_mutex);
-							displacement = 0;
+						if ((mario_type == Mario_type::SuperMario ||
+							mario_type == Mario_type::InvincibleSuperMario ||
+							mario_type == Mario_type::FieryMario ||
+							mario_type == Mario_type::InvincibleFieryMario) &&
+							it->MyType == ObjectType::Brick) {
+							it->collisionable = false;
+							it->SetVisible(false);	
 						}
-						{
-							std::lock_guard<std::mutex> lock(jumpDelay_mutex);
-							jumpDelay = 0;
-						}*/
-						// break;
 					}
 				});
 			}
 			tmp.y = tmp1;
-			// changeImg();
 			SetPosition(tmp);
-			/*displacement -= (float)(DEFAULTDISPLACEMENT / 5);*/
 			jumpcount--;
 			if (jumpcount == 0) {
 				if (state != State::DIED)
@@ -69,9 +62,6 @@ namespace MyAPP::Form::Object {
 				displacement = DEFAULTDISPLACEMENT;
 			}
 		}
-		/*else if (jumpDelay > 0) {
-			--jumpDelay;
-		}*/
 	}
 
 	void Mario::comeDown() noexcept {
@@ -102,6 +92,7 @@ namespace MyAPP::Form::Object {
 						index = 0;
 					state = State::MOVE;
 					changeImg();
+					jumpCobo = 0;
 				}
 			}
 		}

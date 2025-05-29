@@ -44,6 +44,9 @@ typedef std::shared_ptr<MyAPP::Form::Object::Coin>
 typedef std::shared_ptr<MyAPP::Form::Object::CheckPoint>
 	CheckPointPtr;
 
+typedef std::shared_ptr<MyAPP::Form::Object::QuestionBlock>
+	QuestionBlockPtr;
+
 typedef std::shared_ptr<MyAPP::Form::Object::EventObject>
 	EventObjectPtr;
 
@@ -70,6 +73,9 @@ typedef std::vector<TextObjectPtr>
 
 typedef std::vector<CheckPointPtr>
 	CheckPointPtrVec;
+
+typedef std::vector<QuestionBlockPtr>
+	QuestionBlockPtrVec;
 
 typedef std::vector<EventObjectPtr>
 	EventObjectPtrVec;

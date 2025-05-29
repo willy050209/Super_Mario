@@ -77,7 +77,7 @@ inline bool isInWindow(MyAPP::Form::Object::Object* obj) {
 }
 
 inline bool isInWindow(ObjectPtr obj) {
-	auto& pos = obj->GetPosition();
+	auto& pos = obj->m_Transform.translation;
 	auto size = obj->GetSize();
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }

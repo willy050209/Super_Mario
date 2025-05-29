@@ -144,11 +144,12 @@ namespace MyAPP {
 					mario_type = Mario_type::Mario;
 					index = 0;
 					left = 0;
+					jumpCobo = 0;
 					changeImg();
 					// mario_invincible = Mario_Invincible::notInvincible;
 					diedflag = false;
 				}
-
+				int jumpCobo = 0;
 			private:
 				/// <summary>
 				/// ∞ı¶Ê∏ı≈D

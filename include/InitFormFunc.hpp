@@ -144,6 +144,16 @@ namespace MyAPP::Form {
 		return result;
 	}
 
+	inline auto GetQuestionBlocks(std::shared_ptr<BrickPtrVec>& bricks) noexcept {
+		auto result = MakeObject::make_Bricks();
+		std::for_each(bricks->begin(), bricks->end(), [&](auto& it) {
+			if (it->MyType == ObjectType::QuestionBlock) {
+				result->push_back(std::static_pointer_cast<QuestionBlock>(it));
+			}
+		});
+		return result;
+	}
+
 	/// <summary>
 	/// 取得 enemys 中 Type == ObjectType::Turtle 的所有物件
 	/// </summary>
@@ -343,6 +353,9 @@ INITFORM_FUNC(initForm_1_1) {
 	//props->push_back(std::make_shared<Props::Starman>("Starman", 10));
 	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 6, 0 });
 	//std::for_each(std::execution::seq, props->begin(), props->end(), [&](auto& it) { MyFM.addObject(formName, it); });
+
+	//auto questionBlocks = GetQuestionBlocks(Blocks);
+
 
 	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);

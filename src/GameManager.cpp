@@ -46,7 +46,7 @@ void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcep
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::H)) {
 		IncHP();
-		Points::UpdatePoint(MyFM, Points::Point::pts1up);
+		Points::UpdatePoint(MyFM, Points::PointType::pts1up);
 	}
 	MyFM.UpdateForm(this);
 }

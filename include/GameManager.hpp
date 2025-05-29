@@ -81,11 +81,6 @@ namespace MyAPP {
 		/// </summary>
 		/// <param name="val">lvalue ref</param>
 		inline auto addPoint(const int& val) noexcept { point += val; }
-		/// <summary>
-		/// 增加分數
-		/// </summary>
-		/// <param name="val">rvalue ref</param>
-		inline auto addPoint(int&& val) noexcept { point += val; }
 
 		/// <summary>
 		/// 血量遞增

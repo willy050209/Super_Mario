@@ -36,13 +36,14 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 			case Mushroom::Category::Mushroom:
 				std::cout << "touch Mushroom\n";
 				GM->IncHP();
-				Points::UpdatePoint(FM, Points::Point::pts1up);
+				Points::UpdatePoint(FM, Points::PointType::pts1up);
 				break;
 			case Mushroom::Category::MushroomDark:
 				std::cout << "touch MushroomDark\n";
 				break;
 			case Mushroom::Category::BigMushroom:
 				std::cout << "touch BigMushroom\n";
+				mario->changeType(Mario::Mario_type::SuperMario);
 				break;
 			default:
 				break;

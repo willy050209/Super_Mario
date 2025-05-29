@@ -57,146 +57,152 @@ std::shared_ptr<BrickPtrVec> MyAPP::Form::Object::MakeObject::make_Bricks_From_F
 BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo, BrickColor color) noexcept {
 	using namespace MyAPP;
 	using namespace MyAPP::Form::Object;
-	BrickPtr BrickPtr = nullptr;
+	BrickPtr brick_ptr = nullptr;
 	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Brick) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
-			BrickPtr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockImagePath, 10);
+			brick_ptr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			BrickPtr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockDarkImagePath, 10);
+			brick_ptr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockDarkImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockGreyImagePath, 10);
+			brick_ptr = std::make_shared<Brick>("Brick", MyResourcesFilePath::BlockGreyImagePath, 10);
 			break;
 		default:
-			return BrickPtr;
+			return brick_ptr;
 		}
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::QuestionBlock) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
-			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::normal, 10);
+			brick_ptr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::normal, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::dark, 10);
+			brick_ptr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::dark, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::grey, 10);
+			brick_ptr = std::make_shared<QuestionBlock>("QuestionBlock", BrickColor::grey, 10);
 			break;
 		default:
-			return BrickPtr;
+			return brick_ptr;
 		}
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
+		if (fileinfo.data == "BigMushroom") {
+			brick_ptr->userdata = std::make_shared<std::string>(fileinfo.data);
+		}
+		else {
+			brick_ptr->userdata = nullptr;
+		}
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::HiddenBrick) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
-			BrickPtr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockImagePath, 10);
+			brick_ptr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			BrickPtr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockDarkImagePath, 10);
+			brick_ptr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockDarkImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockGreyImagePath, 10);
+			brick_ptr = std::make_shared<HiddenBrick>("HiddenBrick", MyResourcesFilePath::EmptyBlockGreyImagePath, 10);
 			break;
 		default:
-			return BrickPtr;
+			return brick_ptr;
 		}
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Coin) {
-		BrickPtr = std::make_shared<Coin>("Coin", 10);
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr = std::make_shared<Coin>("Coin", 10);
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::CheckPoint) {
-		BrickPtr = std::make_shared<CheckPoint>("CheckPoint");
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr = std::make_shared<CheckPoint>("CheckPoint");
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::SpinningFireBalls) {
-		BrickPtr = make_SpinningFireBalls();
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr = make_SpinningFireBalls();
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::PipeBrick) {
-		BrickPtr = std::make_shared<PipeBrick>("PipeBrick",0);
-		BrickPtr->SetPosition(fileinfo.XY);
+		brick_ptr = std::make_shared<PipeBrick>("PipeBrick",0);
+		brick_ptr->SetPosition(fileinfo.XY);
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Door) {
-		BrickPtr = std::make_shared<Door>("Door");
-		BrickPtr->SetPosition(fileinfo.XY);
+		brick_ptr = std::make_shared<Door>("Door");
+		brick_ptr->SetPosition(fileinfo.XY);
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Flagpole) {
-		BrickPtr = std::make_shared<Flagpole>("Flagpole");
-		BrickPtr->SetPosition(fileinfo.XY);
+		brick_ptr = std::make_shared<Flagpole>("Flagpole");
+		brick_ptr->SetPosition(fileinfo.XY);
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Floor) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
-			BrickPtr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorImagePath, 10);
+			brick_ptr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			BrickPtr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorDarkImagePath, 10);
+			brick_ptr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorDarkImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorGreyImagePath, 10);
+			brick_ptr = std::make_shared<Floor>("Floor", MyResourcesFilePath::FloorGreyImagePath, 10);
 			break;
 		default:
-			return BrickPtr;
+			return brick_ptr;
 		}
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Stairs) {
 		switch (color) {
 		case MyAPP::Form::Object::BrickColor::normal:
-			BrickPtr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickImagePath, 10);
+			brick_ptr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			BrickPtr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickDarkImagePath, 10);
+			brick_ptr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickDarkImagePath, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
-			BrickPtr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickImagePath, 10);
+			brick_ptr = std::make_shared<Stairs>("Stairs", MyResourcesFilePath::StairsBrickImagePath, 10);
 			break;
 		default:
-			return BrickPtr;
+			return brick_ptr;
 		}
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::MovingPlatform) {
-		BrickPtr = std::make_shared<MovingPlatform>("MovingPlatform");
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		std::static_pointer_cast<MovingPlatform>(BrickPtr)->up = fileinfo.Collisionable;
+		brick_ptr = std::make_shared<MovingPlatform>("MovingPlatform");
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		std::static_pointer_cast<MovingPlatform>(brick_ptr)->up = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Bridge) {
-		BrickPtr = std::make_shared<Bridge>("Bridge",  10);
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr = std::make_shared<Bridge>("Bridge",  10);
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Axe) {
-		BrickPtr = std::make_shared<Axe>("Axe", 10);
-		BrickPtr->SetPosition(fileinfo.XY);
-		BrickPtr->SetVisible(fileinfo.Visibility);
-		BrickPtr->collisionable = fileinfo.Collisionable;
+		brick_ptr = std::make_shared<Axe>("Axe", 10);
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
-	return BrickPtr;
+	return brick_ptr;
 }
 
 std::shared_ptr<CharacterPtrVec> MyAPP::Form::Object::MakeObject::make_Characters() noexcept {

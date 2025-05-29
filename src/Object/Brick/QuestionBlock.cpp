@@ -1,48 +1,89 @@
 #include "Object/Brick/QuestionBlock.hpp"
 #include "config.hpp"
-namespace MyAPP {
-	namespace Form {
-		namespace Object {
-			void QuestionBlock::bonk() noexcept {
-				if (play) {
-					SetVisible(true);
-					play = false;
-					switch (color) {
-					case MyAPP::Form::Object::BrickColor::normal:
-						std::static_pointer_cast<Util::Image>(GetDrawable())
-							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockImagePath);
-						break;
-					case MyAPP::Form::Object::BrickColor::dark:
-						std::static_pointer_cast<Util::Image>(GetDrawable())
-							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath);
-						break;
-					case MyAPP::Form::Object::BrickColor::grey:
-						std::static_pointer_cast<Util::Image>(GetDrawable())
-							->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockGreyImagePath);
-						break;
-					default:
-						break;
-					}
-				}
+#include "GameManager.hpp"
+#include "Form/FormManger.hpp"
+#include "Object/EventObject.hpp"
+#include "Util/Image.hpp"
+#include "FilePath.hpp"
+#include "Object/Props/Props.hpp"
+#include "userType.hpp"
+#include <memory>
+#include <utility> // for std::move
+namespace MyAPP::Form:: Object {
+	void QuestionBlock::bonk() noexcept {
+		if (play) {
+			isbonked = true;
+			SetVisible(true);
+			play = false;
+			switch (color) {
+			case MyAPP::Form::Object::BrickColor::normal:
+				std::static_pointer_cast<Util::Image>(GetDrawable())
+					->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockImagePath);
+				break;
+			case MyAPP::Form::Object::BrickColor::dark:
+				std::static_pointer_cast<Util::Image>(GetDrawable())
+					->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath);
+				break;
+			case MyAPP::Form::Object::BrickColor::grey:
+				std::static_pointer_cast<Util::Image>(GetDrawable())
+					->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockGreyImagePath);
+				break;
+			default:
+				break;
 			}
+		}
+	}
 
-			void QuestionBlock::behavior(void* data) {
-				PlayFrames();
-				dojump();
-				comeDown();
-			}
+	void QuestionBlock::behavior(void* data) {
+		PlayFrames();
+		dojump();
+		comeDown();
+		CreateProp(static_cast<GameManager*>(data));
+	}
 
-			void QuestionBlock::PlayFrames() noexcept {
-				if (play) {
-					++(count);
-					if (count >= (FPS_CAP / 5)) {
-						++imgindex;
-						imgindex %= 6;
-						std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
-						count = 0;
-					}
-				}
+	void QuestionBlock::PlayFrames() noexcept {
+		if (play) {
+			++(count);
+			if (count >= (FPS_CAP / 5)) {
+				++imgindex;
+				imgindex %= 6;
+				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
+				count = 0;
 			}
+		}
+	}
+	void QuestionBlock::CreateProp(GameManager* const GM) noexcept {
+		if (!isbonked) {
+			return;
+		}
+		if (userdata == nullptr) {
+			return;
+		}
+		auto& FM = GM->GetFormManger();
+		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+		if (mario == nullptr) {
+			return;
+		}
+		{
+			using namespace MyAPP::Form::Object::Props;
+			using MyAPP::Form::Object::Props::Props;
+			PropsPtr prop;
+			auto proptype = std::static_pointer_cast<std::string>(userdata);
+			if (proptype == nullptr) {
+				return;
+			}
+			else if (*proptype == "BigMushroom") {
+				prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
+				prop->SetPosition(GetPosition());
+				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y);
+			}
+			prop->userdata = mario->userdata;
+			auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+			auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
+			auto& [_, __, props] = (*tuplePtr);
+			FM.addObject(FM.GetNowForm(), prop);
+			props->push_back(std::move(prop));
+			isbonked = false;
 		}
 	}
 }

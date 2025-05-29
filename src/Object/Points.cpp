@@ -16,12 +16,13 @@ void MyAPP::Form::Object::Points::behavior(void* data) {
 		m_Transform.translation.y++;
 	}
 }
-void MyAPP::Form::Object::Points::setPoint(Point point) {
-	if (point < Point::pts100 || point > Point::pts1up) return;
-	setImage(PointsImage[(int)point]);
+void MyAPP::Form::Object::Points::setPoint(PointType pointType) {
+	if (pointType < PointType::pts100 || pointType > PointType::pts1up)
+		return;
+	setImage(PointsImage[(int)pointType]);
 	count = FPS_CAP / 2;
 }
-void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, Point point) {
+void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, PointType pointType) {
 	using MyAPP::Form::Object::Mario;
 	using MyAPP::Form::Object::EventObject;
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
@@ -34,7 +35,7 @@ void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, Point
 	{
 		auto pointobj = std::make_shared<Points>("Point");
 		if (pointobj) {
-			pointobj->setPoint(point);
+			pointobj->setPoint(pointType);
 			pointobj->SetPosition(mario->GetPosition() + glm::vec2(0, mario->GetSize().y / 2));
 			FM.addObject(FM.GetNowForm(), std::move(pointobj));
 		}
