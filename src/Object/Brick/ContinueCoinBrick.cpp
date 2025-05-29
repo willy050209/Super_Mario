@@ -1,4 +1,5 @@
 #include "Object/Brick/ContinueCoinBrick.hpp"
+#include "Object/Points.hpp"
 #include "GameManager.hpp"
 #include "FormManger.hpp"
 #include "filePath.hpp"
@@ -7,6 +8,8 @@ void MyAPP::Form::Object::ContinueCoinBrick::bonk() noexcept {
 	if (bonkedCount < 9) {
 		bonkedCount++;
 		trigger = true;
+		jumpenable = true;
+		bonkJump();
 	}
 	else{
 		switch (color) {
@@ -27,9 +30,14 @@ void MyAPP::Form::Object::ContinueCoinBrick::bonk() noexcept {
 
 void MyAPP::Form::Object::ContinueCoinBrick::behavior(void* data) {
 	if (trigger) {
-		CoinPoints::CreateCoinPoints(static_cast<GameManager*>(data)->GetFormManger(), GetPosition());
+		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+		CoinPoints::CreateCoinPoints(FM, GetPosition());
+		Points::UpdatePoint(FM, Points::PointType::pts200);
+		static_cast<GameManager*>(data)->addPoint(200);
 		trigger = false;
 	}
+	dojump();
+	comeDown();
 }
 
 

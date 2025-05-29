@@ -33,6 +33,12 @@ void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, Point
 		}
 	}
 	{
+		auto event = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText");
+		if (event) {
+			event->Enable = true;
+		}
+	}
+	{
 		auto pointobj = std::make_shared<Points>("Point");
 		if (pointobj) {
 			pointobj->setPoint(pointType);
