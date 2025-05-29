@@ -202,6 +202,24 @@ BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo
 		brick_ptr->SetVisible(fileinfo.Visibility);
 		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::ContinueCoinBrick) {
+		switch (color) {
+		case MyAPP::Form::Object::BrickColor::normal:
+			brick_ptr = std::make_shared<ContinueCoinBrick>("ContinueCoinBrick", MyResourcesFilePath::BlockImagePath, color, 10);
+			break;
+		case MyAPP::Form::Object::BrickColor::dark:
+			brick_ptr = std::make_shared<ContinueCoinBrick>("BriContinueCoinBrickck", MyResourcesFilePath::BlockDarkImagePath, color, 10);
+			break;
+		case MyAPP::Form::Object::BrickColor::grey:
+			brick_ptr = std::make_shared<ContinueCoinBrick>("ContinueCoinBrick", MyResourcesFilePath::BlockGreyImagePath, color, 10);
+			break;
+		default:
+			return brick_ptr;
+		}
+		brick_ptr->SetPosition(fileinfo.XY);
+		brick_ptr->SetVisible(fileinfo.Visibility);
+		brick_ptr->collisionable = fileinfo.Collisionable;
+	}
 	return brick_ptr;
 }
 

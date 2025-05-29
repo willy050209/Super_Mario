@@ -36,7 +36,9 @@ namespace MyAPP::Form::Object {
 		Bridge,
 		Axe,
 		FlagFromPole,
-		Points
+		Points,
+		ContinueCoinBrick,
+		CoinPoints
 	};
 
 }

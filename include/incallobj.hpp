@@ -34,6 +34,7 @@
 #include "Object/Brick/MovingPlatform.hpp"
 #include "Object/FlagFromPole.hpp"
 #include "Object/Points.hpp"
+#include "Object/Brick/ContinueCoinBrick.hpp"
 #include "Object/MakeObject.hpp"
 
 
