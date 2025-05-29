@@ -13,6 +13,7 @@ namespace MyAPP {
 	class GameManager;
 }
 
+
 namespace MyAPP::Form::Object {
 	class QuestionBlock : Interface::Iframes, public Brick {
 	public:

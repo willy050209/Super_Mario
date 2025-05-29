@@ -18,12 +18,18 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Mario::behavior(void* data) {
-		if (!static_cast<MyAPP::GameManager*>(data)->pause && !static_cast<MyAPP::GameManager*>(data)->opMode) {
-			// move();
-			comeDown();
-			doJump();
-			// if (state != State::DIED)
-		}
+		//if (!static_cast<MyAPP::GameManager*>(data)->pause && !static_cast<MyAPP::GameManager*>(data)->opMode) {
+		//	// move();
+		//	comeDown();
+		//	doJump();
+		//	// if (state != State::DIED)
+		//}
+		comeDown();
+		doJump();
+		if (invincibleCount > 0)
+			invincibleCount--;
+		else
+			collisionable = true;
 	}
 
 	void Mario::doJump() noexcept {
@@ -114,14 +120,21 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Mario::died() noexcept {
-		state = State::DIED;
-		displacement = 2.5 * DEFAULTDISPLACEMENT;
+		if (isBigMario()) {
+			if (mario_type == Mario_type::FieryMario || mario_type == Mario_type::SuperMario) {
+				state = State::MOVE;
+				mario_type = Mario_type::Mario;
+				invincibleCount = FPS_CAP * 2;
+				collisionable = false;
+			}
+		}
+		else {
+			state = State::DIED;
+			displacement = 2.5 * DEFAULTDISPLACEMENT;
+			jumpcount = 10;
+		}
 		index = 0;
-		// jumpDelay = 0;
-		jumpcount = 10;
 		changeImg();
-
-		// state = State::UP;
 	}
 
 	// void Mario::changeType(Mario_type type_) noexcept {

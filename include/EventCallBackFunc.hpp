@@ -204,7 +204,12 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::T)) {
 		mario->died();
-		static_cast<MyAPP::GameManager*>(data)->LostALife();
+		if (!mario->isInvincible()) {
+			static_cast<MyAPP::GameManager*>(data)->LostALife();
+		}
+	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::B)) {
+		mario->changeType(Mario::Mario_type::SuperMario);
 	}
 	if (opmode) {
 		if (Util::Input::IsKeyDown(Util::Keycode::W)) {

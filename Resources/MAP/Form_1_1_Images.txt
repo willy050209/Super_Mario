@@ -500,12 +500,12 @@
 22 -5 7 1 1 null
 21 -9 7 1 1 BigMushroom
 23 -9 7 1 1 null
-78 -9 7 1 1 null
+78 -9 7 1 1 BigMushroom
 95 -5 7 1 1 null
 106 -9 7 1 1 null
 109 -9 7 1 1 null
 112 -9 7 1 1 null
-109 -5 7 1 1 null
+109 -5 7 1 1 BigMushroom
 129 -5 7 1 1 null
 130 -5 7 1 1 null
 170 -9 7 1 1 null

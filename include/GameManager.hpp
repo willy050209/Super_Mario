@@ -1,4 +1,5 @@
 #pragma once
+
 #ifndef GAMEMANGER_HPP
 #define GAMEMANGER_HPP
 
@@ -8,7 +9,6 @@
 #include "MyBGM.hpp"
 #include "FilePath.hpp"
 #include "Util/SFX.hpp"
-
 
 #include <memory>
 

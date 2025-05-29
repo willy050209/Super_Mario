@@ -1,5 +1,6 @@
 #include "Object/Props/Mushroom.hpp"
 #include "GameManager.hpp"
+#include "userType.hpp"
 #include <iostream>
 
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
@@ -12,7 +13,7 @@ void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 void MyAPP::Form::Object::Props::Mushroom::Move(glm::vec2 distance) noexcept {
 	if (m_movable) {
 		using MyAPP::Form::Object::Brick;
-		auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
+		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 		auto MyPos = GetPosition() + distance;
 		const auto MySize = GetSize();
 		for (auto& it : *bricks) {
@@ -40,10 +41,17 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 				break;
 			case Mushroom::Category::MushroomDark:
 				std::cout << "touch MushroomDark\n";
+				GM->IncHP();
+				Points::UpdatePoint(FM, Points::PointType::pts1up);
 				break;
 			case Mushroom::Category::BigMushroom:
 				std::cout << "touch BigMushroom\n";
-				mario->changeType(Mario::Mario_type::SuperMario);
+				if (mario->GetMario_type() == Mario::Mario_type::Mario) {
+					mario->changeType(Mario::Mario_type::SuperMario);
+				}
+				else if (mario->GetMario_type() == Mario::Mario_type::InvincibleMario) {
+					mario->changeType(Mario::Mario_type::InvincibleSuperMario);
+				}
 				break;
 			default:
 				break;
@@ -71,7 +79,7 @@ void MyAPP::Form::Object::Props::Mushroom::doDown() noexcept {
 		return;
 	}
 	using MyAPP::Form::Object::Brick;
-	auto bricks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
+	auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 	auto MyPos = GetPosition();
 	if (MyPos.y < WINDOW_HEIGHT) {
 		const auto MySize = GetSize();

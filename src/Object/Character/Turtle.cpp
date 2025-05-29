@@ -104,7 +104,7 @@ namespace MyAPP::Form::Object {
 		auto marioPos = mario->GetPosition();
 		auto marioSize = mario->GetSize();
 		if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
-			if (collisionable && inRange(marioPos, marioSize)) {
+			if (collisionable && mario->collisionable && inRange(marioPos, marioSize)) {
 				if (diedFlag && GetVisibility() && inRange(marioPos, marioSize)) {
 					if (GetPosition().x > marioPos.x) {
 						SetLeft<false>();
@@ -121,7 +121,9 @@ namespace MyAPP::Form::Object {
 				}
 				else {
 					mario->died();
-					GM->LostALife();
+					if (!mario->isBigMario()) {
+						GM->LostALife();
+					}
 				}
 			}
 		}

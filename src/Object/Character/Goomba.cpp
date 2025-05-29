@@ -63,7 +63,7 @@ void MyAPP::Form::Object::Goomba::CheckCollision(void* data) {
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 	if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
-		if (collisionable && inRange(marioPos, marioSize)) {
+		if (collisionable && mario->collisionable && inRange(marioPos, marioSize)) {
 			if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
 				died();
 				switch (mario->jumpCobo) {
@@ -106,7 +106,9 @@ void MyAPP::Form::Object::Goomba::CheckCollision(void* data) {
 			}
 			else {
 				mario->died();
-				GM->LostALife();
+				if (!mario->isInvincible()) {
+					GM->LostALife();
+				}
 			}
 		}
 	}

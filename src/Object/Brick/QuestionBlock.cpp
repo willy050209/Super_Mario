@@ -66,23 +66,31 @@ namespace MyAPP::Form:: Object {
 		}
 		{
 			using namespace MyAPP::Form::Object::Props;
-			using MyAPP::Form::Object::Props::Props;
 			PropsPtr prop;
 			auto proptype = std::static_pointer_cast<std::string>(userdata);
 			if (proptype == nullptr) {
 				return;
 			}
 			else if (*proptype == "BigMushroom") {
-				prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
-				prop->SetPosition(GetPosition());
-				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y);
+				if (mario->isMiniMario()) {
+					prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
+					prop->SetPosition(GetPosition());
+					std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y);
+				}
+				else {
+					prop = std::make_shared<FireFlower>("FireFlower", 9);
+					prop->SetPosition(GetPosition() + glm::vec2{ 0, prop->GetSize().y });
+				}
 			}
 			prop->userdata = mario->userdata;
-			auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
-			auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
-			auto& [_, __, props] = (*tuplePtr);
-			FM.addObject(FM.GetNowForm(), prop);
-			props->push_back(std::move(prop));
+			// Set the position of the prop to be slightly above the question block
+			{
+				auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
+				auto& [_, __, props] = (*tuplePtr);
+				FM.addObject(FM.GetNowForm(), prop);
+				props->push_back(std::move(prop));
+			}
 			isbonked = false;
 		}
 	}
