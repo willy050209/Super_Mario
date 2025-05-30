@@ -121,7 +121,7 @@ namespace MyAPP::Form::Object {
 				}
 				else {
 					mario->died();
-					if (!mario->isBigMario()) {
+					if (!mario->isInvincible()) {
 						GM->LostALife();
 					}
 				}

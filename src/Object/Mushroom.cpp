@@ -5,7 +5,7 @@
 
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	CheckCollision(data);
-	doUp();
+	doJump();
 	Move(glm::vec2(GetSize().x / 16, 0));
 	doDown();
 }
@@ -61,7 +61,7 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 		}
 	}
 }
-void MyAPP::Form::Object::Props::Mushroom::doUp() noexcept {
+void MyAPP::Form::Object::Props::Mushroom::doJump() noexcept {
 	if (UpDistance <= 0) {
 		return;
 	}

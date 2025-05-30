@@ -7,13 +7,14 @@
 #include "Interface/ICollisionable.hpp"
 #include "Interface/IMovable.hpp"
 #include "Interface/IComeDownable.hpp"
+#include "Interface/IJumpable.hpp"
 
 
 namespace MyAPP::Form::Object::Props {
 	/// <summary>
 	/// 所有道具的父類別 繼承ImageObject
 	/// </summary>
-	class Mushroom : Interface::ICollisionable, Interface::IMovable, Interface::IComeDownable, public Props {
+	class Mushroom : Interface::ICollisionable, Interface::IMovable, Interface::IComeDownable, Interface::IJumpable, public Props {
 	public:
 		enum class Category {
 			Mushroom,
@@ -70,7 +71,9 @@ namespace MyAPP::Form::Object::Props {
 		int UpDistance = 0;
 		Category MyCategory;
 		static constexpr inline char* const Images[] = { R"(imgs\super mario\1upMushroom.png)", R"(imgs\super mario\1upMushroomDark.png)", R"(imgs\super mario\BigMushroom.png)" };
-		void doUp() noexcept;
+		
+		virtual void doJump() noexcept override;
+		virtual void Jump() noexcept override {};
 
 		virtual void doDown() noexcept override;
 	};
