@@ -133,6 +133,9 @@ namespace MyAPP::Form:: Object {
 			return mario_invincible == State::Invincible || state == State::DIED || invincibleCount > 0;
 		}
 
+		inline void setInvincible(int val) noexcept {
+			invincibleCount = val;
+		}
 
 		/// <summary>
 		/// 重設所有狀態

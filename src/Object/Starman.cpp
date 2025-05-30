@@ -45,8 +45,20 @@ namespace MyAPP::Form::Object::Props {
 			auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
 				std::cout << "touch Starman\n";
-				// mario->changeType(Mario::Mario_type::SuperMario);
-				mario->changeState(Mario::State::Invincible);
+				switch (mario->GetMario_type()) {
+				case Mario::Mario_type::Mario:
+					mario->changeType(Mario::Mario_type::InvincibleMario);
+					break;
+				case Mario::Mario_type::FieryMario:
+					mario->changeType(Mario::Mario_type::InvincibleFieryMario);
+					break;
+				case Mario::Mario_type::SuperMario:
+					mario->changeType(Mario::Mario_type::InvincibleSuperMario);
+					break;
+				default:
+					break;
+				}
+				mario->setInvincible(FPS_CAP * 10);
 				m_Visible = false;
 			}
 		}

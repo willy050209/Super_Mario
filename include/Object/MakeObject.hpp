@@ -48,7 +48,8 @@ namespace MyAPP::Form::Object {
 			void GetFileDate(std::ifstream& inp) {
 				if (inp.good()) {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
-					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock) {
+					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock ||
+						static_cast<ObjectType>(Type) == ObjectType::PropBrick) {
 						inp >> data;
 					}
 				}

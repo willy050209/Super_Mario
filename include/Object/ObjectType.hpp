@@ -38,7 +38,8 @@ namespace MyAPP::Form::Object {
 		FlagFromPole,
 		Points,
 		ContinueCoinBrick,
-		CoinPoints
+		CoinPoints,
+		PropBrick
 	};
 
 }
