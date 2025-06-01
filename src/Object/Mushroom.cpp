@@ -56,7 +56,8 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 			default:
 				break;
 			}
-
+			Points::UpdatePoint(FM, Points::PointType::pts1000);
+			GM->addPoint(1000);
 			m_Visible = false;
 		}
 	}

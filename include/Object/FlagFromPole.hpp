@@ -29,6 +29,8 @@ namespace MyAPP::Form::Object {
 		virtual void behavior(void* data = nullptr) override;
 
 		static constexpr inline auto FlagFromPoleImage{ R"(imgs\super mario\FlagFromPole.png)" };
+
+		bool enabled{ false };
 	};
 
 }

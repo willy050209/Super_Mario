@@ -465,9 +465,14 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent"))->Enable = false;
 			static_cast<MyAPP::GameManager*>(data)->opMode = false;
-			auto flagformpole = std::make_shared<FlagFromPole>("Flagpole", 100);
-			flagformpole->SetPosition((*it)->GetPosition() - glm::vec2{ flagformpole->GetSize().x / 2, 0 });
-			FM.addObject(FM.GetNowForm(), std::move(flagformpole));
+			auto flagformpole = FM.GetFormObject<FlagFromPole>(FM.GetNowForm(), "FlagFromPole");
+			if (flagformpole) {
+				flagformpole->enabled = true;
+			}
+			auto flagformpolePosUpdate = FM.GetFormObject<EventObject>(FM.GetNowForm(), "flagformpolePosUpdate");
+			if (flagformpolePosUpdate) {
+				flagformpolePosUpdate->Enable = false;
+			}
 			break;
 		}
 	}
@@ -555,10 +560,8 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			std::for_each(std::execution::seq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::Mario) {
-					/*auto pos = obj->GetPosition();
-					pos.x -= gobackposx;
-					obj->SetPosition(pos);*/
 					obj->incPositionX(gobackposx);
+					obj->Reset();
 				} });
 			self->Enable = false;
 			break;

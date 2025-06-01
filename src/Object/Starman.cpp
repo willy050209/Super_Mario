@@ -58,6 +58,8 @@ namespace MyAPP::Form::Object::Props {
 				default:
 					break;
 				}
+				static_cast<MyAPP::GameManager*>(gm)->addPoint(1000);
+				Points::UpdatePoint(fm, Points::PointType::pts1000);
 				mario->setInvincible(FPS_CAP * 10);
 				m_Visible = false;
 			}

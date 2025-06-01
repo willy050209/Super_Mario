@@ -140,7 +140,7 @@ namespace MyAPP::Form:: Object {
 		/// <summary>
 		/// 重設所有狀態
 		/// </summary>
-		inline void Reset() noexcept {
+		virtual void Reset() noexcept override {
 			state = State::MOVE;
 			mario_type = Mario_type::Mario;
 			index = 0;

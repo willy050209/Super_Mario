@@ -40,6 +40,10 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 			it->SetVisible(false);
 			it->collisionable = false;
 		}
+		auto gotodoor = FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor");
+		if (gotodoor) {
+			gotodoor->Enable = true;
+		}
 		enable = false;
 	}
 }

@@ -67,12 +67,22 @@ namespace MyAPP {
 				/// </summary>
 				virtual void move() noexcept;
 
+				virtual void Reset() noexcept {
+					m_Visible = true;
+					collisionable = true;
+					ResetPosition();
+					SetLeft<true>();
+				}
+
+				inline auto setResetPosition(const glm::vec2& pos) noexcept { ResetPositionValue = pos; }
+
+				inline const auto& getResetPosition() const noexcept { return ResetPositionValue; }
 
 			protected:
 				/// <summary>
 				/// 重設座標
 				/// </summary>
-				inline void ResetPosition() noexcept { m_Transform.translation = { 0, 0 }; }
+				inline void ResetPosition() noexcept { m_Transform.translation = ResetPositionValue; }
 
 				/// <summary>
 				/// 墜落事件
@@ -83,6 +93,8 @@ namespace MyAPP {
 				/// 向左旗標
 				/// </summary>
 				int left = 0;
+
+				glm::vec2 ResetPositionValue = { 0, 0 };
 			};
 		}
 	}

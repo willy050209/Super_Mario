@@ -110,6 +110,7 @@ namespace MyAPP {
 		// static constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";
 		// static constexpr auto BlueblockImagePath = /*"imgs/super mario/StairsBrick.png";*/ "imgs/super mario/Blueblock.png";
 
+		static constexpr auto endImagePath = "imgs/super mario/end.png";
 
 		static constexpr auto Ground_Theme = MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3";
 		static constexpr auto Lost_a_Life = MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3";

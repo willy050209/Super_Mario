@@ -66,7 +66,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 		}
 		else {
 			winForm(static_cast<MyAPP::GameManager*>(data));
-			ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
+			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Win_Form);
 		}
 		mario->SetLeft<false>();
 		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();

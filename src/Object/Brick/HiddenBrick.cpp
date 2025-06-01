@@ -22,12 +22,10 @@ void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {
 		auto GM = static_cast<MyAPP::GameManager*>(data);
 		auto& FM = GM->GetFormManger();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-		if (mario->inRange(this->m_Transform.translation, GetSize())) {
+		if (mario->inRange(this->m_Transform.translation, GetSize()) && mario->GetState() == Mario::State::UP) {
 			bonkJump();
 			m_Visible = true;
 			collisionable = true;
-			/*GM->IncHP();
-			FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText")->Enable = true;*/
 			using namespace MyAPP::Form::Object::Props;
 			using MyAPP::Form::Object::Props::Props;
 			auto mushroom = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);

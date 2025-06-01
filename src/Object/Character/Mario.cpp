@@ -24,12 +24,40 @@ namespace MyAPP::Form::Object {
 		//	doJump();
 		//	// if (state != State::DIED)
 		//}
-		comeDown();
-		doJump();
-		if (invincibleCount > 0)
-			invincibleCount--;
-		else
-			collisionable = true;
+		if (!static_cast<MyAPP::GameManager*>(data)->opMode) {
+			comeDown();
+			doJump();
+			if (invincibleCount > 0) {
+				invincibleCount--;
+				switch (mario_type) {
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
+					move();	
+					break;
+				default:
+					break;
+				}
+			}
+			else {
+				collisionable = true;
+				switch (mario_type) {
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
+					changeType(Mario_type::Mario);
+					break;
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
+					changeType(Mario_type::SuperMario);
+					break;
+				case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
+					changeType(Mario_type::FieryMario);
+					break;
+				default:
+					break;
+				}
+				index = 0;
+				changeImg();
+			}
+		}
 	}
 
 	void Mario::doJump() noexcept {

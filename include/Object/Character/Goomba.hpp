@@ -18,6 +18,7 @@ namespace MyAPP {
 				Goomba(const std::string& name, int zindex)
 					: Character(name, Frames[0], zindex) {
 					MyType = ObjectType::Goomba;
+					left = 1;
 				}
 
 				Goomba(const Goomba&) = delete;

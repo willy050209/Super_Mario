@@ -290,23 +290,19 @@ CharacterPtr MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fil
 	CharacterPtr enemy = nullptr;
 	if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Goomba) {
 		enemy = std::make_shared<Goomba>("Goomba", 20);
-		enemy->SetPosition(fileinfo.XY);
-		enemy->SetVisible(true);
-		enemy->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Turtle) {
 		enemy = std::make_shared<Turtle>("Turtle", 20);
-		enemy->SetPosition(fileinfo.XY);
-		enemy->SetVisible(true);
-		enemy->collisionable = fileinfo.Collisionable;
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Koopa) {
 		enemy = std::make_shared<Koopa>("Koopa", 20);
+	}
+	if (enemy) {
 		enemy->SetPosition(fileinfo.XY);
 		enemy->SetVisible(true);
 		enemy->collisionable = fileinfo.Collisionable;
+		enemy->setResetPosition(fileinfo.XY);
 	}
-	
 	return enemy;
 }
 

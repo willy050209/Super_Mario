@@ -306,7 +306,32 @@ INITFORM_FUNC(initFormSetting) {
 
 INITFORM_FUNC(winForm) {
 	auto& MyFM = self->GetFormManger();
-	MyFM.addObject("Win", std::make_shared<TextObject>("", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Win", Util::Color::FromName(Util::Colors::WHITE), 10));
+	constexpr auto formName = MyAPP::Form::FormNames::Win_Form;
+
+
+
+	{
+		using MyAPP::Form::Object::ImageObject;
+		using MyAPP::MyResourcesFilePath;
+		auto background = std::make_shared<ImageObject>("background", MyResourcesFilePath::endImagePath, 10);
+		background->SetPosition({ GetLeftEdge(background), GetTopEdge(background) });
+		MyFM.addObject(formName, std::move(background));
+	}
+	{
+		using MyAPP::Form::Object::EventObject;
+		using MyAPP::Form::Object::ImageObject;
+		using MyAPP::GameManager;
+		auto eventobj = std::make_shared<EventObject>("", [](EventObject* const self, void* data) {
+			auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+			auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "background");
+			if (background->GetPosition().y < -GetTopEdge(background)) {
+				background->m_Transform.translation.y++;
+			}
+		});
+		MyFM.addObject(formName, std::move(eventobj));
+	}
+
+	//MyFM.addObject("Win", std::make_shared<TextObject>("", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Win", Util::Color::FromName(Util::Colors::WHITE), 10));
 }
 
 /*init 1-1*/
@@ -356,6 +381,8 @@ INITFORM_FUNC(initForm_1_1) {
 
 	//auto questionBlocks = GetQuestionBlocks(Blocks);
 
+	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
+	MyFM.addObject(formName, std::move(flagformpole));
 
 	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
@@ -379,6 +406,17 @@ INITFORM_FUNC(initForm_1_1) {
 	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
 	//eventobj->userdata = enemys;
 	//MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("flagformpolePosUpdate", [](EventObject* const self, void* data) {
+		auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+		BrickPtr tmp = std::static_pointer_cast<Brick>(self->userdata);
+		auto flagformpole = FM.GetFormObject<FlagFromPole>(FM.GetNowForm(), "FlagFromPole");
+		if (flagformpole && tmp) {
+			flagformpole->SetPosition({ tmp->GetPosition().x - flagformpole->GetSize().x / 2, tmp->GetPosition().y - flagformpole->GetSize().y / 2 });
+		}
+		});
+	eventobj->userdata = (flagpole->back());
+	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata =(flagpole);
@@ -673,8 +711,47 @@ INITFORM_FUNC(initForm_1_4) {
 	eventobj->userdata = std::move(GetCheckPoints(Blocks));
 	MyFM.addObject(formName, std::move(eventobj));
 
+	{
+		auto door = Getdoors(Blocks);
+		auto event = std::make_shared<EventObject>("moveToDoor", [](EventObject*const self, void* data) {
+			auto door = std::static_pointer_cast<BrickPtrVec>(self->userdata);
+			static_cast<MyAPP::GameManager*>(data)->opMode = false;
+			if (door) {
+				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")->userdata);
+				auto& [enemys, pipes, props] = (*tuplePtr);
+				auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
+				auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
+				auto block = std::static_pointer_cast<BrickPtrVec>(background->userdata);
+				auto flag = true;
+				auto marioPos = mario->GetPosition();
+				auto mariosize = mario->GetSize();
+				auto&& Displacement = static_cast<int>(mariosize.x) >> 3;
+				auto pos = (background)->GetPosition();
+				pos.x -= Displacement;
+				std::for_each(std::execution::seq, block->begin(), block->end(),
+					[&](auto& it) {
+						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+					});
+				std::for_each(std::execution::seq, enemys->begin(), enemys->end(),
+					[&](auto& it) {
+						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+					});
+				std::for_each(std::execution::seq, props->begin(), props->end(),
+					[&](auto& it) {
+						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+					});
+				(background)->SetPosition(pos);
+				mario->move();
+			}
+		}, false);
+		event->userdata = std::move(door);
+		MyFM.addObject(formName,std::move(event));
+	}
+
 	MyFM.addObject(formName, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+
 
 	//writeForm(MyFM, formName);
 }
