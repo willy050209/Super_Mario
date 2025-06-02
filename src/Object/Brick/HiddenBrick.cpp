@@ -34,7 +34,7 @@ void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {
 			mushroom->userdata = mario->userdata;
 			auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 			auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
-			auto& [_, __, props] = (*tuplePtr);
+			auto& [_, __, props, ___] = (*tuplePtr);
 			props->push_back(mushroom);
 			FM.addObject(FM.GetNowForm(), std::move(mushroom));
 		}

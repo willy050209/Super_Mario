@@ -162,6 +162,10 @@ namespace MyAPP::Form:: Object {
 			return mario_type == Mario_type::Mario || mario_type == Mario_type::InvincibleMario;
 		}
 
+		inline bool isFieryMario() const noexcept {
+			return mario_type == Mario_type::FieryMario || mario_type == Mario_type::InvincibleFieryMario;
+		}
+
 		int jumpCobo = 0;
 	private:
 		/// <summary>

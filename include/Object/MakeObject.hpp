@@ -139,6 +139,8 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<PropsPtrVec> make_Props() noexcept;
+
+		[[nodiscard]] static std::shared_ptr<ObjectPtrVec> make_Objs() noexcept;
 	};
 
 }

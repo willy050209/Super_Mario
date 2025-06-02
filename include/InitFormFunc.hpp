@@ -382,8 +382,12 @@ INITFORM_FUNC(initForm_1_1) {
 	//auto questionBlocks = GetQuestionBlocks(Blocks);
 
 	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
-	MyFM.addObject(formName, std::move(flagformpole));
+	flagformpole->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 197, GetTopEdge(Block) - Block->GetSize().y * 2 });
+	MyFM.addObject(formName, (flagformpole));
 
+
+	auto objs = MakeObject::make_Objs();
+	objs->push_back(std::move(flagformpole));
 	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
 	auto& sfx = self->sfx;
@@ -396,7 +400,7 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props);
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props, objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -407,7 +411,7 @@ INITFORM_FUNC(initForm_1_1) {
 	//eventobj->userdata = enemys;
 	//MyFM.addObject(formName, std::move(eventobj));
 
-	eventobj = std::make_shared<EventObject>("flagformpolePosUpdate", [](EventObject* const self, void* data) {
+	/*eventobj = std::make_shared<EventObject>("flagformpolePosUpdate", [](EventObject* const self, void* data) {
 		auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 		BrickPtr tmp = std::static_pointer_cast<Brick>(self->userdata);
 		auto flagformpole = FM.GetFormObject<FlagFromPole>(FM.GetNowForm(), "FlagFromPole");
@@ -416,7 +420,7 @@ INITFORM_FUNC(initForm_1_1) {
 		}
 		});
 	eventobj->userdata = (flagpole->back());
-	MyFM.addObject(formName, std::move(eventobj));
+	MyFM.addObject(formName, std::move(eventobj));*/
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata =(flagpole);
@@ -484,8 +488,10 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
+	auto objs = MakeObject::make_Objs();
+
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props(),objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -577,12 +583,14 @@ INITFORM_FUNC(initForm_1_2) {
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
+	auto objs = MakeObject::make_Objs();
+
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2_Pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props(),objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -639,8 +647,10 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		AddToFoemManger(MyFM, formName, texts);
 	}
 
+	auto objs = MakeObject::make_Objs();
+
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<GameObjectTuple>(MakeObject::make_Characters(), pipes, MakeObject::make_Props());
+	eventobj->userdata = std::make_shared<GameObjectTuple>(MakeObject::make_Characters(), pipes, MakeObject::make_Props(), objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -687,12 +697,14 @@ INITFORM_FUNC(initForm_1_4) {
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
+	auto objs = MakeObject::make_Objs();
+
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
 	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
-	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, std::move(MakeObject::make_Bricks()), std::move(MakeObject::make_Props()));
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, std::move(MakeObject::make_Bricks()), std::move(MakeObject::make_Props()), objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
@@ -719,7 +731,7 @@ INITFORM_FUNC(initForm_1_4) {
 			if (door) {
 				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")->userdata);
-				auto& [enemys, pipes, props] = (*tuplePtr);
+				auto& [enemys, pipes, props, objs] = (*tuplePtr);
 				auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 				auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
 				auto block = std::static_pointer_cast<BrickPtrVec>(background->userdata);
@@ -738,6 +750,10 @@ INITFORM_FUNC(initForm_1_4) {
 						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 					});
 				std::for_each(std::execution::seq, props->begin(), props->end(),
+					[&](auto& it) {
+						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+					});
+				std::for_each(std::execution::seq, objs->begin(), objs->end(),
 					[&](auto& it) {
 						it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 					});

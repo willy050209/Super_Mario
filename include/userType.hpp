@@ -95,7 +95,8 @@ typedef std::pair<ImageObjectPtr, MarioPtr>
 typedef std::tuple<
 	std::shared_ptr<CharacterPtrVec>,
 	std::shared_ptr<BrickPtrVec>,
-	std::shared_ptr<PropsPtrVec>>
+	std::shared_ptr<PropsPtrVec>,
+	std::shared_ptr<ObjectPtrVec>>
 	GameObjectTuple;
 
 typedef std::tuple<int, std::vector<bool>>

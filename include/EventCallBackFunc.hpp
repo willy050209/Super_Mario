@@ -70,7 +70,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(self->userdata);
-	auto& [enemys, pipes, props] = (*tuplePtr);
+	auto& [enemys, pipes, props, objs] = (*tuplePtr);
 	auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 	auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
 	auto block = std::static_pointer_cast<BrickPtrVec>(background->userdata);
@@ -80,7 +80,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto&& Displacement = static_cast<int>(mariosize.x) >> 3;
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	//std::vector<std::thread> thread_object_move;
-
+	if (mario->GetState() == Mario::State::DIED)
+		return;
 	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT) || Util::Input::IsKeyPressed(Util::Keycode::LSHIFT)) {
 		Displacement *= 2;
 	}
@@ -111,6 +112,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
 			std::for_each(std::execution::seq, props->begin(), props->end(),
+				[&](auto& it) {
+					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
+				});
+			std::for_each(std::execution::seq, objs->begin(), objs->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 				});
@@ -155,6 +160,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});
 			std::for_each(std::execution::seq, props->begin(), props->end(),
+				[&](auto& it) {
+					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+				});
+			std::for_each(std::execution::seq, objs->begin(), objs->end(),
 				[&](auto& it) {
 					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 				});

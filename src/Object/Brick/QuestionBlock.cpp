@@ -91,7 +91,7 @@ namespace MyAPP::Form:: Object {
 			{
 				auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
-				auto& [_, __, props] = (*tuplePtr);
+				auto& [_, __, props, ___] = (*tuplePtr);
 				FM.addObject(FM.GetNowForm(), prop);
 				props->push_back(std::move(prop));
 			}

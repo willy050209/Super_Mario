@@ -52,12 +52,12 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 				else if (mario->GetMario_type() == Mario::Mario_type::InvincibleMario) {
 					mario->changeType(Mario::Mario_type::InvincibleSuperMario);
 				}
+				Points::UpdatePoint(FM, Points::PointType::pts1000);
+				GM->addPoint(1000);
 				break;
 			default:
 				break;
 			}
-			Points::UpdatePoint(FM, Points::PointType::pts1000);
-			GM->addPoint(1000);
 			m_Visible = false;
 		}
 	}

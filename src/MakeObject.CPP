@@ -310,6 +310,10 @@ std::shared_ptr<PropsPtrVec> MyAPP::Form::Object::MakeObject::make_Props() noexc
 	return std::make_shared<PropsPtrVec>();
 }
 
+std::shared_ptr<ObjectPtrVec> MyAPP::Form::Object::MakeObject::make_Objs() noexcept {
+	return std::make_shared<ObjectPtrVec>();
+}
+
 
 
 
