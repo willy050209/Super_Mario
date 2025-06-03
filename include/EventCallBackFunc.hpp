@@ -79,7 +79,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto mariosize = mario->GetSize();
 	auto&& Displacement = static_cast<int>(mariosize.x) >> 3;
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
-	//std::vector<std::thread> thread_object_move;
+	
+
 	if (mario->GetState() == Mario::State::DIED)
 		return;
 	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT) || Util::Input::IsKeyPressed(Util::Keycode::LSHIFT)) {
@@ -90,7 +91,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	}
 	if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
 		auto pos = (background)->GetPosition();
-		mario->SetLeft<false>();
+		if (mario->isLeft()) {
+			mario->SetLeft<false>();
+			mario->changeImg();
+		}
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
 				flag = false;
@@ -136,7 +140,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-		mario->SetLeft<true>();
+		if (!mario->isLeft()) {
+			mario->SetLeft<true>();
+			mario->changeImg();
+		}
 		auto pos = (background)->GetPosition();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
@@ -220,6 +227,13 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	else if (Util::Input::IsKeyDown(Util::Keycode::B)) {
 		mario->changeType(Mario::Mario_type::SuperMario);
 	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::N)) {
+		mario->changeType(Mario::Mario_type::FieryMario);
+	}
+	else if (Util::Input::IsKeyDown(Util::Keycode::LCTRL)) {
+		mario->shootFire();
+	}
+
 	if (opmode) {
 		if (Util::Input::IsKeyDown(Util::Keycode::W)) {
 			marioPos.y += mariosize.y;

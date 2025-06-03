@@ -3,11 +3,19 @@
 #define MARIO_HPP
 #include "config.hpp"
 #include "Character.hpp"
+#include "Object/ImageObject.hpp"
+#include "Interface/ICollisionable.hpp"
+#include "Interface/IMovable.hpp"
+#include "FilePath.hpp"
 
 #include <unordered_map>
 #include <vector>
 #include <string>
-namespace MyAPP::Form:: Object {
+namespace MyAPP::Form {
+	class FormManger;
+}
+
+namespace MyAPP::Form::Object {
 	/// <summary>
 	/// 馬力歐物件 繼承Character
 	/// </summary>
@@ -166,6 +174,12 @@ namespace MyAPP::Form:: Object {
 			return mario_type == Mario_type::FieryMario || mario_type == Mario_type::InvincibleFieryMario;
 		}
 
+		inline void shootFire() noexcept {
+			if (isFieryMario() && !shootFireTrigger) {
+				shootFireTrigger = true;
+			}
+		}
+
 		int jumpCobo = 0;
 	private:
 		/// <summary>
@@ -178,6 +192,10 @@ namespace MyAPP::Form:: Object {
 		/// </summary>
 		virtual void comeDown() noexcept override;
 
+		void checkInvincible() noexcept;
+
+		void shoot(void* data) noexcept;
+
 		State state = State::MOVE;
 		Mario_type mario_type = Mario_type::Mario;
 		State mario_invincible = State::MOVE;
@@ -188,6 +206,7 @@ namespace MyAPP::Form:: Object {
 		unsigned imgChangeDelay = 0;
 		int invincibleCount{ 0 };
 		bool diedflag = false;
+		bool shootFireTrigger = false;
 
 
 		std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = {
@@ -226,6 +245,43 @@ namespace MyAPP::Form:: Object {
 
 		};
 	};
-	}
+
+	class Fire :Interface::ICollisionable,Interface::IMovable, public ImageObject {
+	public:
+		explicit Fire(const std::string& name,
+			const float zIndex,
+			const glm::vec2& pivot = { 0, 0 })
+			: ImageObject(name, std::make_shared<Util::Image>(MyAPP::MyResourcesFilePath::FrieBall), zIndex, pivot) {
+			MyType = ObjectType::Fire;
+		}
+
+		Fire(const Fire& other) = delete;
+
+		Fire(Fire&& other) = delete;
+
+		Fire() = delete;
+
+		void behavior(void* data = nullptr) override;
+
+		static void CreateFire(MyAPP::Form::FormManger& FM) noexcept;
+
+		virtual void Move(const glm::vec2& distance) noexcept override;
+		virtual void MoveTo(const glm::vec2& position) noexcept override {
+			m_Transform.translation = position;
+		}
+
+		bool left = false; // 是否向左移動
+
+	private:
+		virtual void CheckCollision(void* data) override;
+		
+		float yposition = 0.0f; // Y軸位置
+
+		float angle = 0.f;
+
+	};
+}
+
+
 
 #endif // !MARIO_HPP

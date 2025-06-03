@@ -13,7 +13,7 @@ namespace MyAPP::Form::Object::Props {
 		Move({ GetSize().x / 16, 0 });
 	}
 
-	void Starman::Move(glm::vec2 distance) noexcept {
+	void Starman::Move(const glm::vec2& distance) noexcept {
 		if (m_movable) {
 			using MyAPP::Form::Object::Brick;
 			auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);

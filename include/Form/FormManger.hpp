@@ -249,6 +249,36 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
+		/// 移除指定物件
+		/// </summary>
+		/// <typeparam name="T">物件類別</typeparam>
+		/// <param name="formName">物件所在的表單名稱</param>
+		/// <param name="objName">物件ID</param>
+		template <typename T,class _Pr>
+		inline void remove_if_Object(const std::string& formName, _Pr _Pred) noexcept {
+			auto form_it = m_Forms.find(formName);
+
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred));
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::find_if(form.m_Images.begin(), form.m_Images.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::find_if(form.m_Texts.begin(), form.m_Texts.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::find_if(form.m_Events.begin(), form.m_Events.end(), _Pred));
+			}
+
+		}
+
+		/// <summary>
 		/// 取得完整表單
 		/// </summary>
 		/// <param name="formName">表單名稱</param>
@@ -376,8 +406,22 @@ namespace MyAPP::Form {
 				if (isInWindow(it))
 					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
 			};
+			auto addEvent = [&](auto& it) {
+				if (isInWindow(it)) {
+					m_Forms[nowForm].m_Form.m_Events.push_back(it);
+				}
+			};
 			if (m_Forms.count(nowForm)) {
+				// 執行目前表單的事件
+				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Events.begin(), m_Forms[nowForm].m_Events.end(), addEvent);
 				doFormEvent(nowForm, data);
+				m_Forms[nowForm].m_Form.m_Events.clear();
+
+				// 更新目前表單的物件
 				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
 				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
 				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);

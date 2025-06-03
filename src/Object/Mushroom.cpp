@@ -10,7 +10,7 @@ void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	doDown();
 }
 
-void MyAPP::Form::Object::Props::Mushroom::Move(glm::vec2 distance) noexcept {
+void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexcept {
 	if (m_movable) {
 		using MyAPP::Form::Object::Brick;
 		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);

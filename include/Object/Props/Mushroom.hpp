@@ -55,8 +55,8 @@ namespace MyAPP::Form::Object::Props {
 
 		void SetUpDistance(int distance) { UpDistance = distance; }
 
-		virtual void Move(glm::vec2 distance) noexcept override;
-		virtual void MoveTo(glm::vec2 position) noexcept override {
+		virtual void Move(const glm::vec2& distance) noexcept override;
+		virtual void MoveTo(const glm::vec2& position) noexcept override {
 			SetPosition(position);
 		}
 

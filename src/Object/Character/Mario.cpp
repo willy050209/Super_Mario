@@ -18,46 +18,11 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Mario::behavior(void* data) {
-		//if (!static_cast<MyAPP::GameManager*>(data)->pause && !static_cast<MyAPP::GameManager*>(data)->opMode) {
-		//	// move();
-		//	comeDown();
-		//	doJump();
-		//	// if (state != State::DIED)
-		//}
 		if (!static_cast<MyAPP::GameManager*>(data)->opMode) {
 			comeDown();
 			doJump();
-			if (invincibleCount > 0) {
-				invincibleCount--;
-				switch (mario_type) {
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
-					move();	
-					break;
-				default:
-					break;
-				}
-			}
-			else {
-				collisionable = true;
-				switch (mario_type) {
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
-					changeType(Mario_type::Mario);
-					changeImg();
-					break;
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
-					changeType(Mario_type::SuperMario);
-					changeImg();
-					break;
-				case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
-					changeType(Mario_type::FieryMario);
-					changeImg();
-					break;
-				default:
-					break;
-				}
-			}
+			checkInvincible();
+			shoot(data);
 		}
 	}
 
@@ -133,6 +98,51 @@ namespace MyAPP::Form::Object {
 		}
 	}
 
+	void Mario::checkInvincible() noexcept {
+		if (invincibleCount > 0) {
+			invincibleCount--;
+			switch (mario_type) {
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
+				move();
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			collisionable = true;
+			switch (mario_type) {
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
+				changeType(Mario_type::Mario);
+				changeImg();
+				break;
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
+				changeType(Mario_type::SuperMario);
+				changeImg();
+				break;
+			case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
+				changeType(Mario_type::FieryMario);
+				changeImg();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	void Mario::shoot(void* data) noexcept {
+		if (shootFireTrigger) {
+			auto GM = static_cast<MyAPP::GameManager*>(data);
+			auto& FM = GM->GetFormManger();
+			Fire::CreateFire(FM);
+			shootFireTrigger = false;
+		}
+	}
+
+
+
 	void Mario::changeImg() noexcept {
 		index %= imgs[mario_type][state][left].size();
 		std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(imgs[mario_type][state][left][index]);
@@ -166,16 +176,78 @@ namespace MyAPP::Form::Object {
 		changeImg();
 	}
 
-	// void Mario::changeType(Mario_type type_) noexcept {
-	//	mario_type = type_;
-	//	changeImg();
-	// }
+	void Fire::behavior(void* data) {
+		this->CheckCollision(data);
+		this->Move({ (left)?-DEFAULTDISPLACEMENT:DEFAULTDISPLACEMENT, yposition });
+	}
 
-	// void Mario::isInvincible(bool flag) noexcept {
-	//	if (flag)
-	//		mario_invincible = State::Invincible;
-	//	else
-	//		mario_invincible = State::MOVE;
-	//	changeImg();
-	// }
+	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
+		static size_t fireCount{ 0 }; // 火球計數器
+		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+		auto fire = std::make_shared<Fire>("Fire", 20);
+		if (mario && moveEvent && fire) {
+			auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
+			auto& [enemys, pipes, props, objs] = (*tuplePtr);
+			if (tuplePtr == nullptr)
+				return;
+			fire->left = mario->isLeft();
+			if (fire->left) {
+				fire->SetPosition(mario->GetPosition() - glm::vec2(fire->GetSize().x, 0));
+			}
+			else {
+				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
+			}
+			fire->yposition = mario->GetPosition().y;
+			fire->userdata = std::make_shared<size_t>(fireCount++);
+			FM.addObject(FM.GetNowForm(), fire);
+			objs->push_back(std::move(fire));
+		}
+	}
+
+	void Fire::Move(const glm::vec2& distance) noexcept {
+		static const float PI = std::acos(-1);
+		m_Transform.translation.x += distance.x;
+		m_Transform.translation.y = GetSize().y * std::sin(2 * PI * angle) + distance.y;
+		angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect
+	}
+
+
+	void Fire::CheckCollision(void* data) {
+		auto GM = static_cast<GameManager*>(data);
+		auto& FM = GM->GetFormManger();
+		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+		if (mario == nullptr || moveEvent == nullptr)
+			return;
+		auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
+		auto& [enemys, pipes, props, objs] = (*tuplePtr);
+		if (tuplePtr == nullptr)
+			return;
+
+		auto remove_fire_image = [&]() {
+			FM.remove_if_Object<Fire>(FM.GetNowForm(), [&](const ObjectPtr& obj) {
+				return obj->MyType == ObjectType::Fire && *std::static_pointer_cast<size_t>(obj->userdata) == *std::static_pointer_cast<size_t>(userdata);
+			});
+			objs->erase(std::remove_if(objs->begin(), objs->end(), [&](const ObjectPtr& obj) {
+				return obj->MyType == ObjectType::Fire && *std::static_pointer_cast<size_t>(obj->userdata) == *std::static_pointer_cast<size_t>(userdata);
+			}),
+				objs->end());
+			};
+		for (auto& it : *enemys) {
+			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
+				it->died();
+				remove_fire_image();
+				return;
+			}
+		}
+		for (auto& it : *std::static_pointer_cast<BrickPtrVec>(mario->userdata)) {
+			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
+				remove_fire_image();
+				return;
+			}
+		}
+	}
+
+
 }

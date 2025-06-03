@@ -20,7 +20,7 @@ namespace MyAPP {
 					MyType = ObjectType::ImageObject;
 				}
 
-				ImageObject(
+				explicit ImageObject(
 					const std::string& name,
 					const std::shared_ptr<Core::Drawable>& drawable,
 					const float zIndex,

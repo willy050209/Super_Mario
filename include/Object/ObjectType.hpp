@@ -39,7 +39,8 @@ namespace MyAPP::Form::Object {
 		Points,
 		ContinueCoinBrick,
 		CoinPoints,
-		PropBrick
+		PropBrick,
+		Fire
 	};
 
 }
