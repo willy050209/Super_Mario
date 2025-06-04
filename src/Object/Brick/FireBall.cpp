@@ -16,7 +16,9 @@ void MyAPP::Form::Object::FireBalls::CheckCollision(void* data) {
 	if (!mario->isInvincible() && !GM->opMode) {
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			mario->died();
-			GM->LostALife();
+			if (!mario->isInvincible()) {
+				GM->LostALife();
+			}
 		}
 	}
 }

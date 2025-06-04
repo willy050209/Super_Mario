@@ -36,7 +36,7 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 				}
 				else {
 					prop = std::make_shared<FireFlower>("FireFlower", 9);
-					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y*1.1);
+					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y);
 				}
 				prop->SetPosition(GetPosition());
 			}
@@ -64,7 +64,7 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 			else if (proptype == "FireFlower") {
 				prop = std::make_shared<FireFlower>("FireFlower", 9);
 				prop->SetPosition(GetPosition());
-				std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y*1.1);
+				std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y);
 			}
 			proptype.clear(); // Clear the proptype after using it
 			if (prop == nullptr) {
