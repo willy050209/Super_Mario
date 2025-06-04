@@ -35,21 +35,21 @@ namespace MyAPP::Form::Object {
 			tmp.y -= MySize.y;
 			tmp.x += (left == 1 ? -((int)MySize.x) >> 1 : ((int)MySize.x) >> 1);
 			for (auto& it : *bricks) {
-				if (it->collisionable && it->inRange(MyPos, MySize)) {
-					if (diedFlag) {
-						moveFlag = false;
-						return;
-					}
-					left ^= 1;
-					imageChangeDelay = FPS_CAP;
-					return;
+				if (it->collisionable && it->inRange(tmp, GetSize())) {
+					flag = true;
+					break;
 				}
 			}
-			for (auto& it : *bricks) {
-				if (it->collisionable && it->inRange(tmp, MySize)) {
-					SetPosition(MyPos);
-					return;
+			if (MyPos.y < WINDOW_HEIGHT && flag) {
+				const auto MySize = GetSize();
+				MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
+				for (auto& it : *bricks) {
+					if (it->collisionable && it->inRange(MyPos, MySize)) {
+						left ^= 1;
+						return;
+					}
 				}
+				SetPosition(MyPos);
 			}
 			if (diedFlag) {
 				moveFlag = false;

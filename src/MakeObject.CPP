@@ -226,7 +226,7 @@ BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo
 			brick_ptr = std::make_shared<PropBrick>("ContinueCoinBrick", MyResourcesFilePath::BlockImagePath,fileinfo.data, color, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::dark:
-			brick_ptr = std::make_shared<PropBrick>("BriContinueCoinBrickck", MyResourcesFilePath::BlockDarkImagePath, fileinfo.data, color, 10);
+			brick_ptr = std::make_shared<PropBrick>("ContinueCoinBrick", MyResourcesFilePath::BlockDarkImagePath, fileinfo.data, color, 10);
 			break;
 		case MyAPP::Form::Object::BrickColor::grey:
 			brick_ptr = std::make_shared<PropBrick>("ContinueCoinBrick", MyResourcesFilePath::BlockGreyImagePath, fileinfo.data, color, 10);

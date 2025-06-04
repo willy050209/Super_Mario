@@ -84,6 +84,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	if (mario->GetState() == Mario::State::DIED)
 		return;
 	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT) || Util::Input::IsKeyPressed(Util::Keycode::LSHIFT)) {
+		if (Util::Input::IsKeyDown(Util::Keycode::RSHIFT) || Util::Input::IsKeyDown(Util::Keycode::LSHIFT)) {
+			mario->shootFire();
+		}
 		Displacement *= 2;
 	}
 	if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == MyAPP::Form::Object::Mario::State::MOVE) {
@@ -156,31 +159,31 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		if (abs(mario->GetPosition().x) >= mariosize.x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
 		}
-		else if (pos.x < GetLeftEdge(background) && flag) {
-			pos.x += Displacement;
-			std::for_each(std::execution::seq, block->begin(), block->end(),
-				[&](auto& it) {
-					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-				});
-			std::for_each(std::execution::seq, enemys->begin(), enemys->end(),
-				[&](auto& it) {
-					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-				});
-			std::for_each(std::execution::seq, props->begin(), props->end(),
-				[&](auto& it) {
-					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-				});
-			std::for_each(std::execution::seq, objs->begin(), objs->end(),
-				[&](auto& it) {
-					it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-				});
-			/*thread_object_move.push_back(std::thread([&]() {for (auto& it : *block) {
-				it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-			} }));
-			thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
-				it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
-			} }));*/
-		}
+		//else if (pos.x < GetLeftEdge(background) && flag) {
+		//	pos.x += Displacement;
+		//	std::for_each(std::execution::seq, block->begin(), block->end(),
+		//		[&](auto& it) {
+		//			it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//		});
+		//	std::for_each(std::execution::seq, enemys->begin(), enemys->end(),
+		//		[&](auto& it) {
+		//			it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//		});
+		//	std::for_each(std::execution::seq, props->begin(), props->end(),
+		//		[&](auto& it) {
+		//			it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//		});
+		//	std::for_each(std::execution::seq, objs->begin(), objs->end(),
+		//		[&](auto& it) {
+		//			it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//		});
+		//	/*thread_object_move.push_back(std::thread([&]() {for (auto& it : *block) {
+		//		it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//	} }));
+		//	thread_object_move.push_back(std::thread([&]() {for (auto& it : enemys) {
+		//		it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
+		//	} }));*/
+		//}
 		else if (mario->GetPosition().x > (-(static_cast<int>(WINDOW_WIDTH) >> 1)) + mario->GetSize().x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
 		}

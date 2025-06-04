@@ -37,13 +37,24 @@ namespace MyAPP {
 
 				inline void SetLoop(bool val) noexcept { loop = val; }
 
-				static constexpr auto GetFrames() noexcept { return Frames; }
+				template <bool isDark>
+				static constexpr auto GetFrames() noexcept { 
+					if constexpr (isDark) {
+						return FramesDark;
+					}
+					else {
+						return Frames;
+					}
+				}
+
+				inline void SetDark(bool val) noexcept { dark = val; }
 
 
 			private:
 				bool loop = true;
+				bool dark = false;
 
-				int imgIndex{ 0 }, imageChangeDelay{ 0 };
+				int imgIndex{ 0 }, imageChangeDelay{ 60 };
 
 				void ChangeImg() noexcept;
 
@@ -51,8 +62,9 @@ namespace MyAPP {
 
 				//virtual void comeDown() noexcept override;
 				//static constexpr inline char* const Frames[] = { R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe0.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe1.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe2.png)", R"(imgs\super mario\1-1\InvincibleMarioJumping\MarioJumpingframe3.png)" };
-				// use frame / 7 up
-				static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/LittleGoomba/frame0.png", "imgs/super mario/1-1/LittleGoomba/frame1.png" };
+				// use frame / 
+				static constexpr inline char* const Frames[] = { "imgs/super mario/LittleGoomba/frame0.png", "imgs/super mario/LittleGoomba/frame1.png" };
+				static constexpr inline char* const FramesDark[] = { "imgs/super mario/LittleGoombaDark/frame0.png", "imgs/super mario/LittleGoombaDark/frame1.png" };
 			};
 		}
 	}

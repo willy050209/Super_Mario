@@ -23,13 +23,6 @@ void MyAPP::Form::Object::Character::move() noexcept {
 			}
 		}
 		SetPosition(MyPos);
-		/*for (auto& it : *bricks) {
-			if (it->collisionable && it->inRange(tmp, MySize)) {
-				SetPosition(MyPos);
-				return;
-			}
-		}*/
-		//left ^= 1;
 	}
 }
 void MyAPP::Form::Object::Character::comeDown() noexcept {

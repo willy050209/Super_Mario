@@ -349,6 +349,13 @@ INITFORM_FUNC(initForm_1_1) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFoemManger(MyFM, formName, Blocks);
 
+	auto leftedge = std::shared_ptr<CheckPoint>(std::make_shared<CheckPoint>("leftedge", 100));
+	leftedge->SetPosition({ GetLeftEdge(Block)  , 0 });
+	leftedge->collisionable = true;
+	leftedge->SetVisible(true);
+	MyFM.addObject(formName, leftedge);
+	//Blocks->push_back(std::move(leftedge));
+
 	// 取得地圖與馬力歐
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
@@ -581,6 +588,11 @@ INITFORM_FUNC(initForm_1_2) {
 	}
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Characters, Blocks);
+	std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
+		if (it->MyType == ObjectType::Goomba) {
+			std::static_pointer_cast<Goomba>(it)->SetDark(true);
+		}
+	});
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();

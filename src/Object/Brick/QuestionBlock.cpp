@@ -75,12 +75,12 @@ namespace MyAPP::Form:: Object {
 				if (mario->isMiniMario()) {
 					prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
 					prop->SetPosition(GetPosition());
-					std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y);
+					std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 				}
 				else {
 					prop = std::make_shared<FireFlower>("FireFlower", 9);
 					prop->SetPosition(GetPosition());
-					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y);
+					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y*1.1);
 					/*prop = std::make_shared<Starman>("FireFlower", 9);
 					prop->SetPosition(GetPosition() + glm::vec2{ 0,GetSize().y });
 					std::static_pointer_cast<Starman>(prop)->SetUpDistance(GetSize().y*3);*/
