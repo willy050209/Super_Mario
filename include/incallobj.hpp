@@ -36,6 +36,7 @@
 #include "Object/Points.hpp"
 #include "Object/Brick/ContinueCoinBrick.hpp"
 #include "Object/Brick/PropBrick.hpp"
+#include "Object/Brick/LeftEdge.hpp"
 #include "Object/MakeObject.hpp"
 
 

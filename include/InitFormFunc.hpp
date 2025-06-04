@@ -347,14 +347,9 @@ INITFORM_FUNC(initForm_1_1) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
+	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
+	Blocks->push_back(leftedge);
 	AddToFoemManger(MyFM, formName, Blocks);
-
-	auto leftedge = std::shared_ptr<CheckPoint>(std::make_shared<CheckPoint>("leftedge", 100));
-	leftedge->SetPosition({ GetLeftEdge(Block)  , 0 });
-	leftedge->collisionable = true;
-	leftedge->SetVisible(true);
-	MyFM.addObject(formName, leftedge);
-	//Blocks->push_back(std::move(leftedge));
 
 	// 取得地圖與馬力歐
 	{
@@ -414,20 +409,12 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	//eventobj->userdata = enemys;
-	//MyFM.addObject(formName, std::move(eventobj));
-
-	/*eventobj = std::make_shared<EventObject>("flagformpolePosUpdate", [](EventObject* const self, void* data) {
-		auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-		BrickPtr tmp = std::static_pointer_cast<Brick>(self->userdata);
-		auto flagformpole = FM.GetFormObject<FlagFromPole>(FM.GetNowForm(), "FlagFromPole");
-		if (flagformpole && tmp) {
-			flagformpole->SetPosition({ tmp->GetPosition().x - flagformpole->GetSize().x / 2, tmp->GetPosition().y - flagformpole->GetSize().y / 2 });
-		}
+	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
+		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);
+		leftedge->m_Transform.translation = { GetLeftEdge(leftedge), 0 };
 		});
-	eventobj->userdata = (flagpole->back());
-	MyFM.addObject(formName, std::move(eventobj));*/
+	eventobj->userdata = std::move(leftedge);
+	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata =(flagpole);
@@ -572,6 +559,8 @@ INITFORM_FUNC(initForm_1_2) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
+	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
+	Blocks->push_back(leftedge);
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	{
@@ -609,9 +598,12 @@ INITFORM_FUNC(initForm_1_2) {
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	//eventobj = std::make_shared<EventObject>("CheckEneyCollision", CheckEneyCollision);
-	//eventobj->userdata = std::move(enemys);
-	//MyFM.addObject(formName, std::move(eventobj));
+	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
+		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);
+		leftedge->m_Transform.translation = { GetLeftEdge(leftedge), 0 };
+	});
+	eventobj->userdata = std::move(leftedge);
+	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
@@ -691,6 +683,8 @@ INITFORM_FUNC(initForm_1_4) {
 
 	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Images, BrickColor::grey);
 	auto checkPointArray =  GetCheckPoints(Blocks);
+	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
+	Blocks->push_back(leftedge);
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	{
@@ -727,6 +721,13 @@ INITFORM_FUNC(initForm_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+
+	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
+		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);
+		leftedge->m_Transform.translation = { GetLeftEdge(leftedge), 0 };
+	});
+	eventobj->userdata = std::move(leftedge);
+	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));

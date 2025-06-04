@@ -40,7 +40,8 @@ namespace MyAPP::Form::Object {
 		ContinueCoinBrick,
 		CoinPoints,
 		PropBrick,
-		Fire
+		Fire,
+		LeftEdge
 	};
 
 }
