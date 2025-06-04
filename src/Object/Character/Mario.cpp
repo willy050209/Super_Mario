@@ -178,7 +178,7 @@ namespace MyAPP::Form::Object {
 
 	void Fire::behavior(void* data) {
 		this->CheckCollision(data);
-		this->Move({ (left)?-DEFAULTDISPLACEMENT:DEFAULTDISPLACEMENT, yposition });
+		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5 : DEFAULTDISPLACEMENT * 1.5, yposition });
 	}
 
 	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
@@ -207,8 +207,9 @@ namespace MyAPP::Form::Object {
 
 	void Fire::Move(const glm::vec2& distance) noexcept {
 		static const float PI = std::acos(-1);
+		static constexpr auto frequency = 0.4f; // Frequency of the sine wave
 		m_Transform.translation.x += distance.x;
-		m_Transform.translation.y = GetSize().y * std::sin(2 * PI * angle) + distance.y;
+		m_Transform.translation.y = GetSize().y * std::sin(2 * PI * frequency * angle) + distance.y;
 		angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect
 	}
 
