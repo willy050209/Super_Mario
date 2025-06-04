@@ -9,13 +9,16 @@ void MyAPP::Form::Object::Character::move() noexcept {
 	bool flag = false;
 	for (auto& it : *bricks) {
 		if (it->collisionable && it->inRange(tmp, GetSize())) {
+			using MyAPP::Form::Object::ObjectType;
+			if (it->MyType == ObjectType::LeftEdge)
+				continue;
 			flag = true;
 			break;
 		}
 	}
 	if (MyPos.y < WINDOW_HEIGHT && flag) {
 		const auto MySize = GetSize();
-		MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
+		MyPos.x += (left == 1 ? -DEFAULTDISPLACEMENT/2:DEFAULTDISPLACEMENT/2);
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				left ^= 1;

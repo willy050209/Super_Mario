@@ -12,8 +12,6 @@
 
 void MyAPP:: Form::Object::HiddenBrick::behavior(void* data) {
 	CheckCollision(data);
-	// dojump();
-	// comeDown();
 }
 
 void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {

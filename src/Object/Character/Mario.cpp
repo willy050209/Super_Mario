@@ -23,6 +23,7 @@ namespace MyAPP::Form::Object {
 			doJump();
 			checkInvincible();
 			shoot(data);
+			static_cast<MyAPP::GameManager*>(data)->mariotype = mario_type;
 		}
 	}
 
@@ -238,6 +239,8 @@ namespace MyAPP::Form::Object {
 		for (auto& it : *enemys) {
 			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
 				it->died();
+				GM->addPoint(100);
+				Points::UpdatePoint(FM, Points::PointType::pts100);
 				remove_fire_image();
 				return;
 			}
