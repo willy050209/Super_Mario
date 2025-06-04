@@ -11,7 +11,12 @@ namespace MyAPP::Form::Object {
 	void Turtle::behavior(void* data) {
 		if (!static_cast<MyAPP::GameManager*>(data)->pause) {
 			if (moveFlag) {
-				move();
+				if (diedFlag) {
+					move();
+				}
+				else {
+					Character::move();
+				}
 			}
 			ChangeImg();
 			comeDown();
@@ -45,18 +50,11 @@ namespace MyAPP::Form::Object {
 				MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
 				for (auto& it : *bricks) {
 					if (it->collisionable && it->inRange(MyPos, MySize)) {
-						left ^= 1;
+						moveFlag = false;
 						return;
 					}
 				}
 				SetPosition(MyPos);
-			}
-			if (diedFlag) {
-				moveFlag = false;
-			}
-			else {
-				left ^= 1;
-				imageChangeDelay = FPS_CAP;
 			}
 		}
 	}
