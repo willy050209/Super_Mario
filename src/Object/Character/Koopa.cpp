@@ -36,7 +36,9 @@ void MyAPP::Form::Object::Koopa::CheckCollision(void* data) {
 	if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
 		if (collisionable && inRange(marioPos, marioSize)) {
 			mario->died();
-			GM->LostALife();
+			if (!mario->isInvincible()) {
+				GM->LostALife();
+			}
 		}
 	}
 }

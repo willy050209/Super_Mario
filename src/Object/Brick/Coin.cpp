@@ -19,13 +19,7 @@ void MyAPP::Form::Object::Coin::behavior(void* data) {
 
 void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
 	if (play) {
-		++(count);
-		if (count >= (FPS_CAP / 5)) {
-			++imgindex;
-			imgindex %= 6;
-			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
-			count = 0;
-		}
+		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
 	}
 }
 void MyAPP::Form::Object::Coin::CheckCollision(void* data) noexcept {

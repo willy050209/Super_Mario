@@ -43,13 +43,7 @@ namespace MyAPP::Form:: Object {
 
 	void QuestionBlock::PlayFrames() noexcept {
 		if (play) {
-			++(count);
-			if (count >= (FPS_CAP / 5)) {
-				++imgindex;
-				imgindex %= 6;
-				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
-				count = 0;
-			}
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
 		}
 	}
 	void QuestionBlock::CreateProp(GameManager* const GM) noexcept {
@@ -80,7 +74,7 @@ namespace MyAPP::Form:: Object {
 				else {
 					prop = std::make_shared<FireFlower>("FireFlower", 9);
 					prop->SetPosition(GetPosition());
-					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y*1.1);
+					std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y);
 					/*prop = std::make_shared<Starman>("FireFlower", 9);
 					prop->SetPosition(GetPosition() + glm::vec2{ 0,GetSize().y });
 					std::static_pointer_cast<Starman>(prop)->SetUpDistance(GetSize().y*3);*/

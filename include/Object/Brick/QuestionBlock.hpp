@@ -43,8 +43,16 @@ namespace MyAPP::Form::Object {
 			return Frames;
 		}
 
-		virtual std::string GetFrame() const noexcept { return Frames[imgindex]; }
+		virtual std::string GetFrame() const noexcept { return Frames[GetFrameCount()]; }
 				
+		static inline size_t& GetFrameCount() noexcept {
+			static size_t frameCount = 0;
+			return frameCount;
+		}
+
+		static constexpr size_t GetMaxFrameCount() noexcept {
+			return 6;
+		}
 
 	private:
 		virtual void PlayFrames() noexcept;
@@ -53,7 +61,6 @@ namespace MyAPP::Form::Object {
 
 		static constexpr inline char* const Frames[] = { "imgs/super mario/QuestionBlock/frame0.png", "imgs/super mario/QuestionBlock/frame1.png", "imgs/super mario/QuestionBlock/frame2.png", "imgs/super mario/QuestionBlock/frame3.png", "imgs/super mario/QuestionBlock/frame4.png", "imgs/super mario/QuestionBlock/frame5.png" };
 
-		int count{ 0 }, imgindex{ 0 };
 		bool play{ true }, isbonked{ false };
 
 		BrickColor color{ BrickColor::normal };
