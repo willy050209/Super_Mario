@@ -107,7 +107,7 @@ void MyAPP::Form::Object::Goomba::CheckCollision(void* data) {
 				}
 				if (mario->GetState() == Mario::State::DOWN) {
 
-					mario->jump(2.5);
+					mario->jump(1.0);
 				}
 			}
 			else {

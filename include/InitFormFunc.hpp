@@ -405,6 +405,20 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props, objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
+		static int frameCount = 0;
+		frameCount++;
+		if (frameCount >= (FPS_CAP / 5)) {
+			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
+			question_block_frame_count++;
+			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
+			auto& coin_frame_count = Coin::GetFrameCount();
+			coin_frame_count++;
+			coin_frame_count %= Coin::GetMaxFrameCount();
+			frameCount = 0;
+		}
+		}));
+
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -496,6 +510,19 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
+		static int frameCount = 0;
+		frameCount++;
+		if (frameCount >= (FPS_CAP / 5)) {
+			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
+			question_block_frame_count++;
+			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
+			auto& coin_frame_count = Coin::GetFrameCount();
+			coin_frame_count++;
+			coin_frame_count %= Coin::GetMaxFrameCount();
+			frameCount = 0;
+		}
+	}));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -610,6 +637,20 @@ INITFORM_FUNC(initForm_1_2) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
+		static int frameCount = 0;
+		frameCount++;
+		if (frameCount >= (FPS_CAP / 5)) {
+			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
+			question_block_frame_count++;
+			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
+			auto& coin_frame_count = Coin::GetFrameCount();
+			coin_frame_count++;
+			coin_frame_count %= Coin::GetMaxFrameCount();
+			frameCount = 0;
+		}
+	}));
+
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
 
@@ -665,6 +706,19 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
+		static int frameCount = 0;
+		frameCount++;
+		if (frameCount >= (FPS_CAP / 5)) {
+			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
+			question_block_frame_count++;
+			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
+			auto& coin_frame_count = Coin::GetFrameCount();
+			coin_frame_count++;
+			coin_frame_count %= Coin::GetMaxFrameCount();
+			frameCount = 0;
+		}
+	}));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -721,6 +775,20 @@ INITFORM_FUNC(initForm_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
+		static int frameCount = 0;
+		frameCount++;
+		if (frameCount >= (FPS_CAP / 5)) {
+			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
+			question_block_frame_count++;
+			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
+			auto& coin_frame_count = Coin::GetFrameCount();
+			coin_frame_count++;
+			coin_frame_count %= Coin::GetMaxFrameCount();
+			frameCount = 0;
+		}
+	}));
 
 	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
 		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);

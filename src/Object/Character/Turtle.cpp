@@ -115,7 +115,7 @@ namespace MyAPP::Form::Object {
 				}
 				else if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
 					died();
-					mario->jump(2.5);
+					mario->jump(1.0);
 				}
 				else {
 					mario->died();
