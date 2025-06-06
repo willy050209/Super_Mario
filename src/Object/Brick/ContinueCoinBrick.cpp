@@ -34,6 +34,7 @@ void MyAPP::Form::Object::ContinueCoinBrick::behavior(void* data) {
 		CoinPoints::CreateCoinPoints(FM, GetPosition());
 		Points::UpdatePoint(FM, Points::PointType::pts200);
 		static_cast<GameManager*>(data)->addPoint(200);
+		static_cast<GameManager*>(data)->coinCount++;
 		trigger = false;
 	}
 	dojump();

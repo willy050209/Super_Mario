@@ -29,6 +29,8 @@ namespace MyAPP::Form::Object{
 
 		virtual void move() noexcept override;
 
+		virtual void Reset() noexcept override;
+
 		inline void setMoveFlag(bool flag) noexcept {
 			moveFlag = flag;
 		}
