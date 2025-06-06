@@ -256,7 +256,7 @@ std::shared_ptr<CoinPtrVec> MyAPP::Form::Object::MakeObject::make_Coins() noexce
 }
 
 std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
-	double multiple = ((float)WINDOW_HEIGHT / 480);
+	const auto multiple = ((float)WINDOW_HEIGHT / 480.f);
 	auto result = std::make_shared<TextObjectPtrVec>();
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ -GetLeftEdge(texttime) - 45 * multiple, GetTopEdge(texttime) - 32  * multiple});
