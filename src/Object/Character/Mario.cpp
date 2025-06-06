@@ -121,14 +121,17 @@ namespace MyAPP::Form::Object {
 			switch (mario_type) {
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
 				changeType(Mario_type::Mario);
+				index++;
 				changeImg();
 				break;
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
 				changeType(Mario_type::SuperMario);
+				index++;
 				changeImg();
 				break;
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
 				changeType(Mario_type::FieryMario);
+				index++;
 				changeImg();
 				break;
 			default:
