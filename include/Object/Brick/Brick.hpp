@@ -64,6 +64,16 @@ namespace MyAPP::Form::Object {
 		/// <returns></returns>
 		inline auto getState() const noexcept { return state; }
 
+		virtual void Reset() noexcept {
+			m_Visible = resetVisible;
+			collisionable = resetCollisionable;
+		}
+
+		virtual void setResetStatic() noexcept {
+			resetVisible = m_Visible;
+			resetCollisionable = collisionable;
+		}
+
 	protected:
 		/// <summary>
 		/// ∞ı¶Ê∏ı≈D
@@ -76,6 +86,8 @@ namespace MyAPP::Form::Object {
 		void comeDown() noexcept;
 
 		bool jumpenable{ true };
+		bool resetVisible{ true };
+		bool resetCollisionable{ true };
 		State state{ State::null };
 		// bool jumpFlag{ false }, comeDownFlag{ false };
 		int jumpcount = 0;

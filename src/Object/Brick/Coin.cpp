@@ -33,5 +33,6 @@ void MyAPP::Form::Object::Coin::CheckCollision(void* data) noexcept {
 		bonk();
 		GM->addPoint(100);
 		FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText")->Enable = true;
+		GM->coinCount++;
 	}
 }

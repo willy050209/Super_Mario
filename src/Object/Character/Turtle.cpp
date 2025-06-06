@@ -113,9 +113,51 @@ namespace MyAPP::Form::Object {
 						setMoveFlag(true);
 					}
 				}
-				else if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN || mario->GetState() == Mario::State::UP) {
+				else if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN) {
 					died();
-					mario->jump(1.0);
+					switch (mario->jumpCobo) {
+					case 0:
+					case 1:
+						GM->addPoint(100);
+						Points::UpdatePoint(FM, Points::PointType::pts100);
+						break;
+					case 2:
+						GM->addPoint(200);
+						Points::UpdatePoint(FM, Points::PointType::pts200);
+						break;
+					case 3:
+						GM->addPoint(400);
+						Points::UpdatePoint(FM, Points::PointType::pts400);
+						break;
+					case 4:
+						GM->addPoint(800);
+						Points::UpdatePoint(FM, Points::PointType::pts800);
+						break;
+					case 5:
+						GM->addPoint(1000);
+						Points::UpdatePoint(FM, Points::PointType::pts1000);
+						break;
+					case 6:
+						GM->addPoint(2000);
+						Points::UpdatePoint(FM, Points::PointType::pts2000);
+						break;
+					case 7:
+						GM->addPoint(4000);
+						Points::UpdatePoint(FM, Points::PointType::pts4000);
+						break;
+					case 8:
+						GM->addPoint(5000);
+						Points::UpdatePoint(FM, Points::PointType::pts5000);
+						break;
+					default:
+						GM->IncHP();
+						Points::UpdatePoint(FM, Points::PointType::pts1up);
+						break;
+					}
+					if (mario->GetState() == Mario::State::DOWN) {
+
+						mario->jump(1.0);
+					}
 				}
 				else {
 					mario->died();

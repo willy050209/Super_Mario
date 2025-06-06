@@ -128,6 +128,8 @@ namespace MyAPP {
 
 		MyAPP::Form::Object::Mario::Mario_type mariotype{ MyAPP::Form::Object::Mario::Mario_type::Mario };
 
+		size_t coinCount = 0;
+
 	private:
 
 		/// <summary>

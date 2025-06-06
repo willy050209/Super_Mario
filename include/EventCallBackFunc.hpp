@@ -568,6 +568,10 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+	auto bricks = std::static_pointer_cast<BrickPtrVec>(mario->userdata);
+	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
+	auto& [enemys, pipes, props, objs] = (*tuplePtr);
 	auto checkPoints = std::static_pointer_cast<CheckPointPtrVec>(self->userdata);
 	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
 	auto GM = static_cast<MyAPP::GameManager*>(data);
@@ -582,9 +586,6 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			std::for_each(std::execution::seq, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::CheckPoint) {
-					/*auto pos = obj->GetPosition();
-					pos.x -= gobackposx;
-					obj->SetPosition(pos);*/
 					obj->incPositionX(gobackposx);
 				} });
 			std::for_each(std::execution::seq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
@@ -600,15 +601,16 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	std::for_each(std::execution::seq, checkPoints->begin(), checkPoints->end(),
 		[&](auto& it) {
 			it->incPositionX(gobackposx);
-			/*auto pos = it->GetPosition();
-			pos.x -= gobackposx;
-			it->SetPosition(pos); */
 		});
-	/*for (auto& it : *checkPoints) {
-		auto pos = it->GetPosition();
-		pos.x -= gobackposx;
-		it->SetPosition(pos);
-	}*/
+	std::for_each(std::execution::seq, bricks->begin(), bricks->end(),
+		[&](auto& it) {
+			it->Reset();
+		});
+	std::for_each(std::execution::seq, props->begin(), props->end(),
+		[&](auto& it) {
+			FM.removeObject<Props::Props>(FM.GetNowForm(), it->m_ID);
+		});
+	props->clear();
 }
 
 /// <summary>

@@ -6,7 +6,7 @@
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	CheckCollision(data);
 	doJump();
-	Move(glm::vec2(GetSize().x / 16, 0));
+	Move(glm::vec2(GetSize().x / 16 * (left ? -1 : 1), 0));
 	doDown();
 }
 
@@ -19,6 +19,7 @@ void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexc
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				MyPos.x = it->GetPosition().x - (static_cast<int>(it->GetSize().x) >> 1) - (static_cast<int>(MySize.x) >> 1);
+				left = !left; // Change direction if collision occurs
 				break;
 			}
 		}
@@ -58,7 +59,7 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 			default:
 				break;
 			}
-			m_Visible = false;
+			FM.removeObject<Mushroom>(FM.GetNowForm(), m_ID);
 		}
 	}
 }

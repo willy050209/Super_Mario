@@ -22,6 +22,7 @@ namespace MyAPP {
 					const std::vector<std::shared_ptr<GameObject>>& children =
 						std::vector<std::shared_ptr<GameObject>>())
 					: GameObject(drawable, zIndex, pivot, visible, children), name(name) {
+					m_ID = IDCounter++;
 				}
 
 				Object(const Object&) = delete;
@@ -134,6 +135,10 @@ namespace MyAPP {
 				/// ¬O§_¥i¸I¼²
 				/// </summary>
 				bool collisionable{ true };
+
+				size_t m_ID;
+
+				static inline size_t IDCounter{ 0 };
 			};
 		}
 	}
