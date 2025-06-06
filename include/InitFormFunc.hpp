@@ -7,6 +7,7 @@ INITFORM_FUNC(initForm_1_2);
 INITFORM_FUNC(initForm_1_1_Pip);
 INITFORM_FUNC(initForm_1_1_to_1_2);
 INITFORM_FUNC(initForm_1_2_Pipe);
+INITFORM_FUNC(initForm_1_2_to_1_4);
 INITFORM_FUNC(initForm_1_4);
 INITFORM_FUNC(winForm);
 
@@ -673,6 +674,105 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 	
 	//writeForm(MyFM, MyAPP::Form::FormNames::Form_1_2_Pipe);
+}
+
+INITFORM_FUNC(initForm_1_2_to_1_4) {
+	using MyAPP::Form::Object::MakeObject;
+	auto& MyFM = self->GetFormManger();
+	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_to_1_4;
+	auto& PositionReference = PositionReference::GetPositionReference();
+
+	// 從地圖檔取得所有方塊
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
+	auto pipes = GetPipeBricks(Blocks);
+	auto flagpole = GetFlagpoles(Blocks);
+	auto checkPointArray = GetCheckPoints(Blocks);
+	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
+	Blocks->push_back(leftedge);
+	AddToFoemManger(MyFM, formName, Blocks);
+
+	// 取得地圖與馬力歐
+	{
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
+		MyFM.addObject(formName, std::move(BMptr.first));
+		MyFM.addObject(formName, std::move(BMptr.second));
+	}
+
+	// 取得時間、分數、生命文字方塊
+	{
+		auto texts = MakeObject::make_GameText();
+		AddToFoemManger(MyFM, formName, texts);
+	}
+
+	// 取得所有敵人
+	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
+
+	/*{
+		auto aaa = std::make_shared<PiranaPlant>("PiranaPlant", 100);
+		aaa->setResetPosition({ 0, 0 });
+		aaa->SetPos({ 0, 0 });
+		enemys->push_back(std::move(aaa));
+	}*/
+	AddToFoemManger(MyFM, formName, enemys);
+
+	auto props = MakeObject::make_Props();
+
+	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
+	flagformpole->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 197, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 2 });
+	MyFM.addObject(formName, (flagformpole));
+
+
+	auto objs = MakeObject::make_Objs();
+	objs->push_back(std::move(flagformpole));
+
+	// 設定表單事件
+	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, false);
+	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
+	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props, objs);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
+
+	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
+	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
+		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);
+		leftedge->m_Transform.translation = { GetLeftEdge(leftedge), 0 };
+	});
+	eventobj->userdata = std::move(leftedge);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
+	eventobj->userdata = (flagpole);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
+	eventobj->userdata = Getdoors(Blocks);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
+
+	// eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
+	// eventobj->userdata = GetTurtless(enemys);
+	// MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+
+	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
+	MyFM.addObject(formName, std::move(eventobj));
+
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = checkPointArray;
+	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
+	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
 }
 
 INITFORM_FUNC(initForm_1_4) {
