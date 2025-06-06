@@ -30,7 +30,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Turtle::move() noexcept {
-		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+		/*auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 		bool flag = true;
 		auto MyPos = GetPosition();
 		if (MyPos.y < WINDOW_HEIGHT) {
@@ -41,6 +41,8 @@ namespace MyAPP::Form::Object {
 			tmp.x += (left == 1 ? -((int)MySize.x) >> 1 : ((int)MySize.x) >> 1);
 			for (auto& it : *bricks) {
 				if (it->collisionable && it->inRange(tmp, GetSize())) {
+					if (it->MyType == ObjectType::LeftEdge)
+						continue;
 					flag = true;
 					break;
 				}
@@ -50,13 +52,15 @@ namespace MyAPP::Form::Object {
 				MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
 				for (auto& it : *bricks) {
 					if (it->collisionable && it->inRange(MyPos, MySize)) {
+						if (it->MyType == ObjectType::LeftEdge)
+							continue;
 						moveFlag = false;
 						return;
 					}
 				}
 				SetPosition(MyPos);
 			}
-		}
+		}*/
 	}
 
 

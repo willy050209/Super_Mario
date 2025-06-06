@@ -808,7 +808,7 @@ EVENTCALLCALLBACKFUN(freeForm) {
 EVENTCALLCALLBACKFUN(UpdateFrameCount) {
 	static size_t frameCount = 0;
 	frameCount++;
-	if (frameCount % 5 ==0) {
+	if (frameCount % 10 == 0) {
 		QuestionBlock::nextFrame();
 		Coin::nextFrame();
 	}

@@ -367,12 +367,12 @@ INITFORM_FUNC(initForm_1_1) {
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
 	
-	{
+	/*{
 		auto aaa = std::make_shared<PiranaPlant>("PiranaPlant", 100);
 		aaa->setResetPosition({ 0, 0 });
 		aaa->SetPos({ 0, 0 });
 		enemys->push_back(std::move(aaa));
-	}
+	}*/
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();

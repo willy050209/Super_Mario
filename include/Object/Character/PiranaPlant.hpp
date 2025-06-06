@@ -69,6 +69,7 @@ namespace MyAPP::Form::Object {
 
 		glm::vec2 pos{ 0.0f, 0.0f };
 
+		bool dead{ false };
 	};
 
 
