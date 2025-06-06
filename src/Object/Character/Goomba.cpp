@@ -110,6 +110,9 @@ void MyAPP::Form::Object::Goomba::CheckCollision(void* data) {
 					mario->jump(1.0);
 				}
 			}
+			else if (mario->GetState() == Mario::State::UP) {
+				return;
+			}
 			else {
 				mario->died();
 				if (!mario->isInvincible()) {
