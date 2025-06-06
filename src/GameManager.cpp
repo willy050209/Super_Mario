@@ -33,7 +33,6 @@ void MyAPP::GameManager::init() noexcept {
 		(func)(this);
 	});
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel);
-	
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {

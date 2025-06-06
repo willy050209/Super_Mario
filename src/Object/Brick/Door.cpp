@@ -61,6 +61,10 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2) {
+			initForm_1_2_to_1_4(static_cast<MyAPP::GameManager*>(data));
+			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_to_1_4);
+		}
+		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_to_1_4) {
 			initForm_1_4(static_cast<MyAPP::GameManager*>(data));
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_4);
 		}

@@ -36,6 +36,8 @@ namespace MyAPP {
 			/// </summary>
 			static constexpr auto Background_1_2_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BG in pipe.png";
 
+			static constexpr auto Background_1_2_to_1_4_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BGupground.png";
+
 			static constexpr auto Background_1_4_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-4BG.png";
 			
 			static constexpr auto Form_1_1_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Images.txt";
@@ -47,6 +49,7 @@ namespace MyAPP {
 			static constexpr auto Form_1_2_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Characters.txt";
 			static constexpr auto Form_1_2_Pipe_Images = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Images.txt";
 			static constexpr auto Form_1_2_Pipe_Characters = MY_RESOURCE_DIR "/MAP/Form_1_2_Pipe_Characters.txt";
+			static constexpr auto Form_1_2_to_1_4_Images = MY_RESOURCE_DIR "/MAP/Form_1_2_to_1_4_Images.txt";
 			static constexpr auto Form_1_4_Images = MY_RESOURCE_DIR "/MAP/Form_1_4_Images.txt";
 			static constexpr auto Form_1_4_Characters = MY_RESOURCE_DIR "/MAP/Form_1_4_Characters.txt";
 		};
