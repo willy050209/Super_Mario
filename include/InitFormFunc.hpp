@@ -360,10 +360,11 @@ INITFORM_FUNC(initForm_1_1) {
 	}
 	
 	// 取得時間、分數、生命文字方塊
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 	
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
@@ -385,6 +386,12 @@ INITFORM_FUNC(initForm_1_1) {
 
 	auto objs = MakeObject::make_Objs();
 	objs->push_back(std::move(flagformpole));
+
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x/2, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
+
+
 	self->sfx = std::make_shared<Util::SFX>(MyAPP::MyResourcesFilePath::Game_Over);
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
 	auto& sfx = self->sfx;
@@ -470,16 +477,20 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	}
 
 	// 取得時間、分數、生命文字方塊
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 
 	// 建立所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
 
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, MakeObject::make_Props(),objs);
@@ -570,10 +581,11 @@ INITFORM_FUNC(initForm_1_2) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Characters, Blocks);
 	std::for_each(enemys->begin(), enemys->end(), [&](auto& it) {
@@ -584,6 +596,9 @@ INITFORM_FUNC(initForm_1_2) {
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2_Pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
@@ -647,12 +662,16 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 
 	auto objs = MakeObject::make_Objs();
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
 
 	auto eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
 	eventobj->userdata = std::make_shared<GameObjectTuple>(MakeObject::make_Characters(), pipes, MakeObject::make_Props(), objs);
@@ -703,10 +722,11 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	}
 
 	// 取得時間、分數、生命文字方塊
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Characters();
@@ -720,6 +740,10 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	auto objs = MakeObject::make_Objs();
 	objs->push_back(std::move(flagformpole));
+
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
 
 	// 設定表單事件
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
@@ -789,15 +813,20 @@ INITFORM_FUNC(initForm_1_4) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	{
-		auto texts = MakeObject::make_GameText();
-		AddToFoemManger(MyFM, formName, texts);
-	}
+	auto texts = MakeObject::make_GameText();
+	AddToFoemManger(MyFM, formName, texts);
+	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		return it->name == "CoinnumText";
+	});
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Characters, Blocks);
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
+
+	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x, 0 });
+	MyFM.addObject(formName, std::move(coinimg));
 
 	auto eventobj = std::make_shared<EventObject>("Form_1_2_to_1_4", freeForm, true);
 	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_to_1_4));

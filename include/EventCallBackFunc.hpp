@@ -807,10 +807,18 @@ EVENTCALLCALLBACKFUN(freeForm) {
 
 EVENTCALLCALLBACKFUN(UpdateFrameCount) {
 	static size_t frameCount = 0;
+	static size_t coinimgIndex = 0;
 	frameCount++;
 	if (frameCount % 10 == 0) {
 		QuestionBlock::nextFrame();
 		Coin::nextFrame();
+		coinimgIndex = (coinimgIndex + 1) % 6;
+		auto GM = static_cast<MyAPP::GameManager*>(data);
+		auto& FM = GM->GetFormManger();
+		auto coinimg = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "coinimg");
+		if (coinimg) {
+			std::static_pointer_cast<Util::Image>(coinimg->GetDrawable())->SetImage(Coin::GetFrames()[coinimgIndex]);
+		}
 	}
 	if (frameCount % 3 == 0) {
 		PiranaPlant::nextFrame();
@@ -823,6 +831,10 @@ EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
 	auto& FM = GM->GetFormManger();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "CoinnumText");
 	if (text) {
+		if (GM->coinCount >= 100) {
+			GM->coinCount -= 100;
+			GM->IncHP();
+		}
 		std::unique_ptr<char> buffer(new char[10]);
 		std::sprintf(buffer.get(), "x%02d", GM->coinCount);
 		std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
