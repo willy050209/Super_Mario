@@ -30,7 +30,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Turtle::move() noexcept {
-		/*auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
 		bool flag = true;
 		auto MyPos = GetPosition();
 		if (MyPos.y < WINDOW_HEIGHT) {
@@ -60,7 +60,13 @@ namespace MyAPP::Form::Object {
 				}
 				SetPosition(MyPos);
 			}
-		}*/
+		}
+	}
+
+	void Turtle::Reset() noexcept {
+		Character::Reset();
+		diedFlag = false;
+		moveFlag = true;
 	}
 
 
