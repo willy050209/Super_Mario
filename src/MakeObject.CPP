@@ -2,6 +2,7 @@
 #include "Position.hpp"
 #include "config.hpp"
 #include "userType.hpp"
+#include<iostream>
 
 #include <memory>
 #include <fstream>
@@ -254,17 +255,43 @@ std::shared_ptr<CoinPtrVec> MyAPP::Form::Object::MakeObject::make_Coins() noexce
 }
 
 std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
+	double multiple = ((float)WINDOW_HEIGHT / 480);
 	auto result = std::make_shared<TextObjectPtrVec>();
-	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "300", Util::Color::FromName(Util::Colors::WHITE), 100);
-	texttime->SetPosition({ GetLeftEdge(texttime), GetTopEdge(texttime) });
+	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
+	texttime->SetPosition({ -GetLeftEdge(texttime) - 45 * multiple, GetTopEdge(texttime) - 32  * multiple});
 	result->push_back(std::move(texttime));
+	
+	auto textnum = std::make_shared<TextObject>("Timename", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "TIME", Util::Color::FromName(Util::Colors::WHITE), 100);
+	textnum->SetPosition({ -GetLeftEdge(textnum) - 45 * multiple, GetTopEdge(textnum) - 10 * multiple });
+	result->push_back(std::move(textnum));
 
-	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
-	text->SetPosition({ -GetLeftEdge(text), GetTopEdge(text) });
+	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
+	text->SetPosition({ 0, GetTopEdge(text) - 32 * multiple});
+	text->SetVisible(false);
 	result->push_back(std::move(text));
 
-	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::MyFontPath, 20 * ((float)WINDOW_HEIGHT / 480), "Point:0", Util::Color::FromName(Util::Colors::WHITE), 100);
-	pointtext->SetPosition({ 0, GetTopEdge(pointtext) });
+	//std::cout << multiple << '\n';
+
+	auto Worldtext = std::make_shared<TextObject>("WorldText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "WORLD", Util::Color::FromName(Util::Colors::WHITE), 100);
+	Worldtext->SetPosition({ -GetLeftEdge(Worldtext) - (45 + 20 + 100) * multiple, GetTopEdge(Worldtext) - 10 * multiple});
+	result->push_back(std::move(Worldtext));
+
+	// 關卡文字
+	auto nowWorldtext = std::make_shared<TextObject>("NOWWorldtext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "1-1", Util::Color::FromName(Util::Colors::WHITE), 100);
+	nowWorldtext->SetPosition({ -GetLeftEdge(nowWorldtext) - (45 + 20 + 120) * multiple, GetTopEdge(nowWorldtext) - 32 * multiple });
+	result->push_back(std::move(nowWorldtext));
+
+	//金幣數量
+	auto coinnumtext = std::make_shared<TextObject>("CoinnumText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "x00", Util::Color::FromName(Util::Colors::WHITE), 100);
+	coinnumtext->SetPosition({ GetLeftEdge(coinnumtext) + (45 + 45 + 20 + 20 + 120) * multiple, GetTopEdge(coinnumtext) - 32 * multiple });
+	result->push_back(std::move(coinnumtext));
+
+	auto MARIOpointtext = std::make_shared<TextObject>("MARIOpointtext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "MARIO", Util::Color::FromName(Util::Colors::WHITE), 100);
+	MARIOpointtext->SetPosition({ GetLeftEdge(MARIOpointtext) + 45 * multiple, GetTopEdge(MARIOpointtext) - 10 * multiple });
+	result->push_back(std::move(MARIOpointtext));
+
+	auto pointtext = std::make_shared<TextObject>("PointText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "000000", Util::Color::FromName(Util::Colors::WHITE), 100);
+	pointtext->SetPosition({ GetLeftEdge(pointtext) + 45 * multiple, GetTopEdge(pointtext) - 32 * multiple});
 	result->push_back(std::move(pointtext));
 
 	return result;

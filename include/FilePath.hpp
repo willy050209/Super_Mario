@@ -59,6 +59,8 @@ namespace MyAPP {
 		static constexpr auto ArialFontPath = MY_RESOURCE_DIR "/Font/arial.ttf";
 		static constexpr auto BackgroundImagePath = MY_RESOURCE_DIR "/Image/Background/cat.jpg";
 		static constexpr auto marioImagePath = "imgs/super mario/Mario/frame0.png";
+		static constexpr auto TimesNewRoman = MY_RESOURCE_DIR "/Font/times.ttf";
+		static constexpr auto SuperMarioFont = MY_RESOURCE_DIR "/Font/Super Mario Bros. NES.ttf";
 
 		/// <summary>
 		/// 磚頭圖片路徑

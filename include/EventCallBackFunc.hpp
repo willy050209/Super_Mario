@@ -717,7 +717,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
 	/// <summary>¤À¼Æ¤å¦r</summary>
 	char textstr[128] = "";
-	snprintf(textstr, sizeof(textstr), "Point:%d", GM->GetPoint());
+	snprintf(textstr, sizeof(textstr), "%06d", GM->GetPoint());
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
 	self->Enable = false;
 }
