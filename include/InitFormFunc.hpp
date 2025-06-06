@@ -683,17 +683,19 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	auto& PositionReference = PositionReference::GetPositionReference();
 
 	// 從地圖檔取得所有方塊
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
+	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_to_1_4_Images);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
+	leftedge->SetPosition({ GetLeftEdge(leftedge), 0 });
 	Blocks->push_back(leftedge);
 	AddToFoemManger(MyFM, formName, Blocks);
 
 	// 取得地圖與馬力歐
 	{
-		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
+		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_to_1_4_ImagePath,
+			Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 10 });
 		MyFM.addObject(formName, std::move(BMptr.first));
 		MyFM.addObject(formName, std::move(BMptr.second));
 	}
@@ -705,20 +707,12 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	}
 
 	// 取得所有敵人
-	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
-
-	/*{
-		auto aaa = std::make_shared<PiranaPlant>("PiranaPlant", 100);
-		aaa->setResetPosition({ 0, 0 });
-		aaa->SetPos({ 0, 0 });
-		enemys->push_back(std::move(aaa));
-	}*/
-	AddToFoemManger(MyFM, formName, enemys);
+	auto enemys = MakeObject::make_Characters();
 
 	auto props = MakeObject::make_Props();
 
 	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
-	flagformpole->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 197, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 2 });
+	flagformpole->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 23.5f, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 2 });
 	MyFM.addObject(formName, (flagformpole));
 
 
@@ -726,7 +720,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	objs->push_back(std::move(flagformpole));
 
 	// 設定表單事件
-	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, false);
+	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 	MyFM.addObject(formName, std::move(eventobj));
 
@@ -757,10 +751,6 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	// eventobj = std::make_shared<EventObject>("CheckTortoiseShellCollision", CheckTortoiseShellCollision);
-	// eventobj->userdata = GetTurtless(enemys);
-	// MyFM.addObject(formName, std::move(eventobj));
-
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
@@ -773,6 +763,8 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("FinifhEvent", CallFinish, false));
 	MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+
+	//MyAPP::Form::writeForm(MyFM, formName);
 }
 
 INITFORM_FUNC(initForm_1_4) {
@@ -805,8 +797,8 @@ INITFORM_FUNC(initForm_1_4) {
 
 	auto objs = MakeObject::make_Objs();
 
-	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
-	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2));
+	auto eventobj = std::make_shared<EventObject>("Form_1_2_to_1_4", freeForm, true);
+	eventobj->userdata = std::move(std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_to_1_4));
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("MoveEvent", moveEvent);
