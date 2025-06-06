@@ -238,6 +238,10 @@ BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo
 		brick_ptr->SetVisible(fileinfo.Visibility);
 		brick_ptr->collisionable = fileinfo.Collisionable;
 	}
+	if (brick_ptr) {
+		brick_ptr->setResetStatic();
+	}
+	
 	return brick_ptr;
 }
 

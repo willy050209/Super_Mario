@@ -21,6 +21,8 @@ void MyAPP::Form::Object::Character::move() noexcept {
 		MyPos.x += (left == 1 ? -DEFAULTDISPLACEMENT/2:DEFAULTDISPLACEMENT/2);
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
+				if (it->MyType == ObjectType::LeftEdge)
+					continue;
 				left ^= 1;
 				return;
 			}

@@ -61,6 +61,7 @@ namespace MyAPP::Form::Object::Props {
 		}
 
 		bool m_movable = false;
+		bool left = false;
 
 	protected:
 

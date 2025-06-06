@@ -109,10 +109,69 @@ namespace MyAPP::Form {
 		/// </summary>
 		/// <typeparam name="T">物件類別</typeparam>
 		/// <param name="formName">物件所在的表單名稱</param>
-		/// <param name="objName">物件ID</param>
+		/// <param name="ID">物件ID</param>
 		/// <returns>位於formName表單中
 		/// 類別為objtype
-		/// ID=objName
+		/// m_ID == ID
+		/// 的物件</returns>
+		template <typename T>
+		inline std::shared_ptr<T> GetFormObject(const std::string& formName, const size_t& ID) const noexcept {
+			// 1. 檢查表單是否存在
+			auto form_it = m_Forms.find(formName);
+			if (form_it == m_Forms.end()) {
+				return nullptr; // 表單不存在
+			}
+			auto& form = form_it->second;
+
+			if constexpr (std::is_same_v<Object::Mario, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->MyType == Object::ObjectType::Mario && ptr->m_ID == ID; });
+				if (it != form.m_Characters.end()) {
+					return std::static_pointer_cast<Object::Mario>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::Character, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				if (it != form.m_Characters.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				auto it = std::find_if(form.m_Images.begin(), form.m_Images.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				if (it != form.m_Images.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				auto it = std::find_if(form.m_Texts.begin(), form.m_Texts.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Texts.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				auto it = std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Buttons.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				auto it = std::find_if(form.m_Events.begin(), form.m_Events.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Events.end()) ? *it : nullptr;
+			}
+
+			return nullptr;
+		}
+
+		/// <summary>
+		/// 取得表單物件
+		/// </summary>
+		/// <typeparam name="T">物件類別</typeparam>
+		/// <param name="formName">物件所在的表單名稱</param>
+		/// <param name="objName">物件名稱</param>
+		/// <returns>位於formName表單中
+		/// 類別為objtype
+		/// name == objName
 		/// 的物件</returns>
 		template <typename T>
 		inline std::shared_ptr<T> GetFormObject(const std::string& formName, std::string_view objName) const noexcept {
@@ -168,13 +227,59 @@ namespace MyAPP::Form {
 		/// </summary>
 		/// <typeparam name="T">物件類別</typeparam>
 		/// <param name="formName">物件所在的表單名稱</param>
-		/// <param name="objName">物件ID</param>
+		/// <param name="ID">物件ID</param>
 		template <typename T>
-		inline void removeObject(const std::string& formName, const std::string &objName) noexcept {
+		inline void removeObject(const std::string& formName, const size_t& ID) noexcept {
 			auto form_it = m_Forms.find(formName);
 			//if (form_it == m_Forms.end()) {
 			//	return; // 表單不存在
 			//}
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::remove_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Characters.end());
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::remove_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Images.end());
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::remove_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Texts.end());
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::remove_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Buttons.end());
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::remove_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Events.end());
+			}
+		}
+
+		/// <summary>
+		/// 移除指定物件
+		/// </summary>
+		/// <typeparam name="T">物件類別</typeparam>
+		/// <param name="formName">物件所在的表單名稱</param>
+		/// <param name="objName">物件名稱</param>
+		template <typename T>
+		inline void removeObject(const std::string& formName, const std::string& objName) noexcept {
+			auto form_it = m_Forms.find(formName);
+			// if (form_it == m_Forms.end()) {
+			//	return; // 表單不存在
+			// }
 			auto& form = form_it->second;
 
 			if constexpr (std::is_base_of_v<Object::Character, T>) {
@@ -407,6 +512,11 @@ namespace MyAPP::Form {
 					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
 			};
 			auto addEvent = [&](auto& it) {
+				auto isInWindow = [](auto& it) {
+					auto& pos = it->m_Transform.translation;
+					auto size = it->GetSize();
+					return std::abs(pos.x) - size.x <= WINDOW_WIDTH && std::abs(pos.y) - size.y <= WINDOW_HEIGHT;
+				};
 				if (isInWindow(it)) {
 					m_Forms[nowForm].m_Form.m_Events.push_back(it);
 				}

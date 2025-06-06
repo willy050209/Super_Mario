@@ -45,6 +45,13 @@ namespace MyAPP::Form::Object {
 
 		virtual std::string GetFrame() const noexcept { return Frames[GetFrameCount()]; }
 				
+		virtual void Reset() noexcept override {
+			Brick::Reset();
+			isbonked = false;
+			play = true;
+			GetFrameCount() = 0;
+		}
+
 		static inline size_t& GetFrameCount() noexcept {
 			static size_t frameCount = 0;
 			return frameCount;

@@ -8,7 +8,7 @@ void MyAPP::Form::Object::Points::behavior(void* data) {
 		if (count <= 0) {
 			auto GM = static_cast<GameManager*>(data);
 			auto& FM = GM->GetFormManger();
-			FM.removeFirstObject<ImageObject>(FM.GetNowForm(), name);
+			FM.removeObject<Points>(FM.GetNowForm(), m_ID);
 			m_Visible = false;
 			return;
 		}

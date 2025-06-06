@@ -37,8 +37,12 @@ namespace MyAPP::Form::Object {
 					if ((it)->collisionable && (it)->inRange(tmp, GetSize())) {
 
 						tmp1 = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
-						(it)->bonk();
-						(it)->bonkJump();
+						auto tmp2 = GetSize();
+						tmp2.x *= 0.75f;
+						if (it->inRange(tmp,tmp2)) {
+							(it)->bonk();
+							(it)->bonkJump();
+						}
 						displacement = 0;
 						if ((mario_type == Mario_type::SuperMario ||
 							mario_type == Mario_type::InvincibleSuperMario ||
@@ -200,7 +204,6 @@ namespace MyAPP::Form::Object {
 				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
 			}
 			fire->yposition = mario->GetPosition().y;
-			fire->userdata = std::make_shared<size_t>(fireCount++);
 			FM.addObject(FM.GetNowForm(), fire);
 			objs->push_back(std::move(fire));
 		}
@@ -228,19 +231,25 @@ namespace MyAPP::Form::Object {
 			return;
 
 		auto remove_fire_image = [&]() {
-			FM.remove_if_Object<Fire>(FM.GetNowForm(), [&](const ObjectPtr& obj) {
-				return obj->MyType == ObjectType::Fire && *std::static_pointer_cast<size_t>(obj->userdata) == *std::static_pointer_cast<size_t>(userdata);
-			});
+			FM.removeObject<Fire>(FM.GetNowForm(), m_ID);
 			objs->erase(std::remove_if(objs->begin(), objs->end(), [&](const ObjectPtr& obj) {
-				return obj->MyType == ObjectType::Fire && *std::static_pointer_cast<size_t>(obj->userdata) == *std::static_pointer_cast<size_t>(userdata);
+				return obj->m_ID == m_ID;
 			}),
 				objs->end());
 			};
 		for (auto& it : *enemys) {
 			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
 				it->died();
-				GM->addPoint(100);
-				Points::UpdatePoint(FM, Points::PointType::pts100);
+				if (it->MyType == ObjectType::Turtle) {
+					it->collisionable = false;
+					it->SetVisible(false);
+					GM->addPoint(200);
+					Points::UpdatePoint(FM, Points::PointType::pts200);
+				}
+				else {
+					GM->addPoint(100);
+					Points::UpdatePoint(FM, Points::PointType::pts100);
+				}
 				remove_fire_image();
 				return;
 			}
