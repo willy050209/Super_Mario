@@ -49,7 +49,8 @@ namespace MyAPP::Form::Object {
 				if (inp.good()) {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
 					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock ||
-						static_cast<ObjectType>(Type) == ObjectType::PropBrick) {
+						static_cast<ObjectType>(Type) == ObjectType::PropBrick ||
+						static_cast<ObjectType>(Type) == ObjectType::HiddenBrick) {
 						inp >> data;
 					}
 				}
@@ -81,7 +82,7 @@ namespace MyAPP::Form::Object {
 		/// <param name="backgroundZindex">­I´º¹ÏZindex</param>
 		/// <param name="marioZindex">MarioZindex</param>
 		/// <returns> first : ­I´º¹Ï second : Mario</returns>
-		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
+		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 0 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
 
 		/// <summary>

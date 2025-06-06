@@ -24,6 +24,10 @@ namespace MyAPP::Form::Object {
 			checkInvincible();
 			shoot(data);
 			static_cast<MyAPP::GameManager*>(data)->mariotype = mario_type;
+			if (addpointflag) {
+				static_cast<MyAPP::GameManager*>(data)->addPoint(50);
+				addpointflag = false;
+			}
 		}
 	}
 
@@ -42,6 +46,9 @@ namespace MyAPP::Form::Object {
 						if (it->inRange(tmp,tmp2)) {
 							(it)->bonk();
 							(it)->bonkJump();
+							if (it->MyType == ObjectType::Brick && isBigMario()) {
+								addpointflag = true;
+							}
 						}
 						displacement = 0;
 						if ((mario_type == Mario_type::SuperMario ||

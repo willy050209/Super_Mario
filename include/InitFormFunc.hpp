@@ -379,7 +379,7 @@ INITFORM_FUNC(initForm_1_1) {
 	auto props = MakeObject::make_Props();
 
 	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
-	flagformpole->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 197, GetTopEdge(Block) - Block->GetSize().y * 2 });
+	flagformpole->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 197.5f, GetTopEdge(Block) - Block->GetSize().y * 2 });
 	MyFM.addObject(formName, (flagformpole));
 
 
@@ -401,7 +401,7 @@ INITFORM_FUNC(initForm_1_1) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount",UpdateFrameCount));
-
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -493,6 +493,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -607,7 +608,7 @@ INITFORM_FUNC(initForm_1_2) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
-
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -665,6 +666,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -750,7 +752,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	MyFM.addObject(formName, std::move(eventobj));
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
-
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
@@ -813,7 +815,7 @@ INITFORM_FUNC(initForm_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
-
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {

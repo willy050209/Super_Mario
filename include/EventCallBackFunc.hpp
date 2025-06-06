@@ -622,9 +622,9 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "HPText");
-	char textstr[10] = "";
-	snprintf(textstr, sizeof(textstr), "HP:%d", GM->GetHP());
-	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
+	std::unique_ptr<char> textstr(new char[10]);
+	sprintf(textstr.get(), "HP:%d", GM->GetHP());
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
 	self->Enable = false;
 }
 
@@ -716,10 +716,10 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto& FM = GM->GetFormManger();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
 	/// <summary>¤À¼Æ¤å¦r</summary>
-	char textstr[128] = "";
-	snprintf(textstr, sizeof(textstr), "%06d", GM->GetPoint());
-	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr);
-	self->Enable = false;
+	std::unique_ptr<char> textstr(new char[10]);
+	sprintf(textstr.get(), "%06d", GM->GetPoint());
+	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
+	//self->Enable = false;
 }
 
 /// <summary>
@@ -816,6 +816,17 @@ EVENTCALLCALLBACKFUN(UpdateFrameCount) {
 		PiranaPlant::nextFrame();
 	}
 	frameCount %= 15;
+}
+
+EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "CoinnumText");
+	if (text) {
+		std::unique_ptr<char> buffer(new char[10]);
+		std::sprintf(buffer.get(), "x%02d", GM->coinCount);
+		std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
+	}
 }
 
 #endif

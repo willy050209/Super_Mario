@@ -118,6 +118,7 @@ BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo
 		brick_ptr->SetPosition(fileinfo.XY);
 		brick_ptr->SetVisible(fileinfo.Visibility);
 		brick_ptr->collisionable = fileinfo.Collisionable;
+		brick_ptr->userdata = std::make_shared<std::string>(fileinfo.data);
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Coin) {
 		brick_ptr = std::make_shared<Coin>("Coin", 10);

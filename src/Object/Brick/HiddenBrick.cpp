@@ -21,22 +21,31 @@ void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {
 		auto& FM = GM->GetFormManger();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (mario->inRange(this->m_Transform.translation, GetSize()) && mario->GetState() == Mario::State::UP) {
-			bonkJump();
+			//bonkJump();
 			m_Visible = true;
 			collisionable = true;
 			using namespace MyAPP::Form::Object::Props;
 			using MyAPP::Form::Object::Props::Props;
-			auto mushroom = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
-			mushroom->SetPosition(GetPosition());
-			mushroom->SetUpDistance(GetSize().y * 1.1);
-			mushroom->userdata = mario->userdata;
-			{
-				auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
-				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
-				auto& [_, __, props, ___] = (*tuplePtr);
-				props->push_back(mushroom);
+			auto data = std::static_pointer_cast<std::string>(userdata);
+			if (data) {
+				if (*data == "Mushroom") {
+					auto mushroom = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
+					mushroom->SetPosition(GetPosition());
+					mushroom->SetUpDistance(GetSize().y * 1.1);
+					mushroom->userdata = mario->userdata;
+					{
+						auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+						auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
+						auto& [_, __, props, ___] = (*tuplePtr);
+						props->push_back(mushroom);
+					}
+					FM.addObject(FM.GetNowForm(), std::move(mushroom));
+				}
+				else {
+					CoinPoints::CreateCoinPoints(FM, GetPosition());
+					GM->coinCount++;
+				}
 			}
-			FM.addObject(FM.GetNowForm(), std::move(mushroom));
 		}
 	}
 }
