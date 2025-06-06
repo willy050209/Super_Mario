@@ -41,7 +41,8 @@ namespace MyAPP::Form::Object {
 		CoinPoints,
 		PropBrick,
 		Fire,
-		LeftEdge
+		LeftEdge,
+		PiranaPlant
 	};
 
 }

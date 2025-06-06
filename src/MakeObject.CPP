@@ -301,6 +301,10 @@ CharacterPtr MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fil
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Koopa) {
 		enemy = std::make_shared<Koopa>("Koopa", 20);
 	}
+	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::PiranaPlant) {
+		enemy = std::make_shared<PiranaPlant>("PiranaPlant", 9);
+		std::static_pointer_cast<PiranaPlant>(enemy)->SetPos(fileinfo.XY);
+	}
 	if (enemy) {
 		enemy->SetPosition(fileinfo.XY);
 		enemy->SetVisible(true);

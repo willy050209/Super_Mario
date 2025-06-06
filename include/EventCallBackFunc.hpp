@@ -805,4 +805,17 @@ EVENTCALLCALLBACKFUN(freeForm) {
 	// m_Events.erase(std::find_if(m_Events.begin(), m_Events.end(), [&](auto& i) { return i->name == self->name; }));
 }
 
+EVENTCALLCALLBACKFUN(UpdateFrameCount) {
+	static size_t frameCount = 0;
+	frameCount++;
+	if (frameCount % 5 ==0) {
+		QuestionBlock::nextFrame();
+		Coin::nextFrame();
+	}
+	if (frameCount % 3 == 0) {
+		PiranaPlant::nextFrame();
+	}
+	frameCount %= 15;
+}
+
 #endif

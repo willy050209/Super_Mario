@@ -366,22 +366,16 @@ INITFORM_FUNC(initForm_1_1) {
 	
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
+	
+	{
+		auto aaa = std::make_shared<PiranaPlant>("PiranaPlant", 100);
+		aaa->setResetPosition({ 0, 0 });
+		aaa->SetPos({ 0, 0 });
+		enemys->push_back(std::move(aaa));
+	}
 	AddToFoemManger(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();
-	//props->push_back(std::make_shared<Props::FireFlower>("FireFlower", 10));
-	//props->back()->SetPosition({ GetLeftEdge(Block), 0 });
-	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::Mushroom>(), Props::Mushroom::Category::Mushroom, 10));
-	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 2, 0 });
-	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::MushroomDark>(), Props::Mushroom::Category::MushroomDark, 10));
-	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 3, 0 });
-	//props->push_back(std::make_shared<Props::Mushroom>("Mushroom", Props::Mushroom::GetImages<Props::Mushroom::Category::BigMushroom>(), Props::Mushroom::Category::BigMushroom, 10));
-	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 4, 0 });
-	//props->push_back(std::make_shared<Props::Starman>("Starman", 10));
-	//props->back()->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 6, 0 });
-	//std::for_each(std::execution::seq, props->begin(), props->end(), [&](auto& it) { MyFM.addObject(formName, it); });
-
-	//auto questionBlocks = GetQuestionBlocks(Blocks);
 
 	auto flagformpole = std::make_shared<FlagFromPole>("FlagFromPole", 100);
 	flagformpole->SetPosition({ GetLeftEdge(Block) + Block->GetSize().x * 197, GetTopEdge(Block) - Block->GetSize().y * 2 });
@@ -405,19 +399,7 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata = std::make_shared<GameObjectTuple>(enemys, pipes, props, objs);
 	MyFM.addObject(formName, std::move(eventobj));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
-		static int frameCount = 0;
-		frameCount++;
-		if (frameCount >= (FPS_CAP / 5)) {
-			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
-			question_block_frame_count++;
-			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
-			auto& coin_frame_count = Coin::GetFrameCount();
-			coin_frame_count++;
-			coin_frame_count %= Coin::GetMaxFrameCount();
-			frameCount = 0;
-		}
-		}));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount",UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
 	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
@@ -510,19 +492,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
-		static int frameCount = 0;
-		frameCount++;
-		if (frameCount >= (FPS_CAP / 5)) {
-			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
-			question_block_frame_count++;
-			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
-			auto& coin_frame_count = Coin::GetFrameCount();
-			coin_frame_count++;
-			coin_frame_count %= Coin::GetMaxFrameCount();
-			frameCount = 0;
-		}
-	}));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -637,19 +607,7 @@ INITFORM_FUNC(initForm_1_2) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
-		static int frameCount = 0;
-		frameCount++;
-		if (frameCount >= (FPS_CAP / 5)) {
-			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
-			question_block_frame_count++;
-			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
-			auto& coin_frame_count = Coin::GetFrameCount();
-			coin_frame_count++;
-			coin_frame_count %= Coin::GetMaxFrameCount();
-			frameCount = 0;
-		}
-	}));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -706,19 +664,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
-		static int frameCount = 0;
-		frameCount++;
-		if (frameCount >= (FPS_CAP / 5)) {
-			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
-			question_block_frame_count++;
-			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
-			auto& coin_frame_count = Coin::GetFrameCount();
-			coin_frame_count++;
-			coin_frame_count %= Coin::GetMaxFrameCount();
-			frameCount = 0;
-		}
-	}));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -776,19 +722,7 @@ INITFORM_FUNC(initForm_1_4) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", [](EventObject* const self, void* data) {
-		static int frameCount = 0;
-		frameCount++;
-		if (frameCount >= (FPS_CAP / 5)) {
-			auto& question_block_frame_count = QuestionBlock::GetFrameCount();
-			question_block_frame_count++;
-			question_block_frame_count %= QuestionBlock::GetMaxFrameCount();
-			auto& coin_frame_count = Coin::GetFrameCount();
-			coin_frame_count++;
-			coin_frame_count %= Coin::GetMaxFrameCount();
-			frameCount = 0;
-		}
-	}));
+	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {
 		auto leftedge = std::static_pointer_cast<LeftEdge>(self->userdata);

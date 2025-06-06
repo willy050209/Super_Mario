@@ -52,13 +52,16 @@ namespace MyAPP::Form::Object {
 			GetFrameCount() = 0;
 		}
 
-		static inline size_t& GetFrameCount() noexcept {
-			static size_t frameCount = 0;
+		static constexpr size_t& GetFrameCount() noexcept {
 			return frameCount;
 		}
 
 		static constexpr size_t GetMaxFrameCount() noexcept {
 			return 6;
+		}
+
+		static void nextFrame() noexcept {
+			frameCount = (frameCount + 1) % GetMaxFrameCount();
 		}
 
 	private:
@@ -71,6 +74,8 @@ namespace MyAPP::Form::Object {
 		bool play{ true }, isbonked{ false };
 
 		BrickColor color{ BrickColor::normal };
+
+		static inline size_t frameCount = 0;
 	};
 }
 

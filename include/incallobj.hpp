@@ -37,6 +37,7 @@
 #include "Object/Brick/ContinueCoinBrick.hpp"
 #include "Object/Brick/PropBrick.hpp"
 #include "Object/Brick/LeftEdge.hpp"
+#include "Object/Character/PiranaPlant.hpp"
 #include "Object/MakeObject.hpp"
 
 

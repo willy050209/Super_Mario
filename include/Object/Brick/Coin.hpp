@@ -42,13 +42,16 @@ namespace MyAPP::Form::Object {
 
 		virtual std::string GetFrame() const noexcept { return Frames[GetFrameCount()]; }
 
-		static inline size_t& GetFrameCount() noexcept {
-			static size_t frameCount = 0;
+		static constexpr size_t& GetFrameCount() noexcept {
 			return frameCount;
 		}
 
 		static constexpr size_t GetMaxFrameCount() noexcept {
 			return 6;
+		}
+
+		static void nextFrame() noexcept {
+			frameCount = (frameCount + 1) % GetMaxFrameCount();
 		}
 				
 
@@ -66,6 +69,8 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/CoinForBlueBG/frame0.png", "imgs/super mario/1-1/CoinForBlueBG/frame1.png", "imgs/super mario/1-1/CoinForBlueBG/frame2.png", "imgs/super mario/1-1/CoinForBlueBG/frame3.png", "imgs/super mario/1-1/CoinForBlueBG/frame4.png", "imgs/super mario/1-1/CoinForBlueBG/frame5.png" };
 		bool play{ true };
+
+		static inline size_t frameCount = 0;
 	};
 }
 

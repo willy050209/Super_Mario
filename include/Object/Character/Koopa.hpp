@@ -33,7 +33,7 @@ namespace MyAPP::Form::Object {
 		virtual std::string GetFrame() const noexcept {
 			return Frames[imgIndex];
 		}
-		virtual void PlayFrames() noexcept;
+		virtual void PlayFrames() noexcept override;
 		
 		private:
 		void checkPosition() noexcept;
