@@ -949,10 +949,10 @@ INITFORM_FUNC(diedForm) {
 
 	{
 		auto marioimg = std::make_shared<ImageObject>("marioimg", MRFP::MarioStanding, 100);
-		marioimg->SetPosition({ marioimg->GetSize() * glm::vec2{-2,-1} });
+		marioimg->SetPosition({ marioimg->GetSize() * glm::vec2{-2.7, 0} });
 
-		auto text = std::make_shared<TextObject>("label2", MRFP::SuperMarioFont, 20 * multiple, "x3", Util::Color::FromName(Util::Colors::WHITE), 100);
-		text->SetPosition(marioimg->GetPosition() + glm::vec2{ PositionReference->GetSize().x * 2, 0 });
+		auto text = std::make_shared<TextObject>("label2", MRFP::SuperMarioFont, 20 * multiple, "x  3", Util::Color::FromName(Util::Colors::WHITE), 100);
+		text->SetPosition(marioimg->GetPosition() + glm::vec2{ PositionReference->GetSize().x * 3, 0 });
 		texts->push_back(std::move(text));
 
 		MyFM.addObject(formName, std::move(marioimg));
@@ -995,7 +995,7 @@ INITFORM_FUNC(diedForm) {
 					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
 					if (text) {
 						std::unique_ptr<char> buffer(new char[16]);
-						std::sprintf(buffer.get(), "x%06d", GM->GetPoint());
+						std::sprintf(buffer.get(), "%06d", GM->GetPoint());
 						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
 					}
 				}
@@ -1003,7 +1003,7 @@ INITFORM_FUNC(diedForm) {
 					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "label2");
 					if (text) {
 						std::unique_ptr<char> buffer(new char[8]);
-						std::sprintf(buffer.get(), "x%d", GM->GetHP());
+						std::sprintf(buffer.get(), "x  %d", GM->GetHP());
 						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
 					}
 				}

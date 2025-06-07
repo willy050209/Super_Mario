@@ -216,6 +216,7 @@ namespace MyAPP::Form::Object {
 			else {
 				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
 			}
+			// 馬利歐y中心位置 + 30 * 倍率的高度
 			fire->yposition = mario->GetPosition().y + 30 * multiple;
 			fire->xposition = mario->GetPosition().x;
 			fire->my_standar = fire->xposition + 16 * multiple + WINDOW_WIDTH / 2;
