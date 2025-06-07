@@ -118,6 +118,7 @@ BrickPtr MyAPP::Form::Object::MakeObject::make_BrickPtr(const Fileinfo& fileinfo
 		brick_ptr->SetPosition(fileinfo.XY);
 		brick_ptr->SetVisible(fileinfo.Visibility);
 		brick_ptr->collisionable = fileinfo.Collisionable;
+		brick_ptr->userdata = std::make_shared<std::string>(fileinfo.data);
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Coin) {
 		brick_ptr = std::make_shared<Coin>("Coin", 10);
@@ -254,8 +255,8 @@ std::shared_ptr<CoinPtrVec> MyAPP::Form::Object::MakeObject::make_Coins() noexce
 	return std::make_shared<CoinPtrVec>();
 }
 
-std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText() noexcept {
-	double multiple = ((float)WINDOW_HEIGHT / 480);
+std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText(const std::string& world) noexcept {
+	const auto multiple = ((float)WINDOW_HEIGHT / 480.f);
 	auto result = std::make_shared<TextObjectPtrVec>();
 	auto texttime = std::make_shared<TextObject>("Timetext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "300", Util::Color::FromName(Util::Colors::WHITE), 100);
 	texttime->SetPosition({ -GetLeftEdge(texttime) - 45 * multiple, GetTopEdge(texttime) - 32  * multiple});
@@ -265,10 +266,10 @@ std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText
 	textnum->SetPosition({ -GetLeftEdge(textnum) - 45 * multiple, GetTopEdge(textnum) - 10 * multiple });
 	result->push_back(std::move(textnum));
 
-	auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
+	/*auto text = std::make_shared<TextObject>("HPText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "HP:3", Util::Color::FromName(Util::Colors::WHITE), 100);
 	text->SetPosition({ 0, GetTopEdge(text) - 32 * multiple});
 	text->SetVisible(false);
-	result->push_back(std::move(text));
+	result->push_back(std::move(text));*/
 
 	//std::cout << multiple << '\n';
 
@@ -277,7 +278,7 @@ std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText
 	result->push_back(std::move(Worldtext));
 
 	// Ãö¥d¤å¦r
-	auto nowWorldtext = std::make_shared<TextObject>("NOWWorldtext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "1-1", Util::Color::FromName(Util::Colors::WHITE), 100);
+	auto nowWorldtext = std::make_shared<TextObject>("NOWWorldtext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, world, Util::Color::FromName(Util::Colors::WHITE), 100);
 	nowWorldtext->SetPosition({ -GetLeftEdge(nowWorldtext) - (45 + 20 + 120) * multiple, GetTopEdge(nowWorldtext) - 32 * multiple });
 	result->push_back(std::move(nowWorldtext));
 

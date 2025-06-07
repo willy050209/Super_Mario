@@ -174,7 +174,7 @@ namespace MyAPP::Form::Object {
 				}
 				else {
 					mario->died();
-					if (!mario->isInvincible()) {
+					if (mario->GetState() == Mario::State::DIED) {
 						GM->LostALife();
 					}
 				}

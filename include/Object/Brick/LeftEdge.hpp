@@ -28,6 +28,11 @@ namespace MyAPP::Form ::Object {
 		LeftEdge() = delete;
 
 		virtual void behavior(void* data = nullptr) override{};
+		
+		virtual void Reset() noexcept {
+			m_Visible = false;
+			collisionable = true;
+		}
 
 		/// <summary>
 		/// ¹Ï¤ù¸ô®|

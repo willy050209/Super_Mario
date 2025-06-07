@@ -26,12 +26,12 @@ void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, Point
 	using MyAPP::Form::Object::Mario;
 	using MyAPP::Form::Object::EventObject;
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	{
-		auto event = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText");
-		if (event) {
-			event->Enable = true;
-		}
-	}
+	//{
+	//	auto event = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText");
+	//	if (event) {
+	//		event->Enable = true;
+	//	}
+	//}
 	{
 		auto event = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText");
 		if (event) {

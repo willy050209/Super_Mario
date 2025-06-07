@@ -39,6 +39,8 @@ namespace MyAPP {
 			static constexpr auto Background_1_2_to_1_4_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BGupground.png";
 
 			static constexpr auto Background_1_4_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-4BG.png";
+
+			static constexpr auto Background_Died_ImagePath = "imgs/super mario/Maps/supermario_pass_stage-FIX.png";
 			
 			static constexpr auto Form_1_1_Images = MY_RESOURCE_DIR "/MAP/Form_1_1_Images.txt";
 			static constexpr auto Form_1_1_Characters = MY_RESOURCE_DIR "/MAP/Form_1_1_Characters.txt";
@@ -110,6 +112,8 @@ namespace MyAPP {
 		static constexpr inline auto BlabkBrick{ R"(imgs\super mario\blackBrick.png)" };
 
 		static constexpr inline auto BridgeBrick{ R"(imgs\super mario\Bridge.png)" };
+
+		static constexpr inline auto MarioStanding{ R"(imgs\super mario\MarioStanding.png)" };
 
 		// static constexpr auto QuestionBlockPath = "imgs/super mario/QuestionBlock/frame0.png";
 		// static constexpr auto EmptyBlockImagePath = "imgs/super mario/EmptyBlock.png";

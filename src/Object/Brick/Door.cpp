@@ -39,7 +39,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 9, GetTopEdge(this) - GetSize().y * 10 });
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
-			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
+			//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdatePointText"))->Enable = true;
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_to_1_2) {
@@ -57,7 +57,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + GetSize().x * 10, GetTopEdge(this) - GetSize().y * 10 });
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
-			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
+			//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2) {

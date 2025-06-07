@@ -207,6 +207,7 @@ namespace MyAPP::Form::Object {
 		int invincibleCount{ 0 };
 		bool diedflag = false;
 		bool shootFireTrigger = false;
+		bool addpointflag = false;
 
 
 		std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = {

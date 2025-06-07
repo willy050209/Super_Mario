@@ -49,7 +49,8 @@ namespace MyAPP::Form::Object {
 				if (inp.good()) {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
 					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock ||
-						static_cast<ObjectType>(Type) == ObjectType::PropBrick) {
+						static_cast<ObjectType>(Type) == ObjectType::PropBrick ||
+						static_cast<ObjectType>(Type) == ObjectType::HiddenBrick) {
 						inp >> data;
 					}
 				}
@@ -81,7 +82,7 @@ namespace MyAPP::Form::Object {
 		/// <param name="backgroundZindex">背景圖Zindex</param>
 		/// <param name="marioZindex">MarioZindex</param>
 		/// <returns> first : 背景圖 second : Mario</returns>
-		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 100 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
+		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 0 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
 
 		/// <summary>
@@ -120,7 +121,7 @@ namespace MyAPP::Form::Object {
 		/// 建立時間、分數、生命文字方塊
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText() noexcept;
+		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText(const std::string& world = "1-1") noexcept;
 
 		/// <summary>
 		/// 從檔案建立 enemys 指標陣列
