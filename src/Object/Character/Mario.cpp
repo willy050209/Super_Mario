@@ -5,6 +5,7 @@
 #include "FilePath.hpp"
 #include "GameManager.hpp"
 #include <execution>
+#include <iostream>
 
 namespace MyAPP::Form::Object {
 
@@ -185,11 +186,13 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Fire::behavior(void* data) {
+		double multiple = ((float)WINDOW_HEIGHT / 480);
 		this->CheckCollision(data);
-		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5 : DEFAULTDISPLACEMENT * 1.5, yposition });
+		this->Move({ (left) ? -1 * multiple : multiple * 1, yposition });
 	}
 
 	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
+		double multiple = ((float)WINDOW_HEIGHT / 480);
 		static size_t fireCount{ 0 }; // 火球計數器
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
@@ -206,18 +209,41 @@ namespace MyAPP::Form::Object {
 			else {
 				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
 			}
-			fire->yposition = mario->GetPosition().y;
+			fire->yposition = mario->GetPosition().y + 30 * multiple;
+			fire->xposition = mario->GetPosition().x;
+			fire->my_standar = fire->xposition + 16 * multiple + WINDOW_WIDTH / 2;
+			fire->distance_y = 62 * multiple - fire->yposition;
+			fire->touch_ground = false;
 			FM.addObject(FM.GetNowForm(), fire);
 			objs->push_back(std::move(fire));
 		}
 	}
 
 	void Fire::Move(const glm::vec2& distance) noexcept {
-		static const float PI = std::acos(-1);
+		double multiple = ((float)WINDOW_HEIGHT / 480);
+
+		m_Transform.translation.x += distance.x;
+
+		float currentX = m_Transform.translation.x + WINDOW_WIDTH/2 - my_standar;
+		//std::cout << currentX << ' ' << m_Transform.translation.x << '\n';
+		if (!touch_ground) {
+			m_Transform.translation.y = (-62.0f / 32.0f) * currentX + 62.0f - distance_y;
+			//std::cout << currentX << ' ' << m_Transform.translation.x << '\n';
+		}
+		else  {
+			// 實作半圓波形
+			//m_Transform.translation.y = yposition;
+			//float term = (currentX - 112.0f) / 80.0f;
+			//m_Transform.translation.y = 32.0f * std::sqrt(1.0f - (term * term));
+		}
+		/*else {
+			m_Transform.translation.y = 0.0f;
+		}*/
+		/* static const float PI = std::acos(-1);
 		static constexpr auto frequency = 0.4f; // Frequency of the sine wave
 		m_Transform.translation.x += distance.x;
 		m_Transform.translation.y = GetSize().y * std::sin(2 * PI * frequency * angle) + distance.y;
-		angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect
+		angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect*/
 	}
 
 

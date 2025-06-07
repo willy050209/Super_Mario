@@ -10,7 +10,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f * 0.15f;
-
+			
 			/// <summary>
 			/// 所有角色的父類別 繼承Object
 			/// </summary>

@@ -281,6 +281,10 @@ namespace MyAPP::Form::Object {
 		virtual void CheckCollision(void* data) override;
 		
 		float yposition = 0.0f; // Y¶b¦ì¸m
+		float xposition = 0.0f; // X¶b¦ì¸m
+		float my_standar = 0.0f;
+		float distance_y = 0.0f;
+		bool touch_ground = false;
 
 		float angle = 0.f;
 
