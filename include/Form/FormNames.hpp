@@ -16,6 +16,7 @@ namespace MyAPP {
 			static constexpr auto Form_1_2_to_1_4 = "Form_1_2_to_1_4";
 			static constexpr auto Form_1_4 = "Form_1_4";
 			static constexpr auto Win_Form = "Win_Form";
+			static constexpr auto DiedForm = "DiedForm";
 		};
 	}
 }

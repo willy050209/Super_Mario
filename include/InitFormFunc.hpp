@@ -10,6 +10,7 @@ INITFORM_FUNC(initForm_1_2_Pipe);
 INITFORM_FUNC(initForm_1_2_to_1_4);
 INITFORM_FUNC(initForm_1_4);
 INITFORM_FUNC(winForm);
+INITFORM_FUNC(diedForm);
 
 
 #ifndef INITFORMFUNC_HPP
@@ -22,12 +23,17 @@ INITFORM_FUNC(winForm);
 #include "config.hpp"
 #include "ProgressBar.hpp"
 #include "userType.hpp"
+#include "GameManager.hpp"
 
 #include <algorithm>
 #include <execution>
 #include <memory>
 #include <tuple>
 #include <fstream>
+
+//namespace MyAPP {
+//	class GameManager;
+//}
 
 using namespace MyAPP::Form::Object;
 
@@ -434,7 +440,7 @@ INITFORM_FUNC(initForm_1_1) {
 	//eventobj->userdata = GetTurtless(enemys);
 	//MyFM.addObject(formName, std::move(eventobj));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -502,7 +508,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
@@ -581,7 +587,7 @@ INITFORM_FUNC(initForm_1_2) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	auto texts = MakeObject::make_GameText();
+	auto texts = MakeObject::make_GameText("1-2");
 	AddToFoemManger(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
@@ -621,7 +627,7 @@ INITFORM_FUNC(initForm_1_2) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
@@ -662,7 +668,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	auto texts = MakeObject::make_GameText();
+	auto texts = MakeObject::make_GameText("1-2");
 	AddToFoemManger(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
@@ -683,7 +689,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
@@ -722,7 +728,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	}
 
 	// 取得時間、分數、生命文字方塊
-	auto texts = MakeObject::make_GameText();
+	auto texts = MakeObject::make_GameText("1-2");
 	AddToFoemManger(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
@@ -777,7 +783,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
@@ -813,7 +819,7 @@ INITFORM_FUNC(initForm_1_4) {
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	auto texts = MakeObject::make_GameText();
+	auto texts = MakeObject::make_GameText("1-4");
 	AddToFoemManger(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
@@ -825,7 +831,7 @@ INITFORM_FUNC(initForm_1_4) {
 	auto objs = MakeObject::make_Objs();
 
 	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
-	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x, 0 });
+	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
 	MyFM.addObject(formName, std::move(coinimg));
 
 	auto eventobj = std::make_shared<EventObject>("Form_1_2_to_1_4", freeForm, true);
@@ -842,7 +848,7 @@ INITFORM_FUNC(initForm_1_4) {
 
 	MyFM.addObject(formName, std::make_shared<EventObject>("CheckMarioPosition", CheckMarioPosition));
 
-	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
+	//MyFM.addObject(formName, std::make_shared<EventObject>("UpdateHPText", UpdateHPText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
@@ -908,6 +914,122 @@ INITFORM_FUNC(initForm_1_4) {
 
 
 	//writeForm(MyFM, formName);
+}
+
+INITFORM_FUNC(diedForm) {
+	auto& MyFM = self->GetFormManger();
+	constexpr auto& formName = MyAPP::Form::FormNames::DiedForm;
+	const auto multiple = ((float)WINDOW_HEIGHT / 480.f);
+	auto& PositionReference = PositionReference::GetPositionReference();
+	using MRFP = MyAPP::MyResourcesFilePath;
+	
+	auto texts = MakeObject::make_GameText("1-1");
+
+	{
+		auto text = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+			return it->name == "Timetext";
+		});
+		std::static_pointer_cast<Util::Text>((*text)->GetDrawable())->SetText("----");
+	}
+
+	{
+		auto label1 = std::make_shared<TextObject>("label1", MRFP::SuperMarioFont, 20 * multiple, "WORLD 1-1", Util::Color::FromName(Util::Colors::WHITE), 100);
+		label1->SetPosition({ 0, label1->GetSize().y * 2 });
+		texts->push_back(std::move(label1));
+	}
+
+	{
+		auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+			return it->name == "CoinnumText";
+		});
+		auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
+		coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
+		MyFM.addObject(formName, std::move(coinimg));
+	}
+
+	{
+		auto marioimg = std::make_shared<ImageObject>("marioimg", MRFP::MarioStanding, 100);
+		marioimg->SetPosition({ marioimg->GetSize() * glm::vec2{-2,-1} });
+
+		auto text = std::make_shared<TextObject>("label2", MRFP::SuperMarioFont, 20 * multiple, "x3", Util::Color::FromName(Util::Colors::WHITE), 100);
+		text->SetPosition(marioimg->GetPosition() + glm::vec2{ PositionReference->GetSize().x * 2, 0 });
+		texts->push_back(std::move(text));
+
+		MyFM.addObject(formName, std::move(marioimg));
+	}
+
+	AddToFoemManger(MyFM, formName, texts);
+
+	{
+		{
+			auto updateEvent = std::make_shared<EventObject>("UpdateInfo", [](EventObject* const self, void* data) {
+				auto GM = static_cast<MyAPP::GameManager*>(data);
+				auto& FM = GM->GetFormManger();
+				auto strptr = std::static_pointer_cast<std::string>(self->userdata);
+				if (strptr == nullptr) {
+					strptr = std::make_shared<std::string>("???");
+				}
+				{
+					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "NOWWorldtext");
+					if (text) {
+						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(*strptr);
+					}
+				}
+				{
+					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "label1");
+					if (text) {
+						std::unique_ptr<char> buffer(new char[16]);
+						std::sprintf(buffer.get(), "WORLD %s", strptr->c_str());
+						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
+					}
+				}
+				{
+					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "CoinnumText");
+					if (text) {
+						std::unique_ptr<char> buffer(new char[16]);
+						std::sprintf(buffer.get(), "x%02u", GM->coinCount);
+						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
+					}
+				}
+				{
+					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
+					if (text) {
+						std::unique_ptr<char> buffer(new char[16]);
+						std::sprintf(buffer.get(), "x%06d", GM->GetPoint());
+						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
+					}
+				}
+				{
+					auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "label2");
+					if (text) {
+						std::unique_ptr<char> buffer(new char[8]);
+						std::sprintf(buffer.get(), "x%d", GM->GetHP());
+						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
+					}
+				}
+				self->Enable = false;
+			});
+			updateEvent->userdata = std::make_shared<std::string>("1-5");
+			MyFM.addObject(formName, std::move(updateEvent));
+		}
+		{
+			auto delayEvent = std::make_shared<EventObject>("DelayEvent", [](EventObject* const self, void* data) {
+				auto GM = static_cast<MyAPP::GameManager*>(data);
+				auto& FM = GM->GetFormManger();
+				auto delayCount = std::static_pointer_cast<int>(self->userdata);
+				if (*delayCount > 0) {
+					(*delayCount)--;
+				}
+				else {
+					FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent")->Enable = true;
+				}
+			});
+			delayEvent->userdata = std::make_shared<int>(FPS_CAP * 2);
+			MyFM.addObject(formName, std::move(delayEvent));
+		}
+		MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
+		MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+	}
 }
 
 #endif // !INITFORMFUNC_HPP

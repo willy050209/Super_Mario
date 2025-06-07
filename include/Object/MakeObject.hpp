@@ -121,7 +121,7 @@ namespace MyAPP::Form::Object {
 		/// 建立時間、分數、生命文字方塊
 		/// </summary>
 		/// <returns></returns>
-		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText() noexcept;
+		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText(const std::string& world = "1-1") noexcept;
 
 		/// <summary>
 		/// 從檔案建立 enemys 指標陣列

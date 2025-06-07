@@ -155,7 +155,7 @@ namespace MyAPP {
 		/// <summary>
 		/// ª±®a¤À¼Æ
 		/// </summary>
-		int point = 0;
+		int point = 1000;
 		// std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 
 

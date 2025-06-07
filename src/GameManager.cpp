@@ -11,7 +11,19 @@
 #include <memory>
 #include <thread>
 
-
+static std::string GetWorld(std::string formname) {
+	using MyAPP::Form::FormNames;
+	if (formname == FormNames::Form_1_1 || formname == FormNames::Form_1_1_Pipe || formname == FormNames::Form_1_1_to_1_2) {
+		return "1-1";
+	}
+	else if (formname == FormNames::Form_1_2 || formname == FormNames::Form_1_2_Pipe || formname == FormNames::Form_1_2_to_1_4) {
+		return "1-2";
+	}
+	else if (formname == FormNames::Form_1_4) {
+		return "1-4";
+	}
+	return "???";
+}
 
 void MyAPP::GameManager::init() noexcept {
 
@@ -27,12 +39,14 @@ void MyAPP::GameManager::init() noexcept {
 
 	puts("init GameManager");
 	std::vector<std::function<void(MyAPP::GameManager*)>> initfuncs = {
-		initFormTitle, initForm_1_1, initFormOptions, initFormSetting
+		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm
 	};
 	std::for_each(std::execution::seq, initfuncs.begin(), initfuncs.end(), [&](auto& func) {
 		(func)(this);
 	});
+
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel);
+	//MyFM.changeForm(MyAPP::Form::FormNames::DiedForm);
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
@@ -59,7 +73,26 @@ void MyAPP::GameManager::LostALife() noexcept {
 	bgm->Pause();
 	sfx->LoadMedia(MyAPP::MyResourcesFilePath::Lost_a_Life);
 	sfx->Play(0);
-	(MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "UpdateHPText"))->Enable = true;
+	{
+		auto changeFormEvent = MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "ChangeFormEvent");
+		changeFormEvent->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::DiedForm);
+		changeFormEvent->Enable = true;
+	}
+	{
+		auto changeFormEvent = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::DiedForm, "ChangeFormEvent");
+		changeFormEvent->userdata = std::make_shared<std::string>(MyFM.GetNowForm());
+		changeFormEvent->Enable = false;
+	}
+	{
+		auto UpdateInfo = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::DiedForm, "UpdateInfo");
+		UpdateInfo->userdata = std::make_shared<std::string>(GetWorld(MyFM.GetNowForm()));
+		UpdateInfo->Enable = true;
+	}
+	{
+		auto DelayEvent = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::DiedForm, "DelayEvent");
+		DelayEvent->userdata = std::make_shared<int>(FPS_CAP * 2);
+		DelayEvent->Enable = true;
+	}
 	if (GetHP() == 0) {
 		bgm->LoadMedia(MyAPP::MyResourcesFilePath::Game_Over);
 		auto sleepevent = (MyFM.GetFormObject<EventObject>(MyFM.GetNowForm(), "SleepAllevent"));

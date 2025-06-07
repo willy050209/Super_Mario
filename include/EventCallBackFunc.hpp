@@ -223,9 +223,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::T)) {
 		mario->died();
-		if (!mario->isInvincible()) {
-			static_cast<MyAPP::GameManager*>(data)->LostALife();
-		}
+		static_cast<MyAPP::GameManager*>(data)->LostALife();
 	}
 	else if (Util::Input::IsKeyDown(Util::Keycode::B)) {
 		mario->changeType(Mario::Mario_type::SuperMario);
@@ -347,7 +345,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
+				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdatePointText"))->Enable = true;
 			}
 			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_to_1_2) {
@@ -377,7 +375,7 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
 				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
+				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
 				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
 			}
 			else {
@@ -585,7 +583,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			gobackposx = -(*checkPoints)[i]->GetPosition().x;
 			std::for_each(std::execution::seq, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
-				if (obj->MyType != ObjectType::CheckPoint) {
+				if (obj->MyType != ObjectType::CheckPoint && obj->name!="coinimg") {
 					obj->incPositionX(gobackposx);
 				} });
 			std::for_each(std::execution::seq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
@@ -638,8 +636,8 @@ EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (!isInWindow(mario) && mario->GetPosition().y < 0) {
-		GM->DecHP();
-		(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
+		GM->LostALife();
+		//(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateHPText"))->Enable = true;
 		if (GM->GetHP() == 0) {
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
 		}
@@ -771,6 +769,9 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
+	if (form == nullptr) {
+		form = std::make_shared<std::string>("null");
+	}
 	self->Enable = false;
 	if (*form == "Form_1_1") {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
@@ -831,6 +832,8 @@ EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
 	auto& FM = GM->GetFormManger();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "CoinnumText");
 	if (text) {
+		auto coinimg = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "coinimg");
+		coinimg->SetPosition((text)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (text)->GetSize().x / 2, 0 });
 		if (GM->coinCount >= 100) {
 			GM->coinCount -= 100;
 			GM->IncHP();

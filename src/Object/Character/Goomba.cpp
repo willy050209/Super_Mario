@@ -115,7 +115,7 @@ void MyAPP::Form::Object::Goomba::CheckCollision(void* data) {
 			}
 			else {
 				mario->died();
-				if (!mario->isInvincible()) {
+				if (mario->GetState() == Mario::State::DIED) {
 					GM->LostALife();
 				}
 			}
