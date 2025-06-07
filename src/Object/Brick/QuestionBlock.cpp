@@ -50,10 +50,15 @@ namespace MyAPP::Form:: Object {
 		if (!isbonked) {
 			return;
 		}
+		auto& FM = GM->GetFormManger();
 		if (userdata == nullptr) {
+			CoinPoints::CreateCoinPoints(FM, GetPosition());
+			Points::UpdatePoint(FM, Points::PointType::pts200);
+			GM->addPoint(200);
+			GM->coinCount++;
+			isbonked = false;
 			return;
 		}
-		auto& FM = GM->GetFormManger();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (mario == nullptr) {
 			return;
@@ -62,10 +67,7 @@ namespace MyAPP::Form:: Object {
 			using namespace MyAPP::Form::Object::Props;
 			PropsPtr prop;
 			auto proptype = std::static_pointer_cast<std::string>(userdata);
-			if (proptype == nullptr) {
-				return;
-			}
-			else if (*proptype == "BigMushroom") {
+			if (proptype != nullptr && *proptype == "BigMushroom") {
 				if (mario->isMiniMario()) {
 					prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
 					prop->SetPosition(GetPosition());
@@ -80,14 +82,16 @@ namespace MyAPP::Form:: Object {
 					std::static_pointer_cast<Starman>(prop)->SetUpDistance(GetSize().y*3);*/
 				}
 			}
-			prop->userdata = mario->userdata;
-			// Set the position of the prop to be slightly above the question block
-			{
-				auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
-				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
-				auto& [_, __, props, ___] = (*tuplePtr);
-				FM.addObject(FM.GetNowForm(), prop);
-				props->push_back(std::move(prop));
+			if(prop){
+				prop->userdata = mario->userdata;
+				// Set the position of the prop to be slightly above the question block
+				{
+					auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+					auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
+					auto& [_, __, props, ___] = (*tuplePtr);
+					FM.addObject(FM.GetNowForm(), prop);
+					props->push_back(std::move(prop));
+				}
 			}
 			isbonked = false;
 		}
