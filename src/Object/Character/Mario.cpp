@@ -195,7 +195,9 @@ namespace MyAPP::Form::Object {
 	void Fire::behavior(void* data) {
 		double multiple = ((float)WINDOW_HEIGHT / 480);
 		this->CheckCollision(data);
-		this->Move({ (left) ? -1 * multiple : multiple * 1, yposition });
+		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5f : DEFAULTDISPLACEMENT * 1.5f, distance_y });
+		if (destroyflag)
+			destroyFire(static_cast<GameManager*>(data)->GetFormManger());
 	}
 
 	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
@@ -217,41 +219,47 @@ namespace MyAPP::Form::Object {
 				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
 			}
 			// 馬利歐y中心位置 + 30 * 倍率的高度
-			fire->yposition = mario->GetPosition().y + 30 * multiple;
+			/*fire->yposition = mario->GetPosition().y + 30 * multiple;
 			fire->xposition = mario->GetPosition().x;
 			fire->my_standar = fire->xposition + 16 * multiple + WINDOW_WIDTH / 2;
 			fire->distance_y = 62 * multiple - fire->yposition;
-			fire->touch_ground = false;
+			fire->touch_ground = false;*/
 			FM.addObject(FM.GetNowForm(), fire);
 			objs->push_back(std::move(fire));
 		}
 	}
 
 	void Fire::Move(const glm::vec2& distance) noexcept {
-		double multiple = ((float)WINDOW_HEIGHT / 480);
+		static auto multiple = ((float)WINDOW_HEIGHT / 480);
 
 		m_Transform.translation.x += distance.x;
-
-		float currentX = m_Transform.translation.x + WINDOW_WIDTH/2 - my_standar;
+		Xcount += distance.x;
+		//float currentX = m_Transform.translation.x + WINDOW_WIDTH/2 - my_standar;
 		//std::cout << currentX << ' ' << m_Transform.translation.x << '\n';
 		if (!touch_ground) {
-			m_Transform.translation.y = (-62.0f / 32.0f) * currentX + 62.0f - distance_y;
+			//m_Transform.translation.y -= (-62.0f / 32.0f)  + 62.0f - distance_y;
 			//std::cout << currentX << ' ' << m_Transform.translation.x << '\n';
+			m_Transform.translation.y += multiple * (-62.0f / 32.0f);
 		}
 		else  {
 			// 實作半圓波形
-			//m_Transform.translation.y = yposition;
-			//float term = (currentX - 112.0f) / 80.0f;
-			//m_Transform.translation.y = 32.0f * std::sqrt(1.0f - (term * term));
+			static const float PI = std::acos(-1);
+			static constexpr auto frequency = 0.2f; // Frequency of the sine wave
+			//m_Transform.translation.x += distance.x;
+			//m_Transform.translation.y = GetSize().y * std::abs(std::sin(2 * PI * frequency * angle))*2 + distance.y;
+			m_Transform.translation.y = GetSize().y * std::sin(2 * PI * frequency * angle) * 2 + distance.y;
+			angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect
+			if (angle > PI / 2) {
+				touch_ground = false;
+				angle = 0;
+			}
 		}
 		/*else {
 			m_Transform.translation.y = 0.0f;
 		}*/
-		/* static const float PI = std::acos(-1);
-		static constexpr auto frequency = 0.4f; // Frequency of the sine wave
-		m_Transform.translation.x += distance.x;
-		m_Transform.translation.y = GetSize().y * std::sin(2 * PI * frequency * angle) + distance.y;
-		angle += 0.055f; // Adjust the angle increment as needed for the desired arc effect*/
+		if (Xcount > WINDOW_WIDTH) {
+			destroyflag = true;
+		}
 	}
 
 
@@ -266,14 +274,6 @@ namespace MyAPP::Form::Object {
 		auto& [enemys, pipes, props, objs] = (*tuplePtr);
 		if (tuplePtr == nullptr)
 			return;
-
-		auto remove_fire_image = [&]() {
-			FM.removeObject<Fire>(FM.GetNowForm(), m_ID);
-			objs->erase(std::remove_if(objs->begin(), objs->end(), [&](const ObjectPtr& obj) {
-				return obj->m_ID == m_ID;
-			}),
-				objs->end());
-			};
 		for (auto& it : *enemys) {
 			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
 				it->died();
@@ -287,17 +287,41 @@ namespace MyAPP::Form::Object {
 					GM->addPoint(100);
 					Points::UpdatePoint(FM, Points::PointType::pts100);
 				}
-				remove_fire_image();
+				destroyflag = true;
 				return;
 			}
 		}
+		bool flag = false;
 		for (auto& it : *std::static_pointer_cast<BrickPtrVec>(mario->userdata)) {
 			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
-				remove_fire_image();
-				return;
+				if (it->m_Transform.translation.y <= m_Transform.translation.y &&
+					std::abs(it->GetPosition().x - GetPosition().x) <= it->GetSize().x / 2 &&
+					it->MyType == ObjectType::Floor) {
+					touch_ground = true;
+					distance_y = m_Transform.translation.y;
+					return;
+				}
+				flag = true;
 			}
 		}
+		if (flag)
+			destroyflag = true;
 	}
+
+	void Fire::destroyFire(FormManger& FM) noexcept {
+		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+		auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
+		auto& [enemys, pipes, props, objs] = (*tuplePtr);
+		if (tuplePtr == nullptr)
+			return;
+		FM.removeObject<Fire>(FM.GetNowForm(), m_ID);
+		objs->erase(std::remove_if(objs->begin(), objs->end(), [&](const ObjectPtr& obj) {
+			return obj->m_ID == m_ID;
+		}),
+			objs->end());
+		destroyflag = false;
+	}
+
 
 
 }

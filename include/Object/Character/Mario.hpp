@@ -280,15 +280,17 @@ namespace MyAPP::Form::Object {
 
 	private:
 		virtual void CheckCollision(void* data) override;
+
+		void destroyFire(FormManger& FM) noexcept;
 		
-		float yposition = 0.0f; // Y¶b¦ì¸m
-		float xposition = 0.0f; // X¶b¦ì¸m
-		float my_standar = 0.0f;
+		//float yposition = 0.0f; // Y¶b¦ì¸m
+		//float xposition = 0.0f; // X¶b¦ì¸m
+		//float my_standar = 0.0f;
 		float distance_y = 0.0f;
-		bool touch_ground = false;
-
+		float Xcount = 0.f;
 		float angle = 0.f;
-
+		bool touch_ground = false;
+		bool destroyflag = false;
 	};
 }
 
