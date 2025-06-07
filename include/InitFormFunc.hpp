@@ -926,10 +926,9 @@ INITFORM_FUNC(diedForm) {
 	auto texts = MakeObject::make_GameText("1-1");
 
 	{
-		auto text = std::find_if(texts->begin(), texts->end(), [](auto& it) {
+		texts->erase(std::find_if(texts->begin(), texts->end(), [](auto& it) {
 			return it->name == "Timetext";
-		});
-		std::static_pointer_cast<Util::Text>((*text)->GetDrawable())->SetText("----");
+		}));
 	}
 
 	{
@@ -1009,7 +1008,7 @@ INITFORM_FUNC(diedForm) {
 				}
 				self->Enable = false;
 			});
-			updateEvent->userdata = std::make_shared<std::string>("1-5");
+			updateEvent->userdata = std::make_shared<std::string>("1-1");
 			MyFM.addObject(formName, std::move(updateEvent));
 		}
 		{
@@ -1028,7 +1027,11 @@ INITFORM_FUNC(diedForm) {
 			MyFM.addObject(formName, std::move(delayEvent));
 		}
 		MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
-		MyFM.addObject(formName, std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false));
+		{
+			auto changeevent = std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false);
+			changeevent->userdata = std::make_shared<std::string>(FormNames::Form_1_1);
+			MyFM.addObject(formName, std::move(changeevent));
+		}
 	}
 }
 
