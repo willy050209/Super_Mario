@@ -128,7 +128,7 @@ namespace MyAPP {
 
 		MyAPP::Form::Object::Mario::Mario_type mariotype{ MyAPP::Form::Object::Mario::Mario_type::Mario };
 
-		size_t coinCount = 99;
+		size_t coinCount = 0;
 
 	private:
 
@@ -155,7 +155,7 @@ namespace MyAPP {
 		/// <summary>
 		/// ª±®a¤À¼Æ
 		/// </summary>
-		int point = 1000;
+		int point = 0;
 		// std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 
 
