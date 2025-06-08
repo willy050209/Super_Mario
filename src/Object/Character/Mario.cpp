@@ -193,7 +193,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Fire::behavior(void* data) {
-		double multiple = ((float)WINDOW_HEIGHT / 480);
+		//double multiple = ((float)WINDOW_HEIGHT / 480);
 		this->CheckCollision(data);
 		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5f : DEFAULTDISPLACEMENT * 1.5f, distance_y });
 		if (destroyflag)
@@ -201,8 +201,8 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
-		double multiple = ((float)WINDOW_HEIGHT / 480);
-		static size_t fireCount{ 0 }; // 火球計數器
+		//double multiple = ((float)WINDOW_HEIGHT / 480);
+		//static size_t fireCount{ 0 }; // 火球計數器
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 		auto fire = std::make_shared<Fire>("Fire", 20);

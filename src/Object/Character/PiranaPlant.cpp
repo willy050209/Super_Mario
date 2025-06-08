@@ -113,7 +113,7 @@ void MyAPP::Form::Object::PiranaPlant::CheckCollision(void *data)  {
 		}
 		else {
 			mario->died();
-			if (!mario->isInvincible()) {
+			if (mario->GetState() == Mario::State::DIED) {
 				GM->LostALife();
 			}
 		}

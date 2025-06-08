@@ -724,7 +724,9 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_to_1_4_ImagePath,
 			Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 10 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		MyFM.addObject(formName, std::move(BMptr.second));
+		auto& mario = std::move(BMptr.second);
+		mario->changeType(self->mariotype);
+		MyFM.addObject(formName, std::move(mario));
 	}
 
 	// 取得時間、分數、生命文字方塊
@@ -763,7 +765,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
 	eventobj = std::make_shared<EventObject>("UpdateTimeTextEvent", UpdateTimeText);
-	eventobj->userdata = std::make_shared<std::tuple<int, int>>(0, 300);
+	eventobj->userdata = MyFM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateTimeTextEvent")->userdata;
 	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("UpdateleftedgePosEvent", [](EventObject* const self, void* data) {

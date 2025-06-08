@@ -39,14 +39,14 @@ void MyAPP::GameManager::init() noexcept {
 
 	puts("init GameManager");
 	std::vector<std::function<void(MyAPP::GameManager*)>> initfuncs = {
-		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm
+		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm,initForm_1_4
 	};
 	std::for_each(std::execution::seq, initfuncs.begin(), initfuncs.end(), [&](auto& func) {
 		(func)(this);
 	});
 
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel);
-	//MyFM.changeForm(MyAPP::Form::FormNames::DiedForm);
+	MyFM.changeForm(MyAPP::Form::FormNames::Form_1_4);
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {

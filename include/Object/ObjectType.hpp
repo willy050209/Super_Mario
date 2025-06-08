@@ -42,7 +42,8 @@ namespace MyAPP::Form::Object {
 		PropBrick,
 		Fire,
 		LeftEdge,
-		PiranaPlant
+		PiranaPlant,
+		Koopa_Fire
 	};
 
 }
