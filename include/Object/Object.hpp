@@ -10,7 +10,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// 提供所以物件的父類
+			/// 提供所有物件的父類
 			/// </summary>
 			class Object : public Util::GameObject {
 			public:
@@ -79,25 +79,16 @@ namespace MyAPP {
 				/// <returns></returns>
 				inline auto inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
 					const auto& mpos = GetPosition();
-					const auto& msize = GetSize();
-					const auto&& _ml = mpos.x - (((int)msize.x) >> 1);
-					const auto&& _mr = mpos.x + (((int)msize.x) >> 1);
-					const auto&& _md = mpos.y - (((int)msize.y) >> 1);
-					const auto&& _mu = mpos.y + (((int)msize.y) >> 1);
-					const auto&& _ol = Position.x - (((int)size.x) >> 1);
-					const auto&& _or = Position.x + (((int)size.x) >> 1);
-					const auto&& _od = Position.y - (((int)size.y) >> 1);
-					const auto&& _ou = Position.y + (((int)size.y) >> 1);
-					/*
-					const auto&& _ml = mpos.x - msize.x / 2;
-					const auto&& _mr = mpos.x + msize.x / 2;
-					const auto&& _md = mpos.y - msize.y / 2;
-					const auto&& _mu = mpos.y + msize.y / 2;
-					const auto&& _ol = Position.x - size.x / 2;
-					const auto&& _or = Position.x + size.x / 2;
-					const auto&& _od = Position.y - size.y / 2;
-					const auto&& _ou = Position.y + size.y / 2;
-					*/
+					const auto msize = GetSize();
+					const auto _ml = mpos.x - (((int)msize.x) >> 1);
+					const auto _mr = mpos.x + (((int)msize.x) >> 1);
+					const auto _md = mpos.y - (((int)msize.y) >> 1);
+					const auto _mu = mpos.y + (((int)msize.y) >> 1);
+					const auto _ol = Position.x - (((int)size.x) >> 1);
+					const auto _or = Position.x + (((int)size.x) >> 1);
+					const auto _od = Position.y - (((int)size.y) >> 1);
+					const auto _ou = Position.y + (((int)size.y) >> 1);
+
 					return _ml < _or && _mr > _ol && _mu > _od && _md < _ou;
 				}
 
@@ -136,8 +127,14 @@ namespace MyAPP {
 				/// </summary>
 				bool collisionable{ true };
 
+				/// <summary>
+				/// 專屬於此物件的唯一編號(若物件數超過size_t的上限會重複)
+				/// </summary>
 				size_t m_ID;
 
+				/// <summary>
+				/// A static inline variable that holds a counter value, typically used for generating unique IDs.
+				/// </summary>
 				static inline size_t IDCounter{ 0 };
 			};
 		}
