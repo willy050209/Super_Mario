@@ -69,8 +69,10 @@ namespace MyAPP::Form::Object {
 		int delaycount = 0;
 		int jumpcout = 0;
 		int shootdelay = 0;
+		int HP = 9;
 		bool jump = false;
 		bool is_L_or_R = true;
+		bool isdied = false;
 	};
 
 	class Koopa_Fire : Interface::ICollisionable, Interface::IMovable, public ImageObject {

@@ -38,8 +38,8 @@ void MyAPP::GameManager::init() noexcept {
 	//t0.join();
 
 	puts("init GameManager");
-	std::vector<std::function<void(MyAPP::GameManager*)>> initfuncs = {
-		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm,initForm_1_4
+	auto initfuncs = {
+		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm ,initForm_1_4
 	};
 	std::for_each(std::execution::seq, initfuncs.begin(), initfuncs.end(), [&](auto& func) {
 		(func)(this);

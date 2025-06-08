@@ -23,12 +23,12 @@ namespace MyAPP::Form::Object {
 			comeDown();
 			doJump();
 			checkInvincible();
-			shoot(data);
-			static_cast<MyAPP::GameManager*>(data)->mariotype = mario_type;
-			if (addpointflag) {
-				static_cast<MyAPP::GameManager*>(data)->addPoint(50);
-				addpointflag = false;
-			}
+		}
+		shoot(data);
+		static_cast<MyAPP::GameManager*>(data)->mariotype = mario_type;
+		if (addpointflag) {
+			static_cast<MyAPP::GameManager*>(data)->addPoint(50);
+			addpointflag = false;
 		}
 	}
 
@@ -283,6 +283,9 @@ namespace MyAPP::Form::Object {
 					GM->addPoint(200);
 					Points::UpdatePoint(FM, Points::PointType::pts200);
 				}
+				else if (it->MyType == ObjectType::Koopa) {
+
+				}
 				else {
 					GM->addPoint(100);
 					Points::UpdatePoint(FM, Points::PointType::pts100);
@@ -296,7 +299,8 @@ namespace MyAPP::Form::Object {
 			if (it->collisionable && it->inRange(GetPosition(), GetSize())) {
 				if (it->m_Transform.translation.y <= m_Transform.translation.y &&
 					std::abs(it->GetPosition().x - GetPosition().x) <= it->GetSize().x / 2 &&
-					it->MyType == ObjectType::Floor) {
+					it->MyType == ObjectType::Floor ||
+					it->MyType == ObjectType::Bridge) {
 					touch_ground = true;
 					distance_y = m_Transform.translation.y;
 					return;

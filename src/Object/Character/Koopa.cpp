@@ -7,23 +7,29 @@
 #include <ctime>
 
 void MyAPP::Form::Object::Koopa::behavior(void* data) {
-	auto tmp = GetPosition();
-	move();
-	if (!jump)
-		comeDown();
-	auto tmp1 = GetPosition();
-	if (tmp.y == tmp1.y) {
-		
+	if(!isdied){
+		move();
+		if (!jump)
+			comeDown();
+		CheckCollision(data);
+		checkPosition();
+		random_shoot(data);
+		turn(data);
+		PlayFrames();
 	}
-	CheckCollision(data);
-	checkPosition();
-	random_shoot(data);
-	turn(data);
-	PlayFrames();
+	else {
+		m_Transform.translation.y -= DEFAULTDISPLACEMENT;
+	}
 }
 
 void MyAPP::Form::Object::Koopa::died() noexcept {
-	//std::cout << "Koopa died" << std::endl;
+	HP--;
+	std::cout << "Koopa HP" << HP << std::endl;
+	if (HP <= 0) {
+		std::cout << "Koopa died" << std::endl;
+		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage("imgs/super mario/KoopaDie.png");
+		isdied = true;
+	}
 }
 
 void MyAPP::Form::Object::Koopa::move() noexcept {

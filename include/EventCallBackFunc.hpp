@@ -252,6 +252,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 			marioPos.x -= mariosize.x;
 			mario->SetPosition(marioPos);
 		}
+		else if (Util::Input::IsKeyDown(Util::Keycode::LCTRL)) {
+			mario->shootFire();
+		}
 	}
 
 	/*for (auto& it : thread_object_move) {
