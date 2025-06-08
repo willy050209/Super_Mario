@@ -196,6 +196,7 @@ namespace MyAPP::Form::Object {
 		//double multiple = ((float)WINDOW_HEIGHT / 480);
 		this->CheckCollision(data);
 		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5f : DEFAULTDISPLACEMENT * 1.5f, distance_y });
+		this->PlayFrames();
 		if (destroyflag)
 			destroyFire(static_cast<GameManager*>(data)->GetFormManger());
 	}
@@ -262,6 +263,15 @@ namespace MyAPP::Form::Object {
 		}
 	}
 
+
+	void Fire::PlayFrames() noexcept {
+		imgDelay++;
+		if (imgDelay >= 10) {
+			imgIndex = (imgIndex + 1) % 4;
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(GetFrame());
+			imgDelay = 0;
+		}
+	}
 
 	void Fire::CheckCollision(void* data) {
 		auto GM = static_cast<GameManager*>(data);
