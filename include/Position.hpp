@@ -82,4 +82,11 @@ inline bool isInWindow(ObjectPtr obj) {
 	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
 }
 
+template <class T>
+inline bool isInWindow(T* obj) {
+	auto& pos = obj->m_Transform.translation;
+	auto size = obj->GetSize();
+	return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
+}
+
 #endif

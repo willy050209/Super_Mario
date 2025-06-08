@@ -23,7 +23,7 @@ unsigned int FPS_CAP = 60;
 int WINDOW_POS_X = SDL_WINDOWPOS_UNDEFINED;
 int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 
-constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/Untitled.png";
+constexpr auto ICOP_PATH = MY_RESOURCE_DIR"/image/ICON/images.png";
 
 
 int main(int, char** argc) {

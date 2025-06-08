@@ -168,6 +168,59 @@ namespace MyAPP::Form {
 		/// </summary>
 		/// <typeparam name="T">物件類別</typeparam>
 		/// <param name="formName">物件所在的表單名稱</param>
+		/// <param name="_Pred">條件</param>
+		/// <returns>位於formName表單中
+		/// 類別為objtype
+		/// _Pred 返回true
+		/// 的物件</returns>
+		template <typename T, class _Pr>
+		inline std::shared_ptr<T> GetFormObject_if(const std::string& formName, _Pr _Pred) const noexcept {
+			// 1. 檢查表單是否存在
+			auto form_it = m_Forms.find(formName);
+			if (form_it == m_Forms.end()) {
+				return nullptr; // 表單不存在
+			}
+			auto& form = form_it->second;
+
+			if constexpr (std::is_same_v<Object::Mario, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred);
+				if (it != form.m_Characters.end()) {
+					return std::static_pointer_cast<Object::Mario>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::Character, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred);
+				if (it != form.m_Characters.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				auto it = std::find_if(form.m_Images.begin(), form.m_Images.end(), _Pred);
+				if (it != form.m_Images.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				auto it = std::find_if(form.m_Texts.begin(), form.m_Texts.end(), _Pred);
+				return (it != form.m_Texts.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				auto it = std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(),_Pred);
+				return (it != form.m_Buttons.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				auto it = std::find_if(form.m_Events.begin(), form.m_Events.end(), _Pred);
+				return (it != form.m_Events.end()) ? *it : nullptr;
+			}
+
+			return nullptr;
+		}
+
+		/// <summary>
+		/// 取得表單物件
+		/// </summary>
+		/// <typeparam name="T">物件類別</typeparam>
+		/// <param name="formName">物件所在的表單名稱</param>
 		/// <param name="objName">物件名稱</param>
 		/// <returns>位於formName表單中
 		/// 類別為objtype
