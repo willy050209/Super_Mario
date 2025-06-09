@@ -44,7 +44,7 @@ void MyAPP::Form::Object::Character::comeDown() noexcept {
 					MyPos = GetPosition();
 					break;
 				}
-				MyPos.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+				MyPos.y = it->GetPosition().y + ((it->GetSize().y) /2) + ((MySize.y) /2);
 				break;
 			}
 		}

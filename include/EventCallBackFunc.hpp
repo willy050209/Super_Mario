@@ -73,14 +73,15 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto& [enemys, pipes, props, objs] = (*tuplePtr);
 	auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
 	auto mario = FM.GetFormObject<MyAPP::Form::Object::Mario>(FM.GetNowForm(), "Mario");
+	if (background == nullptr || mario == nullptr)
+		return;
 	auto block = std::static_pointer_cast<BrickPtrVec>(background->userdata);
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
-	auto&& Displacement = static_cast<int>(mariosize.x) >> 3;
+	float Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	
-
 	if (mario->GetState() == Mario::State::DIED)
 		return;
 	if (Util::Input::IsKeyPressed(Util::Keycode::RSHIFT) || Util::Input::IsKeyPressed(Util::Keycode::LSHIFT)) {
@@ -101,7 +102,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
 				flag = false;
-				marioPos.x = it->GetPosition().x - ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
+				marioPos.x = it->GetPosition().x - (it->GetSize().x / 2) - (mariosize.x / 2);
+				;
 				break;
 			}
 		}
@@ -133,7 +135,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				it->SetPosition({ it->GetPosition().x - Displacement, it->GetPosition().y });
 			} }));*/
 		}
-		else if (mario->GetPosition().x < ((static_cast<int>(WINDOW_WIDTH) >> 1)) - mario->GetSize().x && flag) {
+		else if (mario->GetPosition().x < (WINDOW_WIDTH / 2) - mario->GetSize().x && flag) {
 			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
 		}
 		if (flag)
@@ -152,7 +154,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
 				flag = false;
 				//marioPos = it->GetPosition();
-				marioPos.x = it->GetPosition().x + ((static_cast<int>(it->GetSize().x) >> 1) + (static_cast<int>(mariosize.x) >> 1));
+				marioPos.x = it->GetPosition().x + (it->GetSize().x / 2) + (mariosize.x / 2);
 				break;
 			}
 		}
@@ -184,7 +186,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		//		it->SetPosition({ it->GetPosition().x + Displacement, it->GetPosition().y });
 		//	} }));*/
 		//}
-		else if (mario->GetPosition().x > (-(static_cast<int>(WINDOW_WIDTH) >> 1)) + mario->GetSize().x && flag) {
+		else if (mario->GetPosition().x > (-WINDOW_WIDTH / 2 ) + mario->GetSize().x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });
 		}
 		if (flag)
@@ -201,6 +203,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
 					initForm_1_1_Pip(static_cast<MyAPP::GameManager*>(data));
 					auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
+					if (ChangeFormEventObject == nullptr)
+						return;
 					ChangeFormEventObject->Enable = true;
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_Pipe);
 					return;
@@ -208,6 +212,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 				else {
 					initForm_1_2_Pipe(static_cast<MyAPP::GameManager*>(data));
 					auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
+					if (ChangeFormEventObject == nullptr)
+						return;
 					ChangeFormEventObject->Enable = true;
 					ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 					return;
@@ -272,13 +278,18 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(self->userdata)));
 	auto timetext = FM.GetFormObject<TextObject>(FM.GetNowForm(), "Timetext");
+	if (timetext == nullptr)
+		return;
 	if ((num)++ >= FPS_CAP) {
 		// auto& timetext = std::get<std::shared_ptr<MyAPP::Form::Object::TextObject>>(*std::static_pointer_cast<std::tuple<std::shared_ptr<int>, std::shared_ptr<MyAPP::Form::Object::TextObject>>>(self->userdata));
 		// auto& nowtime = std::get<1>(*(std::static_pointer_cast<std::tuple<int,int, std::shared_ptr<MyAPP::Form::Object::TextObject>>>(self->userdata)));
 		std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
 		(num) = 0;
 		if (nowtime == 0) {
-			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent"))->Enable = true;
+			auto finishEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent");
+			if (finishEvent == nullptr)
+				return;
+			finishEvent->Enable = true;
 		}
 	}
 }

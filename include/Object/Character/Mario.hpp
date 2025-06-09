@@ -77,6 +77,10 @@ namespace MyAPP::Form::Object {
 		/// <param name="data">GameManager * </param>
 		virtual void behavior(void* data = nullptr) override;
 
+		/*virtual inline glm::vec2 GetSize() const noexcept override {
+			return (m_Drawable) ? glm::vec2{std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize().y,std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize().y} : glm::vec2{ 0, 0 };
+		}*/
+
 		// virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
 		/// <summary>

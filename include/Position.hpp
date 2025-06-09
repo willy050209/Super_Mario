@@ -13,7 +13,7 @@
 /// <returns>X軸做座標</returns>
 template <class T>
 inline int GetLeftEdge(T& obj) noexcept {
-	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
+	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ inline int GetLeftEdge(T& obj) noexcept {
 /// <returns>Y軸做座標</returns>
 template <class T>
 inline int GetTopEdge(T& obj) noexcept {
-	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
+	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);
 }
 
 #include "incallobj.hpp"
@@ -35,7 +35,7 @@ inline int GetTopEdge(T& obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>X軸做座標</returns>
 inline int GetLeftEdge(ObjectPtr obj) noexcept {
-	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>(obj->GetSize().x) >> 1));
+	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 
@@ -45,7 +45,7 @@ inline int GetLeftEdge(ObjectPtr obj) noexcept {
 /// <param name="obj"> 物件</param>
 /// <returns>Y軸做座標</returns>
 inline int GetTopEdge(ObjectPtr obj) noexcept {
-	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>(obj->GetSize().y) >> 1));
+	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);
 }
 
 
@@ -56,7 +56,7 @@ inline int GetTopEdge(ObjectPtr obj) noexcept {
 /// <returns>X軸做座標</returns>
 template<class T>
 inline int GetLeftEdge(T* obj) noexcept {
-	return -((static_cast<int>(WINDOW_WIDTH) >> 1) - (static_cast<int>((obj)->GetSize().x) >> 1));
+	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 /// <summary>
@@ -66,7 +66,7 @@ inline int GetLeftEdge(T* obj) noexcept {
 /// <returns>Y軸做座標</returns>
 template<class T>
 inline int GetTopEdge(T* obj) noexcept {
-	return ((static_cast<int>(WINDOW_HEIGHT) >> 1) - (static_cast<int>((obj)->GetSize().y) >> 1));
+	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);
 }
 
 

@@ -20,8 +20,8 @@ namespace MyAPP::Form::Object {
 
 	void Mario::behavior(void* data) {
 		if (!static_cast<MyAPP::GameManager*>(data)->opMode) {
-			comeDown();
 			doJump();
+			comeDown();
 			checkInvincible();
 		}
 		shoot(data);
@@ -37,11 +37,15 @@ namespace MyAPP::Form::Object {
 			auto tmp = GetPosition();
 			auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
 			auto tmp1 = tmp.y += displacement;
+			auto msize = GetSize();
+			tmp.y += displacement;
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
-					if ((it)->collisionable && (it)->inRange(tmp, GetSize())) {
+					if (it->MyType == ObjectType::LeftEdge)
+						return;
+					if ((it)->collisionable && (it)->inRange(tmp, msize)) {
 
-						tmp1 = (it)->GetPosition().y - (static_cast<int>((it)->GetSize().y) >> 1) - (static_cast<int>(GetSize().y) >> 1);
+						tmp1 = (it)->GetPosition().y - (((it)->GetSize().y) / 2) - (GetSize().y /2);
 						auto tmp2 = GetSize();
 						tmp2.x *= 0.75f;
 						if (it->inRange(tmp,tmp2)) {
@@ -89,9 +93,11 @@ namespace MyAPP::Form::Object {
 			tmp.y -= displacement * 2;
 			const auto MySize = GetSize();
 			for (auto& it : *bricks) {
+				if (it->MyType == ObjectType::LeftEdge)
+					continue;
 				if (it->collisionable && it->inRange(tmp, MySize)) {
 					flag = false;
-					tmp.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+					tmp.y = it->GetPosition().y + (it->GetSize().y / 2) + (MySize.y / 2);
 					break;
 				}
 			}
