@@ -6,7 +6,7 @@
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	CheckCollision(data);
 	doJump();
-	Move(glm::vec2(GetSize().x / 16 * (left ? -1 : 1), 0));
+	Move(glm::vec2(MyAPP::Form::Object::DEFAULTDISPLACEMENT/2* (left ? -1 : 1), 0));
 	doDown();
 }
 

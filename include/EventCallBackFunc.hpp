@@ -103,7 +103,6 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
 				flag = false;
 				marioPos.x = it->GetPosition().x - (it->GetSize().x / 2) - (mariosize.x / 2);
-				;
 				break;
 			}
 		}
@@ -532,7 +531,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	auto&& Displacement = (int)marioSize.x >> 3;
+	auto&& Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
 	if (mario->GetState() == Mario::State::MOVE) {
 		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
 			marioPos.x -= Displacement;

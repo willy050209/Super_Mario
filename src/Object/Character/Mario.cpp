@@ -38,7 +38,7 @@ namespace MyAPP::Form::Object {
 			auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
 			auto tmp1 = tmp.y += displacement;
 			auto msize = GetSize();
-			tmp.y += displacement;
+			//tmp.y += displacement;
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
 					if (it->MyType == ObjectType::LeftEdge)
