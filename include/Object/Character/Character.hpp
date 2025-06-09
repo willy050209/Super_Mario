@@ -9,8 +9,13 @@
 namespace MyAPP {
 	namespace Form {
 		namespace Object {
-			const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f * 0.15f;
 			
+			
+			static inline auto& getDEFAULTDISPLACEMENT() noexcept {
+				static const int DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15 / 10 ;
+				return DEFAULTDISPLACEMENT;
+			}
+
 			/// <summary>
 			/// 所有角色的父類別 繼承Object
 			/// </summary>
@@ -77,6 +82,10 @@ namespace MyAPP {
 				inline auto setResetPosition(const glm::vec2& pos) noexcept { ResetPositionValue = pos; }
 
 				inline const auto& getResetPosition() const noexcept { return ResetPositionValue; }
+
+				const auto getBottom() const noexcept {
+					return GetPosition().y - GetSize().y / 2;
+				}
 
 			protected:
 				/// <summary>

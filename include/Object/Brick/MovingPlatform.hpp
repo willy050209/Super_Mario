@@ -3,13 +3,14 @@
 #define MOVINGPLATFORM_HPP
 
 #include "Object/Brick/Brick.hpp"
+#include "Interface/ICollisionable.hpp"
 #include "FilePath.hpp"
 
 namespace MyAPP::Form::Object {
 	/// <summary>
 	/// 平台物件 繼承Brick
 	/// </summary>
-	class MovingPlatform : public Brick {
+	class MovingPlatform :Interface::ICollisionable, public Brick {
 	public:
 		/// <summary>
 		///
@@ -28,6 +29,8 @@ namespace MyAPP::Form::Object {
 		MovingPlatform(MovingPlatform&& brick) = delete;
 
 		virtual void behavior(void* data = nullptr) override;
+
+		virtual void CheckCollision(void* data) override;
 
 		bool up = { true };
 	};

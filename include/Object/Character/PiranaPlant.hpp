@@ -43,6 +43,13 @@ namespace MyAPP::Form::Object {
 			if (FramesCount >= 2) FramesCount = 0;
 		}
 
+		virtual void Reset() noexcept override {
+			Character::Reset();
+			static_count = 0;
+			m_static = PiranaPlantStatic::up;
+			dead = false;
+		}
+
 	private:
 		virtual void CheckCollision(void* data) override;
 

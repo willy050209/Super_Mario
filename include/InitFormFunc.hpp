@@ -884,7 +884,7 @@ INITFORM_FUNC(initForm_1_4) {
 				auto flag = true;
 				auto marioPos = mario->GetPosition();
 				auto mariosize = mario->GetSize();
-				float Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
+				float Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
 				auto pos = (background)->GetPosition();
 				pos.x -= Displacement;
 				std::for_each(std::execution::seq, block->begin(), block->end(),

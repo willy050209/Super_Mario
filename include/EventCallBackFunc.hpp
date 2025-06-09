@@ -79,7 +79,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
-	int Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
+	int Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	
 	if (mario->GetState() == Mario::State::DIED)
@@ -101,12 +101,19 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
-				if (mario->GetState() == Mario::State::UP && (it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y/2) && it->MyType != ObjectType::LeftEdge)
+				if ((mario->GetState() == Mario::State::UP &&
+						(it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y / 2) &&
+						it->MyType != ObjectType::LeftEdge) ||
+					it->MyType == ObjectType::MovingPlatform)
 					continue;
 				flag = false;
 				marioPos.x = it->GetPosition().x - (it->GetSize().x / 2) - (mariosize.x / 2);
 				break;
 			}
+		}
+		if (!flag) {
+			mario->move();
+			return;
 		}
 		if (abs(mario->GetPosition().x) >= mariosize.x  && flag) {
 			mario->SetPosition({ mario->GetPosition().x + Displacement, mario->GetPosition().y });
@@ -153,9 +160,10 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		auto pos = (background)->GetPosition();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
-				if (mario->GetState() == Mario::State::UP && 
-					(it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y / 2) &&
-					it->MyType != ObjectType::LeftEdge)
+				if ((mario->GetState() == Mario::State::UP &&
+						(it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y / 2) &&
+						it->MyType != ObjectType::LeftEdge) ||
+						it->MyType == ObjectType::MovingPlatform)
 					continue;
 				flag = false;
 				//marioPos = it->GetPosition();
@@ -406,6 +414,11 @@ EVENTCALLCALLBACKFUN(CheckDoors) {
 				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
 			}
 			// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
+			if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
+				auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
+				num = FPS_CAP;
+				nowtime++;
+			}
 			break;
 		}
 	}
@@ -541,7 +554,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	auto&& Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
+	auto&& Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
 	if (mario->GetState() == Mario::State::MOVE) {
 		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
 			marioPos.x -= Displacement;
@@ -632,6 +645,11 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			FM.removeObject<Props::Props>(FM.GetNowForm(), it->m_ID);
 		});
 	props->clear();
+	if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
+		auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
+		num = FPS_CAP;
+		nowtime = 300;
+	}
 }
 
 /// <summary>

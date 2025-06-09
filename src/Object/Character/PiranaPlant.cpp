@@ -68,6 +68,8 @@ void MyAPP::Form::Object::PiranaPlant::CheckCollision(void *data)  {
 	auto GM = static_cast<GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+	if (mario == nullptr)
+		return;
 	if (collisionable && inRange(mario->GetPosition(), mario->GetSize())) {
 		if (mario->isInvincible()) {
 			died();
@@ -113,7 +115,7 @@ void MyAPP::Form::Object::PiranaPlant::CheckCollision(void *data)  {
 		}
 		else {
 			mario->died();
-			if (mario->GetState() == Mario::State::DIED) {
+			if (mario->isdied()) {
 				GM->LostALife();
 			}
 		}

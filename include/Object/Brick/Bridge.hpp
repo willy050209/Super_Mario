@@ -26,9 +26,7 @@ namespace MyAPP::Form::Object {
 
 		Bridge(Bridge&&) = delete;
 
-		virtual void behavior(void* data = nullptr) override {};
-
-
+		virtual void behavior(void* data = nullptr) override {}
 	};
 }
 

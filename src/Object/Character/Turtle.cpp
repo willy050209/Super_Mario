@@ -11,12 +11,7 @@ namespace MyAPP::Form::Object {
 	void Turtle::behavior(void* data) {
 		if (!static_cast<MyAPP::GameManager*>(data)->pause) {
 			if (moveFlag) {
-				if (diedFlag) {
-					move();
-				}
-				else {
-					Character::move();
-				}
+				move();
 			}
 			ChangeImg();
 			comeDown();
@@ -30,35 +25,56 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Turtle::move() noexcept {
-		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
-		bool flag = true;
-		auto MyPos = GetPosition();
-		if (MyPos.y < WINDOW_HEIGHT) {
-			const auto MySize = GetSize();
-			MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
-			auto tmp = MyPos;
-			tmp.y -= MySize.y;
-			tmp.x += (left == 1 ? -((int)MySize.x) >> 1 : ((int)MySize.x) >> 1);
+		if (diedFlag) {
+			auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+			bool flag = true;
+			auto MyPos = GetPosition();
+			if (MyPos.y < WINDOW_HEIGHT) {
+				const auto MySize = GetSize();
+				MyPos.x += (left == 1 ? -(getDEFAULTDISPLACEMENT() / 2) : getDEFAULTDISPLACEMENT() / 2);
+				auto tmp = MyPos;
+				tmp.y -= MySize.y;
+				tmp.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
+				for (auto& it : *bricks) {
+					if (it->collisionable && it->inRange(tmp, GetSize())) {
+						if (it->MyType == ObjectType::LeftEdge)
+							continue;
+						flag = true;
+						break;
+					}
+				}
+				if (MyPos.y < WINDOW_HEIGHT && flag) {
+					const auto MySize = GetSize();
+					MyPos.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
+					for (auto& it : *bricks) {
+						if (it->collisionable && it->inRange(MyPos, MySize)) {
+							if (it->MyType == ObjectType::LeftEdge)
+								continue;
+							moveFlag = false;
+							return;
+						}
+					}
+					SetPosition(MyPos);
+				}
+			}
+		}
+		else {
+			auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+			bool flag = false;
+			glm::vec2 pos = GetPosition() + glm::vec2{ GetSize().x * ((left == 1) ? -1 : 1), -GetSize().y };
 			for (auto& it : *bricks) {
-				if (it->collisionable && it->inRange(tmp, GetSize())) {
+				if (it->collisionable && it->inRange(pos, GetSize())) {
 					if (it->MyType == ObjectType::LeftEdge)
 						continue;
 					flag = true;
 					break;
 				}
 			}
-			if (MyPos.y < WINDOW_HEIGHT && flag) {
-				const auto MySize = GetSize();
-				MyPos.x += (left == 1 ? -(((int)MySize.x) >> 4) : (((int)MySize.x) >> 4));
-				for (auto& it : *bricks) {
-					if (it->collisionable && it->inRange(MyPos, MySize)) {
-						if (it->MyType == ObjectType::LeftEdge)
-							continue;
-						moveFlag = false;
-						return;
-					}
-				}
-				SetPosition(MyPos);
+			if (!flag) {
+				left ^= 1;
+			}
+			else {
+				Character::move();
 			}
 		}
 	}
@@ -87,7 +103,7 @@ namespace MyAPP::Form::Object {
 		bool flag = true;
 		auto tmp = GetPosition();
 		if (tmp.y < WINDOW_HEIGHT) {
-			tmp.y -= DEFAULTDISPLACEMENT;
+			tmp.y -= getDEFAULTDISPLACEMENT();
 			const auto MySize = GetSize();
 			std::for_each(std::execution::seq, bricks->begin(), bricks->end(), [&](auto& it) {
 				if (it->collisionable && it->inRange(tmp, MySize)) {
@@ -123,7 +139,7 @@ namespace MyAPP::Form::Object {
 						setMoveFlag(true);
 					}
 				}
-				else if (mario->isInvincible() || mario->GetState() == Mario::State::DOWN) {
+				else if (mario->isInvincible() || (mario->GetState() == Mario::State::DOWN && mario->getBottom() >getBottom())) {
 					died();
 					switch (mario->jumpCobo) {
 					case 0:
@@ -174,7 +190,7 @@ namespace MyAPP::Form::Object {
 				}
 				else {
 					mario->died();
-					if (mario->GetState() == Mario::State::DIED) {
+					if (mario->isdied()) {
 						GM->LostALife();
 					}
 				}

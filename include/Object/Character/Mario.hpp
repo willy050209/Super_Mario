@@ -143,7 +143,11 @@ namespace MyAPP::Form::Object {
 		/// ¬O§_¬OµL¼Ä
 		/// </summary>
 		inline auto isInvincible() const noexcept {
-			return mario_invincible == State::Invincible || state == State::DIED || invincibleCount > 0;
+			return invincibleCount > 0;
+		}
+
+		inline bool isdied() const noexcept {
+			return state == State::DIED;
 		}
 
 		inline void setInvincible(int val) noexcept {
@@ -204,7 +208,7 @@ namespace MyAPP::Form::Object {
 		State state = State::MOVE;
 		Mario_type mario_type = Mario_type::Mario;
 		State mario_invincible = State::MOVE;
-		int displacement = DEFAULTDISPLACEMENT;
+		int displacement = getDEFAULTDISPLACEMENT();
 		int index = 0;
 		//int jumpDelay = 0;
 		int jumpcount = 0;

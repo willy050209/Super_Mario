@@ -18,7 +18,7 @@ void MyAPP::Form::Object::Koopa::behavior(void* data) {
 		PlayFrames();
 	}
 	else {
-		m_Transform.translation.y -= DEFAULTDISPLACEMENT;
+		m_Transform.translation.y -= getDEFAULTDISPLACEMENT();
 	}
 }
 
@@ -35,14 +35,14 @@ void MyAPP::Form::Object::Koopa::died() noexcept {
 void MyAPP::Form::Object::Koopa::move() noexcept {
 	switch (koopstate) {
 	case MyAPP::Form::Object::Koopa::KoopaState::jump1:
-		m_Transform.translation += glm::vec2{ -DEFAULTDISPLACEMENT/2, DEFAULTDISPLACEMENT/2 };
+		m_Transform.translation += glm::vec2{ -getDEFAULTDISPLACEMENT() / 2, getDEFAULTDISPLACEMENT() / 2 };
 		jumpcout--;
 		break;
 	case MyAPP::Form::Object::Koopa::KoopaState::null:
 		delaycount--;
 		break;
 	case MyAPP::Form::Object::Koopa::KoopaState::jump2:
-		m_Transform.translation += glm::vec2{ DEFAULTDISPLACEMENT/2, DEFAULTDISPLACEMENT/2 };
+		m_Transform.translation += glm::vec2{ getDEFAULTDISPLACEMENT() / 2, getDEFAULTDISPLACEMENT() / 2 };
 		jumpcout--;
 		break;
 	default:
@@ -81,10 +81,10 @@ void MyAPP::Form::Object::Koopa::CheckCollision(void* data) {
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
+	if (!GM->opMode && !mario->isInvincible() && !mario->isdied()) {
 		if (collisionable && inRange(marioPos, marioSize)) {
 			mario->died();
-			if (!mario->isInvincible()) {
+			if (!mario->isdied()) {
 				GM->LostALife();
 			}
 		}
@@ -128,7 +128,7 @@ void MyAPP::Form::Object::Koopa::shoot(void* data) noexcept {
 
 void MyAPP::Form::Object::Koopa_Fire::behavior(void* data) {
 	this->CheckCollision(data);
-	this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5f : DEFAULTDISPLACEMENT * 1.5f, 0 });
+	this->Move({ (left) ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2, 0 });
 	if (destroyflag)
 		destroyFire(static_cast<GameManager*>(data)->GetFormManger());
 }

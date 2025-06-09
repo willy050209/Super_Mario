@@ -41,7 +41,7 @@ namespace MyAPP::Form::Object {
 			//tmp.y += displacement;
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
-					if (it->MyType == ObjectType::LeftEdge)
+					if (it->MyType == ObjectType::LeftEdge || it->MyType == ObjectType::MovingPlatform)
 						return;
 					if ((it)->collisionable && (it)->inRange(GetPosition(), GetSize())) {
 						auto tmp2 = GetSize();
@@ -75,7 +75,7 @@ namespace MyAPP::Form::Object {
 				else
 					diedflag = true;
 				index = 0;
-				displacement = DEFAULTDISPLACEMENT;
+				displacement = getDEFAULTDISPLACEMENT();
 			}
 		}
 	}
@@ -180,27 +180,29 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Mario::died() noexcept {
-		if (isBigMario()) {
-			if (mario_type == Mario_type::FieryMario || mario_type == Mario_type::SuperMario) {
-				state = State::MOVE;
-				mario_type = Mario_type::Mario;
-				invincibleCount = FPS_CAP * 2;
-				collisionable = false;
+		if(!isdied()){
+			if (isBigMario()) {
+				if (mario_type == Mario_type::FieryMario || mario_type == Mario_type::SuperMario) {
+					state = State::MOVE;
+					mario_type = Mario_type::Mario;
+					invincibleCount = FPS_CAP * 2;
+					collisionable = false;
+				}
 			}
+			else {
+				state = State::DIED;
+				displacement = 2.5 * getDEFAULTDISPLACEMENT();
+				jumpcount = 10;
+			}
+			index = 0;
+			changeImg();
 		}
-		else {
-			state = State::DIED;
-			displacement = 2.5 * DEFAULTDISPLACEMENT;
-			jumpcount = 10;
-		}
-		index = 0;
-		changeImg();
 	}
 
 	void Fire::behavior(void* data) {
 		//double multiple = ((float)WINDOW_HEIGHT / 480);
 		this->CheckCollision(data);
-		this->Move({ (left) ? -DEFAULTDISPLACEMENT * 1.5f : DEFAULTDISPLACEMENT * 1.5f, distance_y });
+		this->Move({ (left) ? -getDEFAULTDISPLACEMENT() * 1.5f : getDEFAULTDISPLACEMENT() * 1.5f, distance_y });
 		this->PlayFrames();
 		if (destroyflag)
 			destroyFire(static_cast<GameManager*>(data)->GetFormManger());

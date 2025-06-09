@@ -18,7 +18,7 @@ void MyAPP::Form::Object::Character::move() noexcept {
 	}
 	if (MyPos.y < WINDOW_HEIGHT && flag) {
 		const auto MySize = GetSize();
-		MyPos.x += (left == 1 ? -DEFAULTDISPLACEMENT/2:DEFAULTDISPLACEMENT/2);
+		MyPos.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				if (it->MyType == ObjectType::LeftEdge)
@@ -36,7 +36,7 @@ void MyAPP::Form::Object::Character::comeDown() noexcept {
 	auto MyPos = GetPosition();
 	if (MyPos.y < WINDOW_HEIGHT) {
 		const auto MySize = GetSize();
-		MyPos.y -= DEFAULTDISPLACEMENT;
+		MyPos.y -= getDEFAULTDISPLACEMENT();
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				if (it->getState() == Brick::State::jump) {
