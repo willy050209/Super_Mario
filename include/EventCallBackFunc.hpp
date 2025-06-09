@@ -295,10 +295,10 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 		std::static_pointer_cast<Util::Text>(timetext->GetDrawable())->SetText(std::to_string(--nowtime));
 		(num) = 0;
 		if (nowtime == 0) {
-			auto finishEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "FinifhEvent");
-			if (finishEvent == nullptr)
-				return;
-			finishEvent->Enable = true;
+			auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+			if (mario) {
+				static_cast<MyAPP::GameManager*>(data)->LostALife();
+			}
 		}
 	}
 }
