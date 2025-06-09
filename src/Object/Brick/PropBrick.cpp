@@ -4,6 +4,7 @@
 #include "Object/Props/FireFlower.hpp"
 #include "Object/Props/Mushroom.hpp"
 #include "Object/Props/Starman.hpp"
+#include "FilePath.hpp"
 
 void MyAPP::Form::Object::PropBrick::bonk() noexcept {
 
@@ -50,7 +51,6 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 			}
-			
 			else if (proptype == "Mushroom") {
 				prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
 				prop->SetPosition(GetPosition());

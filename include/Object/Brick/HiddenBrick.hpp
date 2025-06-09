@@ -24,7 +24,6 @@ namespace MyAPP ::Form:: Object {
 
 		HiddenBrick() = delete;
 
-
 		virtual void behavior(void* data = nullptr) override;
 
 		virtual void CheckCollision(void* data) override;

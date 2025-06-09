@@ -37,7 +37,7 @@ namespace MyAPP::Form::Object {
 		if (jumpcount > 0 && (state == State::UP || (state == State::DIED && !diedflag))) {
 			auto tmp = GetPosition() + glm::vec2{ 0, displacement };
 			auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
-			//auto tmp1 = tmp.y += displacement;
+			float tmp1 = tmp.y;
 			//tmp.y += displacement;
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
@@ -53,7 +53,7 @@ namespace MyAPP::Form::Object {
 								addpointflag = true;
 							}
 						}
-						tmp.y = (it)->GetPosition().y - (((it)->GetSize().y) / 2) - (GetSize().y / 2);
+						tmp1 = (it)->GetPosition().y - (((it)->GetSize().y) / 2) - (GetSize().y / 2);
 						displacement = 0;
 						if ((mario_type == Mario_type::SuperMario ||
 							mario_type == Mario_type::InvincibleSuperMario ||
@@ -66,6 +66,7 @@ namespace MyAPP::Form::Object {
 					}
 				});
 			}
+			tmp.y = tmp1;
 			SetPosition(tmp);
 			jumpcount--;
 			if (jumpcount == 0) {

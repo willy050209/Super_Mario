@@ -6,6 +6,7 @@
 #include "Brick.hpp"
 #include "ObjectType.hpp"
 #include "Coin.hpp"
+#include "FilePath.hpp"
 
 namespace MyAPP::Form::Object {
 
@@ -29,6 +30,25 @@ namespace MyAPP::Form::Object {
 		/// 被敲擊事件
 		/// </summary>
 		virtual void bonk() noexcept override;
+
+		virtual void Reset() noexcept override {
+			Brick::Reset();
+			switch (color) {
+			case MyAPP::Form::Object::BrickColor::normal:
+				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::BlockImagePath);
+				break;
+			case MyAPP::Form::Object::BrickColor::dark:
+				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::BlockDarkImagePath);
+				break;
+			case MyAPP::Form::Object::BrickColor::grey:
+				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::BlockGreyImagePath);
+				break;
+			default:
+				break;
+			}
+			trigger = false;
+			bonkedCount = 0;
+		}
 
 		/// <summary>
 		/// 表單刷新時執行

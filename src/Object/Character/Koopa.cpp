@@ -35,14 +35,14 @@ void MyAPP::Form::Object::Koopa::died() noexcept {
 void MyAPP::Form::Object::Koopa::move() noexcept {
 	switch (koopstate) {
 	case MyAPP::Form::Object::Koopa::KoopaState::jump1:
-		m_Transform.translation += glm::vec2{ -DEFAULTDISPLACEMENT, DEFAULTDISPLACEMENT/2 };
+		m_Transform.translation += glm::vec2{ -DEFAULTDISPLACEMENT/2, DEFAULTDISPLACEMENT/2 };
 		jumpcout--;
 		break;
 	case MyAPP::Form::Object::Koopa::KoopaState::null:
 		delaycount--;
 		break;
 	case MyAPP::Form::Object::Koopa::KoopaState::jump2:
-		m_Transform.translation += glm::vec2{ DEFAULTDISPLACEMENT, DEFAULTDISPLACEMENT/2 };
+		m_Transform.translation += glm::vec2{ DEFAULTDISPLACEMENT/2, DEFAULTDISPLACEMENT/2 };
 		jumpcout--;
 		break;
 	default:

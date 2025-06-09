@@ -101,7 +101,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
-				if (mario->GetState() == Mario::State::UP && it->GetPosition().y > marioPos.y && it->MyType != ObjectType::LeftEdge)
+				if (mario->GetState() == Mario::State::UP && (it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y/2) && it->MyType != ObjectType::LeftEdge)
 					continue;
 				flag = false;
 				marioPos.x = it->GetPosition().x - (it->GetSize().x / 2) - (mariosize.x / 2);
@@ -153,7 +153,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		auto pos = (background)->GetPosition();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
-				if (mario->GetState() == Mario::State::UP && it->GetPosition().y > marioPos.y && it->MyType!=ObjectType::LeftEdge)
+				if (mario->GetState() == Mario::State::UP && 
+					(it->GetPosition().y + it->GetSize().y / 2) > (marioPos.y + mariosize.y / 2) &&
+					it->MyType != ObjectType::LeftEdge)
 					continue;
 				flag = false;
 				//marioPos = it->GetPosition();
