@@ -23,6 +23,7 @@ namespace MyAPP::Form::Object {
 			doJump();
 			comeDown();
 			checkInvincible();
+			//std::cout << GetPosition().x << ' ' << GetPosition().y << '\n';
 		}
 		shoot(data);
 		static_cast<MyAPP::GameManager*>(data)->mariotype = mario_type;
@@ -34,18 +35,15 @@ namespace MyAPP::Form::Object {
 
 	void Mario::doJump() noexcept {
 		if (jumpcount > 0 && (state == State::UP || (state == State::DIED && !diedflag))) {
-			auto tmp = GetPosition();
+			auto tmp = GetPosition() + glm::vec2{ 0, displacement };
 			auto blocks = std::static_pointer_cast<std::vector<std::shared_ptr<Brick>>>(userdata);
-			auto tmp1 = tmp.y += displacement;
-			auto msize = GetSize();
+			//auto tmp1 = tmp.y += displacement;
 			//tmp.y += displacement;
 			if (state != State::DIED) {
 				std::for_each(std::execution::seq, blocks->begin(), blocks->end(), [&](std::shared_ptr<Brick> it) {
 					if (it->MyType == ObjectType::LeftEdge)
 						return;
-					if ((it)->collisionable && (it)->inRange(tmp, msize)) {
-
-						tmp1 = (it)->GetPosition().y - (((it)->GetSize().y) / 2) - (GetSize().y /2);
+					if ((it)->collisionable && (it)->inRange(GetPosition(), GetSize())) {
 						auto tmp2 = GetSize();
 						tmp2.x *= 0.75f;
 						if (it->inRange(tmp,tmp2)) {
@@ -55,6 +53,7 @@ namespace MyAPP::Form::Object {
 								addpointflag = true;
 							}
 						}
+						tmp.y = (it)->GetPosition().y - (((it)->GetSize().y) / 2) - (GetSize().y / 2);
 						displacement = 0;
 						if ((mario_type == Mario_type::SuperMario ||
 							mario_type == Mario_type::InvincibleSuperMario ||
@@ -67,7 +66,6 @@ namespace MyAPP::Form::Object {
 					}
 				});
 			}
-			tmp.y = tmp1;
 			SetPosition(tmp);
 			jumpcount--;
 			if (jumpcount == 0) {

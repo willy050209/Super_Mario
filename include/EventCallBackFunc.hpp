@@ -79,7 +79,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
-	float Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
+	int Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	
 	if (mario->GetState() == Mario::State::DIED)
@@ -101,6 +101,8 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x + Displacement, marioPos.y }, mariosize)) {
+				if (mario->GetState() == Mario::State::UP && it->GetPosition().y > marioPos.y && it->MyType != ObjectType::LeftEdge)
+					continue;
 				flag = false;
 				marioPos.x = it->GetPosition().x - (it->GetSize().x / 2) - (mariosize.x / 2);
 				break;
@@ -151,11 +153,17 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		auto pos = (background)->GetPosition();
 		for (auto& it : *block) {
 			if (it->collisionable && it->inRange({ marioPos.x - Displacement, marioPos.y }, mariosize)) {
+				if (mario->GetState() == Mario::State::UP && it->GetPosition().y > marioPos.y && it->MyType!=ObjectType::LeftEdge)
+					continue;
 				flag = false;
 				//marioPos = it->GetPosition();
 				marioPos.x = it->GetPosition().x + (it->GetSize().x / 2) + (mariosize.x / 2);
 				break;
 			}
+		}
+		if (!flag) {
+			mario->move();
+			return;
 		}
 		if (abs(mario->GetPosition().x) >= mariosize.x && flag) {
 			mario->SetPosition({ mario->GetPosition().x - Displacement, mario->GetPosition().y });

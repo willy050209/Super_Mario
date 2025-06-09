@@ -18,6 +18,8 @@ void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexc
 		const auto MySize = GetSize();
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
+				if (it->MyType == ObjectType::LeftEdge)
+					continue;
 				MyPos.x = it->GetPosition().x - (((it->GetSize().x / 2) + (MySize.x / 2)) * (left ? -1 : 1));
 				left = !left; // Change direction if collision occurs
 				break;

@@ -21,6 +21,8 @@ namespace MyAPP::Form::Object::Props {
 			const auto MySize = GetSize();
 			for (auto& it : *bricks) {
 				if (it->collisionable && it->inRange(MyPos, MySize)) {
+					if (it->MyType == ObjectType::LeftEdge)
+						continue;
 					MyPos.x = it->GetPosition().x - ((it->GetSize().x) /2) - ((MySize.x) /2);
 					break;
 				}

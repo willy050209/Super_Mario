@@ -78,14 +78,14 @@ namespace MyAPP::Form:: Object {
 		inline auto inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
 			const auto& mpos = GetPosition();
 			const auto msize = GetSize();
-			const auto _ml = mpos.x - (msize.x / 2);
-			const auto _mr = mpos.x + (msize.x / 2);
-			const auto _md = mpos.y - (msize.y / 2);
-			const auto _mu = mpos.y + (msize.y / 2);
-			const auto _ol = Position.x - (size.x / 2);
-			const auto _or = Position.x + (size.x / 2);
-			const auto _od = Position.y - (size.y / 2);
-			const auto _ou = Position.y + (size.y / 2);
+			const int _ml = mpos.x - (int)(msize.x / 2);
+			const int _mr = mpos.x + (int)(msize.x / 2);
+			const int _md = mpos.y - (int)(msize.y / 2);
+			const int _mu = mpos.y + (int)(msize.y / 2);
+			const int _ol = Position.x - (int)(size.x / 2);
+			const int _or = Position.x + (int)(size.x / 2);
+			const int _od = Position.y - (int)(size.y / 2);
+			const int _ou = Position.y + (int)(size.y / 2);
 
 			return _ml < _or && _mr > _ol && _mu > _od && _md < _ou;
 		}

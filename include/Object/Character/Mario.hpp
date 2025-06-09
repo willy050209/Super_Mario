@@ -60,7 +60,7 @@ namespace MyAPP::Form::Object {
 		/// <summary>
 		/// 準備跳躍
 		/// </summary>
-		void jump(float d = 4.5) noexcept;
+		void jump(float d = 4.5f) noexcept;
 
 		/// <summary>
 		/// 執行下墜
@@ -204,7 +204,7 @@ namespace MyAPP::Form::Object {
 		State state = State::MOVE;
 		Mario_type mario_type = Mario_type::Mario;
 		State mario_invincible = State::MOVE;
-		float displacement = DEFAULTDISPLACEMENT;
+		int displacement = DEFAULTDISPLACEMENT;
 		int index = 0;
 		//int jumpDelay = 0;
 		int jumpcount = 0;
