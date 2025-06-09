@@ -81,6 +81,6 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 			}
 		}
 	}
-	dojump();
-	comeDown();
+	//dojump();
+	//comeDown();
 }
