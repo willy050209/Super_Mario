@@ -264,7 +264,7 @@ INITFORM_FUNC(initFormSetting) {
 	tmpbutton->SetCallBackFunc(Back_Button_func);
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, tmpbutton);
 
-	auto text = std::make_shared<TextObject>("VolumeValueText", MyAPP::MyResourcesFilePath::MyFontPath, textSize, std::to_string(MyBGM::GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
+	auto text = std::make_shared<TextObject>("VolumeValueText", MyAPP::MyResourcesFilePath::MyFontPath, textSize, std::to_string(self->bgm->GetVolume()), Util::Color::FromName(Util::Colors::WHITE), 10);
 	text->SetPosition({ 2 * text->GetSize().x, 0 });
 	MyFM.addObject(MyAPP::Form::FormNames::FormSetting, text);
 
@@ -884,7 +884,7 @@ INITFORM_FUNC(initForm_1_4) {
 				auto flag = true;
 				auto marioPos = mario->GetPosition();
 				auto mariosize = mario->GetSize();
-				auto&& Displacement = static_cast<int>(mariosize.x) >> 3;
+				float Displacement = MyAPP::Form::Object::DEFAULTDISPLACEMENT;
 				auto pos = (background)->GetPosition();
 				pos.x -= Displacement;
 				std::for_each(std::execution::seq, block->begin(), block->end(),

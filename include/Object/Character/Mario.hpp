@@ -6,6 +6,7 @@
 #include "Object/ImageObject.hpp"
 #include "Interface/ICollisionable.hpp"
 #include "Interface/IMovable.hpp"
+#include "Interface/IFrames.hpp"
 #include "FilePath.hpp"
 
 #include <unordered_map>
@@ -75,6 +76,10 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <param name="data">GameManager * </param>
 		virtual void behavior(void* data = nullptr) override;
+
+		/*virtual inline glm::vec2 GetSize() const noexcept override {
+			return (m_Drawable) ? glm::vec2{std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize().y,std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize().y} : glm::vec2{ 0, 0 };
+		}*/
 
 		// virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
@@ -252,12 +257,12 @@ namespace MyAPP::Form::Object {
 		};
 	};
 
-	class Fire :Interface::ICollisionable,Interface::IMovable, public ImageObject {
+	class Fire :Interface::ICollisionable,Interface::IMovable,Interface::Iframes, public ImageObject {
 	public:
 		explicit Fire(const std::string& name,
 			const float zIndex,
 			const glm::vec2& pivot = { 0, 0 })
-			: ImageObject(name, std::make_shared<Util::Image>(MyAPP::MyResourcesFilePath::FrieBall), zIndex, pivot) {
+			: ImageObject(name, std::make_shared<Util::Image>(Frame[0]), zIndex, pivot) {
 			MyType = ObjectType::Fire;
 		}
 
@@ -276,6 +281,11 @@ namespace MyAPP::Form::Object {
 			m_Transform.translation = position;
 		}
 
+		virtual std::string GetFrame() const noexcept override {
+			return Frame[imgIndex];
+		}
+		virtual void PlayFrames() noexcept override;
+
 		bool left = false; // 是否向左移動
 
 	private:
@@ -286,11 +296,14 @@ namespace MyAPP::Form::Object {
 		//float yposition = 0.0f; // Y軸位置
 		//float xposition = 0.0f; // X軸位置
 		//float my_standar = 0.0f;
+		bool touch_ground = false;
+		bool destroyflag = false;
 		float distance_y = 0.0f;
 		float Xcount = 0.f;
 		float angle = 0.f;
-		bool touch_ground = false;
-		bool destroyflag = false;
+		int imgIndex = 0;
+		int imgDelay = 0;
+		static constexpr char* Frame[]{ R"(imgs\super mario\FireBall\01.png)", R"(imgs\super mario\FireBall\02.png)", R"(imgs\super mario\FireBall\03.png)", R"(imgs\super mario\FireBall\04.png)" };
 	};
 }
 

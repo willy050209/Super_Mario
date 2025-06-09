@@ -21,7 +21,7 @@ namespace MyAPP::Form:: Object {
 	void Brick::dojump() noexcept {
 		if (state == State::jump) {
 			// const auto Displacement = static_cast<unsigned>(GetSize().y) >> 4;
-			incPositionY(static_cast<int>(GetSize().y) >> 4);
+			incPositionY(GetSize().y / 16);
 			jumpcount--;
 			if (!jumpcount) {
 				state = State::down;
@@ -33,7 +33,7 @@ namespace MyAPP::Form:: Object {
 		if (state == State::down) {
 			// const auto Displacement = static_cast<unsigned>(GetSize().y) >> 4;
 			if (GetPosition().y > pos.y) {
-				incPositionY(-(static_cast<int>(GetSize().y) >> 4));
+				incPositionY(-GetSize().y / 16);
 			}
 			else {
 				state = State::null;

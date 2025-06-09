@@ -6,7 +6,7 @@
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	CheckCollision(data);
 	doJump();
-	Move(glm::vec2(GetSize().x / 16 * (left ? -1 : 1), 0));
+	Move(glm::vec2(MyAPP::Form::Object::DEFAULTDISPLACEMENT/2* (left ? -1 : 1), 0));
 	doDown();
 }
 
@@ -18,7 +18,7 @@ void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexc
 		const auto MySize = GetSize();
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
-				MyPos.x = it->GetPosition().x - (static_cast<int>(it->GetSize().x) >> 1) - (static_cast<int>(MySize.x) >> 1);
+				MyPos.x = it->GetPosition().x - (((it->GetSize().x / 2) + (MySize.x / 2)) * (left ? -1 : 1));
 				left = !left; // Change direction if collision occurs
 				break;
 			}
@@ -88,7 +88,7 @@ void MyAPP::Form::Object::Props::Mushroom::doDown() noexcept {
 		MyPos.y -= GetSize().y / 8;
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
-				MyPos.y = it->GetPosition().y + (static_cast<int>(it->GetSize().y) >> 1) + (static_cast<int>(MySize.y) >> 1);
+				MyPos.y = it->GetPosition().y + ((it->GetSize().y) /2) + ((MySize.y) /2);
 				break;
 			}
 		}

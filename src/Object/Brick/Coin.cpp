@@ -14,6 +14,7 @@ void MyAPP::Form::Object::Coin::bonk() noexcept {
 
 void MyAPP::Form::Object::Coin::behavior(void* data) {
 	PlayFrames();
+	
 	CheckCollision(data);
 }
 

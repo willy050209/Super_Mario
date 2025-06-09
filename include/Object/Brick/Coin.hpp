@@ -42,6 +42,11 @@ namespace MyAPP::Form::Object {
 
 		virtual std::string GetFrame() const noexcept { return Frames[GetFrameCount()]; }
 
+		virtual void Reset() noexcept {
+			Brick::Reset();
+			play = true;
+		}
+
 		static constexpr size_t& GetFrameCount() noexcept {
 			return frameCount;
 		}
@@ -53,7 +58,8 @@ namespace MyAPP::Form::Object {
 		static void nextFrame() noexcept {
 			frameCount = (frameCount + 1) % GetMaxFrameCount();
 		}
-				
+			
+
 
 	private:
 		/// <summary>
