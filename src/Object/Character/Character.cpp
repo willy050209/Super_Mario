@@ -38,6 +38,8 @@ void MyAPP::Form::Object::Character::comeDown() noexcept {
 		const auto MySize = GetSize();
 		MyPos.y -= getDEFAULTDISPLACEMENT();
 		for (auto& it : *bricks) {
+			if (it->MyType == ObjectType::LeftEdge)
+				continue;
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				if (it->getState() == Brick::State::jump) {
 					died();

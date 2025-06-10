@@ -292,6 +292,8 @@ namespace MyAPP::Form::Object {
 
 		bool left = false; // ¬O§_¦V¥ª²¾°Ê
 
+		static constexpr auto GetFrames() { return Frame; }
+
 	private:
 		virtual void CheckCollision(void* data) override;
 

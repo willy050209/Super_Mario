@@ -12,6 +12,8 @@ INITFORM_FUNC(initForm_1_4);
 INITFORM_FUNC(winForm);
 INITFORM_FUNC(diedForm);
 
+INITFORM_FUNC(initForm1);
+
 
 #ifndef INITFORMFUNC_HPP
 #define INITFORMFUNC_HPP
@@ -738,6 +740,11 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	// 取得所有敵人
 	auto enemys = MakeObject::make_Characters();
+	{
+		auto tmp = std::make_shared<PiranaPlant>("PiranaPlant", 9);
+
+		enemys->push_back(std::move(tmp));
+	}
 
 	auto props = MakeObject::make_Props();
 
@@ -1033,6 +1040,57 @@ INITFORM_FUNC(diedForm) {
 			auto changeevent = std::make_shared<EventObject>("ChangeFormEvent", ChangeFormEvent, false);
 			changeevent->userdata = std::make_shared<std::string>(FormNames::Form_1_1);
 			MyFM.addObject(formName, std::move(changeevent));
+		}
+	}
+}
+
+INITFORM_FUNC(initForm1) {
+	auto& MyFM = self->GetFormManger();
+	constexpr auto& formName = "Form1";
+	using MPATH = MyAPP::MyResourcesFilePath;
+	
+	//文字方塊
+	{
+		if (auto text = std::make_shared<TextObject>("label1", MPATH::ArialFontPath, 50, "hello world!", Util::Color(255, 255, 255))) {
+			text->SetPosition({ 0, 0 });
+			MyFM.addObject(formName, std::move(text));
+		}
+	}
+	// 按鈕
+	{
+		auto buttoncallback = [](Button* const self, void* data) {
+			std::cout << self->name << " is clicked!\n\r";
+		};
+		for (auto i = 0; i < 3; ++i) {
+			auto button = std::make_shared<Button>(std::string("Button") + std::to_string(i), MPATH::ArialFontPath, 50, std::string("Button") + std::to_string(i), Util::Color(255, 255, 255));
+			if (button == nullptr)
+				continue;
+			button->CallBackFunc = buttoncallback;
+			button->SetPosition({ GetLeftEdge(button) + button->GetSize().x, GetTopEdge(button) - button->GetSize().y * i });
+			MyFM.addObject(formName, std::move(button));
+		}
+	}
+	// 圖片方塊
+	{
+		if (auto img = std::make_shared<ImageObject>("img", MY_RESOURCE_DIR "\\Image\\Background\\cat.jpg",1)) {
+			img->SetPosition({ -GetLeftEdge(img), -GetTopEdge(img) });
+			MyFM.addObject(formName, std::move(img));
+		}
+	}
+	//事件
+	{
+		auto systemTime = [](EventObject*const self,void*data) {
+			auto num = std::static_pointer_cast<int>(self->userdata);
+			if ((*num)++ >= FPS_CAP) {
+				auto currentTime = std::chrono::system_clock::now();
+				auto time = std::chrono::system_clock::to_time_t(currentTime);
+				std::cout << "目前時間：" << std::ctime(&time);
+				(*num) = 0;
+			}
+		};
+		if (auto timeEvent = std::make_shared<EventObject>("timeEvent", systemTime)) {
+			timeEvent->userdata = std::make_shared<int>(0);
+			MyFM.addObject(formName, std::move(timeEvent));
 		}
 	}
 }

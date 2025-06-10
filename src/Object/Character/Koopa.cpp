@@ -4,17 +4,22 @@
 #include "FilePath.hpp"
 #include "config.hpp"
 #include <iostream>
-#include <ctime>
+#include <numeric>   // For std::iota
+#include <algorithm> // For std::shuffle
+#include <random>    // For std::default_random_engine and std::seed_seq
+#include <chrono>    // For std::chrono::system_clock
 
 void MyAPP::Form::Object::Koopa::behavior(void* data) {
 	if(!isdied){
-		move();
-		if (!jump)
-			comeDown();
-		CheckCollision(data);
-		checkPosition();
-		random_shoot(data);
-		turn(data);
+		if(enable){
+			move();
+			if (!jump)
+				comeDown();
+			CheckCollision(data);
+			checkPosition();
+			random_shoot(data);
+			turn(data);
+		}
 		PlayFrames();
 	}
 	else {
@@ -61,6 +66,11 @@ void MyAPP::Form::Object::Koopa::move() noexcept {
 	}
 }
 
+void MyAPP::Form::Object::Koopa::kill() noexcept {
+	HP = 0;
+	died();
+}
+
 void MyAPP::Form::Object::Koopa::checkPosition() noexcept {
 	if (std::abs(GetPosition().y) > WINDOW_HEIGHT/2) {
 		died();
@@ -104,15 +114,25 @@ void MyAPP::Form::Object::Koopa::PlayFrames() noexcept {
 void MyAPP::Form::Object::Koopa::random_shoot(void* data) noexcept {
 	shootdelay++;
 	if(shootdelay >= FPS_CAP){
-		static bool seeded = false;
-		if (!seeded) {
-			srand(static_cast<unsigned int>(time(0)));
-			seeded = true;
-		}
+		auto random0to9 = []() {
+			// 建立一個包含 0 到 9 的向量
+			std::vector<int> arr(10);
+			std::iota(arr.begin(), arr.end(), 0); // 填充 0, 1, ..., 9
 
-		auto randomNumber = rand() % 100;
+			// 使用當前時間作為種子來初始化亂數產生器
+			// 這樣每次執行都會有不同的洗牌結果
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine rng(seed);
 
-		if (randomNumber < 50) {
+			// 使用 std::shuffle 進行洗牌
+			std::shuffle(arr.begin(), arr.end(), rng);
+
+			return arr[0];
+		};
+
+		auto randomNumber = random0to9();
+
+		if (randomNumber < 3) {
 			shoot(data);
 		}
 		shootdelay = 0;

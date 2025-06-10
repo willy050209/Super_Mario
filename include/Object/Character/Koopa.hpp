@@ -48,6 +48,12 @@ namespace MyAPP::Form::Object {
 		}
 		virtual void PlayFrames() noexcept override;
 		
+		void SetEnable(bool val) noexcept {
+			enable = val;
+		}
+
+		void kill() noexcept;
+
 	private:
 		void checkPosition() noexcept;
 		void turn(void* data) noexcept;
@@ -73,6 +79,7 @@ namespace MyAPP::Form::Object {
 		bool jump = false;
 		bool is_L_or_R = true;
 		bool isdied = false;
+		bool enable = true;
 	};
 
 	class Koopa_Fire : Interface::ICollisionable, Interface::IMovable, public ImageObject {

@@ -4,6 +4,8 @@
 #include "GameManager.hpp"
 #include "Object/ImageObject.hpp"
 
+#include <thread>
+
 void MyAPP::Form::Object::Axe::behavior(void* data) {
 	PlayFrames();
 	CheckCollision(data);
@@ -32,18 +34,38 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 		std::copy_if(imgs.begin(), imgs.end(), std::back_inserter(Briges), [](auto& it) {
 			return it->MyType == ObjectType::Bridge;
 		});
+		std::reverse(Briges.begin(), Briges.end());
 		return Briges;
 	};
-	if (inRange(mario->GetPosition(),mario->GetSize()) && enable) {
+	if (inRange(mario->GetPosition(),mario->GetSize()) && enable && mario->GetState() == Mario::State::MOVE) {
+		auto flag = true;
 		auto Briges = GetBriges();
+		if (auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")) {
+			moveEvent->Enable = false;
+		}
+		mario->collisionable = false;
 		for (auto& it : Briges) {
 			it->SetVisible(false);
 			it->collisionable = false;
+			flag = false;
+			FM.removeObject<Bridge>(FM.GetNowForm(), it->m_ID);
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			break;
 		}
-		auto gotodoor = FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor");
-		if (gotodoor) {
-			gotodoor->Enable = true;
+		if (flag) {
+			mario->SetLeft<false>();
+			if (auto gotodoor = FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor")) {
+				gotodoor->Enable = true;
+			}
+			enable = false;
+			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
+				koopa->kill();
+			}
 		}
-		enable = false;
+		else {
+			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
+				koopa->SetEnable(false);
+			}
+		}
 	}
 }
