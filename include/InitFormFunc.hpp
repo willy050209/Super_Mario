@@ -600,6 +600,12 @@ INITFORM_FUNC(initForm_1_2) {
 		if (it->MyType == ObjectType::Goomba) {
 			std::static_pointer_cast<Goomba>(it)->SetDark(true);
 		}
+		if (it->MyType == ObjectType::Turtle) {
+			std::static_pointer_cast<Turtle>(it)->SetDark(true);
+		}
+		if (it->MyType == ObjectType::PiranaPlant) {
+			std::static_pointer_cast<PiranaPlant>(it)->SetDark(true);
+		}
 	});
 	AddToFormManager(MyFM, formName, enemys);
 

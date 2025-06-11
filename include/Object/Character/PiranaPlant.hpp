@@ -27,16 +27,28 @@ namespace MyAPP::Form::Object {
 
 		virtual void move() noexcept override;
 
-		static constexpr auto GetFrames() noexcept { return Frames; }
+		//static constexpr auto GetFrames() noexcept { return Frames; }
 
 		virtual std::string GetFrame() const noexcept {
-			return (isDark ? FramesDark[FramesCount] : Frames[FramesCount]);
+			return (dark ? FramesDark[FramesCount] : Frames[FramesCount]);
 		}
+
+		template <bool isDark>
+		static constexpr auto GetFrames() noexcept {
+			if constexpr (isDark) {
+				return FramesDark;
+			}
+			else {
+				return Frames;
+			}
+		}
+
 		virtual void PlayFrames() noexcept override;
 
 		constexpr void SetPos(const glm::vec2& position) noexcept { pos = position; }
 
-		bool isDark{ false };
+		//bool isDark{ false };
+		inline void SetDark(bool val) noexcept { dark = val; }
 
 		static void nextFrame() noexcept {
 			++FramesCount;
@@ -77,6 +89,7 @@ namespace MyAPP::Form::Object {
 		glm::vec2 pos{ 0.0f, 0.0f };
 
 		bool dead{ false };
+		bool dark = false;
 	};
 
 
