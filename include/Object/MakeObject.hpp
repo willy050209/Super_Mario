@@ -50,7 +50,8 @@ namespace MyAPP::Form::Object {
 					inp >> XY.x >> XY.y >> Type >> Visibility >> Collisionable;
 					if (static_cast<ObjectType>(Type) == ObjectType::QuestionBlock ||
 						static_cast<ObjectType>(Type) == ObjectType::PropBrick ||
-						static_cast<ObjectType>(Type) == ObjectType::HiddenBrick) {
+						static_cast<ObjectType>(Type) == ObjectType::HiddenBrick ||
+						static_cast<ObjectType>(Type) == ObjectType::Turtle) {
 						inp >> data;
 					}
 				}

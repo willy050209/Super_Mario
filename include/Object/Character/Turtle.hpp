@@ -23,6 +23,12 @@ namespace MyAPP::Form::Object{
 
 		Turtle& operator=(Turtle&&) = delete;
 
+		enum class TurtleColor {
+			Default,
+			Dark,
+			Red
+		} turtlecolor = TurtleColor::Default;
+
 		virtual void behavior(void* data) override;
 
 		virtual void died() noexcept override;
@@ -39,20 +45,26 @@ namespace MyAPP::Form::Object{
 
 		// static constexpr inline char* const imgs[][2] = { { "imgs/super mario/1-1/TurtleGreen/frame0.png", "imgs/super mario/1-1/TurtleGreen/frame1.png" }, { "imgs/super mario/1-1/TurtleGreen_faceleft/frame0.png", "imgs/super mario/1-1/TurtleGreen_faceleft/frame1.png" } };
 
-		template <bool isDark>
+		template <TurtleColor Color>
 		static constexpr auto GetFrames() noexcept {
-			if constexpr (isDark) {
+			if constexpr (Color == TurtleColor::Dark) {
 				return FramesDark;
+			}
+			else if constexpr (Color == TurtleColor::Red) {
+				return FramesRed;
 			}
 			else {
 				return Frames;
 			}
 		}
 
-		template <bool isDark>
+		template <TurtleColor Color>
 		static constexpr auto GetFrames_R() noexcept {
-			if constexpr (isDark) {
+			if constexpr (Color == TurtleColor::Dark) {
 				return darkimgs_r;
+			}
+			else if constexpr (Color == TurtleColor::Red) {
+				return Redimgs_r;
 			}
 			else {
 				return imgs_r;
@@ -76,10 +88,9 @@ namespace MyAPP::Form::Object{
 
 		inline void SetDark(bool val) noexcept { dark = val; }
 
-
 	private:
 		int imgIndex{ 0 }, imageChangeDelay{ 0 };
-
+		
 		bool moveFlag = true;
 		bool dark = false;
 
@@ -93,8 +104,11 @@ namespace MyAPP::Form::Object{
 		static constexpr inline char* const imgs_r[] = { "imgs/super mario/TurtleGreen/frame0.png", "imgs/super mario/TurtleGreen/frame1.png" };
 		static constexpr inline char* const FramesDark[] = { "imgs/super mario/TurtleGreenDark_faceleft/frame0.png", "imgs/super mario/TurtleGreenDark_faceleft/frame1.png" };
 		static constexpr inline char* const darkimgs_r[] = { "imgs/super mario/TurtleGreenDark/frame0.png", "imgs/super mario/TurtleGreenDark/frame1.png" };
-		static constexpr inline char* const TortoiseShell[] = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
-		static constexpr inline char* const DarkTortoiseShell[] = { "imgs/super mario/KoopaTroopaShellGreenDark.png" };
+		static constexpr inline char* const FramesRed[] = { "imgs/super mario/TrutleRed_faceleft/frame0.png", "imgs/super mario/TrutleRed_faceleft/frame1.png" };
+		static constexpr inline char* const Redimgs_r[] = { "imgs/super mario/TrutleRed/frame0.png", "imgs/super mario/TrutleRed/frame1.png" };
+		static constexpr inline char* const TortoiseShell = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
+		static constexpr inline char* const DarkTortoiseShell = { "imgs/super mario/KoopaTroopaShellGreenDark.png" };
+		static constexpr inline char* const RedTortoiseShell = { "imgs/super mario/KoopaTroopaShellGreenDark.png" };
 	};
 }
 #endif // !GOOMBA_HPP

@@ -21,7 +21,19 @@ namespace MyAPP::Form::Object {
 
 	void Turtle::died() noexcept {
 		diedFlag = true;
-		std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(dark ? DarkTortoiseShell[0] : TortoiseShell[0]);
+		switch (turtlecolor) {
+		case MyAPP::Form::Object::Turtle::TurtleColor::Default:
+			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(TortoiseShell);
+			break;
+		case MyAPP::Form::Object::Turtle::TurtleColor::Dark:
+			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(DarkTortoiseShell);
+			break;
+		case MyAPP::Form::Object::Turtle::TurtleColor::Red:
+			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(RedTortoiseShell);
+			break;
+		default:
+			break;
+		}
 	}
 
 	void Turtle::move() noexcept {
@@ -92,7 +104,20 @@ namespace MyAPP::Form::Object {
 			if (imageChangeDelay >= (FPS_CAP / 3)) {
 				imgIndex++;
 				imgIndex &= 1;
-				std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? (dark ? FramesDark[imgIndex] : Frames[imgIndex]) : (dark ? darkimgs_r[imgIndex] : imgs_r[imgIndex])));
+				switch (turtlecolor) {
+				case MyAPP::Form::Object::Turtle::TurtleColor::Default:
+					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? Frames[imgIndex] : imgs_r[imgIndex]));
+					break;
+				case MyAPP::Form::Object::Turtle::TurtleColor::Dark:
+					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? FramesDark[imgIndex] : darkimgs_r[imgIndex]));
+					break;
+				case MyAPP::Form::Object::Turtle::TurtleColor::Red:
+					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? FramesRed[imgIndex] : Redimgs_r[imgIndex]));
+					break;
+				default:
+					break;
+				}
+				//std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? (dark ? FramesDark[imgIndex] : Frames[imgIndex]) : (dark ? darkimgs_r[imgIndex] : imgs_r[imgIndex])));
 				imageChangeDelay = 0;
 			}
 		}

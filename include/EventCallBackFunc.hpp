@@ -79,7 +79,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 	auto flag = true;
 	auto marioPos = mario->GetPosition();
 	auto mariosize = mario->GetSize();
-	int Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
+	auto Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
 	auto& opmode = static_cast<MyAPP::GameManager*>(data)->opMode;
 	
 	if (mario->GetState() == Mario::State::DIED)
@@ -554,7 +554,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
-	auto&& Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
+	auto& Displacement = MyAPP::Form::Object::getDEFAULTDISPLACEMENT();
 	if (mario->GetState() == Mario::State::MOVE) {
 		if (marioPos.x > (*doorarrPtr->begin())->GetPosition().x) {
 			marioPos.x -= Displacement;
