@@ -8,20 +8,23 @@
 
 void MyAPP::Form::Object::PropBrick::bonk() noexcept {
 
-	switch (color) {
-	case MyAPP::Form::Object::BrickColor::normal:
-		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockImagePath);
-		break;
-	case MyAPP::Form::Object::BrickColor::dark:
-		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath);
-		break;
-	case MyAPP::Form::Object::BrickColor::grey:
-		std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockGreyImagePath);
-		break;
-	default:
-		break;
+	if(Enable){
+		switch (color) {
+		case MyAPP::Form::Object::BrickColor::normal:
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockImagePath);
+			break;
+		case MyAPP::Form::Object::BrickColor::dark:
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockDarkImagePath);
+			break;
+		case MyAPP::Form::Object::BrickColor::grey:
+			std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::EmptyBlockGreyImagePath);
+			break;
+		default:
+			break;
+		}
+		trigger = true;
+		Enable = false;
 	}
-	trigger = true;
 }
 
 void MyAPP::Form::Object::PropBrick::behavior(void* data) {
@@ -55,18 +58,20 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 				prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
+				proptype.clear(); // Clear the proptype after using it
 			}
 			else if (proptype == "MushroomDark") {
 				prop = std::make_shared<Mushroom>("MushroomDark", Mushroom::GetImages<Mushroom::Category::MushroomDark>(), Mushroom::Category::MushroomDark, 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
+				proptype.clear(); // Clear the proptype after using it
 			}
 			else if (proptype == "FireFlower") {
 				prop = std::make_shared<FireFlower>("FireFlower", 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<FireFlower>(prop)->SetUpDistance(GetSize().y);
 			}
-			proptype.clear(); // Clear the proptype after using it
+			//proptype.clear(); // Clear the proptype after using it
 			if (prop == nullptr) {
 				return; // No valid prop type specified
 			}
@@ -80,6 +85,7 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 				props->push_back(std::move(prop));
 			}
 		}
+		trigger = false;
 	}
 	//dojump();
 	//comeDown();

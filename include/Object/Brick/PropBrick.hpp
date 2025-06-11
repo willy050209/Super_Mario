@@ -33,7 +33,8 @@ namespace MyAPP::Form::Object {
 
 		virtual void Reset() noexcept override {
 			Brick::Reset();
-			bool trigger = false;
+			trigger = false;
+			Enable = true;
 			switch (color) {
 			case MyAPP::Form::Object::BrickColor::normal:
 				std::static_pointer_cast<Util::Image>(GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::BlockImagePath);
@@ -57,6 +58,7 @@ namespace MyAPP::Form::Object {
 
 	private:
 		bool trigger = false;
+		bool Enable = true;
 		BrickColor color;
 		std::string proptype;
 	};
