@@ -16,5 +16,11 @@ void MyAPP::Form::Object::CheckPoint::CheckCollision(void* data) {
 		Enable = false;
 		puts("CheckPoint");
 		static_cast<MyAPP::GameManager*>(data)->SaveCheckPointPos(marioPos);
+		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+		auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
+		auto& [enemys, pipes, props, objs] = (*tuplePtr);
+		std::for_each(enemys->begin(), enemys->end(), [](auto& it) {
+			it->setResetPosition(it->GetPosition());
+		});
 	}
 }

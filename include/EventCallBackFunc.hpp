@@ -617,6 +617,11 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 	for (int i = checkPoints->size() - 1; i >= 0; --i) {
 		if (!(*checkPoints)[i]->Enable) {
 			gobackposx = -(*checkPoints)[i]->GetPosition().x;
+			if (auto backgroundptr = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background")) {
+				if (GetLeftEdge(backgroundptr) < backgroundptr->GetPosition().x + gobackposx) {
+					gobackposx = -(backgroundptr->GetPosition().x - GetLeftEdge(backgroundptr));
+				}
+			}
 			std::for_each(std::execution::seq, allobj.m_Images.begin(), allobj.m_Images.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::CheckPoint && obj->name!="coinimg") {
@@ -625,7 +630,6 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 			std::for_each(std::execution::seq, allobj.m_Characters.begin(), allobj.m_Characters.end(),
 				[&](auto& obj) {
 				if (obj->MyType != ObjectType::Mario) {
-					obj->incPositionX(gobackposx);
 					obj->Reset();
 				} });
 			self->Enable = false;

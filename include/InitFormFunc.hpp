@@ -186,7 +186,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>>& objlist) noexcept {
+	inline void AddToFormManager(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>>& objlist) noexcept {
 		std::for_each(objlist->begin(), objlist->end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 
@@ -198,7 +198,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFoemManger(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>>& objlist) noexcept {
+	inline void AddToFormManager(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>>& objlist) noexcept {
 		std::for_each(objlist.begin(), objlist.end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 }
@@ -358,7 +358,7 @@ INITFORM_FUNC(initForm_1_1) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
 	Blocks->push_back(leftedge);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	// 取得地圖與馬力歐
 	{
@@ -369,7 +369,7 @@ INITFORM_FUNC(initForm_1_1) {
 	
 	// 取得時間、分數、生命文字方塊
 	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
@@ -383,7 +383,7 @@ INITFORM_FUNC(initForm_1_1) {
 		aaa->SetPos({ 0, 0 });
 		enemys->push_back(std::move(aaa));
 	}*/
-	AddToFoemManger(MyFM, formName, enemys);
+	AddToFormManager(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();
 
@@ -473,7 +473,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	// 建立地圖與馬力歐
 	{
@@ -486,14 +486,14 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 
 	// 取得時間、分數、生命文字方塊
 	auto texts = MakeObject::make_GameText();
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
 
 	// 建立所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
-	AddToFoemManger(MyFM, formName, enemys);
+	AddToFormManager(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
 	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
@@ -537,7 +537,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 {
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
@@ -579,7 +579,7 @@ INITFORM_FUNC(initForm_1_2) {
 	auto checkPointArray = GetCheckPoints(Blocks);
 	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
 	Blocks->push_back(leftedge);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5, 100 });
@@ -590,7 +590,7 @@ INITFORM_FUNC(initForm_1_2) {
 	}
 
 	auto texts = MakeObject::make_GameText("1-2");
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
@@ -601,7 +601,7 @@ INITFORM_FUNC(initForm_1_2) {
 			std::static_pointer_cast<Goomba>(it)->SetDark(true);
 		}
 	});
-	AddToFoemManger(MyFM, formName, enemys);
+	AddToFormManager(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
 	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
@@ -660,7 +660,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetLeftEdge(Block) + Block->GetSize().x * 3, 100 });
@@ -671,7 +671,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	}
 
 	auto texts = MakeObject::make_GameText("1-2");
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
@@ -719,7 +719,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
 	leftedge->SetPosition({ GetLeftEdge(leftedge), 0 });
 	Blocks->push_back(leftedge);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	// 取得地圖與馬力歐
 	{
@@ -733,7 +733,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 	// 取得時間、分數、生命文字方塊
 	auto texts = MakeObject::make_GameText("1-2");
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
@@ -742,9 +742,12 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	auto enemys = MakeObject::make_Characters();
 	{
 		auto tmp = std::make_shared<PiranaPlant>("PiranaPlant", 9);
-
+		tmp->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 11 });
+		tmp->SetPos(tmp->GetPosition());
+		tmp->setResetPosition(tmp->GetPosition());
 		enemys->push_back(std::move(tmp));
 	}
+	AddToFormManager(MyFM, formName, enemys);
 
 	auto props = MakeObject::make_Props();
 
@@ -818,7 +821,7 @@ INITFORM_FUNC(initForm_1_4) {
 	auto checkPointArray =  GetCheckPoints(Blocks);
 	auto leftedge = std::make_shared<LeftEdge>("LeftEdge");
 	Blocks->push_back(leftedge);
-	AddToFoemManger(MyFM, formName, Blocks);
+	AddToFormManager(MyFM, formName, Blocks);
 
 	{
 		auto BMptr = MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 6 });
@@ -829,13 +832,13 @@ INITFORM_FUNC(initForm_1_4) {
 	}
 
 	auto texts = MakeObject::make_GameText("1-4");
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
 
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_4_Characters, Blocks);
-	AddToFoemManger(MyFM, formName, enemys);
+	AddToFormManager(MyFM, formName, enemys);
 
 	auto objs = MakeObject::make_Objs();
 
@@ -966,7 +969,7 @@ INITFORM_FUNC(diedForm) {
 		MyFM.addObject(formName, std::move(marioimg));
 	}
 
-	AddToFoemManger(MyFM, formName, texts);
+	AddToFormManager(MyFM, formName, texts);
 
 	{
 		{
