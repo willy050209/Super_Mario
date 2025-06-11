@@ -17,7 +17,7 @@ void MyAPP::Form::Object::MovingPlatform::behavior(void* data) {
 			SetPosition(glm::vec2{ m_Transform.translation.x, GetTopEdge(this) } + glm::vec2{ 0, GetSize().y });
 		}
 	}
-	CheckCollision(data);
+	//CheckCollision(data);
 }
 
 void MyAPP::Form::Object::MovingPlatform::CheckCollision(void* data) {
@@ -25,7 +25,7 @@ void MyAPP::Form::Object::MovingPlatform::CheckCollision(void* data) {
 	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (mario) {
-		if (inRange(mario->GetPosition(), GetSize())) {
+		if (inRange(mario->GetPosition(), GetSize()) ) {
 			mario->SetPosition({ mario->GetPosition().x, GetPosition().y + GetSize().y / 2 + mario->GetSize().y/2  });
 		}
 	}

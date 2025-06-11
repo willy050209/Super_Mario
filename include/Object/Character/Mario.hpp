@@ -208,7 +208,7 @@ namespace MyAPP::Form::Object {
 		State state = State::MOVE;
 		Mario_type mario_type = Mario_type::Mario;
 		State mario_invincible = State::MOVE;
-		int displacement = getDEFAULTDISPLACEMENT();
+		float displacement = getDEFAULTDISPLACEMENT();
 		int index = 0;
 		//int jumpDelay = 0;
 		int jumpcount = 0;
