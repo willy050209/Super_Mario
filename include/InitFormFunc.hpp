@@ -745,7 +745,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	auto enemys = MakeObject::make_Characters();
 	{
 		auto tmp = std::make_shared<PiranaPlant>("PiranaPlant", 9);
-		tmp->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 11 });
+		tmp->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 11.5 });
 		tmp->SetPos(tmp->GetPosition());
 		tmp->setResetPosition(tmp->GetPosition());
 		enemys->push_back(std::move(tmp));

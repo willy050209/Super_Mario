@@ -189,6 +189,18 @@ namespace MyAPP::Form::Object {
 			}
 		}
 
+		auto GetCrouchingImg() const noexcept {
+			if (isFieryMario()) {
+				return (left ? R"(imgs\super mario\Flip_FieryMarioCrouching.png)" : R"(imgs\super mario\FieryMarioCrouching.png)");
+			}
+			else if(isBigMario()) {
+				return (left ? R"(imgs\super mario\Flip_SuperMarioCrouching.png)" : R"(imgs\super mario\SuperMarioCrouching.png)");
+			}
+			else {
+				return (left ? R"(imgs\super mario\Flip_MarioStanding.png)" : R"(imgs\super mario\MarioStanding.png)");
+			}
+		}
+
 		int jumpCobo = 0;
 	private:
 		/// <summary>
@@ -293,6 +305,7 @@ namespace MyAPP::Form::Object {
 		bool left = false; // ¬O§_¦V¥ª²¾°Ê
 
 		static constexpr auto GetFrames() { return Frame; }
+
 
 	private:
 		virtual void CheckCollision(void* data) override;

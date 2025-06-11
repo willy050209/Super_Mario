@@ -213,6 +213,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		mario->move();
 	}
 	else if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
+		//std::static_pointer_cast<Util::Image>(mario->GetDrawable())->SetImage(mario->GetCrouchingImg());
 		static_cast<MyAPP::GameManager*>(data)->mariotype = mario->GetMario_type();
 		for (auto& it : *pipes) {
 			if (it->inRange({ marioPos.x, marioPos.y }, mariosize)) {
