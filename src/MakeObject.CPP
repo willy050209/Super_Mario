@@ -325,6 +325,15 @@ CharacterPtr MyAPP::Form::Object::MakeObject::make_EnemysPtr(const Fileinfo& fil
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Turtle) {
 		enemy = std::make_shared<Turtle>("Turtle", 20);
+		if (fileinfo.data == "Red") {
+			std::static_pointer_cast<Turtle>(enemy)->turtlecolor = Turtle::TurtleColor::Red;
+		}
+		else if (fileinfo.data == "Dark") {
+			std::static_pointer_cast<Turtle>(enemy)->turtlecolor = Turtle::TurtleColor::Dark;
+		}
+		else {
+			std::static_pointer_cast<Turtle>(enemy)->turtlecolor = Turtle::TurtleColor::Default;
+		}
 	}
 	else if (static_cast<ObjectType>(fileinfo.Type) == ObjectType::Koopa) {
 		enemy = std::make_shared<Koopa>("Koopa", 20);

@@ -6,8 +6,8 @@
 void MyAPP::Form::Object::Props::Mushroom::behavior(void* data) {
 	CheckCollision(data);
 	doJump();
-	Move(glm::vec2(MyAPP::Form::Object::getDEFAULTDISPLACEMENT() * (left ? -0.7 : 0.7), 0));
 	doDown();
+	Move(glm::vec2(MyAPP::Form::Object::getDEFAULTDISPLACEMENT() * (left ? -0.7 : 0.7), 0));
 }
 
 void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexcept {
@@ -87,7 +87,7 @@ void MyAPP::Form::Object::Props::Mushroom::doDown() noexcept {
 	auto MyPos = GetPosition();
 	if (MyPos.y < WINDOW_HEIGHT) {
 		const auto MySize = GetSize();
-		MyPos.y -= GetSize().y / 8;
+		MyPos.y -= getDEFAULTDISPLACEMENT();
 		for (auto& it : *bricks) {
 			if (it->collisionable && it->inRange(MyPos, MySize)) {
 				MyPos.y = it->GetPosition().y + ((it->GetSize().y) /2) + ((MySize.y) /2);
