@@ -108,7 +108,7 @@ namespace MyAPP::Form::Object{
 		static constexpr inline char* const Redimgs_r[] = { "imgs/super mario/TrutleRed/frame0.png", "imgs/super mario/TrutleRed/frame1.png" };
 		static constexpr inline char* const TortoiseShell = { "imgs/super mario/1-1/KoopaTroopaShellGreen.png" };
 		static constexpr inline char* const DarkTortoiseShell = { "imgs/super mario/KoopaTroopaShellGreenDark.png" };
-		static constexpr inline char* const RedTortoiseShell = { "imgs/super mario/KoopaTroopaShellGreenDark.png" };
+		static constexpr inline char* const RedTortoiseShell = { "imgs/super mario/KoopaTroopaShellRed.png" };
 	};
 }
 #endif // !GOOMBA_HPP

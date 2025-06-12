@@ -10,6 +10,9 @@
 namespace MyAPP::Form::Object {
 
 	void Mario::jump(float d) noexcept {
+		if (state == State::CROUCH && isBigMario()) {
+			m_Transform.translation.y += (64 - 44) / 480.f * WINDOW_HEIGHT;
+		}
 		state = State::UP;
 		displacement = WINDOW_HEIGHT / 15.f * d / 18;
 		index = 0;
@@ -89,6 +92,7 @@ namespace MyAPP::Form::Object {
 			SetPosition(tmp);
 		}
 		else if (state != State::UP && state != State::DIED && tmp.y < WINDOW_HEIGHT) {
+			displacement = getDEFAULTDISPLACEMENT();
 			tmp.y -= displacement * 2;
 			const auto MySize = GetSize();
 			for (auto& it : *bricks) {

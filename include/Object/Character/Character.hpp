@@ -12,7 +12,7 @@ namespace MyAPP {
 			
 			
 			static inline auto& getDEFAULTDISPLACEMENT() noexcept {
-				static const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15 / 10 ;
+				static const auto DEFAULTDISPLACEMENT = WINDOW_HEIGHT / 15.f / 10 ;
 				return DEFAULTDISPLACEMENT;
 			}
 
