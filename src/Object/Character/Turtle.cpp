@@ -49,7 +49,7 @@ namespace MyAPP::Form::Object {
 				tmp.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
 				for (auto& it : *bricks) {
 					if (it->collisionable && it->inRange(tmp, GetSize())) {
-						if (it->MyType == ObjectType::LeftEdge)
+						if (it->MyType == ObjectType::LeftEdge || it->MyType == ObjectType::QuestionBlock)
 							continue;
 						flag = true;
 						break;
@@ -147,11 +147,27 @@ namespace MyAPP::Form::Object {
 	}
 	void Turtle::CheckCollision(void* data) {
 		using namespace MyAPP::Form::Object;
+		using MyAPP::Form::Object::Character;
 		auto GM = static_cast<MyAPP::GameManager*>(data);
 		auto& FM = GM->GetFormManger();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		auto marioPos = mario->GetPosition();
 		auto marioSize = mario->GetSize();
+		if (diedFlag && collisionable && moveFlag) {
+			auto& characters = FM.GetFormAndObject(FM.GetNowForm()).m_Characters;
+			std::for_each(characters.begin(), characters.end(), [&](CharacterPtr& it) {
+				if (it->MyType == ObjectType::Mario || it->m_ID == m_ID || (it->MyType == ObjectType::Turtle && std::static_pointer_cast<Turtle>(it)->diedFlag)) {
+					return;
+				}
+				else {
+					if (it->collisionable && inRange(it->GetPosition(),it->GetSize())) {
+						it->died();
+						GM->addPoint(100);
+						Points::UpdatePoint(FM,Points::PointType::pts100);
+					}
+				}
+				});
+		}
 		if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
 			if (collisionable && mario->collisionable && inRange(marioPos, marioSize)) {
 				if (diedFlag && GetVisibility() && inRange(marioPos, marioSize)) {

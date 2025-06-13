@@ -207,6 +207,8 @@ namespace MyAPP::Form::Object {
 			changeImg();
 		}
 
+		void CheckPos(void* data);
+
 		int jumpCobo = 0;
 	private:
 		/// <summary>
