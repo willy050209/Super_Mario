@@ -46,6 +46,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Into_the_Pipe);
 			GM->bgm->Play(1);
 			initForm_1_2(static_cast<MyAPP::GameManager*>(data));
+			std::this_thread::sleep_for(std::chrono::seconds(3));
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
