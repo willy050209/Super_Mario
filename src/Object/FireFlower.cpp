@@ -22,11 +22,14 @@ namespace MyAPP:: Form:: Object::Props {
 
 	void FireFlower::CheckCollision(void* data) {
 		if (m_Visible) {
+			auto GM = static_cast<GameManager*>(data);
 			auto& fm = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 			auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
 				mario->changeType(Mario::Mario_type::FieryMario);
 				std::cout << "touch FireFlower\n";
+				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Get_mashroo_fireflower);
+				GM->sfx->Play(0);
 				m_Visible = false;
 			}
 		}

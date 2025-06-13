@@ -39,16 +39,22 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 			switch (MyCategory) {
 			case Mushroom::Category::Mushroom:
 				std::cout << "touch Mushroom\n";
+				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Life_up_1);
+				GM->sfx->Play(0);
 				GM->IncHP();
 				Points::UpdatePoint(FM, Points::PointType::pts1up);
 				break;
 			case Mushroom::Category::MushroomDark:
 				std::cout << "touch MushroomDark\n";
+				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Life_up_1);
+				GM->sfx->Play(0);
 				GM->IncHP();
 				Points::UpdatePoint(FM, Points::PointType::pts1up);
 				break;
 			case Mushroom::Category::BigMushroom:
 				std::cout << "touch BigMushroom\n";
+				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Get_mashroo_fireflower);
+				GM->sfx->Play(0);
 				if (mario->GetMario_type() == Mario::Mario_type::Mario) {
 					mario->changeType(Mario::Mario_type::SuperMario);
 				}

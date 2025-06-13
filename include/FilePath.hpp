@@ -208,7 +208,7 @@ namespace MyAPP {
 		static constexpr auto Crash_block = MY_RESOURCE_DIR "/BGM/Crash_block.mp3";
 		static constexpr auto Get_coin = MY_RESOURCE_DIR "/BGM/Get_coin.mp3";
 		static constexpr auto Get_mashroo_fireflower = MY_RESOURCE_DIR "/BGM/Get_mashroo_fireflower.mp3";
-		static constexpr auto Koopa_Fire = MY_RESOURCE_DIR "/BGM/Koopa_Fire.mp3";
+		static constexpr auto Koopa_Fire_bgm = MY_RESOURCE_DIR "/BGM/Koopa_Fire.mp3";
 		static constexpr auto Life_up_1 = MY_RESOURCE_DIR "/BGM/Life_up_1.mp3";
 		static constexpr auto Mario_jump = MY_RESOURCE_DIR "/BGM/Mario_jump.mp3";
 

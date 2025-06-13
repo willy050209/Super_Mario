@@ -43,9 +43,12 @@ namespace MyAPP::Form::Object::Props {
 
 	void Starman::CheckCollision(void* gm) {
 		if (m_Visible) {
+			auto GM = static_cast<MyAPP::GameManager*>(gm);
 			auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManger();
 			auto& mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
+				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Invincibility_Theme);
+				GM->sfx->Play(0);
 				std::cout << "touch Starman\n";
 				switch (mario->GetMario_type()) {
 				case Mario::Mario_type::Mario:
@@ -63,6 +66,8 @@ namespace MyAPP::Form::Object::Props {
 				static_cast<MyAPP::GameManager*>(gm)->addPoint(1000);
 				Points::UpdatePoint(fm, Points::PointType::pts1000);
 				mario->setInvincible(FPS_CAP * 10);
+				/*GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
+				GM->bgm->Play(-1);*/
 				m_Visible = false;
 			}
 		}
