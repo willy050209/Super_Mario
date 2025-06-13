@@ -156,13 +156,15 @@ namespace MyAPP::Form::Object {
 		if (diedFlag && collisionable && moveFlag) {
 			auto& characters = FM.GetFormAndObject(FM.GetNowForm()).m_Characters;
 			std::for_each(characters.begin(), characters.end(), [&](CharacterPtr& it) {
-				if (it->MyType == ObjectType::Mario || it->m_ID == m_ID) {
+				if (it->MyType == ObjectType::Mario || it->m_ID == m_ID || (it->MyType == ObjectType::Turtle && std::static_pointer_cast<Turtle>(it)->diedFlag)) {
 					return;
 				}
 				else {
-					it->died();
-					/*GM->addPoint(100);
-					Points::UpdatePoint(FM,Points::PointType::pts100);*/
+					if (it->collisionable && inRange(it->GetPosition(),it->GetSize())) {
+						it->died();
+						GM->addPoint(100);
+						Points::UpdatePoint(FM,Points::PointType::pts100);
+					}
 				}
 				});
 		}
