@@ -50,7 +50,7 @@ void MyAPP::GameManager::init() noexcept {
 	});
 
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel);
-	//MyFM.changeForm(MyAPP::Form::FormNames::Form_1_2_Pipe);
+	//MyFM.changeForm(MyAPP::Form::FormNames::Form_1_2);
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {

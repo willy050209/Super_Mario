@@ -2,6 +2,12 @@
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
 #include "MyDefine.hpp"
+
+#include <array>
+#include <string>
+#include <algorithm>
+#include <execution>
+
 namespace MyAPP {
 	/// <summary>
 	/// 檔案路徑
@@ -55,7 +61,26 @@ namespace MyAPP {
 			static constexpr auto Form_1_4_Images = MY_RESOURCE_DIR "/MAP/Form_1_4_Images.txt";
 			static constexpr auto Form_1_4_Characters = MY_RESOURCE_DIR "/MAP/Form_1_4_Characters.txt";
 		};
-	
+		
+		class Kapoo {
+		public:
+			CANNOTCREATE(Kapoo);
+
+			static inline auto getCapoo_giphyFrame() noexcept {
+				static auto Capoo_giphyFrame = initCapoo_giphyFrame();
+				return Capoo_giphyFrame;
+			}
+		private:
+			static inline std::array<std::string, 57> initCapoo_giphyFrame() noexcept {
+				std::array<std::string, 57> Capoo_giphyFrame;
+				int index = 0;
+				std::for_each(std::execution::seq, Capoo_giphyFrame.begin(), Capoo_giphyFrame.end(), [&](auto& it) {
+					(it) = std::string(MY_RESOURCE_DIR "/Kapoo/Capoo_giphy/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Capoo_giphyFrame;
+			}
+		};
+
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
 		/// <summary>
 		/// 生成式人工智慧導論製作的手寫字型

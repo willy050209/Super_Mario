@@ -26,7 +26,7 @@ namespace MyAPP::Form::Object {
 			//CheckPos(data);
 			doJump();
 			if (downFlag)
-			comeDown();
+				comeDown();
 			checkInvincible();
 			StatndCheck();
 			//std::cout << GetPosition().x << ' ' << GetPosition().y << '\n';
@@ -49,10 +49,20 @@ namespace MyAPP::Form::Object {
 		while (loopflag) {
 			loopflag = false;
 			for (auto& it : (*bricks)) {
-				if (it->collisionable&&inRange(it->GetPosition(), it->GetSize())) {
+				if (it->collisionable && inRange(it->GetPosition(), it->GetSize())) {
 					loopflag = true;
-					m_Transform.translation.x--;
-					m_Transform.translation.y++;
+					if (GetPosition().x + GetSize().x / 2 >= it->GetPosition().x - it->GetSize().x / 2){
+						m_Transform.translation.x = it->GetPosition().x - it->GetSize().x / 2;
+					}
+					else {
+						m_Transform.translation.x = it->GetPosition().x + it->GetSize().x / 2;
+					}
+					if (GetPosition().y + GetSize().y / 2 >= it->GetPosition().y - it->GetSize().y / 2) {
+						m_Transform.translation.y = it->GetPosition().y - it->GetSize().y / 2;
+					}
+					else {
+						m_Transform.translation.y = it->GetPosition().y + it->GetSize().y / 2;
+					}
 					break;
 				}
 			}

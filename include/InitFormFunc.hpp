@@ -633,6 +633,27 @@ INITFORM_FUNC(initForm_1_2) {
 	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
 	MyFM.addObject(formName, std::move(coinimg));
 
+	if (auto capoo_giphy = std::make_shared<ImageObject>("capoo_giphy", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrame().front(), 100)) {
+		capoo_giphy->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 187, GetTopEdge(capoo_giphy) - PositionReference->GetSize().x * 4 });
+		MyFM.addObject(formName, capoo_giphy);
+		objs->push_back(std::move(capoo_giphy));
+		if (auto updateframe = std::make_shared<EventObject>("Update_Capoo_Giphy_Frame", [](EventObject* const self, void* data) {
+				static size_t index = 0;
+				auto fpscount = std::static_pointer_cast<size_t>(self->userdata);
+				if (((*fpscount)++) >= 10) {
+					index = (index + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrame().size();
+					auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "capoo_giphy")) {
+						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrame().at(index));
+					}
+					(*fpscount) = 0;
+				}
+			})) {
+			updateframe->userdata = std::make_shared<size_t>(0);
+			MyFM.addObject(formName, std::move(updateframe));
+		}
+	}
+
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2_Pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
