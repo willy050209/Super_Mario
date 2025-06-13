@@ -56,6 +56,8 @@ namespace MyAPP::Form:: Object {
 			Points::UpdatePoint(FM, Points::PointType::pts200);
 			GM->addPoint(200);
 			GM->coinCount++;
+			GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Get_coin);
+			GM->sfx->Play(0);
 			isbonked = false;
 			return;
 		}

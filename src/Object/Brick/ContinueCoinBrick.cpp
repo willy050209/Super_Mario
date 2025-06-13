@@ -30,10 +30,13 @@ void MyAPP::Form::Object::ContinueCoinBrick::bonk() noexcept {
 
 void MyAPP::Form::Object::ContinueCoinBrick::behavior(void* data) {
 	if (trigger) {
+		auto GM = static_cast<GameManager*>(data);
 		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 		CoinPoints::CreateCoinPoints(FM, GetPosition());
 		Points::UpdatePoint(FM, Points::PointType::pts200);
 		static_cast<GameManager*>(data)->addPoint(200);
+		GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Get_coin);
+		GM->sfx->Play(0);
 		static_cast<GameManager*>(data)->coinCount++;
 		trigger = false;
 	}
