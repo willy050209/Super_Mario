@@ -337,7 +337,8 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(CheckDoors) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger(); // static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
@@ -842,8 +843,16 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
-	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe || *form == FormNames::Form_1_4) {
+	else if (*form == "Form_1_1_to_1_2") {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == FormNames::Form_1_4) {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Castle_Theme);
 		GM->bgm->Play(-1);
 	}
 	FM.changeForm(*form);
