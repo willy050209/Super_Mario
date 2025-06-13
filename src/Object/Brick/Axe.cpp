@@ -37,7 +37,7 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 		std::reverse(Briges.begin(), Briges.end());
 		return Briges;
 	};
-	if (inRange(mario->GetPosition(), mario->GetSize()) && enable && mario->GetState() == Mario::State::MOVE || mario->GetState() == Mario::State::STAND) {
+	if (inRange(mario->GetPosition(), mario->GetSize()) && enable && (mario->GetState() == Mario::State::MOVE || mario->GetState() == Mario::State::STAND)) {
 		auto flag = true;
 		auto Briges = GetBriges();
 		if (auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")) {
