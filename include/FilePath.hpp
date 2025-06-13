@@ -66,18 +66,61 @@ namespace MyAPP {
 		public:
 			CANNOTCREATE(Kapoo);
 
-			static inline auto getCapoo_giphyFrame() noexcept {
-				static auto Capoo_giphyFrame = initCapoo_giphyFrame();
-				return Capoo_giphyFrame;
+			static inline auto getCapoo_giphyFrames() noexcept {
+				static auto Capoo_giphyFrames = initCapoo_giphyFrames();
+				return Capoo_giphyFrames;
 			}
+
+			static inline auto getCapoo_smileFrames() noexcept {
+				static auto Capoo_smileFrames = initCapoo_smileFrames();
+				return Capoo_smileFrames;
+			}
+
+			static inline auto getKapoo_100Frames() noexcept {
+				static auto Kapoo_100Frames = initKapoo_100Frames();
+				return Kapoo_100Frames;
+			}
+
+			static inline auto getKapoo_KnowledgeFrames() noexcept {
+				static auto Kapoo_KnowledgeFrames = initKapoo_KnowledgeFrames();
+				return Kapoo_KnowledgeFrames;
+			}
+
 		private:
-			static inline std::array<std::string, 57> initCapoo_giphyFrame() noexcept {
-				std::array<std::string, 57> Capoo_giphyFrame;
+			static inline std::array<std::string, 57> initCapoo_giphyFrames() noexcept {
+				std::array<std::string, 57> Frame;
 				int index = 0;
-				std::for_each(std::execution::seq, Capoo_giphyFrame.begin(), Capoo_giphyFrame.end(), [&](auto& it) {
-					(it) = std::string(MY_RESOURCE_DIR "/Kapoo/Capoo_giphy/frame") + std::to_string(index++) + std::string(".png");
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Capoo_giphy/frame") + std::to_string(index++) + std::string(".png");
 				});
-				return Capoo_giphyFrame;
+				return Frame;
+			}
+
+			static inline std::array<std::string, 149> initCapoo_smileFrames() noexcept {
+				std::array<std::string, 149> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Capoo_smile/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+
+			static inline std::array<std::string, 20> initKapoo_100Frames() noexcept {
+				std::array<std::string, 20> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Kapoo_100/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+
+			static inline std::array<std::string, 14> initKapoo_KnowledgeFrames() noexcept {
+				std::array<std::string, 14> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Kapoo_Knowledge/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
 			}
 		};
 

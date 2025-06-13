@@ -63,17 +63,17 @@ int main(int, char** argc) {
 		}));
 	}
 
-	//auto directorys_Kapoo = getSubdirectoriesRecursive(MY_RESOURCE_DIR "/Kapoo"); 
-	//for (auto& it : directorys_Kapoo) {
-	//	std::cout << "enlarge " << it << '\n';
-	//	std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
-	//	std::filesystem::create_directory(outpath);
-	//	threads.push_back(std::thread([=]() {
-	//		// std::cout << outpath << '\n';
-	//		enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
-	//		std::cout << "Successfully enlarged and stored the image\n";
-	//	}));
-	//}
+	auto directorys_Kapoo = getSubdirectoriesRecursive(MY_RESOURCE_DIR "/Kapoo"); 
+	for (auto& it : directorys_Kapoo) {
+		std::cout << "enlarge " << it << '\n';
+		std::string outpath = "imgs\\" + it.substr(sizeof(MY_RESOURCE_DIR));
+		std::filesystem::create_directory(outpath);
+		threads.push_back(std::thread([=]() {
+			// std::cout << outpath << '\n';
+			enlargeImages(it, (WINDOW_HEIGHT) / 480.f, outpath);
+			std::cout << "Successfully enlarged and stored the image\n";
+		}));
+	}
 
 	//std::vector<std::pair<std::string, std::string>> filepaths;
 	//for (auto& it : directorys) {
