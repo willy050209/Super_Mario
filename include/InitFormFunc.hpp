@@ -971,7 +971,7 @@ INITFORM_FUNC(diedForm) {
 
 	{
 		auto marioimg = std::make_shared<ImageObject>("marioimg", MRFP::MarioStanding, 100);
-		marioimg->SetPosition({ marioimg->GetSize() * glm::vec2{-2.7, 0} });
+		marioimg->SetPosition({ marioimg->GetSize() * glm::vec2{-2.0, 0} });
 
 		auto text = std::make_shared<TextObject>("label2", MRFP::SuperMarioFont, 20 * multiple, "x  3", Util::Color::FromName(Util::Colors::WHITE), 100);
 		text->SetPosition(marioimg->GetPosition() + glm::vec2{ PositionReference->GetSize().x * 3, 0 });
