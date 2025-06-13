@@ -169,7 +169,7 @@ namespace MyAPP::Form::Object {
 			}
 		}
 		else {
-			static_cast<GameManager*>(data)->bgm->Resume();
+			//static_cast<GameManager*>(data)->bgm->Resume();
 			collisionable = true;
 			switch (mario_type) {
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:

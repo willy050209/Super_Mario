@@ -58,9 +58,6 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 				gotodoor->Enable = true;
 			}
 			enable = false;
-			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
-				koopa->kill();
-			}
 		}
 		else {
 			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
@@ -68,5 +65,8 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 			}
 		}
 		mario->setInvincible(200000);
+		if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
+			koopa->kill();
+		}
 	}
 }
