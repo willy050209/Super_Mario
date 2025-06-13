@@ -847,6 +847,10 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
+	else if (*form == FormNames::Form_1_2_to_1_4) {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
+		GM->bgm->Play(-1);
+	}
 	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
 		GM->bgm->Play(-1);

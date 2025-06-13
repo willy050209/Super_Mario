@@ -41,7 +41,7 @@ void MyAPP::GameManager::init() noexcept {
 	auto initfuncs = {
 		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm 
 		//,initForm_1_2,initForm_1_2_Pipe
-		,initForm_1_2
+		//,initForm_1_2
 		//,initForm_1_4
 		//,initForm1
 	};
@@ -50,7 +50,7 @@ void MyAPP::GameManager::init() noexcept {
 	});
 
 	MyFM.changeForm(MyAPP::Form::FormNames::FormTitel);
-	MyFM.changeForm(MyAPP::Form::FormNames::Form_1_2);
+	//MyFM.changeForm(MyAPP::Form::FormNames::Form_1_2);
 }
 
 void MyAPP::GameManager::Update(std::shared_ptr<Core::Context>& context) noexcept {
