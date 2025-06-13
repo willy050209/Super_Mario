@@ -27,7 +27,7 @@ namespace MyAPP::Form::Object {
 			doJump();
 			if (downFlag)
 				comeDown();
-			checkInvincible();
+			checkInvincible(data);
 			StatndCheck();
 			//std::cout << GetPosition().x << ' ' << GetPosition().y << '\n';
 		}
@@ -154,7 +154,7 @@ namespace MyAPP::Form::Object {
 		}
 	}
 
-	void Mario::checkInvincible() noexcept {
+	void Mario::checkInvincible(void *data) noexcept {
 		if (invincibleCount > 0) {
 			invincibleCount--;
 			switch (mario_type) {
@@ -169,6 +169,7 @@ namespace MyAPP::Form::Object {
 			}
 		}
 		else {
+			static_cast<GameManager*>(data)->bgm->Play();
 			collisionable = true;
 			switch (mario_type) {
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:

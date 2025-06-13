@@ -225,7 +225,7 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		virtual void comeDown() noexcept override;
 
-		void checkInvincible() noexcept;
+		void checkInvincible(void* data) noexcept;
 
 		void shoot(void* data) noexcept;
 
@@ -245,6 +245,7 @@ namespace MyAPP::Form::Object {
 		bool shootFireTrigger = false;
 		bool addpointflag = false;
 		bool downFlag = true;
+		 
 
 
 		static inline std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = {
