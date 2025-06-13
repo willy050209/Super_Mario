@@ -46,6 +46,7 @@ namespace MyAPP::Form::Object {
 		if (bricks == nullptr)
 			return;
 		bool loopflag = true;
+		m_Transform.translation.y += (64 - 44) / 480.f * WINDOW_HEIGHT;
 		while (loopflag) {
 			loopflag = false;
 			for (auto& it : (*bricks)) {

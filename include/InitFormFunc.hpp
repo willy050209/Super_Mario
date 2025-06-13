@@ -635,22 +635,22 @@ INITFORM_FUNC(initForm_1_2) {
 
 	{
 		if (auto capoo_giphy = std::make_shared<ImageObject>("capoo_giphy", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrames().front(), 20)) {
-			capoo_giphy->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 187, GetTopEdge(capoo_giphy) - PositionReference->GetSize().x * 4 });
+			capoo_giphy->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 189.5, GetTopEdge(capoo_giphy) - PositionReference->GetSize().x * 2 });
 			MyFM.addObject(formName, capoo_giphy);
 			objs->push_back(std::move(capoo_giphy));
 		}
-		if (auto Capoo_smile = std::make_shared<ImageObject>("Capoo_smile", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().front(), 20)) {
-			Capoo_smile->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 180, GetTopEdge(Capoo_smile) - PositionReference->GetSize().x * 4 });
+		if (auto Capoo_smile = std::make_shared<ImageObject>("Capoo_smile", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().front(), 5)) {
+			Capoo_smile->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 182, GetTopEdge(Capoo_smile) - PositionReference->GetSize().x * 2 });
 			MyFM.addObject(formName, Capoo_smile);
 			objs->push_back(std::move(Capoo_smile));
 		}
 		if (auto Kapoo_100 = std::make_shared<ImageObject>("Kapoo_100", MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().front(), 20)) {
-			Kapoo_100->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 187, GetTopEdge(Kapoo_100) - PositionReference->GetSize().x * 10 });
+			Kapoo_100->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 188.5, GetTopEdge(Kapoo_100) - PositionReference->GetSize().x * 7 });
 			MyFM.addObject(formName, Kapoo_100);
 			objs->push_back(std::move(Kapoo_100));
 		}
 		if (auto Kapoo_Knowledge = std::make_shared<ImageObject>("Kapoo_Knowledge", MyAPP::MyResourcesFilePath::Kapoo::getKapoo_KnowledgeFrames().front(), 20)) {
-			Kapoo_Knowledge->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 180, GetTopEdge(Kapoo_Knowledge) - PositionReference->GetSize().x * 10 });
+			Kapoo_Knowledge->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 178, GetTopEdge(Kapoo_Knowledge) - PositionReference->GetSize().x * 7 });
 			MyFM.addObject(formName, Kapoo_Knowledge);
 			objs->push_back(std::move(Kapoo_Knowledge));
 		}
@@ -675,7 +675,7 @@ INITFORM_FUNC(initForm_1_2) {
 					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Kapoo_100")) {
 						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().at(index1));
 					}
-					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "capoo_giphy")) {
+					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Kapoo_Knowledge")) {
 						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getKapoo_KnowledgeFrames().at(index2));
 					}
 					(*fpscount) = 0;

@@ -336,94 +336,94 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="self">指向當前物件的指標</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
-EVENTCALLCALLBACKFUN(CheckDoors) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
-	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
-	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-	auto marioPos = mario->GetPosition();
-	auto marioSize = mario->GetSize();
-	for (auto& it : *doorarrPtr) {
-		if (it->inRange(marioPos, marioSize)) {
-			auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
-			for (auto& eventobj : objandform.m_Events) {
-				eventobj->Enable = false;
-			}
-			auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
-			ChangeFormEventObject->Enable = true;
-			if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
-				initForm_1_1_to_1_2(static_cast<MyAPP::GameManager*>(data));
-				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_to_1_2);
-			}
-			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_Pipe) {
-				auto& form_1_1_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_1);
-				std::for_each(std::execution::seq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
-					it->incPositionX(displacement);
-				});
-				std::for_each(std::execution::seq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
-					it->incPositionX(displacement);
-				});
-				/*for (auto& it : form_1_1_OBJ.m_Characters) {
-					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
-					it->SetPosition(tmp);
-				}*/
-				/*for (auto& it : form_1_1_OBJ.m_Images) {
-					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
-					it->SetPosition(tmp);
-				}*/
-				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->Enable = true;
-				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->userdata = std::make_shared<SleepAllEventUserDataType>(FPS_CAP, std::vector<bool>());
-				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
-				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
-				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdatePointText"))->Enable = true;
-			}
-			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_to_1_2) {
-				initForm_1_2(static_cast<MyAPP::GameManager*>(data));
-				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
-			}
-			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
-				auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
-				std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
-					it->incPositionX(displacement);
-				});
-				std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
-					it->incPositionX(displacement);
-				});
-				/*for (auto& it : form_1_2_OBJ.m_Characters) {
-					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
-					it->SetPosition(tmp);
-				}
-				for (auto& it : form_1_2_OBJ.m_Images) {
-					auto tmp = it->GetPosition();
-					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
-					it->SetPosition(tmp);
-				}*/
-				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->Enable = true;
-				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->userdata = std::make_shared<SleepAllEventUserDataType>(FPS_CAP, std::vector<bool>());
-				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
-				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
-				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
-				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
-			}
-			else {
-				winForm(static_cast<MyAPP::GameManager*>(data));
-				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
-			}
-			// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
-			if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
-				auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
-				num = FPS_CAP;
-				nowtime++;
-			}
-			break;
-		}
-	}
-}
+//EVENTCALLCALLBACKFUN(CheckDoors) {
+//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+//	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
+//	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+//	auto marioPos = mario->GetPosition();
+//	auto marioSize = mario->GetSize();
+//	for (auto& it : *doorarrPtr) {
+//		if (it->inRange(marioPos, marioSize)) {
+//			auto& objandform = FM.GetFormAndObject(FM.GetNowForm());
+//			for (auto& eventobj : objandform.m_Events) {
+//				eventobj->Enable = false;
+//			}
+//			auto ChangeFormEventObject = (FM.GetFormObject<EventObject>(FM.GetNowForm(), "ChangeFormEvent"));
+//			ChangeFormEventObject->Enable = true;
+//			if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1) {
+//				initForm_1_1_to_1_2(static_cast<MyAPP::GameManager*>(data));
+//				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_to_1_2);
+//			}
+//			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_Pipe) {
+//				auto& form_1_1_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_1);
+//				std::for_each(std::execution::seq, form_1_1_OBJ.m_Characters.begin(), form_1_1_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+//					it->incPositionX(displacement);
+//				});
+//				std::for_each(std::execution::seq, form_1_1_OBJ.m_Images.begin(), form_1_1_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-107)](auto& it) {
+//					it->incPositionX(displacement);
+//				});
+//				/*for (auto& it : form_1_1_OBJ.m_Characters) {
+//					auto tmp = it->GetPosition();
+//					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
+//					it->SetPosition(tmp);
+//				}*/
+//				/*for (auto& it : form_1_1_OBJ.m_Images) {
+//					auto tmp = it->GetPosition();
+//					tmp.x -= doorarrPtr->front()->GetSize().x * (107);
+//					it->SetPosition(tmp);
+//				}*/
+//				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->Enable = true;
+//				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->userdata = std::make_shared<SleepAllEventUserDataType>(FPS_CAP, std::vector<bool>());
+//				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_1, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 9, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+//				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "freeForm_1_1_pipe"))->Enable = true;
+//				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1);
+//				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdateHPText"))->Enable = true;
+//				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdatePointText"))->Enable = true;
+//			}
+//			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_to_1_2) {
+//				initForm_1_2(static_cast<MyAPP::GameManager*>(data));
+//				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
+//			}
+//			else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_2_Pipe) {
+//				auto& form_1_2_OBJ = FM.GetFormAndObject(MyAPP::Form::FormNames::Form_1_2);
+//				std::for_each(std::execution::seq, form_1_2_OBJ.m_Characters.begin(), form_1_2_OBJ.m_Characters.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
+//					it->incPositionX(displacement);
+//				});
+//				std::for_each(std::execution::seq, form_1_2_OBJ.m_Images.begin(), form_1_2_OBJ.m_Images.end(), [displacement = doorarrPtr->front()->GetSize().x * (-12)](auto& it) {
+//					it->incPositionX(displacement);
+//				});
+//				/*for (auto& it : form_1_2_OBJ.m_Characters) {
+//					auto tmp = it->GetPosition();
+//					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
+//					it->SetPosition(tmp);
+//				}
+//				for (auto& it : form_1_2_OBJ.m_Images) {
+//					auto tmp = it->GetPosition();
+//					tmp.x -= doorarrPtr->front()->GetSize().x * (10);
+//					it->SetPosition(tmp);
+//				}*/
+//				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->Enable = true;
+//				FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "SleepAllevent")->userdata = std::make_shared<SleepAllEventUserDataType>(FPS_CAP, std::vector<bool>());
+//				(FM.GetFormObject<Mario>(MyAPP::Form::FormNames::Form_1_2, "Mario"))->SetPosition({ -(WINDOW_WIDTH >> 1) + (*doorarrPtr)[0]->GetSize().x * 10, GetTopEdge((*doorarrPtr)[0]) - (*doorarrPtr)[0]->GetSize().y * 10 });
+//				ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
+//				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "freeForm_1_2_Pipe"))->Enable = true;
+//				//(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdateHPText"))->Enable = true;
+//				(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_2, "UpdatePointText"))->Enable = true;
+//			}
+//			else {
+//				winForm(static_cast<MyAPP::GameManager*>(data));
+//				ChangeFormEventObject->userdata = std::make_shared<std::string>("Win");
+//			}
+//			// initForm_1_2(static_cast<MyAPP::GameManager*>(data));
+//			if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
+//				auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
+//				num = FPS_CAP;
+//				nowtime++;
+//			}
+//			break;
+//		}
+//	}
+//}
 
 /// <summary>
 /// 判斷與敵人碰撞
