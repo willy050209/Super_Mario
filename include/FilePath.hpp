@@ -2,6 +2,12 @@
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
 #include "MyDefine.hpp"
+
+#include <array>
+#include <string>
+#include <algorithm>
+#include <execution>
+
 namespace MyAPP {
 	/// <summary>
 	/// 檔案路徑
@@ -55,7 +61,69 @@ namespace MyAPP {
 			static constexpr auto Form_1_4_Images = MY_RESOURCE_DIR "/MAP/Form_1_4_Images.txt";
 			static constexpr auto Form_1_4_Characters = MY_RESOURCE_DIR "/MAP/Form_1_4_Characters.txt";
 		};
-	
+		
+		class Kapoo {
+		public:
+			CANNOTCREATE(Kapoo);
+
+			static inline auto getCapoo_giphyFrames() noexcept {
+				static auto Capoo_giphyFrames = initCapoo_giphyFrames();
+				return Capoo_giphyFrames;
+			}
+
+			static inline auto getCapoo_smileFrames() noexcept {
+				static auto Capoo_smileFrames = initCapoo_smileFrames();
+				return Capoo_smileFrames;
+			}
+
+			static inline auto getKapoo_100Frames() noexcept {
+				static auto Kapoo_100Frames = initKapoo_100Frames();
+				return Kapoo_100Frames;
+			}
+
+			static inline auto getKapoo_KnowledgeFrames() noexcept {
+				static auto Kapoo_KnowledgeFrames = initKapoo_KnowledgeFrames();
+				return Kapoo_KnowledgeFrames;
+			}
+
+		private:
+			static inline std::array<std::string, 57> initCapoo_giphyFrames() noexcept {
+				std::array<std::string, 57> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Capoo_giphy/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+
+			static inline std::array<std::string, 149> initCapoo_smileFrames() noexcept {
+				std::array<std::string, 149> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Capoo_smile/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+
+			static inline std::array<std::string, 20> initKapoo_100Frames() noexcept {
+				std::array<std::string, 20> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Kapoo_100/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+
+			static inline std::array<std::string, 14> initKapoo_KnowledgeFrames() noexcept {
+				std::array<std::string, 14> Frame;
+				int index = 0;
+				std::for_each(std::execution::seq, Frame.begin(), Frame.end(), [&](auto& it) {
+					(it) = std::string("imgs/Kapoo/Kapoo_Knowledge/frame") + std::to_string(index++) + std::string(".png");
+				});
+				return Frame;
+			}
+		};
+
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
 		/// <summary>
 		/// 生成式人工智慧導論製作的手寫字型
