@@ -404,7 +404,7 @@ INITFORM_FUNC(initForm_1_1) {
 	self->bgm = std::make_shared<Util::BGM>(MyAPP::MyResourcesFilePath::Ground_Theme);
 	auto& sfx = self->sfx;
 	auto& bgm = self->bgm;
-	bgm->Play(-1);
+	//bgm->Play(-1);
 
 	// 設定表單事件
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1_pipe", freeForm, false);

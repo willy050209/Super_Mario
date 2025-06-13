@@ -150,7 +150,8 @@ namespace MyAPP::Form::Object {
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleMario:
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleSuperMario:
 			case MyAPP::Form::Object::Mario::Mario_type::InvincibleFieryMario:
-				move();
+				index++;
+				changeImg();
 				break;
 			default:
 				break;

@@ -833,6 +833,7 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
+	using MyAPP::Form::FormNames;
 	if (form == nullptr) {
 		form = std::make_shared<std::string>("null");
 	}
@@ -841,11 +842,7 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
-	else if (*form == "Form_1_1_Pipe") {
-		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
-		GM->bgm->Play(-1);
-	}
-	else if (*form == "Form_1_2" || *form == "Form_1_2_Pipe") {
+	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe || *form == FormNames::Form_1_4) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
 		GM->bgm->Play(-1);
 	}
