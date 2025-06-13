@@ -26,6 +26,7 @@ namespace MyAPP::Form::Object {
 			doJump();
 			comeDown();
 			checkInvincible();
+			StatndCheck();
 			//std::cout << GetPosition().x << ' ' << GetPosition().y << '\n';
 		}
 		shoot(data);
@@ -166,6 +167,16 @@ namespace MyAPP::Form::Object {
 		}
 	}
 
+	void Mario::StatndCheck() noexcept {
+		if (STANDCount > 0) {
+			STANDCount--;
+		}
+		else if(state == State::MOVE) {
+			state = State::STAND;
+			changeImg();
+		}
+	}
+
 
 
 	void Mario::changeImg() noexcept {
@@ -175,6 +186,7 @@ namespace MyAPP::Form::Object {
 
 	void Mario::move() noexcept {
 		imgChangeDelay++;
+		STANDCount = 15;
 		if (imgChangeDelay >= 10) {
 			index++;
 			// index %= imgs[state][left].size();

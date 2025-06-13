@@ -90,7 +90,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 		}
 		Displacement *= 2;
 	}
-	if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && (mario)->GetState() == MyAPP::Form::Object::Mario::State::MOVE) {
+	if (!opmode && Util::Input::IsKeyDown(Util::Keycode::UP) && ((mario)->GetState() == MyAPP::Form::Object::Mario::State::MOVE || (mario)->GetState() == MyAPP::Form::Object::Mario::State::STAND)) {
 		(mario)->jump();
 	}
 	if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
@@ -512,8 +512,8 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Brick)) </param>
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
-
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto flagpole = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto marioPos = mario->GetPosition();
@@ -522,14 +522,14 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	for (auto& it = flagpole->begin(); it < flagpole->end(); ++it) {
 		if ((*it)->inRange(marioPos, marioSize)) {
 			auto f_height = static_cast<int>(it - flagpole->begin());
-			static_cast<MyAPP::GameManager*>(data)->addPoint(1000 * f_height);
+			GM->addPoint(1000 * f_height);
 			printf("FlagpoleCollision.\nTouch height:%d", f_height);
 			mario->down();
 			self->Enable = false;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdatePointText"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "moveToDoor"))->Enable = true;
 			(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent"))->Enable = false;
-			static_cast<MyAPP::GameManager*>(data)->opMode = false;
+			GM->opMode = false;
 			auto flagformpole = FM.GetFormObject<FlagFromPole>(FM.GetNowForm(), "FlagFromPole");
 			if (flagformpole) {
 				flagformpole->enabled = true;
@@ -537,6 +537,17 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			auto flagformpolePosUpdate = FM.GetFormObject<EventObject>(FM.GetNowForm(), "flagformpolePosUpdate");
 			if (flagformpolePosUpdate) {
 				flagformpolePosUpdate->Enable = false;
+			}
+			{
+				if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
+					auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
+					timeEvent->Enable = false;
+					for (auto i = nowtime; i > 0; --i) {
+						GM->addPoint(50);
+						FM.refresh();
+						std::this_thread::sleep_for(std::chrono::milliseconds(100));
+					}
+				}
 			}
 			break;
 		}

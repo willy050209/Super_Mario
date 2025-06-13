@@ -515,6 +515,10 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
 
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = checkPointArray;
+	MyFM.addObject(formName, std::move(eventobj));
+
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));
 
@@ -698,6 +702,10 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdatePointText", UpdatePointText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateCoinCountText", UpdateCoinCountText, true));
 	MyFM.addObject(formName, std::make_shared<EventObject>("UpdateFrameCount", UpdateFrameCount));
+
+	eventobj = std::make_shared<EventObject>("GoBackCheckPoint", GoBackCheckPoint, false);
+	eventobj->userdata = checkPointArray;
+	MyFM.addObject(formName, std::move(eventobj));
 
 	eventobj = std::make_shared<EventObject>("SleepAllevent", SleepAllevent, false);
 	MyFM.addObject(formName, std::move(eventobj));

@@ -659,6 +659,23 @@ namespace MyAPP::Form {
 			prevForm.erase(std::remove(prevForm.begin(), prevForm.end(), formName), prevForm.end());
 		}
 
+		inline void refresh() noexcept {
+			auto addToRoot = [&](auto& it) {
+				if (isInWindow(it))
+					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
+			};
+			if (m_Forms.count(nowForm)) {
+
+				// 更新目前表單的物件
+				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
+				m_Forms[nowForm].m_Form.Update();
+				m_Forms[nowForm].m_Form.m_Root.clear();
+			}
+		}
+
 		//template<class T>
 		//std::vector<std::shared_ptr<T>> GetAllObject(const std::string& formName, std::string_view objName) {
 		//	auto form_it = m_Forms.find(formName);
