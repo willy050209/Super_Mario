@@ -318,25 +318,51 @@ INITFORM_FUNC(winForm) {
 	constexpr auto formName = MyAPP::Form::FormNames::Win_Form;
 
 
-
+	if (auto Capoo_smile = std::make_shared<ImageObject>("Capoo_smile", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().front(), 5)) {
+		//Capoo_smile->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 182, GetTopEdge(Capoo_smile) - PositionReference->GetSize().x * 2 });
+		MyFM.addObject(formName, Capoo_smile);
+	}
+	if (auto updateframe = std::make_shared<EventObject>("Update_Capoo_Giphy_Frame", [](EventObject* const self, void* data) {
+			static size_t index = 0;
+			auto fpscount = std::static_pointer_cast<size_t>(self->userdata);
+			if (((*fpscount)++) >= 1) {
+				index = (index + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().size();
+				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+				if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Capoo_smile")) {
+					std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().at(index));
+					if (index == 0) {
+						auto testEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "test");
+						testEvent->Enable = true;
+						img->SetVisible(false);
+						self->Enable = false;
+						FM.GetFormObject<ImageObject>(FM.GetNowForm(), "background")->SetVisible(true);
+					}
+				}
+				(*fpscount) = 0;
+			}
+		})) {
+		updateframe->userdata = std::make_shared<size_t>(0);
+		MyFM.addObject(formName, std::move(updateframe));
+	}
 	{
 		using MyAPP::Form::Object::ImageObject;
 		using MyAPP::MyResourcesFilePath;
 		auto background = std::make_shared<ImageObject>("background", MyResourcesFilePath::endImagePath, 10);
 		background->SetPosition({ GetLeftEdge(background), GetTopEdge(background) });
+		background->SetVisible(false);
 		MyFM.addObject(formName, std::move(background));
 	}
 	{
 		using MyAPP::Form::Object::EventObject;
 		using MyAPP::Form::Object::ImageObject;
 		using MyAPP::GameManager;
-		auto eventobj = std::make_shared<EventObject>("", [](EventObject* const self, void* data) {
+		auto eventobj = std::make_shared<EventObject>("test", [](EventObject* const self, void* data) {
 			auto& FM = static_cast<GameManager*>(data)->GetFormManger();
 			auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "background");
 			if (background->GetPosition().y < -GetTopEdge(background)) {
 				background->m_Transform.translation.y++;
 			}
-		});
+		},false);
 		MyFM.addObject(formName, std::move(eventobj));
 	}
 
@@ -639,11 +665,6 @@ INITFORM_FUNC(initForm_1_2) {
 			MyFM.addObject(formName, capoo_giphy);
 			objs->push_back(std::move(capoo_giphy));
 		}
-		if (auto Capoo_smile = std::make_shared<ImageObject>("Capoo_smile", MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().front(), 5)) {
-			Capoo_smile->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 182, GetTopEdge(Capoo_smile) - PositionReference->GetSize().x * 2 });
-			MyFM.addObject(formName, Capoo_smile);
-			objs->push_back(std::move(Capoo_smile));
-		}
 		if (auto Kapoo_100 = std::make_shared<ImageObject>("Kapoo_100", MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().front(), 20)) {
 			Kapoo_100->SetPosition({ GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 188.5, GetTopEdge(Kapoo_100) - PositionReference->GetSize().x * 7 });
 			MyFM.addObject(formName, Kapoo_100);
@@ -656,21 +677,16 @@ INITFORM_FUNC(initForm_1_2) {
 		}
 		if (auto updateframe = std::make_shared<EventObject>("Update_Capoo_Giphy_Frame", [](EventObject* const self, void* data) {
 				static size_t index = 0;
-				static size_t index0 = 0;
 				static size_t index1 = 0;
 				static size_t index2 = 0;
 				auto fpscount = std::static_pointer_cast<size_t>(self->userdata);
 				if (((*fpscount)++) >= 10) {
 					index = (index + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrames().size();
-					index0 = (index0 + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().size();
 					index1 = (index1 + 1) % MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().size();
 					index2 = (index2 + 1) % MyAPP::MyResourcesFilePath::Kapoo::getKapoo_KnowledgeFrames().size();
 					auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
 					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "capoo_giphy")) {
 						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrames().at(index));
-					}
-					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Capoo_smile")) {
-						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().at(index0));
 					}
 					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Kapoo_100")) {
 						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().at(index1));
