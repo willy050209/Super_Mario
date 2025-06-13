@@ -49,7 +49,7 @@ namespace MyAPP::Form::Object::Props {
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
 				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Invincibility_Theme);
 				GM->sfx->Play(0);
-				//GM->bgm->Pause();
+				GM->bgm->Pause();
 				std::cout << "touch Starman\n";
 				switch (mario->GetMario_type()) {
 				case Mario::Mario_type::Mario:

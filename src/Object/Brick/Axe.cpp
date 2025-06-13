@@ -67,6 +67,6 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 				koopa->SetEnable(false);
 			}
 		}
-		mario->setInvincible(2147483647);
+		mario->setInvincible(200000);
 	}
 }
