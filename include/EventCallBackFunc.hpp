@@ -847,7 +847,7 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
-	else if (*form == "Form_1_2_to_1_4") {
+	else if (*form == FormNames::Form_1_2_to_1_4) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
@@ -862,6 +862,9 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	else if (*form == FormNames::Win_Form) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Never_Gonna_Give_You_Up);
 		GM->bgm->Play(-1);
+	} 
+	else if (*form == FormNames::DiedForm) {
+		GM->bgm->Pause();
 	}
 	FM.changeForm(*form);
 	// std::cout << "now form is:" <<  * form << '\n';
