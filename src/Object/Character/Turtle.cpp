@@ -161,8 +161,8 @@ namespace MyAPP::Form::Object {
 				}
 				else {
 					it->died();
-					GM->addPoint(100);
-					Points::UpdatePoint(FM,Points::PointType::pts100);
+					/*GM->addPoint(100);
+					Points::UpdatePoint(FM,Points::PointType::pts100);*/
 				}
 				});
 		}
