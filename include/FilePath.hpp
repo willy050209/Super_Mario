@@ -205,6 +205,13 @@ namespace MyAPP {
 		static constexpr auto Invincibility_Theme = MY_RESOURCE_DIR "/BGM/05. Invincibility Theme.mp3";
 		static constexpr auto Saved_the_Princess = MY_RESOURCE_DIR "/BGM/11. Saved the Princess (NES).mp3";
 		static constexpr auto Into_the_Pipe = MY_RESOURCE_DIR "/BGM/10. Into the Pipe.mp3";
+		static constexpr auto Crash_block = MY_RESOURCE_DIR "/BGM/Crash_block.mp3";
+		static constexpr auto Get_coin = MY_RESOURCE_DIR "/BGM/Get_coin.mp3";
+		static constexpr auto Get_mashroo_fireflower = MY_RESOURCE_DIR "/BGM/Get_mashroo_fireflower.mp3";
+		static constexpr auto Koopa_Fire = MY_RESOURCE_DIR "/BGM/Koopa_Fire.mp3";
+		static constexpr auto Life_up_1 = MY_RESOURCE_DIR "/BGM/Life_up_1.mp3";
+		static constexpr auto Mario_jump = MY_RESOURCE_DIR "/BGM/Mario_jump.mp3";
+
 
 		// static constexpr auto CheckPointPath = "imgs/super mario/CheckPoint.png";
 	};
