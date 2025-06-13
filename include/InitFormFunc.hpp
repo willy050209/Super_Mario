@@ -432,6 +432,8 @@ INITFORM_FUNC(initForm_1_1) {
 	eventobj->userdata =(flagpole);
 	MyFM.addObject(formName, std::move(eventobj));
 
+	MyFM.addObject(formName, std::make_shared<EventObject>("FlagpoleAddPoint", FlagpoleAddPoint, false));
+
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = Getdoors(Blocks);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -491,6 +493,14 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 		return it->name == "CoinnumText";
 	});
 
+	if (auto pipeimg = std::make_shared<ImageObject>("pipeimg", MyAPP::MyResourcesFilePath::PipeDarkImagePath, 100)) {
+		MakeObject::Fileinfo finfo;
+		finfo.XY = { 14, -11.5 };
+		finfo.ChangeXY();
+		pipeimg->SetPosition(finfo.XY);
+		MyFM.addObject(formName, pipeimg);
+	}
+
 	// 建立所有敵人
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFormManager(MyFM, formName, enemys);
@@ -542,13 +552,21 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFormManager(MyFM, formName, Blocks);
-
-{
+	
+	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
 		MyFM.addObject(formName, std::move(BMptr.first));
 		auto& mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
+	}
+
+	if (auto pipeimg = std::make_shared<ImageObject>("pipeimg", MyAPP::MyResourcesFilePath::PipeImagePath, 100)) {
+		MakeObject::Fileinfo finfo;
+		finfo.XY = { 10, -11.5 };
+		finfo.ChangeXY();
+		pipeimg->SetPosition(finfo.XY);
+		MyFM.addObject(formName, pipeimg);
 	}
 
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1", freeForm);
@@ -683,6 +701,14 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 		return it->name == "CoinnumText";
 	});
 
+	if (auto pipeimg = std::make_shared<ImageObject>("pipeimg", MyAPP::MyResourcesFilePath::PipeDarkImagePath, 100)) {
+		MakeObject::Fileinfo finfo;
+		finfo.XY = { 14, -11.5 };
+		finfo.ChangeXY();
+		pipeimg->SetPosition(finfo.XY);
+		MyFM.addObject(formName, pipeimg);
+	}
+
 	auto objs = MakeObject::make_Objs();
 	auto coinimg = std::make_shared<ImageObject>("coinimg", *Coin::GetFrames(), 10);
 	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
@@ -799,6 +825,8 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	eventobj = std::make_shared<EventObject>("CheckFlagpoleCollision", CheckFlagpoleCollision);
 	eventobj->userdata = (flagpole);
 	MyFM.addObject(formName, std::move(eventobj));
+
+	MyFM.addObject(formName, std::make_shared<EventObject>("FlagpoleAddPoint", FlagpoleAddPoint, false));
 
 	eventobj = std::make_shared<EventObject>("moveToDoor", moveToDoor, false);
 	eventobj->userdata = Getdoors(Blocks);

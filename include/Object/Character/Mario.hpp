@@ -209,6 +209,10 @@ namespace MyAPP::Form::Object {
 
 		void CheckPos(void* data);
 
+		void SetDownFlag(const bool& val) {
+			downFlag = val;
+		}
+
 		int jumpCobo = 0;
 	private:
 		/// <summary>
@@ -240,6 +244,7 @@ namespace MyAPP::Form::Object {
 		bool diedflag = false;
 		bool shootFireTrigger = false;
 		bool addpointflag = false;
+		bool downFlag = true;
 
 
 		static inline std::unordered_map<Mario_type, std::unordered_map<State, std::vector<std::vector<const char*>>>> imgs = {

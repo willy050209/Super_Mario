@@ -25,6 +25,7 @@ namespace MyAPP::Form::Object {
 		if (!static_cast<MyAPP::GameManager*>(data)->opMode) {
 			//CheckPos(data);
 			doJump();
+			if (downFlag)
 			comeDown();
 			checkInvincible();
 			StatndCheck();

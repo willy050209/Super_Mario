@@ -123,6 +123,10 @@ namespace MyAPP {
 
 		static constexpr auto endImagePath = "imgs/super mario/end.png";
 
+		static constexpr auto PipeImagePath = "imgs/super mario/pipe.png";
+
+		static constexpr auto PipeDarkImagePath = "imgs/super mario/pipeDark.png";
+
 		static constexpr auto Ground_Theme = MY_RESOURCE_DIR "/BGM/01. Ground Theme.mp3";
 		static constexpr auto Lost_a_Life = MY_RESOURCE_DIR "/BGM/08. Lost a Life.mp3";
 		static constexpr auto Underground_Theme = MY_RESOURCE_DIR "/BGM/02. Underground Theme.mp3";

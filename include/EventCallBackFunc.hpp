@@ -534,22 +534,25 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 			if (flagformpole) {
 				flagformpole->enabled = true;
 			}
-			auto flagformpolePosUpdate = FM.GetFormObject<EventObject>(FM.GetNowForm(), "flagformpolePosUpdate");
+			/*auto flagformpolePosUpdate = FM.GetFormObject<EventObject>(FM.GetNowForm(), "flagformpolePosUpdate");
 			if (flagformpolePosUpdate) {
 				flagformpolePosUpdate->Enable = false;
-			}
+			}*/
 			{
 				if (auto timeEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "UpdateTimeTextEvent")) {
 					auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(timeEvent->userdata)));
 					timeEvent->Enable = false;
-					for (auto i = nowtime; i > 0; --i) {
-						GM->addPoint(50);
-						auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
-						std::unique_ptr<char> textstr(new char[10]);
-						sprintf(textstr.get(), "%06d", GM->GetPoint());
-						std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
-						FM.refresh();
-						//std::this_thread::;
+					if (auto flagpoleAddPointEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "FlagpoleAddPoint")) {
+						std::vector<bool> bvec;
+						auto& allEvents = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+						int index = 0;
+						std::for_each(allEvents.begin(), allEvents.end(), [&](EventObjectPtr& it) {
+							bvec.push_back(it->Enable);
+							it->Enable = false;
+						});
+						flagpoleAddPointEvent->Enable = true;
+						flagpoleAddPointEvent->userdata = std::make_shared<SleepAllEventUserDataType>(nowtime, std::move(bvec));
+						mario->SetDownFlag(false);
 					}
 				}
 			}
@@ -903,6 +906,35 @@ EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
 		std::sprintf(buffer.get(), "x%02d", GM->coinCount);
 		std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(buffer.get());
 	}
+}
+
+EVENTCALLCALLBACKFUN(FlagpoleAddPoint) {
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
+	if(auto userdata = std::static_pointer_cast<SleepAllEventUserDataType>(self->userdata)) {
+		auto& [time, bvec] = *userdata;
+		if (time >0) {
+			GM->addPoint(50);
+			auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
+			std::unique_ptr<char> textstr(new char[10]);
+			sprintf(textstr.get(), "%06d", GM->GetPoint());
+			std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
+			FM.refresh();
+			time--;
+		}
+		else {
+			auto& allEvents = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
+			int index = 0;
+			std::for_each(allEvents.begin(), allEvents.end(), [&](EventObjectPtr& it) {
+				it->Enable = bvec[index++];
+			});
+			self->Enable = false;
+			if (auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario")) {
+				mario->SetDownFlag(true);
+			}
+		}
+	}
+
 }
 
 #endif
