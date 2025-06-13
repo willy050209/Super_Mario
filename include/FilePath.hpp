@@ -205,6 +205,7 @@ namespace MyAPP {
 		static constexpr auto Invincibility_Theme = MY_RESOURCE_DIR "/BGM/05. Invincibility Theme.mp3";
 		static constexpr auto Saved_the_Princess = MY_RESOURCE_DIR "/BGM/11. Saved the Princess (NES).mp3";
 		static constexpr auto Into_the_Pipe = MY_RESOURCE_DIR "/BGM/10. Into the Pipe.mp3";
+		static constexpr auto Never_Gonna_Give_You_Up = MY_RESOURCE_DIR "/BGM/Rick Astley - Never Gonna Give You Up (Official Music Video).mp3";
 
 		// static constexpr auto CheckPointPath = "imgs/super mario/CheckPoint.png";
 	};

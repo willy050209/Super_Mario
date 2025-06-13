@@ -230,7 +230,7 @@ namespace MyAPP::Form::Object {
 	}
 
 	void Mario::died() noexcept {
-		if(!isdied()){
+		if(!isdied() && invincibleCount<=0){
 			if (isBigMario()) {
 				if (mario_type == Mario_type::FieryMario || mario_type == Mario_type::SuperMario) {
 					state = State::MOVE;

@@ -839,11 +839,11 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		form = std::make_shared<std::string>("null");
 	}
 	self->Enable = false;
-	if (*form == "Form_1_1") {
+	if (*form == FormNames::Form_1_1) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
-	else if (*form == "Form_1_1_to_1_2") {
+	else if (*form == FormNames::Form_1_1_to_1_2) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
@@ -857,6 +857,10 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	}
 	else if (*form == FormNames::Form_1_4) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Castle_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == FormNames::Win_Form) {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Never_Gonna_Give_You_Up);
 		GM->bgm->Play(-1);
 	}
 	FM.changeForm(*form);
