@@ -44,7 +44,7 @@ void MyAPP::GameManager::init() noexcept {
 		//,initForm_1_2
 		//,initForm_1_4
 		//,initForm1
-		,initForm_1_1_to_1_2
+		//,initForm_1_1_to_1_2
 	};
 	std::for_each(std::execution::seq, initfuncs.begin(), initfuncs.end(), [&](auto& func) {
 		(func)(this);
