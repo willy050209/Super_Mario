@@ -49,7 +49,7 @@ namespace MyAPP::Form::Object {
 				tmp.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
 				for (auto& it : *bricks) {
 					if (it->collisionable && it->inRange(tmp, GetSize())) {
-						if (it->MyType == ObjectType::LeftEdge)
+						if (it->MyType == ObjectType::LeftEdge || it->MyType == ObjectType::QuestionBlock)
 							continue;
 						flag = true;
 						break;
