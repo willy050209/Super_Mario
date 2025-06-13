@@ -13,8 +13,8 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 	auto allEventDiseable = [](std::vector<std::shared_ptr<MyAPP::Form::Object::EventObject>>& Events) {
 		std::for_each(Events.begin(), Events.end(), [](auto& eventobj) { eventobj->Enable = false; });
 	};
-
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto GM = static_cast<MyAPP::GameManager*>(data);
+	auto& FM = GM->GetFormManger();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -43,6 +43,8 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 			(FM.GetFormObject<EventObject>(MyAPP::Form::FormNames::Form_1_1, "UpdatePointText"))->Enable = true;
 		}
 		else if (FM.GetNowForm() == MyAPP::Form::FormNames::Form_1_1_to_1_2) {
+			GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Into_the_Pipe);
+			GM->bgm->Play(1);
 			initForm_1_2(static_cast<MyAPP::GameManager*>(data));
 			ChangeFormEventObject->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 		}

@@ -425,6 +425,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 //	}
 //}
 
+
 /// <summary>
 /// §PÂ_»P¼Ä¤H¸I¼²
 /// </summary>
@@ -842,8 +843,16 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
 		GM->bgm->Play(-1);
 	}
-	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe || *form == FormNames::Form_1_4) {
+	else if (*form == "Form_1_1_to_1_2") {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Ground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == FormNames ::Form_1_1_Pipe||* form == FormNames::Form_1_2 || *form == FormNames::Form_1_2_Pipe) {
 		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Underground_Theme);
+		GM->bgm->Play(-1);
+	}
+	else if (*form == FormNames::Form_1_4) {
+		GM->bgm->LoadMedia(MyAPP::MyResourcesFilePath::Castle_Theme);
 		GM->bgm->Play(-1);
 	}
 	FM.changeForm(*form);
