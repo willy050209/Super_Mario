@@ -23,6 +23,7 @@ namespace MyAPP::Form::Object {
 
 	void Mario::behavior(void* data) {
 		if (!static_cast<MyAPP::GameManager*>(data)->opMode) {
+			//CheckPos(data);
 			doJump();
 			comeDown();
 			checkInvincible();
@@ -34,6 +35,26 @@ namespace MyAPP::Form::Object {
 		if (addpointflag) {
 			static_cast<MyAPP::GameManager*>(data)->addPoint(50);
 			addpointflag = false;
+		}
+	}
+
+	void Mario::CheckPos(void* data) {
+		auto GM = static_cast<GameManager*>(data);
+		auto& FM = GM->GetFormManger();
+		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+		if (bricks == nullptr)
+			return;
+		bool loopflag = true;
+		while (loopflag) {
+			loopflag = false;
+			for (auto& it : (*bricks)) {
+				if (it->collisionable&&inRange(it->GetPosition(), it->GetSize())) {
+					loopflag = true;
+					m_Transform.translation.x--;
+					m_Transform.translation.y++;
+					break;
+				}
+			}
 		}
 	}
 
