@@ -37,13 +37,13 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 		std::reverse(Briges.begin(), Briges.end());
 		return Briges;
 	};
-	if (inRange(mario->GetPosition(),mario->GetSize()) && enable && mario->GetState() == Mario::State::MOVE) {
+	if (inRange(mario->GetPosition(), mario->GetSize()) && enable && mario->GetState() == Mario::State::MOVE || mario->GetState() == Mario::State::STAND) {
 		auto flag = true;
 		auto Briges = GetBriges();
 		if (auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")) {
 			moveEvent->Enable = false;
 		}
-		mario->collisionable = false;
+		//mario->collisionable = false;
 		for (auto& it : Briges) {
 			it->SetVisible(false);
 			it->collisionable = false;
@@ -58,15 +58,17 @@ void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 				gotodoor->Enable = true;
 			}
 			enable = false;
+			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
+				koopa->kill();
+			}
 		}
 		else {
 			if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
 				koopa->SetEnable(false);
+
 			}
 		}
 		mario->setInvincible(200000);
-		if (auto koopa = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa")) {
-			koopa->kill();
-		}
+		
 	}
 }
