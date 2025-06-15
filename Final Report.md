@@ -150,8 +150,8 @@ INITFORM_FUNC(initForm1) {
 
 
 #### 物件
-我們的物件關係如下
-![OOPL繼承關係.drawio](https://hackmd.io/_uploads/Hyhao7HXee.png)
+我們的物件關係如下  
+![OOPL繼承關係.drawio](https://hackmd.io/_uploads/Hyhao7HXee.png)  
 物件之間彼此繼承各自實作，再透過表單選擇需要的物件去呈現在畫面上
 
 ##### Character
