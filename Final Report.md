@@ -614,6 +614,6 @@ namespace MyAPP::Form::Object::Interface {
 
 #    Contributor
 :::success
-**優秀的組員們**
+**優秀的組員們**  
 ![Kapoo_100](https://hackmd.io/_uploads/B1MjYfoXlg.gif)
 :::
