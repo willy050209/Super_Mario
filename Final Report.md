@@ -43,12 +43,12 @@ title: 2025 OOPL Final Report
 
 遊戲過程中瑪利歐可以收集散落各處的金幣或敲擊特殊的磚塊，獲得其中的金幣或特殊道具。道具或金幣除了從正常的問號磚塊獲得，也會有隱藏的磚塊可以獲取更多的金幣或道具，千萬不要小看金幣，~~有了金幣瑪利歐才有錢賠償一路上破壞的蘑菇王國~~那些金幣累積到100可以幫瑪利歐加一條命。
 道具方面瑪利歐可以獲得：
-1. 超級蘑菇 ![BigMushroom](https://hackmd.io/_uploads/B1CGRxeQee.png =5%x)：吃了之後會瑪利歐會變大，可以多獲得一次承受敵人或障礙傷害的機會(受傷之後就縮水回去小矮人了)，此外在大瑪利歐的情況下還能將頭頂上的磚塊擊碎。
-2. 火之花 ![frame0](https://hackmd.io/_uploads/Sk3YCxlQxe.png =5%x)：在大瑪利歐狀態下敲擊原本該出現超級蘑菇的位置會出現，拾取 ~~(吃下？)~~ 後瑪利歐可以丟出火焰擊弊敵人。
+1. 超級蘑菇 ![BigMushroom](https://hackmd.io/_uploads/B1CGRxeQee.png=5%x)：吃了之後會瑪利歐會變大，可以多獲得一次承受敵人或障礙傷害的機會(受傷之後就縮水回去小矮人了)，此外在大瑪利歐的情況下還能將頭頂上的磚塊擊碎。
+2. 火之花 ![frame0](https://hackmd.io/_uploads/Sk3YCxlQxe.png=5%x)：在大瑪利歐狀態下敲擊原本該出現超級蘑菇的位置會出現，拾取 ~~(吃下？)~~ 後瑪利歐可以丟出火焰擊弊敵人。
 3. 無敵星 ![frame0](https://hackmd.io/_uploads/BynhRllXge.png)：拿到這個道具後，瑪利歐短暫 ~~化身超級賽亞人~~ 變成無敵狀態(約30S)，碰到他的敵人都會死去。
 4. 1UP蘑菇 ![1upMushroom](https://hackmd.io/_uploads/S1WZ1Wl7gx.png)![1upMushroomDark](https://hackmd.io/_uploads/Bkb-1-gmeg.png)：拾取 ~~(應該不是吃下，那個看起來就有毒)~~ 後，瑪力歐會加一條命。
 
-瑪利歐隻身穿梭於敵人中，跟敵人戰鬥的方法除了無敵星跟火之花，還有他那強壯的雙腳，瑪利歐可以透過雙腳踩死敵人，如果敵人是 ~~可愛的~~ 栗寶寶![frame0](https://hackmd.io/_uploads/BJOtgZxmle.png =3%x)則可以直接踩死(不覺得栗寶寶長得很像是香菇嗎，傳說栗寶寶原本也是磨菇王國的一員，後來因為不明原因倒戈投靠庫巴)，若是你遇到烏龜了![frame0](https://hackmd.io/_uploads/SycgbWe7gg.png =3%x)，那你也可以用你強大的雙腳踩他，他會縮進去龜殼中![KoopaTroopaShellGreen](https://hackmd.io/_uploads/B1WmbWeQll.png =3%x)，你可以將他踢走，就可以把龜殼撞向敵人或是磚塊破壞，當然瑪利歐自己碰到也會受傷，最後你可能會想問，庫巴呢，這可以踩嗎！
+瑪利歐隻身穿梭於敵人中，跟敵人戰鬥的方法除了無敵星跟火之花，還有他那強壯的雙腳，瑪利歐可以透過雙腳踩死敵人，如果敵人是 ~~可愛的~~ 栗寶寶![frame0](https://hackmd.io/_uploads/BJOtgZxmle.png=3%x)則可以直接踩死(不覺得栗寶寶長得很像是香菇嗎，傳說栗寶寶原本也是磨菇王國的一員，後來因為不明原因倒戈投靠庫巴)，若是你遇到烏龜了![frame0](https://hackmd.io/_uploads/SycgbWe7gg.png=3%x)，那你也可以用你強大的雙腳踩他，他會縮進去龜殼中![KoopaTroopaShellGreen](https://hackmd.io/_uploads/B1WmbWeQll.png=3%x)，你可以將他踢走，就可以把龜殼撞向敵人或是磚塊破壞，當然瑪利歐自己碰到也會受傷，最後你可能會想問，庫巴呢，這可以踩嗎！
 ![frame0](https://hackmd.io/_uploads/S1ZffZlXex.png)
 
 你看看他殼上的刺吧，你肯定不會想踩他的，最好的方法就是用智取，把橋砍斷讓他掉下去，但如果你是火焰狀態的瑪利歐，其實也可以用火焰擊斃他。
@@ -58,31 +58,31 @@ title: 2025 OOPL Final Report
 講到分數，在遊戲中有各種獲得分數的方法，透過踩踏敵人、吃金幣、破壞磚塊、吃道具等方式都可以獲得不同的分數，每當分數連續不斷獲得或是累積到$20,000$分或$40,000$分時可以多獲得額外的一條命。
 
 ### 遊戲畫面
-0. 瑪利歐的開場畫面
+0. 瑪利歐的開場畫面  
 ![image](https://hackmd.io/_uploads/S1845mwXll.png)
-1. 瑪利歐的暫停畫面
+1. 瑪利歐的暫停畫面  
 ![image](https://hackmd.io/_uploads/rJ75qmvmlx.png)
 
-3. 歐的每次總結畫面(實際數字可能會依照實情變動)
+3. 歐的每次總結畫面(實際數字可能會依照實情變動)  
 ![supermario_pass_stage](https://hackmd.io/_uploads/B1OGrWlQgl.png)
-3. 瑪利歐空降在1-1打亂人家的生活步調
+3. 瑪利歐空降在1-1打亂人家的生活步調  
 ![image](https://hackmd.io/_uploads/ryWBjXDmgl.png)
-5. 瑪利歐發現栗寶寶，然後被摸一下就沒命了
+5. 瑪利歐發現栗寶寶，然後被摸一下就沒命了  
 ![image](https://hackmd.io/_uploads/H1EAjQvmlg.png)
 
-7. 瑪利歐鑽進水管探險1-1
+7. 瑪利歐鑽進水管探險1-1  
 ![image](https://hackmd.io/_uploads/ryxQhXPXxl.png)
 
-11. 瑪利歐化身超級賽亞人
+11. 瑪利歐化身超級賽亞人  
 ![image](https://hackmd.io/_uploads/rJetn7DXxe.png)
 
-14. 瑪利歐穿梭於火柱之間
+14. 瑪利歐穿梭於火柱之間  
 ![image](https://hackmd.io/_uploads/SJo16XDXll.png)
 
-15. 瑪利歐跟庫巴的對決
+15. 瑪利歐跟庫巴的對決  
 ![image](https://hackmd.io/_uploads/Sy-yC7wQgl.png)
 
-16. 瑪利歐殘踩斷橋樑通關
+16. 瑪利歐殘踩斷橋樑通關  
 ![image](https://hackmd.io/_uploads/rJb4Cmv7xg.png)
 
 
