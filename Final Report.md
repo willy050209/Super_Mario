@@ -43,7 +43,7 @@ title: 2025 OOPL Final Report
 
 遊戲過程中瑪利歐可以收集散落各處的金幣或敲擊特殊的磚塊，獲得其中的金幣或特殊道具。道具或金幣除了從正常的問號磚塊獲得，也會有隱藏的磚塊可以獲取更多的金幣或道具，千萬不要小看金幣，~~有了金幣瑪利歐才有錢賠償一路上破壞的蘑菇王國~~那些金幣累積到100可以幫瑪利歐加一條命。
 道具方面瑪利歐可以獲得：
-1. 超級蘑菇 ![BigMushroom](https://hackmd.io/_uploads/B1CGRxeQee.png=5%x)：吃了之後會瑪利歐會變大，可以多獲得一次承受敵人或障礙傷害的機會(受傷之後就縮水回去小矮人了)，此外在大瑪利歐的情況下還能將頭頂上的磚塊擊碎。
+1. 超級蘑菇 ![BigMushroom](https://hackmd.io/_uploads/B1CGRxeQee.png=32x32)：吃了之後會瑪利歐會變大，可以多獲得一次承受敵人或障礙傷害的機會(受傷之後就縮水回去小矮人了)，此外在大瑪利歐的情況下還能將頭頂上的磚塊擊碎。
 2. 火之花 ![frame0](https://hackmd.io/_uploads/Sk3YCxlQxe.png=5%x)：在大瑪利歐狀態下敲擊原本該出現超級蘑菇的位置會出現，拾取 ~~(吃下？)~~ 後瑪利歐可以丟出火焰擊弊敵人。
 3. 無敵星 ![frame0](https://hackmd.io/_uploads/BynhRllXge.png)：拿到這個道具後，瑪利歐短暫 ~~化身超級賽亞人~~ 變成無敵狀態(約30S)，碰到他的敵人都會死去。
 4. 1UP蘑菇 ![1upMushroom](https://hackmd.io/_uploads/S1WZ1Wl7gx.png)![1upMushroomDark](https://hackmd.io/_uploads/Bkb-1-gmeg.png)：拾取 ~~(應該不是吃下，那個看起來就有毒)~~ 後，瑪力歐會加一條命。
