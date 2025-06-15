@@ -3,10 +3,6 @@ title: 2025 OOPL Final Report
 
 ---
 
-:::success
-:::spoiler Table Of Contents
-[toc]
-:::
 # 2025 OOPL Final Report
 
 ## 組別資訊
@@ -613,7 +609,5 @@ namespace MyAPP::Form::Object::Interface {
 * 112340104 黃紹泓 45%
 
 #    Contributor
-:::success
 **優秀的組員們**  
 ![Kapoo_100](https://hackmd.io/_uploads/B1MjYfoXlg.gif)
-:::
