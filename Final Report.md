@@ -250,7 +250,7 @@ struct PositionReference {
 
 };
 ```
-相比於上面的 Lazy Initialization}$ ， Eager Initialization 是在程式碼一執行時就配置好記憶體，兩者並無絕對的優劣之分，端看使用當下的情況
+相比於上面的 Lazy Initialization ， Eager Initialization 是在程式碼一執行時就配置好記憶體，兩者並無絕對的優劣之分，端看使用當下的情況
 
 ```cpp=
 class Fire :Interface::ICollisionable,Interface::IMovable,Interface::Iframes, public ImageObject {
