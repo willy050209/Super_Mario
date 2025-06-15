@@ -233,9 +233,9 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 ```
 
 #### Singleton pattern & Lazy Initialization & Eager Initialization
-對於 $\text{Singleton pattern}$：單例對象的類必須保證只有一個實例存在
+對於 Singleton pattern ：單例對象的類必須保證只有一個實例存在
 
-$\text{Lazy Initialization}$：`BrickPositionReference`只會在`GetPositionReference()`第一次被呼叫時才創建。這比在程式啟動時就創建單例的 $\text{Eager Initialization}$ 方式更有效率，特別是當單例的創建成本較高且不一定會被用到時
+Lazy Initialization ：`BrickPositionReference`只會在`GetPositionReference()`第一次被呼叫時才創建。這比在程式啟動時就創建單例的 Eager Initialization 方式更有效率，特別是當單例的創建成本較高且不一定會被用到時
 ```cpp=
 /*
 確保了創建的是一個 Brick 物件的唯一實例。
@@ -250,7 +250,7 @@ struct PositionReference {
 
 };
 ```
-相比於上面的 $\text{Lazy Initialization}$ ，$\text{Eager Initialization}$ 是在程式碼一執行時就配置好記憶體，兩者並無絕對的優劣之分，端看使用當下的情況
+相比於上面的 Lazy Initialization}$ ， Eager Initialization 是在程式碼一執行時就配置好記憶體，兩者並無絕對的優劣之分，端看使用當下的情況
 
 ```cpp=
 class Fire :Interface::ICollisionable,Interface::IMovable,Interface::Iframes, public ImageObject {
