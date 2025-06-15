@@ -5,6 +5,8 @@ title: 2025 OOPL Final Report
 
 # 2025 OOPL Final Report
 
+報告若是可以的話，建議到 `hackmd` 查看，體驗較佳，報告連結：https://hackmd.io/@Generous/Supermario
+
 ## 組別資訊
 
 組別：6  
