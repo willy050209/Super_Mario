@@ -11,11 +11,11 @@ title: 2025 OOPL Final Report
 
 ## 組別資訊
 
-組別：6
-組員：112340104黃紹泓、112590005陳宇威
-復刻遊戲：Super Mario Bros.
-專案連結：[點我](https://github.com/willy050209/Super_Mario "Super_Mario")
-遊玩影片：[留言區有重點，我弄很久，拜託看一下QAQ](https://www.youtube.com/watch?v=P7z0_l-20Nw)
+組別：6  
+組員：112340104黃紹泓、112590005陳宇威  
+復刻遊戲：Super Mario Bros.  
+專案連結：[點我](https://github.com/willy050209/Super_Mario "Super_Mario")  
+遊玩影片：[留言區有重點，我弄很久，拜託看一下QAQ](https://www.youtube.com/watch?v=P7z0_l-20Nw)  
 
 ## 專案簡介
 
@@ -25,7 +25,7 @@ title: 2025 OOPL Final Report
 
 ### 組別分工
 
-* 112340104黃紹泓：素材尋找和產生、關卡詳情設計調整、地圖建構
+* 112340104黃紹泓：素材尋找和產生、關卡詳情設計調整、地圖建構  
 * 112590005陳宇威：表單框架、物件整體規劃
 
 ## 遊戲介紹
