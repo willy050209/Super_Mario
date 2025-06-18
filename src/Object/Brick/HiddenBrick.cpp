@@ -29,12 +29,12 @@ void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {
 			auto data = std::static_pointer_cast<std::string>(userdata);
 			if (data) {
 				if (*data == "Mushroom") {
-					auto mushroom = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
+					auto mushroom = std::make_shared<Mushroom>("Mushroom", GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
 					mushroom->SetPosition(GetPosition());
 					mushroom->SetUpDistance(GetSize().y * 1.1);
 					mushroom->userdata = mario->userdata;
 					{
-						auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+						auto moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 						auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
 						auto& [_, __, props, ___] = (*tuplePtr);
 						props->push_back(mushroom);

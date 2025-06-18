@@ -34,7 +34,7 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 	if (m_Visible) {
 		auto GM = static_cast<MyAPP::GameManager*>(gm);
 		auto& FM = GM->GetFormManger();
-		auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			switch (MyCategory) {
 			case Mushroom::Category::Mushroom:

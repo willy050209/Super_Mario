@@ -46,24 +46,24 @@ using namespace MyAPP::Form::Object;
 
 
 /// <summary>
-/// ¨ú±o²{¦b¨t²Î®É¶¡¡A¨Ã¿é¥X¦ÜCMD
+/// ï¿½ï¿½ï¿½oï¿½{ï¿½bï¿½tï¿½Î®É¶ï¿½ï¿½Aï¿½Ã¿ï¿½Xï¿½ï¿½CMD
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 	auto num = std::static_pointer_cast<int>(self->userdata);
 	if ((*num)++ >= FPS_CAP) {
 		auto currentTime = std::chrono::system_clock::now();
 		auto time = std::chrono::system_clock::to_time_t(currentTime);
-		std::cout << "¥Ø«e®É¶¡¡G" << std::ctime(&time);
+		std::cout << "ï¿½Ø«eï¿½É¶ï¿½ï¿½G" << std::ctime(&time);
 		(*num) = 0;
 	}
 }
 
 /// <summary>
-/// ²¾°Ê¨Æ¥ó
+/// ï¿½ï¿½ï¿½Ê¨Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::tuple(std::vector(std::shared_ptr(Character)), std::vector(std::shared_ptr(Brick))) </param>
 EVENTCALLCALLBACKFUN(moveEvent) {
@@ -287,9 +287,9 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 }
 
 /// <summary>
-/// ÅÜ§ó®É¶¡¨Æ¥ó
+/// ï¿½Ü§ï¿½É¶ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::tuple(int, int, std::shared_ptr(TextObject))) </param>
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
@@ -331,9 +331,9 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 // }
 
 /// <summary>
-/// §PÂ_¬O§_¨ì¹F¤jªù
+/// ï¿½Pï¿½_ï¿½Oï¿½_ï¿½ï¿½Fï¿½jï¿½ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 //EVENTCALLCALLBACKFUN(CheckDoors) {
@@ -427,9 +427,9 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 
 
 /// <summary>
-/// §PÂ_»P¼Ä¤H¸I¼²
+/// ï¿½Pï¿½_ï¿½Pï¿½Ä¤Hï¿½Iï¿½ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Character)) </param>
 //EVENTCALLCALLBACKFUN(CheckEneyCollision) {
@@ -486,7 +486,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <summary>
 /// Game Over Event
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CallFinish) {
 	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
@@ -507,9 +507,9 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 }
 
 /// <summary>
-/// §PÂ_»PºX±ì¸I¼²
+/// ï¿½Pï¿½_ï¿½Pï¿½Xï¿½ï¿½Iï¿½ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Brick)) </param>
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
@@ -520,9 +520,11 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
 
-	for (auto& it = flagpole->begin(); it < flagpole->end(); ++it) {
-		if ((*it)->inRange(marioPos, marioSize)) {
-			auto f_height = static_cast<int>(it - flagpole->begin());
+    int i = 0;
+	for (auto& it :*flagpole) {
+        ++i;
+		if ((it)->inRange(marioPos, marioSize)) {
+			auto f_height = i;
 			GM->addPoint(1000 * f_height);
 			printf("FlagpoleCollision.\nTouch height:%d", f_height);
 			mario->down();
@@ -563,9 +565,9 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 }
 
 /// <summary>
-/// ²¾°Ê¨ì¤jªù¨Æ¥ó
+/// ï¿½ï¿½ï¿½Ê¨ï¿½jï¿½ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
@@ -590,9 +592,9 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 }
 
 /// <summary>
-/// §PÂ_»P¦sÀÉÂI¸I¼²¨Æ¥ó
+/// ï¿½Pï¿½_ï¿½Pï¿½sï¿½ï¿½ï¿½Iï¿½Iï¿½ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 //EVENTCALLCALLBACKFUN(CheckPointCollision) {
@@ -614,9 +616,9 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 //}
 
 /// <summary>
-/// ªð¦^¦sÀÉÂI¨Æ¥ó
+/// ï¿½ï¿½^ï¿½sï¿½ï¿½ï¿½Iï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
@@ -677,9 +679,9 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 }
 
 /// <summary>
-/// §ó·sHP¤å¦r¨Æ¥ó
+/// ï¿½ï¿½sHPï¿½ï¿½rï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdateHPText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
@@ -692,9 +694,9 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 }
 
 /// <summary>
-/// §PÂ_Mario®y¼Ð¨Æ¥ó
+/// ï¿½Pï¿½_Marioï¿½yï¿½Ð¨Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
@@ -713,16 +715,16 @@ EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 }
 
 /// <summary>
-/// ¼È°±©Ò¦³¨Æ¥ó¨Æ¥ó
+/// ï¿½È°ï¿½ï¿½Ò¦ï¿½ï¿½Æ¥ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::tuple(int, std::vector(bool))) </param>
 EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
-	/// <summary> count ¼È°±ªº´V¼Æ 
-	/// bvec ­ì¥»¨Æ¥óªºª¬ºA </summary>
+	/// <summary> count ï¿½È°ï¿½ï¿½ï¿½ï¿½Vï¿½ï¿½ 
+	/// bvec ï¿½ì¥»ï¿½Æ¥óªºªï¿½ï¿½A </summary>
 	auto& [count, bvec] = (*std::static_pointer_cast<SleepAllEventUserDataType>(self->userdata));
 	--count;
 	if (bvec.size() == 0) {
@@ -748,9 +750,9 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 }
 
 /// <summary>
-/// §PÂ_»Pª÷¹ô¸I¼²¨Æ¥ó
+/// ï¿½Pï¿½_ï¿½Pï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Coin)) </param>
 //EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
@@ -770,15 +772,15 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 //}
 
 /// <summary>
-/// §ó·s¤À¼Æ¨Æ¥ó
+/// ï¿½ï¿½sï¿½ï¿½ï¿½Æ¨Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
-	/// <summary>¤À¼Æ¤å¦r</summary>
+	/// <summary>ï¿½ï¿½ï¿½Æ¤ï¿½r</summary>
 	std::unique_ptr<char> textstr(new char[10]);
 	sprintf(textstr.get(), "%06d", GM->GetPoint());
 	std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
@@ -786,9 +788,9 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 }
 
 /// <summary>
-/// Àt´ß¸I¼²¨Æ¥ó
+/// ï¿½tï¿½ß¸Iï¿½ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Turtle)) </param>
 //EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
@@ -815,7 +817,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 //}
 
 ///// <summary>
-///// ¹D¨ã¸I¼²¨Æ¥ó
+///// ï¿½Dï¿½ï¿½Iï¿½ï¿½ï¿½Æ¥ï¿½
 ///// </summary>
 ///// <param name=""></param>
 //EVENTCALLCALLBACKFUN(CheckPropsCollision) {
@@ -825,11 +827,11 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 
 
 /// <summary>
-/// §ïÅÜªí³æ¨Æ¥ó
+/// ï¿½ï¿½ï¿½Üªï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
-/// <param name="self->userdata">¤Á´«¥Øªºªí³æ</param>
+/// <param name="self->userdata">ï¿½ï¿½ï¿½ï¿½ï¿½Øªï¿½ï¿½ï¿½ï¿½</param>
 EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -872,11 +874,11 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 }
 
 /// <summary>
-/// ÄÀ©ñªí³æ¨Æ¥ó
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½
 /// </summary>
-/// <param name="self">«ü¦V·í«eª«¥óªº«ü¼Ð</param>
+/// <param name="self">ï¿½ï¿½ï¿½Vï¿½ï¿½eï¿½ï¿½ï¿½óªº«ï¿½ï¿½ï¿½</param>
 /// <param name="data">GameManager *</param>
-/// <param name="self->userdata">¥Ø¼Ðªí³æ</param>
+/// <param name="self->userdata">ï¿½Ø¼Ðªï¿½ï¿½</param>
 EVENTCALLCALLBACKFUN(freeForm) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
 	auto& FM = GM->GetFormManger();
@@ -936,7 +938,7 @@ EVENTCALLCALLBACKFUN(FlagpoleAddPoint) {
 			std::unique_ptr<char> textstr(new char[10]);
 			sprintf(textstr.get(), "%06d", GM->GetPoint());
 			std::static_pointer_cast<Util::Text>(text->GetDrawable())->SetText(textstr.get());
-			FM.refresh();
+			//FM.refresh();
 			time--;
 		}
 		else {

@@ -71,7 +71,7 @@ namespace MyAPP::Form:: Object {
 			auto proptype = std::static_pointer_cast<std::string>(userdata);
 			if (proptype != nullptr && *proptype == "BigMushroom") {
 				if (mario->isMiniMario()) {
-					prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
+					prop = std::make_shared<Mushroom>("Mushroom", GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
 					prop->SetPosition(GetPosition());
 					std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 				}
@@ -88,7 +88,7 @@ namespace MyAPP::Form:: Object {
 				prop->userdata = mario->userdata;
 				// Set the position of the prop to be slightly above the question block
 				{
-					auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+					auto moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 					auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
 					auto& [_, __, props, ___] = (*tuplePtr);
 					FM.addObject(FM.GetNowForm(), prop);

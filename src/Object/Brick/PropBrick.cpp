@@ -35,7 +35,7 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 			PropsPtr prop{ nullptr };
 			if (proptype == "BigMushroomOrFireFlower") {
 				if (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario")->isMiniMario()) {
-					prop = std::make_shared<Mushroom>("BigMushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
+					prop = std::make_shared<Mushroom>("BigMushroom", GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
 					std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 				}
 				else {
@@ -50,18 +50,18 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 				std::static_pointer_cast<Starman>(prop)->SetUpDistance(GetSize().y*1.1);
 			}
 			else if (proptype == "BigMushroom") {
-				prop = std::make_shared<Mushroom>("BigMushroom", Mushroom::GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
+				prop = std::make_shared<Mushroom>("BigMushroom", GetImages<Mushroom::Category::BigMushroom>(), Mushroom::Category::BigMushroom, 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 			}
 			else if (proptype == "Mushroom") {
-				prop = std::make_shared<Mushroom>("Mushroom", Mushroom::GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
+				prop = std::make_shared<Mushroom>("Mushroom", GetImages<Mushroom::Category::Mushroom>(), Mushroom::Category::Mushroom, 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 				proptype.clear(); // Clear the proptype after using it
 			}
 			else if (proptype == "MushroomDark") {
-				prop = std::make_shared<Mushroom>("MushroomDark", Mushroom::GetImages<Mushroom::Category::MushroomDark>(), Mushroom::Category::MushroomDark, 9);
+				prop = std::make_shared<Mushroom>("MushroomDark", GetImages<Mushroom::Category::MushroomDark>(), Mushroom::Category::MushroomDark, 9);
 				prop->SetPosition(GetPosition());
 				std::static_pointer_cast<Mushroom>(prop)->SetUpDistance(GetSize().y*1.1);
 				proptype.clear(); // Clear the proptype after using it
@@ -78,7 +78,7 @@ void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 			prop->userdata = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario")->userdata;
 			// Set the position of the prop to be slightly above the question block
 			{
-				auto& moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
+				auto moveevent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveevent->userdata);
 				auto& [_, __, props, ___] = (*tuplePtr);
 				FM.addObject(FM.GetNowForm(), prop);

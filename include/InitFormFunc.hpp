@@ -42,7 +42,7 @@ using namespace MyAPP::Form::Object;
 namespace MyAPP::Form {
 
 	/// <summary>
-	/// ±Nªí³æ¼g¤J¤å¦rÀÉ
+	/// ï¿½Nï¿½ï¿½ï¿½gï¿½Jï¿½ï¿½rï¿½ï¿½
 	/// </summary>
 	/// <param name="FM"></param>
 	/// <param name="formName"></param>
@@ -94,7 +94,7 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ¨ú±o bricks ¤¤ Type == ObjectType::CheckPoint ªº©Ò¦³ª«¥ó
+	/// ï¿½ï¿½ï¿½o bricks ï¿½ï¿½ Type == ObjectType::CheckPoint ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
@@ -109,7 +109,7 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ¨ú±o bricks ¤¤ Type == ObjectType::PipeBrick ªº©Ò¦³ª«¥ó
+	/// ï¿½ï¿½ï¿½o bricks ï¿½ï¿½ Type == ObjectType::PipeBrick ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
@@ -124,7 +124,7 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ¨ú±o bricks ¤¤ Type == ObjectType::Flagpole ªº©Ò¦³ª«¥ó
+	/// ï¿½ï¿½ï¿½o bricks ï¿½ï¿½ Type == ObjectType::Flagpole ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
@@ -139,7 +139,7 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ¨ú±o bricks ¤¤ Type == ObjectType::Door ªº©Ò¦³ª«¥ó
+	/// ï¿½ï¿½ï¿½o bricks ï¿½ï¿½ Type == ObjectType::Door ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
@@ -164,7 +164,7 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ¨ú±o enemys ¤¤ Type == ObjectType::Turtle ªº©Ò¦³ª«¥ó
+	/// ï¿½ï¿½ï¿½o enemys ï¿½ï¿½ Type == ObjectType::Turtle ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	/// <param name="bricks"></param>
 	/// <returns></returns>
@@ -179,9 +179,9 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ±Nª«¥ó°}¦C©ñ¤Jªí³æ
+	/// ï¿½Nï¿½ï¿½ï¿½ï¿½}ï¿½Cï¿½ï¿½Jï¿½ï¿½ï¿½
 	/// </summary>
-	/// <typeparam name="T">ª«¥ó°}¦Cªº¦@¦P¤÷Ãþ</typeparam>
+	/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½}ï¿½Cï¿½ï¿½ï¿½@ï¿½Pï¿½ï¿½ï¿½ï¿½</typeparam>
 	/// <param name="FM"></param>
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
@@ -191,9 +191,9 @@ namespace MyAPP::Form {
 	}
 
 	/// <summary>
-	/// ±Nª«¥ó°}¦C©ñ¤Jªí³æ
+	/// ï¿½Nï¿½ï¿½ï¿½ï¿½}ï¿½Cï¿½ï¿½Jï¿½ï¿½ï¿½
 	/// </summary>
-	/// <typeparam name="T">ª«¥ó°}¦Cªº¦@¦P¤÷Ãþ</typeparam>
+	/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½}ï¿½Cï¿½ï¿½ï¿½@ï¿½Pï¿½ï¿½ï¿½ï¿½</typeparam>
 	/// <param name="FM"></param>
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
@@ -374,11 +374,11 @@ INITFORM_FUNC(initForm_1_1) {
 	using namespace MyAPP::Form::Object;
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1;
-	// §@¬°®y¼Ð°Ñ¦Ò
+	// ï¿½@ï¿½ï¿½ï¿½yï¿½Ð°Ñ¦ï¿½
 	auto& Block = PositionReference::GetPositionReference();
 	
-	// ±q¦a¹ÏÀÉ¨ú±o©Ò¦³¤è¶ô
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
+	// ï¿½qï¿½aï¿½ï¿½ï¿½É¨ï¿½ï¿½oï¿½Ò¦ï¿½ï¿½ï¿½ï¿½
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Images);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
@@ -386,21 +386,21 @@ INITFORM_FUNC(initForm_1_1) {
 	Blocks->push_back(leftedge);
 	AddToFormManager(MyFM, formName, Blocks);
 
-	// ¨ú±o¦a¹Ï»P°¨¤O¼Ú
+	// ï¿½ï¿½ï¿½oï¿½aï¿½Ï»Pï¿½ï¿½ï¿½Oï¿½ï¿½
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_ImagePath, Blocks);
 		MyFM.addObject(formName, std::move(BMptr.first));
 		MyFM.addObject(formName, std::move(BMptr.second));
 	}
 	
-	// ¨ú±o®É¶¡¡B¤À¼Æ¡B¥Í©R¤å¦r¤è¶ô
+	// ï¿½ï¿½ï¿½oï¿½É¶ï¿½ï¿½Bï¿½ï¿½ï¿½Æ¡Bï¿½Í©Rï¿½ï¿½rï¿½ï¿½ï¿½
 	auto texts = MakeObject::make_GameText();
 	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
 	
-	// ¨ú±o©Ò¦³¼Ä¤H
+	// ï¿½ï¿½ï¿½oï¿½Ò¦ï¿½ï¿½Ä¤H
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Characters, Blocks);
 	
 	/*{
@@ -432,7 +432,7 @@ INITFORM_FUNC(initForm_1_1) {
 	auto& bgm = self->bgm;
 	//bgm->Play(-1);
 
-	// ³]©wªí³æ¨Æ¥ó
+	// ï¿½]ï¿½wï¿½ï¿½ï¿½Æ¥ï¿½
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_1_pipe", freeForm, false);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_1_Pipe);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -487,32 +487,32 @@ INITFORM_FUNC(initForm_1_1) {
 }
 
 /// <summary>
-/// ªì©l¤Æ1-1¤ôºÞ
+/// ï¿½ï¿½lï¿½ï¿½1-1ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_Pip) {
 	auto& MyFM = self->GetFormManger();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_Pipe;
-	// ¨ú±o®y¼Ð°Ñ¦Ò
+	// ï¿½ï¿½ï¿½oï¿½yï¿½Ð°Ñ¦ï¿½
 	auto& PositionReference = PositionReference::GetPositionReference();
 
-	// «Ø¥ß¦a¹Ï¤è¶ô
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, BrickColor::dark);
+	// ï¿½Ø¥ß¦aï¿½Ï¤ï¿½ï¿½
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
 	AddToFormManager(MyFM, formName, Blocks);
 
-	// «Ø¥ß¦a¹Ï»P°¨¤O¼Ú
+	// ï¿½Ø¥ß¦aï¿½Ï»Pï¿½ï¿½ï¿½Oï¿½ï¿½
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_Pipe_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 3, 100 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	// ¨ú±o®É¶¡¡B¤À¼Æ¡B¥Í©R¤å¦r¤è¶ô
+	// ï¿½ï¿½ï¿½oï¿½É¶ï¿½ï¿½Bï¿½ï¿½ï¿½Æ¡Bï¿½Í©Rï¿½ï¿½rï¿½ï¿½ï¿½
 	auto texts = MakeObject::make_GameText();
 	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
@@ -527,7 +527,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 		MyFM.addObject(formName, pipeimg);
 	}
 
-	// «Ø¥ß©Ò¦³¼Ä¤H
+	// ï¿½Ø¥ß©Ò¦ï¿½ï¿½Ä¤H
 	auto enemys = MakeObject::make_Enemys_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_Pipe_Characters, Blocks);
 	AddToFormManager(MyFM, formName, enemys);
 
@@ -565,7 +565,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 }
 
 /// <summary>
-/// ªì©l¤Æ1-1¨ì1-2¹L³õ
+/// ï¿½ï¿½lï¿½ï¿½1-1ï¿½ï¿½1-2ï¿½Lï¿½ï¿½
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_to_1_2) {
@@ -573,7 +573,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_to_1_2;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_to_1_2_Images, BrickColor::normal);
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_1_to_1_2_Images, BrickColor::normal);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
@@ -582,7 +582,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_1_to_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 2, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 12 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
@@ -613,7 +613,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 }
 
 /// <summary>
-/// ªì©l¤Æ1-2¦a¹Ï
+/// ï¿½ï¿½lï¿½ï¿½1-2ï¿½aï¿½ï¿½
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_2) {
@@ -621,7 +621,7 @@ INITFORM_FUNC(initForm_1_2) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Images, BrickColor::dark);
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
@@ -632,7 +632,7 @@ INITFORM_FUNC(initForm_1_2) {
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5, 100 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
@@ -742,7 +742,7 @@ INITFORM_FUNC(initForm_1_2) {
 }
 
 /// <summary>
-/// ªì©l¤Æ1-2¤ôºÞ
+/// ï¿½ï¿½lï¿½ï¿½1-2ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_2_Pipe) {
@@ -750,7 +750,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_Pipe;
 	auto& Block = PositionReference::GetPositionReference();
 
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Pipe_Images, BrickColor::dark);
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_Pipe_Images, BrickColor::dark);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
@@ -759,7 +759,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_Pipe_ImagePath, Blocks, { GetLeftEdge(Block) + Block->GetSize().x * 3, 100 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
@@ -817,8 +817,8 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_to_1_4;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
-	// ±q¦a¹ÏÀÉ¨ú±o©Ò¦³¤è¶ô
-	auto& Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_to_1_4_Images);
+	// ï¿½qï¿½aï¿½ï¿½ï¿½É¨ï¿½ï¿½oï¿½Ò¦ï¿½ï¿½ï¿½ï¿½
+	auto Blocks = MakeObject::make_Bricks_From_File(MyAPP::MyResourcesFilePath::MAP::Form_1_2_to_1_4_Images);
 	auto pipes = GetPipeBricks(Blocks);
 	auto flagpole = GetFlagpoles(Blocks);
 	auto checkPointArray = GetCheckPoints(Blocks);
@@ -827,24 +827,24 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	Blocks->push_back(leftedge);
 	AddToFormManager(MyFM, formName, Blocks);
 
-	// ¨ú±o¦a¹Ï»P°¨¤O¼Ú
+	// ï¿½ï¿½ï¿½oï¿½aï¿½Ï»Pï¿½ï¿½ï¿½Oï¿½ï¿½
 	{
 		auto BMptr = MyAPP::Form::Object::MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_2_to_1_4_ImagePath,
 			Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x * 5.5, GetTopEdge(PositionReference) - PositionReference->GetSize().x * 10 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
 
-	// ¨ú±o®É¶¡¡B¤À¼Æ¡B¥Í©R¤å¦r¤è¶ô
+	// ï¿½ï¿½ï¿½oï¿½É¶ï¿½ï¿½Bï¿½ï¿½ï¿½Æ¡Bï¿½Í©Rï¿½ï¿½rï¿½ï¿½ï¿½
 	auto texts = MakeObject::make_GameText("1-2");
 	AddToFormManager(MyFM, formName, texts);
 	auto cointext = std::find_if(texts->begin(), texts->end(), [](auto& it) {
 		return it->name == "CoinnumText";
 	});
 
-	// ¨ú±o©Ò¦³¼Ä¤H
+	// ï¿½ï¿½ï¿½oï¿½Ò¦ï¿½ï¿½Ä¤H
 	auto enemys = MakeObject::make_Characters();
 	{
 		auto tmp = std::make_shared<PiranaPlant>("PiranaPlant", 9);
@@ -869,7 +869,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 	coinimg->SetPosition((*cointext)->GetPosition() - glm::vec2{ coinimg->GetSize().x + (*cointext)->GetSize().x / 2, 0 });
 	MyFM.addObject(formName, std::move(coinimg));
 
-	// ³]©wªí³æ¨Æ¥ó
+	// ï¿½]ï¿½wï¿½ï¿½ï¿½Æ¥ï¿½
 	auto eventobj = std::make_shared<EventObject>("freeForm_1_2", freeForm, true);
 	eventobj->userdata = std::make_shared<std::string>(MyAPP::Form::FormNames::Form_1_2);
 	MyFM.addObject(formName, std::move(eventobj));
@@ -934,7 +934,7 @@ INITFORM_FUNC(initForm_1_4) {
 	{
 		auto BMptr = MakeObject::make_Background_And_Mario(MyAPP::MyResourcesFilePath::MAP::Background_1_4_ImagePath, Blocks, { GetLeftEdge(PositionReference) + PositionReference->GetSize().x, GetTopEdge(PositionReference) - PositionReference->GetSize().y * 6 });
 		MyFM.addObject(formName, std::move(BMptr.first));
-		auto& mario = std::move(BMptr.second);
+		auto mario = std::move(BMptr.second);
 		mario->changeType(self->mariotype);
 		MyFM.addObject(formName, std::move(mario));
 	}
@@ -1160,14 +1160,14 @@ INITFORM_FUNC(initForm1) {
 	constexpr auto& formName = "Form1";
 	using MPATH = MyAPP::MyResourcesFilePath;
 	
-	//¤å¦r¤è¶ô
+	//ï¿½ï¿½rï¿½ï¿½ï¿½
 	{
 		if (auto text = std::make_shared<TextObject>("label1", MPATH::ArialFontPath, 50, "hello world!", Util::Color(255, 255, 255))) {
 			text->SetPosition({ 0, 0 });
 			MyFM.addObject(formName, std::move(text));
 		}
 	}
-	// «ö¶s
+	// ï¿½ï¿½ï¿½s
 	{
 		auto buttoncallback = [](Button* const self, void* data) {
 			std::cout << self->name << " is clicked!\n\r";
@@ -1181,21 +1181,21 @@ INITFORM_FUNC(initForm1) {
 			MyFM.addObject(formName, std::move(button));
 		}
 	}
-	// ¹Ï¤ù¤è¶ô
+	// ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½
 	{
 		if (auto img = std::make_shared<ImageObject>("img", MY_RESOURCE_DIR "\\Image\\Background\\cat.jpg",1)) {
 			img->SetPosition({ -GetLeftEdge(img), -GetTopEdge(img) });
 			MyFM.addObject(formName, std::move(img));
 		}
 	}
-	//¨Æ¥ó
+	//ï¿½Æ¥ï¿½
 	{
 		auto systemTime = [](EventObject*const self,void*data) {
 			auto num = std::static_pointer_cast<int>(self->userdata);
 			if ((*num)++ >= FPS_CAP) {
 				auto currentTime = std::chrono::system_clock::now();
 				auto time = std::chrono::system_clock::to_time_t(currentTime);
-				std::cout << "¥Ø«e®É¶¡¡G" << std::ctime(&time);
+				std::cout << "ï¿½Ø«eï¿½É¶ï¿½ï¿½G" << std::ctime(&time);
 				(*num) = 0;
 			}
 		};

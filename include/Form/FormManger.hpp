@@ -14,37 +14,37 @@
 
 namespace MyAPP::Form {
 	/// <summary>
-	/// ¦s©ñªí³æ»P¦ì©óªí³æªº©Ò¦³ª«¥ó
+	/// ï¿½sï¿½ï¿½ï¿½ï¿½Pï¿½ï¿½ï¿½ï¿½æªºï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	struct FormAndObject {
 		/// <summary>
-		/// ªí³æ
+		/// ï¿½ï¿½ï¿½
 		/// </summary>
 		Form m_Form;
 		/// <summary>
-		/// ¤å¦r¤è¶ô
+		/// ï¿½ï¿½rï¿½ï¿½ï¿½
 		/// </summary>
 		TextObjectPtrVec m_Texts;
 		/// <summary>
-		/// ¹Ï¤ù¤è¶ô
+		/// ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		ImageObjectPtrVec m_Images;
 		/// <summary>
-		/// «ö¶s
+		/// ï¿½ï¿½ï¿½s
 		/// </summary>
 		ButtonPtrVec m_Buttons;
 		/// <summary>
-		/// ¨¤¦â
+		/// ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		CharacterPtrVec m_Characters;
 		/// <summary>
-		/// ¨Æ¥ó
+		/// ï¿½Æ¥ï¿½
 		/// </summary>
 		EventObjectPtrVec m_Events;
 	};
 
 	/// <summary>
-	/// ºÞ²zªí³æ»P¨Æ¥ó
+	/// ï¿½Þ²zï¿½ï¿½ï¿½Pï¿½Æ¥ï¿½
 	/// </summary>
 	class FormManger {
 	public:
@@ -55,27 +55,27 @@ namespace MyAPP::Form {
 		// FormManger(std::string formName) : nowForm(formName) {}
 
 		/// <summary>
-		/// ¨ú±o¥Ø«eªí³æ¦WºÙ
+		/// ï¿½ï¿½ï¿½oï¿½Ø«eï¿½ï¿½ï¿½Wï¿½ï¿½
 		/// </summary>
-		/// <returns>ªí³æ¦WºÙ</returns>
+		/// <returns>ï¿½ï¿½ï¿½Wï¿½ï¿½</returns>
 		inline const auto& GetNowForm() const noexcept { return nowForm; }
 
 		/// <summary>
-		/// ¨ú±o«e¤@­Óªí³æ¦WºÙ
+		/// ï¿½ï¿½ï¿½oï¿½eï¿½@ï¿½Óªï¿½ï¿½Wï¿½ï¿½
 		/// </summary>
-		/// <returns>ªí³æ¦WºÙ</returns>
+		/// <returns>ï¿½ï¿½ï¿½Wï¿½ï¿½</returns>
 		inline const auto GetPrevForm() const noexcept { return prevForm.back(); }
 
 		/// <summary>
-		/// ¨ú±oªí³æª«¥ó
+		/// ï¿½ï¿½ï¿½oï¿½ï¿½æª«ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="objtype">ª«¥óÃþ§O</param>
-		/// <param name="objName">ª«¥óID</param>
-		/// <returns>¦ì©óformNameªí³æ¤¤
-		/// Ãþ§O¬°objtype
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="objtype">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</param>
+		/// <param name="objName">ï¿½ï¿½ï¿½ï¿½ID</param>
+		/// <returns>ï¿½ï¿½ï¿½formNameï¿½ï¿½æ¤¤
+		/// ï¿½ï¿½ï¿½Oï¿½ï¿½objtype
 		/// ID=objName
-		/// ªºª«¥ó</returns>
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</returns>
 		// inline std::shared_ptr<MyAPP::Form::Object::Object> GetFormObject(const std::string& formName, ObjectType objtype,std::string_view objName) noexcept {
 		//	switch (objtype) {
 		//	case ObjectType::Mario:
@@ -105,21 +105,21 @@ namespace MyAPP::Form {
 		// }
 
 		/// <summary>
-		/// ¨ú±oªí³æª«¥ó
+		/// ï¿½ï¿½ï¿½oï¿½ï¿½æª«ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="ID">ª«¥óID</param>
-		/// <returns>¦ì©óformNameªí³æ¤¤
-		/// Ãþ§O¬°objtype
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="ID">ï¿½ï¿½ï¿½ï¿½ID</param>
+		/// <returns>ï¿½ï¿½ï¿½formNameï¿½ï¿½æ¤¤
+		/// ï¿½ï¿½ï¿½Oï¿½ï¿½objtype
 		/// m_ID == ID
-		/// ªºª«¥ó</returns>
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</returns>
 		template <typename T>
 		inline std::shared_ptr<T> GetFormObject(const std::string& formName, const size_t& ID) const noexcept {
-			// 1. ÀË¬dªí³æ¬O§_¦s¦b
+			// 1. ï¿½Ë¬dï¿½ï¿½ï¿½Oï¿½_ï¿½sï¿½b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr; // ªí³æ¤£¦s¦b
+				return nullptr; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 			}
 			auto& form = form_it->second;
 
@@ -164,21 +164,21 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ¨ú±oªí³æª«¥ó
+		/// ï¿½ï¿½ï¿½oï¿½ï¿½æª«ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="_Pred">±ø¥ó</param>
-		/// <returns>¦ì©óformNameªí³æ¤¤
-		/// Ãþ§O¬°objtype
-		/// _Pred ªð¦^true
-		/// ªºª«¥ó</returns>
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="_Pred">ï¿½ï¿½ï¿½ï¿½</param>
+		/// <returns>ï¿½ï¿½ï¿½formNameï¿½ï¿½æ¤¤
+		/// ï¿½ï¿½ï¿½Oï¿½ï¿½objtype
+		/// _Pred ï¿½ï¿½^true
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</returns>
 		template <typename T, class _Pr>
 		inline std::shared_ptr<T> GetFormObject_if(const std::string& formName, _Pr _Pred) const noexcept {
-			// 1. ÀË¬dªí³æ¬O§_¦s¦b
+			// 1. ï¿½Ë¬dï¿½ï¿½ï¿½Oï¿½_ï¿½sï¿½b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr; // ªí³æ¤£¦s¦b
+				return nullptr; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 			}
 			auto& form = form_it->second;
 
@@ -217,21 +217,21 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ¨ú±oªí³æª«¥ó
+		/// ï¿½ï¿½ï¿½oï¿½ï¿½æª«ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="objName">ª«¥ó¦WºÙ</param>
-		/// <returns>¦ì©óformNameªí³æ¤¤
-		/// Ãþ§O¬°objtype
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="objName">ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <returns>ï¿½ï¿½ï¿½formNameï¿½ï¿½æ¤¤
+		/// ï¿½ï¿½ï¿½Oï¿½ï¿½objtype
 		/// name == objName
-		/// ªºª«¥ó</returns>
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</returns>
 		template <typename T>
 		inline std::shared_ptr<T> GetFormObject(const std::string& formName, std::string_view objName) const noexcept {
-			// 1. ÀË¬dªí³æ¬O§_¦s¦b
+			// 1. ï¿½Ë¬dï¿½ï¿½ï¿½Oï¿½_ï¿½sï¿½b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr; // ªí³æ¤£¦s¦b
+				return nullptr; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 			}
 			auto& form = form_it->second;
 
@@ -276,16 +276,16 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ²¾°£«ü©wª«¥ó
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="ID">ª«¥óID</param>
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="ID">ï¿½ï¿½ï¿½ï¿½ID</param>
 		template <typename T>
 		inline void removeObject(const std::string& formName, const size_t& ID) noexcept {
 			auto form_it = m_Forms.find(formName);
 			//if (form_it == m_Forms.end()) {
-			//	return; // ªí³æ¤£¦s¦b
+			//	return; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 			//}
 			auto& form = form_it->second;
 
@@ -322,16 +322,16 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ²¾°£«ü©wª«¥ó
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="objName">ª«¥ó¦WºÙ</param>
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="objName">ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		template <typename T>
 		inline void removeObject(const std::string& formName, const std::string& objName) noexcept {
 			auto form_it = m_Forms.find(formName);
 			// if (form_it == m_Forms.end()) {
-			//	return; // ªí³æ¤£¦s¦b
+			//	return; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 			// }
 			auto& form = form_it->second;
 
@@ -368,11 +368,11 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ²¾°£«ü©wª«¥ó
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="objName">ª«¥óID</param>
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="objName">ï¿½ï¿½ï¿½ï¿½ID</param>
 		template <typename T>
 		inline void removeFirstObject(const std::string& formName, const std::string& objName) noexcept {
 			auto form_it = m_Forms.find(formName);
@@ -407,11 +407,11 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ²¾°£«ü©wª«¥ó
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="T">ª«¥óÃþ§O</typeparam>
-		/// <param name="formName">ª«¥ó©Ò¦bªºªí³æ¦WºÙ</param>
-		/// <param name="objName">ª«¥óID</param>
+		/// <typeparam name="T">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O</typeparam>
+		/// <param name="formName">ï¿½ï¿½ï¿½ï¿½Ò¦bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="objName">ï¿½ï¿½ï¿½ï¿½ID</param>
 		template <typename T,class _Pr>
 		inline void remove_if_Object(const std::string& formName, _Pr _Pred) noexcept {
 			auto form_it = m_Forms.find(formName);
@@ -437,59 +437,59 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ¨ú±o§¹¾ãªí³æ
+		/// ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">ªí³æ¦WºÙ</param>
-		/// <returns>«ü©wªí³æ</returns>
+		/// <param name="formName">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <returns>ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½</returns>
 		inline auto& GetFormAndObject(const std::string& formName) noexcept {
 			return m_Forms[formName];
 		}
 
 		/// <summary>
-		/// ±N¨Æ¥óª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½Æ¥óª«¥ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="event">¨Æ¥óª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="event">ï¿½Æ¥óª«¥ï¿½</param>
 		inline void addObject(const std::string& formName, EventObjectPtr& event) noexcept {
 			m_Forms[formName].m_Events.push_back(event);
 			addForm(formName, event);
 		}
 
 		/// <summary>
-		/// ±N¨Æ¥óª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½Æ¥óª«¥ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="event">¨Æ¥óª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="event">ï¿½Æ¥óª«¥ï¿½</param>
 		inline void addObject(const std::string& formName, EventObjectPtr&& event) noexcept {
 			m_Forms[formName].m_Events.push_back(event);
 			addForm(formName, event);
 		}
 
 		/// <summary>
-		/// ±N«ö¶sª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="button">«ö¶sª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="button">ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, ButtonPtr& button) noexcept {
 			m_Forms[formName].m_Buttons.push_back(button);
 			addForm(formName, button);
 		}
 
 		/// <summary>
-		/// ±N«ö¶sª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="button">«ö¶sª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="button">ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, ButtonPtr&& button) noexcept {
 			m_Forms[formName].m_Buttons.push_back(button);
 			addForm(formName, button);
 		}
 
 		/// <summary>
-		/// ±N«ö¹Ï¤ùª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="image">¹Ï¤ùª«¥ó¥[</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="image">ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½[</param>
 		inline void addObject(const std::string& formName, ImageObjectPtr& image) noexcept {
 			if (image->name == "Background") {
 				m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
@@ -501,10 +501,10 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ±N«ö¹Ï¤ùª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="image">¹Ï¤ùª«¥ó¥[</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="image">ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½[</param>
 		inline void addObject(const std::string& formName, ImageObjectPtr&& image) noexcept {
 			if (image->name == "Background") {
 				m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
@@ -516,66 +516,71 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ±N«ö¨¤¦âª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½âª«ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="character">¨¤¦âª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="character">ï¿½ï¿½ï¿½âª«ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, CharacterPtr& character) noexcept {
 			m_Forms[formName].m_Characters.push_back(character);
 			addForm(formName, character);
 		}
 
 		/// <summary>
-		/// ±N«ö¨¤¦âª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½âª«ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="character">¨¤¦âª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="character">ï¿½ï¿½ï¿½âª«ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, CharacterPtr&& character) noexcept {
 			m_Forms[formName].m_Characters.push_back(character);
 			addForm(formName, character);
 		}
 
 		/// <summary>
-		/// ±N«ö¤å¦rª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="text">¤å¦rª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="text">ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, TextObjectPtr& text) noexcept {
 			m_Forms[formName].m_Texts.push_back(text);
 			addForm(formName, text);
 		}
 
 		/// <summary>
-		/// ±N«ö¤å¦rª«¥ó¥[¤Jªí³æ
+		/// ï¿½Nï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">­n¥[¤Jªºªí³æ</param>
-		/// <param name="text">¤å¦rª«¥ó</param>
+		/// <param name="formName">ï¿½nï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½</param>
+		/// <param name="text">ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½</param>
 		inline void addObject(const std::string& formName, TextObjectPtr&& text) noexcept {
 			m_Forms[formName].m_Texts.push_back(text);
 			addForm(formName, text);
 		}
 
 		/// <summary>
-		/// ¨ê·sªí³æ
+		/// ï¿½ï¿½sï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="data">GameManager *</param>
 		inline void UpdateForm(void* data) {
 			auto addToRoot = [&](auto& it) {
-				if (isInWindow(it))
+			    auto isInWindows = [](auto& it) {
+			        auto& pos = (it)->m_Transform.translation;
+			        auto size = (it)->GetSize();
+			        return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
+			    };
+				if (isInWindows(it))
 					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
 			};
 			auto addEvent = [&](auto& it) {
-				auto isInWindow = [](auto& it) {
+				auto isInWindows = [](auto& it) {
 					auto& pos = it->m_Transform.translation;
 					auto size = it->GetSize();
 					return std::abs(pos.x) - size.x <= WINDOW_WIDTH && std::abs(pos.y) - size.y <= WINDOW_HEIGHT;
 				};
-				if (isInWindow(it)) {
+				if (isInWindows(it)) {
 					m_Forms[nowForm].m_Form.m_Events.push_back(it);
 				}
 			};
 			if (m_Forms.count(nowForm)) {
-				// °õ¦æ¥Ø«eªí³æªº¨Æ¥ó
+				// ï¿½ï¿½ï¿½ï¿½Ø«eï¿½ï¿½æªºï¿½Æ¥ï¿½
 				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addEvent);
 				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addEvent);
 				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addEvent);
@@ -584,7 +589,7 @@ namespace MyAPP::Form {
 				doFormEvent(nowForm, data);
 				m_Forms[nowForm].m_Form.m_Events.clear();
 
-				// §ó·s¥Ø«eªí³æªºª«¥ó
+				// ï¿½ï¿½sï¿½Ø«eï¿½ï¿½æªºï¿½ï¿½ï¿½ï¿½
 				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
 				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
 				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
@@ -596,9 +601,9 @@ namespace MyAPP::Form {
 
 
 		///// <summary>
-		///// §ïÅÜÅã¥Üªí³æ
+		///// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üªï¿½ï¿½
 		///// </summary>
-		///// <param name="formname">ªí³æ¦WºÙ</param>
+		///// <param name="formname">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		// inline void changeForm(std::string formname) noexcept {
 		//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 		//		prevForm.push_back(nowForm);
@@ -607,9 +612,9 @@ namespace MyAPP::Form {
 		// }
 
 		///// <summary>
-		///// §ïÅÜÅã¥Üªí³æ
+		///// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üªï¿½ï¿½
 		///// </summary>
-		///// <param name="formname">ªí³æ¦WºÙ</param>
+		///// <param name="formname">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		// inline void changeForm(std::string formname) noexcept {
 		//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 		//		prevForm.push_back(nowForm);
@@ -618,9 +623,9 @@ namespace MyAPP::Form {
 		// }
 
 		/// <summary>
-		/// §ïÅÜÅã¥Üªí³æ
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üªï¿½ï¿½
 		/// </summary>
-		/// <param name="formname">ªí³æ¦WºÙ</param>
+		/// <param name="formname">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		inline void changeForm(const std::string& formname) noexcept {
 			if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 				prevForm.push_back(std::move(nowForm));
@@ -629,7 +634,7 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ªð¦^¤W¤@­Óªí³æ
+		/// ï¿½ï¿½^ï¿½Wï¿½@ï¿½Óªï¿½ï¿½
 		/// </summary>
 		inline void returnPrevForm() noexcept {
 			nowForm = prevForm.back();
@@ -637,50 +642,50 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ªí³æ¼È°±
+		/// ï¿½ï¿½ï¿½È°ï¿½
 		/// </summary>
 		inline void Pause() noexcept {
 			isPause = true;
 		}
 
 		/// <summary>
-		/// ¨ú®ø¼È°±
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½È°ï¿½
 		/// </summary>
 		inline void rePause() noexcept {
 			isPause = false;
 		}
 
 		/// <summary>
-		/// ÄÀ©ñªí³æ
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">ªí³æ¦WºÙ</param>
+		/// <param name="formName">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		inline void freeForm(const std::string& formName) {
 			m_Forms.erase(formName);
 			prevForm.erase(std::remove(prevForm.begin(), prevForm.end(), formName), prevForm.end());
 		}
 
-		inline void refresh() noexcept {
-			auto addToRoot = [&](auto& it) {
-				if (isInWindow(it))
-					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
-			};
-			if (m_Forms.count(nowForm)) {
-
-				// §ó·s¥Ø«eªí³æªºª«¥ó
-				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
-				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
-				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
-				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
-				m_Forms[nowForm].m_Form.Update();
-				m_Forms[nowForm].m_Form.m_Root.clear();
-			}
-		}
+		// inline void refresh() noexcept {
+		// 	auto addToRoot = [&](auto& it) {
+		// 		if (isInWindow(it))
+		// 			m_Forms[nowForm].m_Form.m_Root.AddChild(it);
+		// 	};
+		// 	if (m_Forms.count(nowForm)) {
+		//
+		// 		// ï¿½ï¿½sï¿½Ø«eï¿½ï¿½æªºï¿½ï¿½ï¿½ï¿½
+		// 		std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
+		// 		m_Forms[nowForm].m_Form.Update();
+		// 		m_Forms[nowForm].m_Form.m_Root.clear();
+		// 	}
+		// }
 
 		//template<class T>
 		//std::vector<std::shared_ptr<T>> GetAllObject(const std::string& formName, std::string_view objName) {
 		//	auto form_it = m_Forms.find(formName);
 		//	if (form_it == m_Forms.end()) {
-		//		return nullptr; // ªí³æ¤£¦s¦b
+		//		return nullptr; // ï¿½ï¿½æ¤£ï¿½sï¿½b
 		//	}
 		//	auto& form = form_it->second;
 		//	std::vector<std::shared_ptr<T>> result;
@@ -744,9 +749,9 @@ namespace MyAPP::Form {
 
 	private:
 		/// <summary>
-		/// °õ¦æªí³æ¤ºªº©Ò¦³¨Æ¥ó
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½æ¤ºï¿½ï¿½ï¿½Ò¦ï¿½ï¿½Æ¥ï¿½
 		/// </summary>
-		/// <param name="formName">ªí³æ¦WºÙ</param>
+		/// <param name="formName">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
 		/// <param name="data">GameManager *</param>
 		inline void doFormEvent(const std::string& formName, void* data) noexcept {
 			if (!isPause)
@@ -754,10 +759,10 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// ¥[¤Jªí³æ
+		/// ï¿½[ï¿½Jï¿½ï¿½ï¿½
 		/// </summary>
-		/// <param name="formName">ªí³æ¦WºÙ</param>
-		/// <param name="obj">ª«¥ó¦@¦P¤÷Ãþ§O</param>
+		/// <param name="formName">ï¿½ï¿½ï¿½Wï¿½ï¿½</param>
+		/// <param name="obj">ï¿½ï¿½ï¿½ï¿½@ï¿½Pï¿½ï¿½ï¿½ï¿½ï¿½O</param>
 		inline void addForm(const std::string& formName, ObjectPtr obj) noexcept {
 			m_Forms[formName].m_Form.addForm(obj);
 		}
@@ -767,19 +772,19 @@ namespace MyAPP::Form {
 
 	protected:
 		/// <summary>
-		/// ªí³æ¦WºÙ»Pªí¯Zª«¥ó¹ïÀ³§Ç¦C
+		/// ï¿½ï¿½ï¿½Wï¿½Ù»Pï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¦C
 		/// </summary>
 		std::unordered_map<std::string, FormAndObject> m_Forms;
 		/// <summary>
-		/// ¥Ø«eªí³æ
+		/// ï¿½Ø«eï¿½ï¿½ï¿½
 		/// </summary>
 		std::string nowForm;
 		/// <summary>
-		/// ªí³æ¤Á´«°ïÅ|
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|
 		/// </summary>
 		std::vector<std::string> prevForm;
 		/// <summary>
-		/// ¼È°±ºX¼Ð
+		/// ï¿½È°ï¿½ï¿½Xï¿½ï¿½
 		/// </summary>
 		bool isPause = false;
 	};

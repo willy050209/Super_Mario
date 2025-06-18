@@ -12,7 +12,7 @@
 
 namespace MyAPP::Form::Object::Props {
 	/// <summary>
-	/// ©Ò¦³¹D¨ãªº¤÷Ãþ§O Ä~©ÓImageObject
+	/// ï¿½Ò¦ï¿½ï¿½Dï¿½ãªºï¿½ï¿½ï¿½ï¿½ï¿½O ï¿½~ï¿½ï¿½ImageObject
 	/// </summary>
 	class Mushroom : Interface::ICollisionable, Interface::IMovable, Interface::IComeDownable, Interface::IJumpable, public Props {
 	public:
@@ -41,17 +41,17 @@ namespace MyAPP::Form::Object::Props {
 		virtual void behavior(void* data = nullptr) override;
 
 
-		template <Category category>
-		static constexpr auto GetImages() noexcept { return Images[0]; }
+		//template <Category category>
+		//static constexpr auto GetImages() noexcept { return Images[0]; }
 
-		template <>
-		static constexpr auto GetImages<Category::Mushroom>() noexcept { return Images[0]; }
+		//template <>
+		//static constexpr auto GetImages<Category::Mushroom>() noexcept { return Images[0]; }
 
-		template <>
-		static constexpr auto GetImages<Category::MushroomDark>() noexcept { return Images[1]; }
+		//template <>
+		//static constexpr auto GetImages<Category::MushroomDark>() noexcept { return Images[1]; }
 
-		template <>
-		static constexpr auto GetImages<Category::BigMushroom>() noexcept { return Images[2]; }
+		//template <>
+		//static constexpr auto GetImages<Category::BigMushroom>() noexcept { return Images[2]; }
 
 		void SetUpDistance(int distance) { UpDistance = distance; }
 
@@ -78,6 +78,18 @@ namespace MyAPP::Form::Object::Props {
 
 		virtual void doDown() noexcept override;
 	};
+
+	template <Mushroom::Category category>
+	constexpr auto GetImages() noexcept { return R"(imgs\super mario\1upMushroom.png)"; }
+
+	template <>
+	constexpr auto GetImages<Mushroom::Category::Mushroom>() noexcept { return R"(imgs\super mario\1upMushroom.png)"; }
+
+	template <>
+	constexpr auto GetImages<Mushroom::Category::MushroomDark>() noexcept { return R"(imgs\super mario\1upMushroomDark.png)"; }
+
+	template <>
+	constexpr auto GetImages<Mushroom::Category::BigMushroom>() noexcept { return R"(imgs\super mario\BigMushroom.png)"; }
 }
 
 
