@@ -38,6 +38,7 @@ void MyAPP::GameManager::init() noexcept {
 	//t0.join();
 
 	puts("init GameManager");
+    this->bgm->SetVolume(50);
 	auto initfuncs = {
 		initFormTitle, initForm_1_1, initFormOptions, initFormSetting, diedForm 
 		//,initForm_1_2,initForm_1_2_Pipe
