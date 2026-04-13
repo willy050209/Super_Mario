@@ -29,6 +29,14 @@ namespace Constants {
     inline const std::string MARIO_OUTPUT_DIR = "imgs/super mario";
     
     inline const std::string ICON_PATH = MY_RESOURCE_DIR "/image/ICON/images.png";
+
+    // Physics Settings
+    inline constexpr float GRAVITY = -0.6f;
+    inline constexpr float TERMINAL_VELOCITY = -12.0f;
+    inline constexpr float JUMP_FORCE = 12.0f;
+    inline constexpr float MOVE_SPEED = 4.0f;
+    inline constexpr float FRICTION = 0.9f;
+    inline constexpr float AIR_RESISTANCE = 0.98f;
 }
 
 } // namespace MyAPP

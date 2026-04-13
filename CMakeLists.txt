@@ -35,7 +35,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(PTSD)
 
-file(GLOB_RECURSE SRC_FILES src/*.cpp)
+file(GLOB_RECURSE SRC_FILES src/*.cpp src/Object/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
 file(GLOB_RECURSE HEADER_FILES include/Object/*.hpp)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES})
