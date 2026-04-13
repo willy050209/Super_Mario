@@ -33,7 +33,7 @@ void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexc
 void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 	if (m_Visible) {
 		auto GM = static_cast<MyAPP::GameManager*>(gm);
-		auto& FM = GM->GetFormManger();
+		auto& FM = GM->GetFormManager();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			switch (MyCategory) {

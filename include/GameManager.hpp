@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-#ifndef GAMEMANGER_HPP
-#define GAMEMANGER_HPP
+#ifndef GAMEMANAGER_HPP
+#define GAMEMANAGER_HPP
 
 #include "MyContext.hpp"
 #include "Util/BGM.hpp"
-#include "Form/FormManger.hpp"
+#include "Form/FormManager.hpp"
 #include "MyBGM.hpp"
 #include "FilePath.hpp"
 #include "Util/SFX.hpp"
@@ -45,10 +45,10 @@ namespace MyAPP {
 		inline auto isEnd() const noexcept { return endstate; }
 
 		/// <summary>
-		/// 取得FormManger
+		/// 取得FormManager
 		/// </summary>
 		/// <returns></returns>
-		inline auto& GetFormManger() noexcept { return MyFM; }
+		inline auto& GetFormManager() noexcept { return MyFM; }
 
 		/// <summary>
 		/// 使否需要重啟
@@ -145,7 +145,7 @@ namespace MyAPP {
 		/// <summary>
 		/// 管理所有表單
 		/// </summary>
-		MyAPP::Form::FormManger MyFM{};
+		MyAPP::Form::FormManager MyFM{};
 
 		/// <summary>
 		/// 玩家HP
@@ -168,4 +168,4 @@ namespace MyAPP {
 
 }
 
-#endif // !GAMEMANGER_HPP
+#endif // !GAMEMANAGER_HPP

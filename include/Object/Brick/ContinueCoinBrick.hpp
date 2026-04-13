@@ -64,7 +64,7 @@ namespace MyAPP::Form::Object {
 }
 
 namespace MyAPP::Form {
-	class FormManger;
+	class FormManager;
 }
 #include "Interface/IFrames.hpp"
 namespace MyAPP::Form::Object {
@@ -87,7 +87,7 @@ namespace MyAPP::Form::Object {
 		virtual void behavior(void* data = nullptr) override;
 
 
-		static void CreateCoinPoints(MyAPP::Form::FormManger& FM, glm::vec2 pos);
+		static void CreateCoinPoints(MyAPP::Form::FormManager& FM, glm::vec2 pos);
 
 		virtual std::string GetFrame() const noexcept override { return Coin::GetFrames()[FrameIndex % 6]; }
 

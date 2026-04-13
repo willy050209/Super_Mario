@@ -4,7 +4,7 @@
 
 #include "Button.hpp"
 #include "GameManager.hpp"
-#include "FormManger.hpp"
+#include "FormManager.hpp"
 #include "MyBGM.hpp"
 #include "Form/FormNames.hpp"
 #include <iostream>
@@ -22,7 +22,7 @@ BUTTONCALLBACKFUNCTION(callBackTest) {
 
 BUTTONCALLBACKFUNCTION(RestaetButtonEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	// auto& fm = gm->GetFormManger();
+	// auto& fm = gm->GetFormManager();
 	gm->SetRestart(true);
 	gm->End();
 }
@@ -35,25 +35,25 @@ BUTTONCALLBACKFUNCTION(exitCallBack) {
 
 BUTTONCALLBACKFUNCTION(Back_Button_func) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	fm.returnPrevForm();
 }
 
 BUTTONCALLBACKFUNCTION(CallOptionForm) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	fm.changeForm(MyAPP::Form::FormNames::FormOptions);
 }
 
 BUTTONCALLBACKFUNCTION(CallSettingForm) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	fm.changeForm(MyAPP::Form::FormNames::FormSetting);
 }
 
 BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	int volume = gm->bgm->GetVolume();
 	if (volume == 128) 
 		return;
@@ -67,7 +67,7 @@ BUTTONCALLBACKFUNCTION(VolumeUpClickedEvent) {
 
 BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	int volume = gm->bgm->GetVolume();
 	if (volume == 0)
 		return;
@@ -81,7 +81,7 @@ BUTTONCALLBACKFUNCTION(VolumeDownClickedEvent) {
 
 BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	if (new_WINDOW_HEIGHT == 480) {
 		new_WINDOW_WIDTH = 960;
 		new_WINDOW_HEIGHT = 720;
@@ -103,7 +103,7 @@ BUTTONCALLBACKFUNCTION(ScreenSizeUpClickedEvent) {
 
 BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	if (new_WINDOW_HEIGHT == 960) {
 		new_WINDOW_WIDTH = 960;
 		new_WINDOW_HEIGHT = 720;
@@ -123,13 +123,13 @@ BUTTONCALLBACKFUNCTION(ScreenSizeDownClickedEvent) {
 
 BUTTONCALLBACKFUNCTION(StartButtonEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	fm.changeForm(MyAPP::Form::FormNames::DiedForm);
 }
 
 BUTTONCALLBACKFUNCTION(HelpButtonEvent) {
 	auto gm = static_cast<MyAPP::GameManager*>(data);
-	auto& fm = gm->GetFormManger();
+	auto& fm = gm->GetFormManager();
 	fm.changeForm("help");
 	system(std::static_pointer_cast<std::string>(self->userdata)->c_str());
 

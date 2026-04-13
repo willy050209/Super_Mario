@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef MARIO_HPP
 #define MARIO_HPP
 
@@ -13,6 +13,7 @@
 #include "Object/PhysicsComponent.hpp"
 #include "Object/AnimationComponent.hpp"
 #include "Object/InputComponent.hpp"
+#include "Object/AudioComponent.hpp"
 #include "Object/Character/MarioAttributes.hpp"
 
 namespace MyAPP::Form {
@@ -109,6 +110,7 @@ namespace MyAPP::Form::Object {
 		PhysicsComponent* m_Physics = nullptr;
 		AnimationComponent* m_Animation = nullptr;
 		InputComponent* m_Input = nullptr;
+		AudioComponent* m_Audio = nullptr;
 
 		// State
 		State state = State::MOVE;

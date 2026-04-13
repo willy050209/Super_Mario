@@ -26,7 +26,7 @@ void MyAPP::Form::Object::Axe::PlayFrames() noexcept {
 void MyAPP::Form::Object::Axe::CheckCollision(void* data) noexcept {
 	using namespace MyAPP::Form::Object;
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& imgs = FM.GetFormAndObject(FM.GetNowForm()).m_Images;
 	auto GetBriges = [&]() -> std::vector<std::shared_ptr<ImageObject>> {

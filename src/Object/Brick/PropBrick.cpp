@@ -30,7 +30,7 @@ void MyAPP::Form::Object::PropBrick::bonk() noexcept {
 void MyAPP::Form::Object::PropBrick::behavior(void* data) {
 	if (trigger) {
 		using namespace MyAPP::Form::Object::Props;
-		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+		auto& FM = static_cast<GameManager*>(data)->GetFormManager();
 		{
 			PropsPtr prop{ nullptr };
 			if (proptype == "BigMushroomOrFireFlower") {

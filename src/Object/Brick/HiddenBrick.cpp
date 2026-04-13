@@ -18,7 +18,7 @@ void MyAPP::Form::Object::HiddenBrick::CheckCollision(void* data) {
 	if (!m_Visible) {
 		using namespace MyAPP::Form::Object;
 		auto GM = static_cast<MyAPP::GameManager*>(data);
-		auto& FM = GM->GetFormManger();
+		auto& FM = GM->GetFormManager();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (mario->inRange(this->m_Transform.translation, GetSize()) && mario->GetState() == Mario::State::UP) {
 			//bonkJump();

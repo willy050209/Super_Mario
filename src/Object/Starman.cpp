@@ -44,7 +44,7 @@ namespace MyAPP::Form::Object::Props {
 	void Starman::CheckCollision(void* gm) {
 		if (m_Visible) {
 			auto GM = static_cast<MyAPP::GameManager*>(gm);
-			auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManger();
+			auto& fm = static_cast<MyAPP::GameManager*>(gm)->GetFormManager();
 			auto mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
 				GM->sfx->LoadMedia(MyAPP::MyResourcesFilePath::Invincibility_Theme);

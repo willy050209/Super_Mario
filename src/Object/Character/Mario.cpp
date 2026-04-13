@@ -1,4 +1,4 @@
-#include "Object/Character/Mario.hpp"
+﻿#include "Object/Character/Mario.hpp"
 #include "Object/ImageObject.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
@@ -18,6 +18,10 @@ Mario::Mario(const std::string& name, int zindex)
     m_Physics = &AddComponent<PhysicsComponent>(true); // Use gravity
     m_Animation = &AddComponent<AnimationComponent>(12.0f); // 12 FPS
     m_Input = &AddComponent<InputComponent>();
+    m_Audio = &AddComponent<AudioComponent>();
+    
+    // Setup sounds
+    m_Audio->AddSound("Jump", MyResourcesFilePath::Mario_jump);
     
     // Initialize with default type
     changeType(Mario_type::Mario);
@@ -89,6 +93,7 @@ void Mario::changeImg() noexcept {
 void Mario::jump(float d) noexcept {
     if (m_Physics->IsOnGround()) {
         m_Physics->ApplyImpulse({0, d * 2.5f}); // Adjust multiplier to match old feel
+        m_Audio->Play("Jump");
         state = State::UP;
     }
 }

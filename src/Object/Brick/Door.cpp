@@ -14,7 +14,7 @@ void MyAPP::Form::Object::Door::CheckCollision(void* data) noexcept {
 		std::for_each(Events.begin(), Events.end(), [](auto& eventobj) { eventobj->Enable = false; });
 	};
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();

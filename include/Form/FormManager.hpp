@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef FORMMANAGER_HPP
-#define FORMMANAGER_HPP
+#ifndef FormManager_HPP
+#define FormManager_HPP
 
 #include "Form/Form.hpp"
 #include "incallobj.hpp"
@@ -14,24 +14,37 @@
 
 namespace MyAPP::Form {
 	/// <summary>
-	/// Unified content for a Form, containing all its objects.
+	/// �s����P����檺�Ҧ�����
 	/// </summary>
-	struct FormContent {
+	struct FormAndObject {
 		/// <summary>
-		/// Associated Form.
+		/// ���
 		/// </summary>
 		Form m_Form;
-
 		/// <summary>
-		/// Unified map for all objects in this form, indexed by their unique ID.
+		/// ��r���
 		/// </summary>
-		std::unordered_map<size_t, ObjectPtr> m_AllObjects;
+		TextObjectPtrVec m_Texts;
+		/// <summary>
+		/// �Ϥ����
+		/// </summary>
+		ImageObjectPtrVec m_Images;
+		/// <summary>
+		/// ���s
+		/// </summary>
+		ButtonPtrVec m_Buttons;
+		/// <summary>
+		/// ����
+		/// </summary>
+		CharacterPtrVec m_Characters;
+		/// <summary>
+		/// �ƥ�
+		/// </summary>
+		EventObjectPtrVec m_Events;
 	};
 
-	using FormAndObject = FormContent; // Backward compatibility alias
-
 	/// <summary>
-	/// Manages forms and their associated events/objects.
+	/// �޲z���P�ƥ�
 	/// </summary>
 	class FormManager {
 	public:
@@ -39,214 +52,580 @@ namespace MyAPP::Form {
 
 		FormManager(const std::string& formName) : nowForm(formName) {}
 
+		// FormManager(std::string formName) : nowForm(formName) {}
+
 		/// <summary>
-		/// Gets the name of the current form.
+		/// ���o�ثe���W��
 		/// </summary>
+		/// <returns>���W��</returns>
 		inline const auto& GetNowForm() const noexcept { return nowForm; }
 
 		/// <summary>
-		/// Gets the name of the previous form.
+		/// ���o�e�@�Ӫ��W��
 		/// </summary>
+		/// <returns>���W��</returns>
 		inline const auto GetPrevForm() const noexcept { return prevForm.back(); }
 
 		/// <summary>
-		/// Gets an object from a specific form by its ID.
+		/// ���o��檫��
 		/// </summary>
-		template <typename T = Object::Object>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="objtype">�������O</param>
+		/// <param name="objName">����ID</param>
+		/// <returns>���formName��椤
+		/// ���O��objtype
+		/// ID=objName
+		/// ������</returns>
+		// inline std::shared_ptr<MyAPP::Form::Object::Object> GetFormObject(const std::string& formName, ObjectType objtype,std::string_view objName) noexcept {
+		//	switch (objtype) {
+		//	case ObjectType::Mario:
+		//	case ObjectType::Goomba:
+		//	case ObjectType::Character:
+		//		return *std::find_if(m_Forms[formName].m_Characters.begin(), m_Forms[formName].m_Characters.end(), [&](auto& it) { return it->name == objName; });
+		//		break;
+		//	case ObjectType::QuestionBlock:
+		//	case ObjectType::Brick:
+		//	case ObjectType::CheckPoint:
+		//	case ObjectType::ImageObject:
+		//		return *std::find_if(m_Forms[formName].m_Images.begin(), m_Forms[formName].m_Images.end(), [&](auto& it) { return it->name == objName; });
+		//		break;
+		//	case ObjectType::TextObject:
+		//		return *std::find_if(m_Forms[formName].m_Texts.begin(), m_Forms[formName].m_Texts.end(), [&](auto& it) { return it->name == objName; });
+		//		break;
+		//	case ObjectType::Button:
+		//		return *std::find_if(m_Forms[formName].m_Buttons.begin(), m_Forms[formName].m_Buttons.end(), [&](auto& it) { return it->name == objName; });
+		//		break;
+		//	case ObjectType::EventObject:
+		//		return *std::find_if(m_Forms[formName].m_Events.begin(), m_Forms[formName].m_Events.end(), [&](auto& it) { return it->name == objName; });
+		//		break;
+		//	default:
+		//		return nullptr;
+		//		break;
+		//	}
+		// }
+
+		/// <summary>
+		/// ���o��檫��
+		/// </summary>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="ID">����ID</param>
+		/// <returns>���formName��椤
+		/// ���O��objtype
+		/// m_ID == ID
+		/// ������</returns>
+		template <typename T>
 		inline std::shared_ptr<T> GetFormObject(const std::string& formName, const size_t& ID) const noexcept {
+			// 1. �ˬd���O�_�s�b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr;
+				return nullptr; // ��椣�s�b
 			}
 			auto& form = form_it->second;
-			auto obj_it = form.m_AllObjects.find(ID);
-			if (obj_it != form.m_AllObjects.end()) {
-				return std::dynamic_pointer_cast<T>(obj_it->second);
+
+			if constexpr (std::is_same_v<Object::Mario, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->MyType == Object::ObjectType::Mario && ptr->m_ID == ID; });
+				if (it != form.m_Characters.end()) {
+					return std::static_pointer_cast<Object::Mario>(*it);
+				}
 			}
+			else if constexpr (std::is_base_of_v<Object::Character, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				if (it != form.m_Characters.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				auto it = std::find_if(form.m_Images.begin(), form.m_Images.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				if (it != form.m_Images.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				auto it = std::find_if(form.m_Texts.begin(), form.m_Texts.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Texts.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				auto it = std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Buttons.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				auto it = std::find_if(form.m_Events.begin(), form.m_Events.end(),
+					[&](const auto& ptr) { return ptr && ptr->m_ID == ID; });
+				return (it != form.m_Events.end()) ? *it : nullptr;
+			}
+
 			return nullptr;
 		}
 
 		/// <summary>
-		/// Gets an object from a specific form that satisfies a predicate.
+		/// ���o��檫��
 		/// </summary>
-		template <typename T = Object::Object, class _Pr>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="_Pred">����</param>
+		/// <returns>���formName��椤
+		/// ���O��objtype
+		/// _Pred ��^true
+		/// ������</returns>
+		template <typename T, class _Pr>
 		inline std::shared_ptr<T> GetFormObject_if(const std::string& formName, _Pr _Pred) const noexcept {
+			// 1. �ˬd���O�_�s�b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr;
+				return nullptr; // ��椣�s�b
 			}
 			auto& form = form_it->second;
-			for (auto& [id, obj] : form.m_AllObjects) {
-				auto casted = std::dynamic_pointer_cast<T>(obj);
-				if (casted && _Pred(casted)) {
-					return casted;
+
+			if constexpr (std::is_same_v<Object::Mario, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred);
+				if (it != form.m_Characters.end()) {
+					return std::static_pointer_cast<Object::Mario>(*it);
 				}
 			}
+			else if constexpr (std::is_base_of_v<Object::Character, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred);
+				if (it != form.m_Characters.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				auto it = std::find_if(form.m_Images.begin(), form.m_Images.end(), _Pred);
+				if (it != form.m_Images.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				auto it = std::find_if(form.m_Texts.begin(), form.m_Texts.end(), _Pred);
+				return (it != form.m_Texts.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				auto it = std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(),_Pred);
+				return (it != form.m_Buttons.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				auto it = std::find_if(form.m_Events.begin(), form.m_Events.end(), _Pred);
+				return (it != form.m_Events.end()) ? *it : nullptr;
+			}
+
 			return nullptr;
 		}
 
 		/// <summary>
-		/// Gets an object from a specific form by its name.
+		/// ���o��檫��
 		/// </summary>
-		template <typename T = Object::Object>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="objName">����W��</param>
+		/// <returns>���formName��椤
+		/// ���O��objtype
+		/// name == objName
+		/// ������</returns>
+		template <typename T>
 		inline std::shared_ptr<T> GetFormObject(const std::string& formName, std::string_view objName) const noexcept {
+			// 1. �ˬd���O�_�s�b
 			auto form_it = m_Forms.find(formName);
 			if (form_it == m_Forms.end()) {
-				return nullptr;
+				return nullptr; // ��椣�s�b
 			}
 			auto& form = form_it->second;
-			for (auto& [id, obj] : form.m_AllObjects) {
-				if (obj && obj->name == objName) {
-					auto casted = std::dynamic_pointer_cast<T>(obj);
-					if (casted) return casted;
+
+			if constexpr (std::is_same_v<Object::Mario, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->MyType == Object::ObjectType::Mario && ptr->name == objName; });
+				if (it != form.m_Characters.end()) {
+					return std::static_pointer_cast<Object::Mario>(*it);
 				}
 			}
+			else if constexpr (std::is_base_of_v<Object::Character, T>) {
+				auto it = std::find_if(form.m_Characters.begin(), form.m_Characters.end(),
+					[&](const auto& ptr) { return ptr && ptr->name == objName; });
+				if (it != form.m_Characters.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				auto it = std::find_if(form.m_Images.begin(), form.m_Images.end(),
+					[&](const auto& ptr) { return ptr && ptr->name == objName; });
+				if (it != form.m_Images.end()) {
+					return std::dynamic_pointer_cast<T>(*it);
+				}
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				auto it = std::find_if(form.m_Texts.begin(), form.m_Texts.end(),
+					[&](const auto& ptr) { return ptr && ptr->name == objName; });
+				return (it != form.m_Texts.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				auto it = std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(),
+					[&](const auto& ptr) { return ptr && ptr->name == objName; });
+				return (it != form.m_Buttons.end()) ? *it : nullptr;
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				auto it = std::find_if(form.m_Events.begin(), form.m_Events.end(),
+					[&](const auto& ptr) { return ptr && ptr->name == objName; });
+				return (it != form.m_Events.end()) ? *it : nullptr;
+			}
+
 			return nullptr;
 		}
 
 		/// <summary>
-		/// Removes an object from a specific form by its ID.
+		/// �������w����
 		/// </summary>
-		template <typename T = Object::Object>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="ID">����ID</param>
+		template <typename T>
 		inline void removeObject(const std::string& formName, const size_t& ID) noexcept {
 			auto form_it = m_Forms.find(formName);
-			if (form_it != m_Forms.end()) {
-				form_it->second.m_AllObjects.erase(ID);
+			//if (form_it == m_Forms.end()) {
+			//	return; // ��椣�s�b
+			//}
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::remove_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Characters.end());
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::remove_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Images.end());
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::remove_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Texts.end());
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::remove_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Buttons.end());
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::remove_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+					return it->m_ID == ID;
+				}),
+					form.m_Events.end());
 			}
 		}
 
 		/// <summary>
-		/// Removes all objects with a specific name from a form.
+		/// �������w����
 		/// </summary>
-		template <typename T = Object::Object>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="objName">����W��</param>
+		template <typename T>
 		inline void removeObject(const std::string& formName, const std::string& objName) noexcept {
 			auto form_it = m_Forms.find(formName);
-			if (form_it != m_Forms.end()) {
-				auto& objects = form_it->second.m_AllObjects;
-				for (auto it = objects.begin(); it != objects.end();) {
-					if (it->second->name == objName && std::dynamic_pointer_cast<T>(it->second)) {
-						it = objects.erase(it);
-					} else {
-						++it;
-					}
-				}
+			// if (form_it == m_Forms.end()) {
+			//	return; // ��椣�s�b
+			// }
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::remove_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+					return it->name == objName;
+				}),
+					form.m_Characters.end());
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::remove_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+					return it->name == objName;
+				}),
+					form.m_Images.end());
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::remove_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+					return it->name == objName;
+				}),
+					form.m_Texts.end());
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::remove_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+					return it->name == objName;
+				}),
+					form.m_Buttons.end());
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::remove_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+					return it->name == objName;
+				}),
+					form.m_Events.end());
 			}
 		}
 
 		/// <summary>
-		/// Removes the first object with a specific name from a form.
+		/// �������w����
 		/// </summary>
-		template <typename T = Object::Object>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="objName">����ID</param>
+		template <typename T>
 		inline void removeFirstObject(const std::string& formName, const std::string& objName) noexcept {
 			auto form_it = m_Forms.find(formName);
-			if (form_it != m_Forms.end()) {
-				auto& objects = form_it->second.m_AllObjects;
-				for (auto it = objects.begin(); it != objects.end(); ++it) {
-					if (it->second->name == objName && std::dynamic_pointer_cast<T>(it->second)) {
-						objects.erase(it);
-						return;
-					}
-				}
+
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::find_if(form.m_Characters.begin(), form.m_Characters.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::find_if(form.m_Images.begin(), form.m_Images.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::find_if(form.m_Texts.begin(), form.m_Texts.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::find_if(form.m_Events.begin(), form.m_Events.end(), [&](auto& it) {
+					return it->name == objName;
+				}));
 			}
 		}
 
 		/// <summary>
-		/// Removes an object if it satisfies a predicate.
+		/// �������w����
 		/// </summary>
-		template <typename T = Object::Object, class _Pr>
+		/// <typeparam name="T">�������O</typeparam>
+		/// <param name="formName">����Ҧb�����W��</param>
+		/// <param name="objName">����ID</param>
+		template <typename T,class _Pr>
 		inline void remove_if_Object(const std::string& formName, _Pr _Pred) noexcept {
 			auto form_it = m_Forms.find(formName);
-			if (form_it != m_Forms.end()) {
-				auto& objects = form_it->second.m_AllObjects;
-				for (auto it = objects.begin(); it != objects.end();) {
-					auto casted = std::dynamic_pointer_cast<T>(it->second);
-					if (casted && _Pred(casted)) {
-						it = objects.erase(it);
-					} else {
-						++it;
-					}
-				}
+
+			auto& form = form_it->second;
+
+			if constexpr (std::is_base_of_v<Object::Character, T>) {
+				form.m_Characters.erase(std::find_if(form.m_Characters.begin(), form.m_Characters.end(), _Pred));
 			}
+			else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+				form.m_Images.erase(std::find_if(form.m_Images.begin(), form.m_Images.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::TextObject, T>) {
+				form.m_Texts.erase(std::find_if(form.m_Texts.begin(), form.m_Texts.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::Button, T>) {
+				form.m_Buttons.erase(std::find_if(form.m_Buttons.begin(), form.m_Buttons.end(), _Pred));
+			}
+			else if constexpr (std::is_same_v<Object::EventObject, T>) {
+				form.m_Events.erase(std::find_if(form.m_Events.begin(), form.m_Events.end(), _Pred));
+			}
+
 		}
 
 		/// <summary>
-		/// Gets the content (form and objects) of a specific form.
+		/// ���o������
 		/// </summary>
+		/// <param name="formName">���W��</param>
+		/// <returns>���w���</returns>
 		inline auto& GetFormAndObject(const std::string& formName) noexcept {
 			return m_Forms[formName];
 		}
 
 		/// <summary>
-		/// Adds an object to a form.
+		/// �N�ƥ󪫥�[�J���
 		/// </summary>
-		template<typename T>
-		inline void addObject(const std::string& formName, std::shared_ptr<T> obj) noexcept {
-			if (!obj) return;
-			m_Forms[formName].m_AllObjects[obj->m_ID] = obj;
-			addForm(formName, obj);
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="event">�ƥ󪫥�</param>
+		inline void addObject(const std::string& formName, EventObjectPtr& event) noexcept {
+			m_Forms[formName].m_Events.push_back(event);
+			addForm(formName, event);
 		}
 
 		/// <summary>
-		/// Adds an object to a form (rvalue reference).
+		/// �N�ƥ󪫥�[�J���
 		/// </summary>
-		template<typename T>
-		inline void addObject(const std::string& formName, std::shared_ptr<T>&& obj) noexcept {
-			if (!obj) return;
-			size_t id = obj->m_ID;
-			m_Forms[formName].m_AllObjects[id] = std::move(obj);
-			addForm(formName, m_Forms[formName].m_AllObjects[id]);
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="event">�ƥ󪫥�</param>
+		inline void addObject(const std::string& formName, EventObjectPtr&& event) noexcept {
+			m_Forms[formName].m_Events.push_back(event);
+			addForm(formName, event);
 		}
 
 		/// <summary>
-		/// Updates the current form.
+		/// �N���s����[�J���
 		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="button">���s����</param>
+		inline void addObject(const std::string& formName, ButtonPtr& button) noexcept {
+			m_Forms[formName].m_Buttons.push_back(button);
+			addForm(formName, button);
+		}
+
+		/// <summary>
+		/// �N���s����[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="button">���s����</param>
+		inline void addObject(const std::string& formName, ButtonPtr&& button) noexcept {
+			m_Forms[formName].m_Buttons.push_back(button);
+			addForm(formName, button);
+		}
+
+		/// <summary>
+		/// �N���Ϥ�����[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="image">�Ϥ�����[</param>
+		inline void addObject(const std::string& formName, ImageObjectPtr& image) noexcept {
+			if (image->name == "Background") {
+				m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
+			}
+			else {
+				m_Forms[formName].m_Images.push_back(image);
+			}
+			addForm(formName, image);
+		}
+
+		/// <summary>
+		/// �N���Ϥ�����[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="image">�Ϥ�����[</param>
+		inline void addObject(const std::string& formName, ImageObjectPtr&& image) noexcept {
+			if (image->name == "Background") {
+				m_Forms[formName].m_Images.insert(m_Forms[formName].m_Images.begin(), image);
+			}
+			else {
+				m_Forms[formName].m_Images.push_back(image);
+			}
+			addForm(formName, image);
+		}
+
+		/// <summary>
+		/// �N�����⪫��[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="character">���⪫��</param>
+		inline void addObject(const std::string& formName, CharacterPtr& character) noexcept {
+			m_Forms[formName].m_Characters.push_back(character);
+			addForm(formName, character);
+		}
+
+		/// <summary>
+		/// �N�����⪫��[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="character">���⪫��</param>
+		inline void addObject(const std::string& formName, CharacterPtr&& character) noexcept {
+			m_Forms[formName].m_Characters.push_back(character);
+			addForm(formName, character);
+		}
+
+		/// <summary>
+		/// �N����r����[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="text">��r����</param>
+		inline void addObject(const std::string& formName, TextObjectPtr& text) noexcept {
+			m_Forms[formName].m_Texts.push_back(text);
+			addForm(formName, text);
+		}
+
+		/// <summary>
+		/// �N����r����[�J���
+		/// </summary>
+		/// <param name="formName">�n�[�J�����</param>
+		/// <param name="text">��r����</param>
+		inline void addObject(const std::string& formName, TextObjectPtr&& text) noexcept {
+			m_Forms[formName].m_Texts.push_back(text);
+			addForm(formName, text);
+		}
+
+		/// <summary>
+		/// ��s���
+		/// </summary>
+		/// <param name="data">GameManager *</param>
 		inline void UpdateForm(void* data) {
-			if (m_Forms.count(nowForm)) {
-				auto& currentFormContent = m_Forms[nowForm];
-				auto& form = currentFormContent.m_Form;
-				
-				auto isInWindows = [](const ObjectPtr& obj) {
-					if (!obj) return false;
-					auto& pos = obj->m_Transform.translation;
-					auto size = obj->GetSize();
-					// Use a slightly larger window for events to allow them to trigger just before coming on screen
+			auto addToRoot = [&](auto& it) {
+			    auto isInWindows = [](auto& it) {
+			        auto& pos = (it)->m_Transform.translation;
+			        auto size = (it)->GetSize();
+			        return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
+			    };
+				if (isInWindows(it))
+					m_Forms[nowForm].m_Form.m_Root.AddChild(it);
+			};
+			auto addEvent = [&](auto& it) {
+				auto isInWindows = [](auto& it) {
+					auto& pos = it->m_Transform.translation;
+					auto size = it->GetSize();
 					return std::abs(pos.x) - size.x <= WINDOW_WIDTH && std::abs(pos.y) - size.y <= WINDOW_HEIGHT;
 				};
-
-				auto isInStrictWindow = [](const ObjectPtr& obj) {
-					if (!obj) return false;
-					auto& pos = obj->m_Transform.translation;
-					auto size = obj->GetSize();
-					return std::abs(pos.x) - size.x <= WINDOW_WIDTH / 2 && std::abs(pos.y) - size.y <= WINDOW_HEIGHT / 2;
-				};
-
-				// 1. Prepare events for objects currently in the window
-				for (auto& [id, obj] : currentFormContent.m_AllObjects) {
-					if (isInWindows(obj)) {
-						form.m_Events.push_back(obj);
-					}
+				if (isInWindows(it)) {
+					m_Forms[nowForm].m_Form.m_Events.push_back(it);
 				}
-
-				// 2. Execute behaviors
+			};
+			if (m_Forms.count(nowForm)) {
+				// ����ثe��檺�ƥ�
+				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addEvent);
+				std::for_each(m_Forms[nowForm].m_Events.begin(), m_Forms[nowForm].m_Events.end(), addEvent);
 				doFormEvent(nowForm, data);
-				form.m_Events.clear();
+				m_Forms[nowForm].m_Form.m_Events.clear();
 
-				// 3. Prepare rendering for objects in the window
-				for (auto& [id, obj] : currentFormContent.m_AllObjects) {
-					if (obj->MyType != Object::ObjectType::EventObject && isInStrictWindow(obj)) {
-						form.m_Root.AddChild(obj);
-					}
-				}
-
-				form.Update();
-				form.m_Root.clear();
+				// ��s�ثe��檺����
+				std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
+				std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
+				m_Forms[nowForm].m_Form.Update();
+				m_Forms[nowForm].m_Form.m_Root.clear();
 			}
 		}
 
+
+		///// <summary>
+		///// ������ܪ��
+		///// </summary>
+		///// <param name="formname">���W��</param>
+		// inline void changeForm(std::string formname) noexcept {
+		//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+		//		prevForm.push_back(nowForm);
+		//	}
+		//	nowForm = formname;
+		// }
+
+		///// <summary>
+		///// ������ܪ��
+		///// </summary>
+		///// <param name="formname">���W��</param>
+		// inline void changeForm(std::string formname) noexcept {
+		//	if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
+		//		prevForm.push_back(nowForm);
+		//	}
+		//	nowForm = formname;
+		// }
+
 		/// <summary>
-		/// Change form
+		/// ������ܪ��
 		/// </summary>
-		/// <param name="formname">form name</param>
+		/// <param name="formname">���W��</param>
 		inline void changeForm(const std::string& formname) noexcept {
 			if (std::find(prevForm.begin(), prevForm.end(), nowForm) == prevForm.end()) {
 				prevForm.push_back(std::move(nowForm));
@@ -255,43 +634,124 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// Return to previous form
+		/// ��^�W�@�Ӫ��
 		/// </summary>
 		inline void returnPrevForm() noexcept {
-			if (!prevForm.empty()) {
-				nowForm = prevForm.back();
-				prevForm.pop_back();
-			}
+			nowForm = prevForm.back();
+			prevForm.pop_back();
 		}
 
 		/// <summary>
-		/// Pause
+		/// ���Ȱ�
 		/// </summary>
 		inline void Pause() noexcept {
 			isPause = true;
 		}
 
 		/// <summary>
-		/// Resume
+		/// �����Ȱ�
 		/// </summary>
 		inline void rePause() noexcept {
 			isPause = false;
 		}
 
 		/// <summary>
-		/// Free form
+		/// ������
 		/// </summary>
-		/// <param name="formName">form name</param>
+		/// <param name="formName">���W��</param>
 		inline void freeForm(const std::string& formName) {
 			m_Forms.erase(formName);
 			prevForm.erase(std::remove(prevForm.begin(), prevForm.end(), formName), prevForm.end());
 		}
 
+		// inline void refresh() noexcept {
+		// 	auto addToRoot = [&](auto& it) {
+		// 		if (isInWindow(it))
+		// 			m_Forms[nowForm].m_Form.m_Root.AddChild(it);
+		// 	};
+		// 	if (m_Forms.count(nowForm)) {
+		//
+		// 		// ��s�ثe��檺����
+		// 		std::for_each(m_Forms[nowForm].m_Texts.begin(), m_Forms[nowForm].m_Texts.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Buttons.begin(), m_Forms[nowForm].m_Buttons.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Images.begin(), m_Forms[nowForm].m_Images.end(), addToRoot);
+		// 		std::for_each(m_Forms[nowForm].m_Characters.begin(), m_Forms[nowForm].m_Characters.end(), addToRoot);
+		// 		m_Forms[nowForm].m_Form.Update();
+		// 		m_Forms[nowForm].m_Form.m_Root.clear();
+		// 	}
+		// }
+
+		//template<class T>
+		//std::vector<std::shared_ptr<T>> GetAllObject(const std::string& formName, std::string_view objName) {
+		//	auto form_it = m_Forms.find(formName);
+		//	if (form_it == m_Forms.end()) {
+		//		return nullptr; // ��椣�s�b
+		//	}
+		//	auto& form = form_it->second;
+		//	std::vector<std::shared_ptr<T>> result;
+		//	if constexpr (std::is_same_v<Object::Mario, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+		//	else if constexpr (std::is_base_of_v<Object::Character, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+		//	else if constexpr (std::is_base_of_v<Object::ImageObject, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+		//	else if constexpr (std::is_same_v<Object::TextObject, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+		//	else if constexpr (std::is_same_v<Object::Button, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+		//	else if constexpr (std::is_same_v<Object::EventObject, T>) {
+		//		std::transform(form.m_Characters.begin(), form.m_Characters.end(), std::back_inserter(result),
+		//			[&](auto& it) {
+		//				if (it->name == objName) {
+		//					return std::static_pointer_cast<T>(it);
+		//				}
+		//			});
+		//		return result;
+		//	}
+
+		//	return nullptr;
+		//}
+
 	private:
 		/// <summary>
-		/// Execute form events
+		/// �����椺���Ҧ��ƥ�
 		/// </summary>
-		/// <param name="formName">form name</param>
+		/// <param name="formName">���W��</param>
 		/// <param name="data">GameManager *</param>
 		inline void doFormEvent(const std::string& formName, void* data) noexcept {
 			if (!isPause)
@@ -299,31 +759,34 @@ namespace MyAPP::Form {
 		}
 
 		/// <summary>
-		/// Add to form
+		/// �[�J���
 		/// </summary>
-		/// <param name="formName">form name</param>
-		/// <param name="obj">object</param>
+		/// <param name="formName">���W��</param>
+		/// <param name="obj">����@�P�����O</param>
 		inline void addForm(const std::string& formName, ObjectPtr obj) noexcept {
 			m_Forms[formName].m_Form.addForm(obj);
 		}
 
+
+
+
 	protected:
 		/// <summary>
-		/// Map of form names to their content
+		/// ���W�ٻP��Z��������ǦC
 		/// </summary>
 		std::unordered_map<std::string, FormAndObject> m_Forms;
 		/// <summary>
-		/// Current form name
+		/// �ثe���
 		/// </summary>
 		std::string nowForm;
 		/// <summary>
-		/// Stack of previous forms
+		/// ���������|
 		/// </summary>
 		std::vector<std::string> prevForm;
 		/// <summary>
-		/// Pause state
+		/// �Ȱ��X��
 		/// </summary>
 		bool isPause = false;
 	};
 }
-#endif //! FORMMANAGER_HPP
+#endif //! FormManager_HPP

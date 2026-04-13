@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Component.hpp"
 #include <unordered_map>
 #include "Util/Keycode.hpp"

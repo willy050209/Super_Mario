@@ -79,7 +79,7 @@ void MyAPP::Form::Object::Koopa::checkPosition() noexcept {
 
 void MyAPP::Form::Object::Koopa::turn(void* data) noexcept {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	left = (GetPosition().x >= mario->GetPosition().x) ? 1 : 0;
 }
@@ -87,7 +87,7 @@ void MyAPP::Form::Object::Koopa::turn(void* data) noexcept {
 void MyAPP::Form::Object::Koopa::CheckCollision(void* data) {
 	using namespace MyAPP::Form::Object;
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -142,7 +142,7 @@ void MyAPP::Form::Object::Koopa::random_shoot(void* data) noexcept {
 void MyAPP::Form::Object::Koopa::shoot(void* data) noexcept {
 	std::cout << "shoot\n\r";
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	Koopa_Fire::CreateFire(FM);
 }
 
@@ -150,10 +150,10 @@ void MyAPP::Form::Object::Koopa_Fire::behavior(void* data) {
 	this->CheckCollision(data);
 	this->Move({ (left) ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2, 0 });
 	if (destroyflag)
-		destroyFire(static_cast<GameManager*>(data)->GetFormManger());
+		destroyFire(static_cast<GameManager*>(data)->GetFormManager());
 }
 
-void MyAPP::Form::Object::Koopa_Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
+void MyAPP::Form::Object::Koopa_Fire::CreateFire(MyAPP::Form::FormManager& FM) noexcept {
 	auto koopa_ptr = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa");
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	auto fire = std::make_shared<Koopa_Fire>("Koopa_Fire", 20);
@@ -185,7 +185,7 @@ void MyAPP::Form::Object::Koopa_Fire::Move(const glm::vec2& distance) noexcept {
 
 void MyAPP::Form::Object::Koopa_Fire::CheckCollision(void* data) {
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	if (mario == nullptr || moveEvent == nullptr || GM->opMode)
@@ -208,7 +208,7 @@ void MyAPP::Form::Object::Koopa_Fire::CheckCollision(void* data) {
 		destroyflag = true;
 }
 
-void MyAPP::Form::Object::Koopa_Fire::destroyFire(FormManger& FM) noexcept {
+void MyAPP::Form::Object::Koopa_Fire::destroyFire(FormManager& FM) noexcept {
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
 	auto& [enemys, pipes, props, objs] = (*tuplePtr);

@@ -26,6 +26,7 @@ INITFORM_FUNC(initForm1);
 #include "ProgressBar.hpp"
 #include "userType.hpp"
 #include "GameManager.hpp"
+#include "Util/MapLoader.hpp"
 
 #include <algorithm>
 #include <execution>
@@ -46,7 +47,7 @@ namespace MyAPP::Form {
 	/// </summary>
 	/// <param name="FM"></param>
 	/// <param name="formName"></param>
-	inline void writeForm(MyAPP::Form::FormManger& FM,const std::string& formName) {
+	inline void writeForm(MyAPP::Form::FormManager& FM,const std::string& formName) {
 		auto& Block = PositionReference::GetPositionReference();
 		auto size = Block->GetSize();
 		auto x0 = GetLeftEdge(Block);
@@ -186,7 +187,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFormManager(MyAPP::Form::FormManger& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>>& objlist) noexcept {
+	inline void AddToFormManager(MyAPP::Form::FormManager& FM, const std::string& formname, std::shared_ptr<std::vector<std::shared_ptr<T>>>& objlist) noexcept {
 		std::for_each(objlist->begin(), objlist->end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 
@@ -198,7 +199,7 @@ namespace MyAPP::Form {
 	/// <param name="formname"></param>
 	/// <param name="objlist"></param>
 	template <class T>
-	inline void AddToFormManager(MyAPP::Form::FormManger& FM, const std::string& formname, std::vector<std::shared_ptr<T>>& objlist) noexcept {
+	inline void AddToFormManager(MyAPP::Form::FormManager& FM, const std::string& formname, std::vector<std::shared_ptr<T>>& objlist) noexcept {
 		std::for_each(objlist.begin(), objlist.end(), [&](auto& it) { FM.addObject(formname, it); });
 	}
 }
@@ -210,7 +211,7 @@ INITFORM_FUNC(initFormTitle) {
 	const auto textSize = 50 * ((float)WINDOW_HEIGHT / 480);
 	auto&& textColor = Util::Color::FromName(Util::Colors::YELLOW);
 
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 
 	auto button = std::make_shared<Button>("Start", MyAPP::MyResourcesFilePath::MyFontPath, textSize, "Start", textColor, 10);
 	button->SetPosition({ 0, 2 * button->GetSize().y });
@@ -234,7 +235,7 @@ INITFORM_FUNC(initFormTitle) {
 /*init Options Form*/
 INITFORM_FUNC(initFormOptions) {
 	const auto textSize = 50 * ((float)WINDOW_HEIGHT / 480);
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	auto tmpbutton = std::make_shared<Button>("ExitButton", MyAPP::MyResourcesFilePath::MyFontPath, textSize, "Exit", Util::Color::FromName(Util::Colors::SLATE_BLUE), 100);
 	tmpbutton->SetPosition({ 0,
 		GetTopEdge(tmpbutton) - (WINDOW_HEIGHT - tmpbutton->GetSize().y) + textSize });
@@ -260,7 +261,7 @@ INITFORM_FUNC(initFormOptions) {
 
 INITFORM_FUNC(initFormSetting) {
 	const auto textSize = 30 * ((float)WINDOW_HEIGHT / 480);
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	auto tmpbutton = std::make_shared<Button>("BackButton", MyAPP::MyResourcesFilePath::MyFontPath, 40 * ((float)WINDOW_HEIGHT / 480), "Back", Util::Color::FromName(Util::Colors::SLATE_BLUE), 10);
 	tmpbutton->SetPosition({ GetLeftEdge(tmpbutton), GetTopEdge(tmpbutton) });
 	tmpbutton->SetCallBackFunc(Back_Button_func);
@@ -314,7 +315,7 @@ INITFORM_FUNC(initFormSetting) {
 }
 
 INITFORM_FUNC(winForm) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto formName = MyAPP::Form::FormNames::Win_Form;
 
 
@@ -327,7 +328,7 @@ INITFORM_FUNC(winForm) {
 			auto fpscount = std::static_pointer_cast<size_t>(self->userdata);
 			if (((*fpscount)++) >= 1) {
 				index = (index + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().size();
-				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 				if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Capoo_smile")) {
 					std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_smileFrames().at(index));
 					if (index == 0) {
@@ -357,7 +358,7 @@ INITFORM_FUNC(winForm) {
 		using MyAPP::Form::Object::ImageObject;
 		using MyAPP::GameManager;
 		auto eventobj = std::make_shared<EventObject>("test", [](EventObject* const self, void* data) {
-			auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+			auto& FM = static_cast<GameManager*>(data)->GetFormManager();
 			auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "background");
 			if (background->GetPosition().y < -GetTopEdge(background)) {
 				background->m_Transform.translation.y++;
@@ -372,7 +373,7 @@ INITFORM_FUNC(winForm) {
 /*init 1-1*/
 INITFORM_FUNC(initForm_1_1) {
 	using namespace MyAPP::Form::Object;
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1;
 	// �@���y�аѦ�
 	auto& Block = PositionReference::GetPositionReference();
@@ -491,7 +492,7 @@ INITFORM_FUNC(initForm_1_1) {
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_Pip) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_Pipe;
 	// ���o�y�аѦ�
 	auto& PositionReference = PositionReference::GetPositionReference();
@@ -569,7 +570,7 @@ INITFORM_FUNC(initForm_1_1_Pip) {
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_1_to_1_2) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_1_to_1_2;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
@@ -617,7 +618,7 @@ INITFORM_FUNC(initForm_1_1_to_1_2) {
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_2) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
@@ -684,7 +685,7 @@ INITFORM_FUNC(initForm_1_2) {
 					index = (index + 1) % MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrames().size();
 					index1 = (index1 + 1) % MyAPP::MyResourcesFilePath::Kapoo::getKapoo_100Frames().size();
 					index2 = (index2 + 1) % MyAPP::MyResourcesFilePath::Kapoo::getKapoo_KnowledgeFrames().size();
-					auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+					auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 					if (auto img = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "capoo_giphy")) {
 						std::static_pointer_cast<Util::Image>(img->GetDrawable())->SetImage(MyAPP::MyResourcesFilePath::Kapoo::getCapoo_giphyFrames().at(index));
 					}
@@ -746,7 +747,7 @@ INITFORM_FUNC(initForm_1_2) {
 /// </summary>
 /// <param name=""></param>
 INITFORM_FUNC(initForm_1_2_Pipe) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_Pipe;
 	auto& Block = PositionReference::GetPositionReference();
 
@@ -813,7 +814,7 @@ INITFORM_FUNC(initForm_1_2_Pipe) {
 
 INITFORM_FUNC(initForm_1_2_to_1_4) {
 	using MyAPP::Form::Object::MakeObject;
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_2_to_1_4;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
@@ -921,7 +922,7 @@ INITFORM_FUNC(initForm_1_2_to_1_4) {
 
 INITFORM_FUNC(initForm_1_4) {
 	using MyAPP::Form::Object::MakeObject;
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::Form_1_4;
 	auto& PositionReference = PositionReference::GetPositionReference();
 
@@ -993,7 +994,7 @@ INITFORM_FUNC(initForm_1_4) {
 			auto door = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 			static_cast<MyAPP::GameManager*>(data)->opMode = false;
 			if (door) {
-				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+				auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 				auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent")->userdata);
 				auto& [enemys, pipes, props, objs] = (*tuplePtr);
 				auto background = FM.GetFormObject<MyAPP::Form::Object::ImageObject>(FM.GetNowForm(), "Background");
@@ -1037,7 +1038,7 @@ INITFORM_FUNC(initForm_1_4) {
 }
 
 INITFORM_FUNC(diedForm) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = MyAPP::Form::FormNames::DiedForm;
 	const auto multiple = ((float)WINDOW_HEIGHT / 480.f);
 	auto& PositionReference = PositionReference::GetPositionReference();
@@ -1083,7 +1084,7 @@ INITFORM_FUNC(diedForm) {
 		{
 			auto updateEvent = std::make_shared<EventObject>("UpdateInfo", [](EventObject* const self, void* data) {
 				auto GM = static_cast<MyAPP::GameManager*>(data);
-				auto& FM = GM->GetFormManger();
+				auto& FM = GM->GetFormManager();
 				auto strptr = std::static_pointer_cast<std::string>(self->userdata);
 				if (strptr == nullptr) {
 					strptr = std::make_shared<std::string>("???");
@@ -1134,7 +1135,7 @@ INITFORM_FUNC(diedForm) {
 		{
 			auto delayEvent = std::make_shared<EventObject>("DelayEvent", [](EventObject* const self, void* data) {
 				auto GM = static_cast<MyAPP::GameManager*>(data);
-				auto& FM = GM->GetFormManger();
+				auto& FM = GM->GetFormManager();
 				auto delayCount = std::static_pointer_cast<int>(self->userdata);
 				if (*delayCount > 0) {
 					(*delayCount)--;
@@ -1156,7 +1157,7 @@ INITFORM_FUNC(diedForm) {
 }
 
 INITFORM_FUNC(initForm1) {
-	auto& MyFM = self->GetFormManger();
+	auto& MyFM = self->GetFormManager();
 	constexpr auto& formName = "Form1";
 	using MPATH = MyAPP::MyResourcesFilePath;
 	

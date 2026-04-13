@@ -1,4 +1,4 @@
-#include "Object/AnimationComponent.hpp"
+﻿#include "Object/AnimationComponent.hpp"
 #include "Object/Object.hpp"
 #include "config.hpp"
 

@@ -10,7 +10,7 @@
 
 void MyAPP::Form::Object::PiranaPlant::behavior(void* data) {
 	if (!dead) {
-		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+		auto& FM = static_cast<GameManager*>(data)->GetFormManager();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		move();
 		if (std::abs(mario->GetPosition().x - GetPosition().x) >= mario->GetSize().x*2) {
@@ -66,7 +66,7 @@ void MyAPP::Form::Object::PiranaPlant::PlayFrames() noexcept {
 
 void MyAPP::Form::Object::PiranaPlant::CheckCollision(void *data)  {
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (mario == nullptr)
 		return;
