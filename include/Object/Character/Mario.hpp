@@ -136,8 +136,13 @@ namespace MyAPP::Form::Object {
 		/// </summary>
 		/// <param name="type_"></param>
 		inline void changeType(Mario_type type_) noexcept {
+			auto oldSize = GetSize();
 			mario_type = type_;
 			changeImg();
+			auto newSize = GetSize();
+			if (newSize.y != oldSize.y) {
+				m_Transform.translation.y += (newSize.y - oldSize.y) / 2.0f;
+			}
 		}
 
 		/// <summary>
