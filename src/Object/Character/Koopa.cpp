@@ -1,4 +1,4 @@
-#include "Object/Character/Koopa.hpp"
+ï»¿#include "Object/Character/Koopa.hpp"
 #include "Object/Character/MArio.hpp"
 #include "GameManager.hpp"
 #include "FilePath.hpp"
@@ -115,16 +115,16 @@ void MyAPP::Form::Object::Koopa::random_shoot(void* data) noexcept {
 	shootdelay++;
 	if(shootdelay >= FPS_CAP){
 		auto random0to9 = []() {
-			// «Ø¥ß¤@­Ó¥]§t 0 ¨ì 9 ªº¦V¶q
+			// å»ºç«‹ä¸€å€‹åŒ…å« 0 åˆ° 9 çš„å‘é‡
 			std::vector<int> arr(10);
-			std::iota(arr.begin(), arr.end(), 0); // ¶ñ¥R 0, 1, ..., 9
+			std::iota(arr.begin(), arr.end(), 0); // å¡«å…… 0, 1, ..., 9
 
-			// ¨Ï¥Î·í«e®É¶¡§@¬°ºØ¤l¨Óªì©l¤Æ¶Ã¼Æ²£¥Í¾¹
-			// ³o¼Ë¨C¦¸°õ¦æ³£·|¦³¤£¦Pªº¬~µPµ²ªG
+			// ä½¿ç”¨ç•¶å‰æ™‚é–“ä½œç‚ºç¨®å­ä¾†åˆå§‹åŒ–äº‚æ•¸ç”¢ç”Ÿå™¨
+			// é€™æ¨£æ¯æ¬¡åŸ·è¡Œéƒ½æœƒæœ‰ä¸åŒçš„æ´—ç‰Œçµæœ
 			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 			std::default_random_engine rng(seed);
 
-			// ¨Ï¥Î std::shuffle ¶i¦æ¬~µP
+			// ä½¿ç”¨ std::shuffle é€²è¡Œæ´—ç‰Œ
 			std::shuffle(arr.begin(), arr.end(), rng);
 
 			return arr[0];

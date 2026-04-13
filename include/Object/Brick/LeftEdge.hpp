@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef LEFTEDGE_HPP
 #define LEFTEDGE_HPP
 
@@ -6,7 +6,7 @@
 #include "Interface/ICollisionable.hpp"
 namespace MyAPP::Form ::Object {
 	/// <summary>
-	/// ¦sÀÉÂIª«¥ó Ä~©ÓBrick
+	/// å­˜æª”é»žç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class LeftEdge : public Brick {
 	public:
@@ -35,7 +35,7 @@ namespace MyAPP::Form ::Object {
 		}
 
 		/// <summary>
-		/// ¹Ï¤ù¸ô®|
+		/// åœ–ç‰‡è·¯å¾‘
 		/// </summary>
 		static constexpr inline char* const LeftEdgeImagePath = "imgs/super mario/LeftEdge.png";
 

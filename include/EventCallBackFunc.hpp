@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef EVENTCALLCALLBACKFUNC_hpp
 #define EVENTCALLCALLBACKFUNC_hpp
 #include "InitFormFunc.hpp"

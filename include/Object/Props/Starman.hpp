@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef STARMAN_HPP
 #define STARMAN_HPP
 
@@ -12,7 +12,7 @@
 
 namespace MyAPP::Form::Object:: Props {
 	/// <summary>
-	/// µL¼Ä¬P¬P Ä~©ÓProps
+	/// ç„¡æ•µæ˜Ÿæ˜Ÿ ç¹¼æ‰¿Props
 	/// </summary>
 	class Starman :Interface::ICollisionable, Interface::Iframes,Interface::IComeDownable,Interface::IJumpable,Interface::IMovable, public Props {
 	public:

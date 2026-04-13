@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef HIDDENBRICK_HPP
 #define HIDDENBRICK_HPP
 

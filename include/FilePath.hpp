@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef FILEPATH_HPP
 #define FILEPATH_HPP
 #include "MyDefine.hpp"
@@ -10,7 +10,7 @@
 
 namespace MyAPP {
 	/// <summary>
-	/// ÀÉ®×¸ô®|
+	/// æª”æ¡ˆè·¯å¾‘
 	/// </summary>
 	struct MyResourcesFilePath {
 		CANNOTCREATE(MyResourcesFilePath);
@@ -18,27 +18,27 @@ namespace MyAPP {
 			CANNOTCREATE(MAP);
 
 			/// <summary>
-			/// 1-1¦a¹Ï¹Ï¤ù¸ô®|
+			/// 1-1åœ°åœ–åœ–ç‰‡è·¯å¾‘
 			/// </summary>
 			static constexpr auto Background_1_1_ImagePath = R"(imgs\super mario\Maps\SuperMarioBrosMap1-1main-up.png)";
 
 			/// <summary>
-			/// 1-1¤ôºŞ¦a¹Ï¹Ï¤ù¸ô®|
+			/// 1-1æ°´ç®¡åœ°åœ–åœ–ç‰‡è·¯å¾‘
 			/// </summary>
 			static constexpr auto Background_1_1_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1inpipe.png";
 
 			/// <summary>
-			/// 1-1¨ì1-2¹L³õ¹Ï¤ù¸ô®|
+			/// 1-1åˆ°1-2éå ´åœ–ç‰‡è·¯å¾‘
 			/// </summary>
 			static constexpr auto Background_1_1_to_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-1 to 1-2.png";
 
 			///// <summary>
-			/// 1-2¦a¹Ï¹Ï¤ù¸ô®|
+			/// 1-2åœ°åœ–åœ–ç‰‡è·¯å¾‘
 			/// </summary>
 			static constexpr auto Background_1_2_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2main_new.png";
 
 			/// <summary>
-			/// 1-2¤ôºŞ¦a¹Ï¹Ï¤ù¸ô®|
+			/// 1-2æ°´ç®¡åœ°åœ–åœ–ç‰‡è·¯å¾‘
 			/// </summary>
 			static constexpr auto Background_1_2_Pipe_ImagePath = "imgs/super mario/Maps/SuperMarioBrosMap1-2BG in pipe.png";
 
@@ -126,7 +126,7 @@ namespace MyAPP {
 
 		static constexpr auto BGMPath = MY_RESOURCE_DIR "/BGM/Ring08.wav";
 		/// <summary>
-		/// ¥Í¦¨¦¡¤H¤u´¼¼z¾É½×»s§@ªº¤â¼g¦r«¬
+		/// ç”Ÿæˆå¼äººå·¥æ™ºæ…§å°è«–è£½ä½œçš„æ‰‹å¯«å­—å‹
 		/// </summary>
 		static constexpr auto MyFontPath = MY_RESOURCE_DIR "/Font/t112590005.ttf";
 		static constexpr auto ArialFontPath = MY_RESOURCE_DIR "/Font/arial.ttf";
@@ -136,38 +136,38 @@ namespace MyAPP {
 		static constexpr auto SuperMarioFont = MY_RESOURCE_DIR "/Font/Super Mario Bros. NES.ttf";
 
 		/// <summary>
-		/// ¿jÀY¹Ï¤ù¸ô®|
+		/// ç£šé ­åœ–ç‰‡è·¯å¾‘
 		/// </summary>
 		static constexpr auto BlockImagePath = "imgs/super mario/1-1/BrickBlockBrown.png";
 
 		/// <summary>
-		/// ¿jÀY¹Ï¤ù¸ô®|(²`¦â)
+		/// ç£šé ­åœ–ç‰‡è·¯å¾‘(æ·±è‰²)
 		/// </summary>
 		static constexpr auto BlockDarkImagePath = "imgs/super mario/BrickBlockDark.png";
 
 		static constexpr auto BlockGreyImagePath = "imgs/super mario/BrickBlockCastle.png";
 
 		/// <summary>
-		/// ¦aªO¹Ï¤ù¸ô®|
+		/// åœ°æ¿åœ–ç‰‡è·¯å¾‘
 		/// </summary>
 		static constexpr auto FloorImagePath = "imgs/super mario/floor.png";
 
 		/// <summary>
-		/// ¦aªO¹Ï¤ù¸ô®|(²`¦â)
+		/// åœ°æ¿åœ–ç‰‡è·¯å¾‘(æ·±è‰²)
 		/// </summary>
 		static constexpr auto FloorDarkImagePath = "imgs/super mario/floordark.png";
 
 		static constexpr auto FloorGreyImagePath = "imgs/super mario/floorCastle.png";
 
 		/// <summary>
-		/// ¶¥±è¹Ï¤ù¸ô®|
+		/// éšæ¢¯åœ–ç‰‡è·¯å¾‘
 		/// </summary>
 		static constexpr auto StairsBrickImagePath = "imgs/super mario/StairsBrick.png";
 
 		static constexpr auto MovingPlatform = R"(imgs\super mario\MovingPlatform.png)";
 
 		/// <summary>
-		/// ¶¥±è¹Ï¤ù¸ô®|(²`¦â)
+		/// éšæ¢¯åœ–ç‰‡è·¯å¾‘(æ·±è‰²)
 		/// </summary>
 		static constexpr auto StairsBrickDarkImagePath = "imgs/super mario/StairsBrickDark.png";
 

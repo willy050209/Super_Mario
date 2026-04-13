@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef PROPBRICK_HPP
 #define PROPBRICK_HPP
@@ -27,7 +27,7 @@ namespace MyAPP::Form::Object {
 		PropBrick() = delete;
 
 		/// <summary>
-		/// ³QºVÀ»¨Æ¥ó
+		/// è¢«æ•²æ“Šäº‹ä»¶
 		/// </summary>
 		virtual void bonk() noexcept override;
 
@@ -51,7 +51,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ªí³æ¨ê·s®É°õ¦æ
+		/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data"></param>
 		virtual void behavior(void* data = nullptr) override;

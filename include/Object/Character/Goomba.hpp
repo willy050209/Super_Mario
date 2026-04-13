@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef GOOMBA_HPP
 #define GOOMBA_HPP
 
@@ -11,7 +11,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// ®ßÄ_Ä_ª«¥ó Ä~©ÓCharacter
+			/// æ —å¯¶å¯¶ç‰©ä»¶ ç¹¼æ‰¿Character
 			/// </summary>
 			class Goomba : Interface::ICollisionable, public Character {
 			public:

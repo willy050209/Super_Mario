@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
@@ -17,7 +17,7 @@ namespace MyAPP {
 			}
 
 			/// <summary>
-			/// ©Ò¦³¨¤¦âªº¤÷Ãş§O Ä~©ÓObject
+			/// æ‰€æœ‰è§’è‰²çš„çˆ¶é¡åˆ¥ ç¹¼æ‰¿Object
 			/// </summary>
 			class Character : public Object {
 			public:
@@ -41,7 +41,7 @@ namespace MyAPP {
 				}*/
 
 				/// <summary>
-				/// ¬O§_­±¦V¥ªÃä
+				/// æ˜¯å¦é¢å‘å·¦é‚Š
 				/// </summary>
 				/// <returns></returns>
 				inline auto isLeft() const noexcept {
@@ -49,9 +49,9 @@ namespace MyAPP {
 				}
 
 				/// <summary>
-				/// ³]©w¦V¥ª¦V¥k
+				/// è¨­å®šå‘å·¦å‘å³
 				/// </summary>
-				/// <typeparam name="val">true ¦V¥ª false ¦V¥k</typeparam>
+				/// <typeparam name="val">true å‘å·¦ false å‘å³</typeparam>
 				template<bool T_or_F>
 				inline void SetLeft() noexcept {
 					if constexpr (T_or_F) {
@@ -63,12 +63,12 @@ namespace MyAPP {
 				}
 
 				/// <summary>
-				/// ¦º¤`¨Æ¥ó
+				/// æ­»äº¡äº‹ä»¶
 				/// </summary>
 				virtual void died() noexcept = 0;
 
 				/// <summary>
-				/// ²¾°Ê¨Æ¥ó
+				/// ç§»å‹•äº‹ä»¶
 				/// </summary>
 				virtual void move() noexcept;
 
@@ -89,17 +89,17 @@ namespace MyAPP {
 
 			protected:
 				/// <summary>
-				/// ­«³]®y¼Ğ
+				/// é‡è¨­åº§æ¨™
 				/// </summary>
 				inline void ResetPosition() noexcept { m_Transform.translation = ResetPositionValue; }
 
 				/// <summary>
-				/// ¼Y¸¨¨Æ¥ó
+				/// å¢œè½äº‹ä»¶
 				/// </summary>
 				virtual void comeDown() noexcept;
 
 				/// <summary>
-				/// ¦V¥ªºX¼Ğ
+				/// å‘å·¦æ——æ¨™
 				/// </summary>
 				int left = 0;
 

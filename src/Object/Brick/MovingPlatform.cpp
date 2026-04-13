@@ -1,4 +1,4 @@
-#include "Object/Brick/MovingPlatform.hpp"
+﻿#include "Object/Brick/MovingPlatform.hpp"
 #include "Position.hpp"
 #include "GameManager.hpp"
 #include "FormManger.hpp"

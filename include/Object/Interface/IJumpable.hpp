@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef IJUMPABLE_FPP
 #define IJUMPABLE_FPP
 

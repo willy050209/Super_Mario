@@ -1,4 +1,4 @@
-#include "incallobj.hpp"
+ï»¿#include "incallobj.hpp"
 #include "Position.hpp"
 #include "config.hpp"
 #include "userType.hpp"
@@ -277,12 +277,12 @@ std::shared_ptr<TextObjectPtrVec> MyAPP::Form::Object::MakeObject::make_GameText
 	Worldtext->SetPosition({ -GetLeftEdge(Worldtext) - (45 + 20 + 100) * multiple, GetTopEdge(Worldtext) - 10 * multiple});
 	result->push_back(std::move(Worldtext));
 
-	// Ãö¥d¤å¦r
+	// é—œå¡æ–‡å­—
 	auto nowWorldtext = std::make_shared<TextObject>("NOWWorldtext", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, world, Util::Color::FromName(Util::Colors::WHITE), 100);
 	nowWorldtext->SetPosition({ -GetLeftEdge(nowWorldtext) - (45 + 20 + 120) * multiple, GetTopEdge(nowWorldtext) - 32 * multiple });
 	result->push_back(std::move(nowWorldtext));
 
-	//ª÷¹ô¼Æ¶q
+	//é‡‘å¹£æ•¸é‡
 	auto coinnumtext = std::make_shared<TextObject>("CoinnumText", MyAPP::MyResourcesFilePath::SuperMarioFont, 20 * multiple, "x00", Util::Color::FromName(Util::Colors::WHITE), 100);
 	coinnumtext->SetPosition({ GetLeftEdge(coinnumtext) + (45 + 45 + 20 + 20 + 120) * multiple, GetTopEdge(coinnumtext) - 32 * multiple });
 	result->push_back(std::move(coinnumtext));

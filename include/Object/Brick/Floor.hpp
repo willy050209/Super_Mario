@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef Foor_HPP
 #define Foor_HPP
 
@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¦sÀÉÂIª«¥ó Ä~©ÓBrick
+	/// å­˜æª”é»žç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Floor : public Brick {
 	public:

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef FORMMANGER_HPP
 #define FORMMANGER_HPP
 

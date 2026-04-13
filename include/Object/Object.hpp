@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form:: Object {
 	/// <summary>
-	/// ´£¨Ñ©Ò¦³ª«¥óªº¤÷Ãş
+	/// æä¾›æ‰€æœ‰ç‰©ä»¶çš„çˆ¶é¡
 	/// </summary>
 	class Object : public Util::GameObject {
 	public:
@@ -32,33 +32,33 @@ namespace MyAPP::Form:: Object {
 		Object& operator=(Object&&) = delete;
 
 		/// <summary>
-		/// ¨ú±o Core::Drawable
+		/// å–å¾— Core::Drawable
 		/// </summary>
 		/// <returns>Core::Drawable</returns>
 		inline auto GetDrawable() const noexcept { return m_Drawable; }
 
 		/// <summary>
-		/// ¨ú±o®y¼Ğ
+		/// å–å¾—åº§æ¨™
 		/// </summary>
 		/// <returns>Position</returns>
 		virtual inline const glm::vec2& GetPosition() const noexcept { return m_Transform.translation; }
 
 		/// <summary>
-		/// ¨ú±o¬O§_¥i¨£
+		/// å–å¾—æ˜¯å¦å¯è¦‹
 		/// </summary>
 		/// <returns>Visible</returns>
 		inline bool GetVisibility() const noexcept { return m_Visible; }
 
 		/// <summary>
-		/// ³]©w®y¼Ğ
+		/// è¨­å®šåº§æ¨™
 		/// </summary>
-		/// <param name="Position">®y¼Ğ</param>
+		/// <param name="Position">åº§æ¨™</param>
 		inline void SetPosition(const glm::vec2& Position) noexcept { m_Transform.translation = Position; }
 
 		/// <summary>
-		/// ³]©w¹Ï¤ù
+		/// è¨­å®šåœ–ç‰‡
 		/// </summary>
-		/// <param name="ImagePath">¹Ï¤ù¸ô®|</param>
+		/// <param name="ImagePath">åœ–ç‰‡è·¯å¾‘</param>
 		void setImage(const std::string& ImagePath) noexcept { m_Drawable = std::make_shared<Util::Image>(ImagePath); }
 
 		inline void incPositionX(int Displacement) noexcept {
@@ -70,10 +70,10 @@ namespace MyAPP::Form:: Object {
 		}
 
 		/// <summary>
-		/// §PÂ_¿é¤Jªº¯x§Î¬O§_»P¦Û¨­­«Å|
+		/// åˆ¤æ–·è¼¸å…¥çš„çŸ©å½¢æ˜¯å¦èˆ‡è‡ªèº«é‡ç–Š
 		/// </summary>
-		/// <param name="Position">¯x§Î¤¤¤ß®y¼Ğ</param>
-		/// <param name="size">¯x§Î¤j¤p</param>
+		/// <param name="Position">çŸ©å½¢ä¸­å¿ƒåº§æ¨™</param>
+		/// <param name="size">çŸ©å½¢å¤§å°</param>
 		/// <returns></returns>
 		inline auto inRange(const glm::vec2& Position, const glm::vec2& size) const noexcept {
 			const auto& mpos = GetPosition();
@@ -91,42 +91,42 @@ namespace MyAPP::Form:: Object {
 		}
 
 		/// <summary>
-		/// ¨ú±o¦Û¨­¤j¤p
+		/// å–å¾—è‡ªèº«å¤§å°
 		/// </summary>
-		/// <returns>¯x§Î¤j¤p</returns>
+		/// <returns>çŸ©å½¢å¤§å°</returns>
 		virtual inline glm::vec2 GetSize() const noexcept {
 			return (m_Drawable) ? std::static_pointer_cast<Util::Image>(m_Drawable)->GetSize() : glm::vec2{ 0, 0 };
 		}
 
 		/// <summary>
-		/// ¨C¦¸ªí³æ¨ê·s®É°õ¦æ
+		/// æ¯æ¬¡è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data">GameManager *</param>
 		virtual void behavior(void* data = nullptr) {}
 
 				
 		/// <summary>
-		/// ¦Û¤vªº¦W¤l
+		/// è‡ªå·±çš„åå­
 		/// </summary>
 		std::string name;
 
 		/// <summary>
-		/// ´£¨Ñ¦Ó¥~¸ê®Æ±µ¤f (void *)
+		/// æä¾›è€Œå¤–è³‡æ–™æ¥å£ (void *)
 		/// </summary>
 		std::shared_ptr<void> userdata{ nullptr };
 
 		/// <summary>
-		/// ¦Û¨­¸ê®ÆÃş«¬
+		/// è‡ªèº«è³‡æ–™é¡å‹
 		/// </summary>
 		ObjectType MyType = ObjectType::Object;
 
 		/// <summary>
-		/// ¬O§_¥i¸I¼²
+		/// æ˜¯å¦å¯ç¢°æ’
 		/// </summary>
 		bool collisionable{ true };
 
 		/// <summary>
-		/// ±MÄİ©ó¦¹ª«¥óªº°ß¤@½s¸¹(­Yª«¥ó¼Æ¶W¹Lsize_tªº¤W­­·|­«½Æ)
+		/// å°ˆå±¬æ–¼æ­¤ç‰©ä»¶çš„å”¯ä¸€ç·¨è™Ÿ(è‹¥ç‰©ä»¶æ•¸è¶…ésize_tçš„ä¸Šé™æœƒé‡è¤‡)
 		/// </summary>
 		size_t m_ID;
 

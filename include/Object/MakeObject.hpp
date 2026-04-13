@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef MAKEOBJECT_HPP
 #define MAKEOBJECT_HPP
 #include "Position.hpp"
@@ -15,7 +15,7 @@ namespace MyAPP::Form::Object {
 
 	struct PositionReference {
 		/// <summary>
-		/// ¦^¶Ç§@¬°®y¼Ğ°Ñ¦Òªº¤è¶ô
+		/// å›å‚³ä½œç‚ºåº§æ¨™åƒè€ƒçš„æ–¹å¡Š
 		/// </summary>
 		/// <returns></returns>
 		static const auto& GetPositionReference() {
@@ -32,7 +32,7 @@ namespace MyAPP::Form::Object {
 		CANNOTCREATE(MakeObject);
 
 		/// <summary>
-		/// ¦a¹ÏÀÉ®æ¦¡
+		/// åœ°åœ–æª”æ ¼å¼
 		/// </summary>
 		struct Fileinfo {
 			glm::vec2 XY{};
@@ -42,7 +42,7 @@ namespace MyAPP::Form::Object {
 			std::string data{};
 
 			/// <summary>
-			/// ±qÀÉ®×Åª¨ú¸ê®Æ
+			/// å¾æª”æ¡ˆè®€å–è³‡æ–™
 			/// </summary>
 			/// <param name="inp"></param>
 			void GetFileDate(std::ifstream& inp) {
@@ -58,7 +58,7 @@ namespace MyAPP::Form::Object {
 			}
 
 			/// <summary>
-			/// ±NXYÂà¬°¹ê»Ú®y¼Ğ
+			/// å°‡XYè½‰ç‚ºå¯¦éš›åº§æ¨™
 			/// </summary>
 			void ChangeXY() {
 				auto& PositionReference = PositionReference::GetPositionReference();
@@ -68,38 +68,38 @@ namespace MyAPP::Form::Object {
 
 
 		/// <summary>
-		/// «Ø¥ß¥]§t¤õ²yªº¤õ¬W¤è¶ô
+		/// å»ºç«‹åŒ…å«ç«çƒçš„ç«æŸ±æ–¹å¡Š
 		/// </summary>
-		/// <param name="name">ª«¥óID</param>
-		/// <param name="zindex">¹Ï¼h</param>
-		/// <returns>¤õ¬W¤è¶ôªº«ü¼Ğ</returns>
+		/// <param name="name">ç‰©ä»¶ID</param>
+		/// <param name="zindex">åœ–å±¤</param>
+		/// <returns>ç«æŸ±æ–¹å¡Šçš„æŒ‡æ¨™</returns>
 		[[nodiscard]] static SpinningFireBallsPtr make_SpinningFireBalls(const std::string& name = "SpinningFireBalls", glm::vec2 pos = { 0, 0 }, int zindex = 100) noexcept;
 
 		/// <summary>
-		/// «Ø¥ß­I´º¹Ï»PMario
+		/// å»ºç«‹èƒŒæ™¯åœ–èˆ‡Mario
 		/// </summary>
-		/// <param name="backgrount_FilePath">­I´º¹Ï¸ô®|</param>
-		/// <param name="marioPos">Mario®y¼Ğ</param>
-		/// <param name="backgroundZindex">­I´º¹ÏZindex</param>
+		/// <param name="backgrount_FilePath">èƒŒæ™¯åœ–è·¯å¾‘</param>
+		/// <param name="marioPos">Marioåº§æ¨™</param>
+		/// <param name="backgroundZindex">èƒŒæ™¯åœ–Zindex</param>
 		/// <param name="marioZindex">MarioZindex</param>
-		/// <returns> first : ­I´º¹Ï second : Mario</returns>
+		/// <returns> first : èƒŒæ™¯åœ– second : Mario</returns>
 		[[nodiscard]] static BackgroundMarioPair make_Background_And_Mario(const std::string& backgrount_FilePath, std::shared_ptr<BrickPtrVec>& Bricks, glm::vec2 marioPos = { 0, 0 }, int backgroundZindex = 0, int marioZindex = 50) noexcept;
 
 
 		/// <summary>
-		/// ±qÀÉ®×«Ø¥ß Brick vector «ü¼Ğ
+		/// å¾æª”æ¡ˆå»ºç«‹ Brick vector æŒ‡æ¨™
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<BrickPtrVec> make_Bricks_From_File(const std::string& filename, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Brick «ü¼Ğ°}¦C
+		/// å»ºç«‹ Brick æŒ‡æ¨™é™£åˆ—
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<BrickPtrVec> make_Bricks() noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Brick «ü¼Ğ
+		/// å»ºç«‹ Brick æŒ‡æ¨™
 		/// </summary>
 		/// <param name="fileinfo"></param>
 		/// <param name="isDark"></param>
@@ -107,37 +107,37 @@ namespace MyAPP::Form::Object {
 		[[nodiscard]] static BrickPtr make_BrickPtr(const Fileinfo& fileinfo, BrickColor color = BrickColor::normal) noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Character vector «ü¼Ğ
+		/// å»ºç«‹ Character vector æŒ‡æ¨™
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<CharacterPtrVec> make_Characters() noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Coin vector «ü¼Ğ
+		/// å»ºç«‹ Coin vector æŒ‡æ¨™
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<CoinPtrVec> make_Coins() noexcept;
 
 		/// <summary>
-		/// «Ø¥ß®É¶¡¡B¤À¼Æ¡B¥Í©R¤å¦r¤è¶ô
+		/// å»ºç«‹æ™‚é–“ã€åˆ†æ•¸ã€ç”Ÿå‘½æ–‡å­—æ–¹å¡Š
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<TextObjectPtrVec> make_GameText(const std::string& world = "1-1") noexcept;
 
 		/// <summary>
-		/// ±qÀÉ®×«Ø¥ß enemys «ü¼Ğ°}¦C
+		/// å¾æª”æ¡ˆå»ºç«‹ enemys æŒ‡æ¨™é™£åˆ—
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<CharacterPtrVec> make_Enemys_From_File(const std::string& filename, std::shared_ptr<BrickPtrVec>& Bricks) noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Character «ü¼Ğ
+		/// å»ºç«‹ Character æŒ‡æ¨™
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static CharacterPtr make_EnemysPtr(const Fileinfo& fileinfo) noexcept;
 
 		/// <summary>
-		/// «Ø¥ß Props «ü¼Ğ°}¦C
+		/// å»ºç«‹ Props æŒ‡æ¨™é™£åˆ—
 		/// </summary>
 		/// <returns></returns>
 		[[nodiscard]] static std::shared_ptr<PropsPtrVec> make_Props() noexcept;

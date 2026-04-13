@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef PIRANAPLANTDARK_HPP
 #define PIRANAPLANTDARK_HPP
 #include "Character.hpp"

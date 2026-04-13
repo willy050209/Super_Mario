@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef PROPS_HPP
 #define PROPS_HPP
 
@@ -10,7 +10,7 @@ namespace MyAPP {
 		namespace Object {
 			namespace Props {
 				/// <summary>
-				/// ©Ò¦³¹D¨ãªº¤÷Ãş§O Ä~©ÓImageObject
+				/// æ‰€æœ‰é“å…·çš„çˆ¶é¡åˆ¥ ç¹¼æ‰¿ImageObject
 				/// </summary>
 				class Props :public ImageObject {
 				public:

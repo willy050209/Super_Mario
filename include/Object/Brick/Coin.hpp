@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef COIN_HPP
 #define COIN_HPP
 
@@ -9,7 +9,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ª÷¹ôª«¥ó Ä~©ÓBrick
+	/// é‡‘å¹£ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Coin :Interface::ICollisionable, Interface::Iframes, public Brick {
 	public:
@@ -28,12 +28,12 @@ namespace MyAPP::Form::Object {
 		Coin() = delete;
 
 		/// <summary>
-		/// ³QºVÀ»¨Æ¥ó
+		/// è¢«æ•²æ“Šäº‹ä»¶
 		/// </summary>
 		virtual void bonk() noexcept override;
 
 		/// <summary>
-		/// ªí³æ¨ê·s®É°õ¦æ
+		/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data"></param>
 		virtual void behavior(void* data = nullptr) override;
@@ -63,7 +63,7 @@ namespace MyAPP::Form::Object {
 
 	private:
 		/// <summary>
-		/// ¼½©ñ¹Ï¤ù
+		/// æ’­æ”¾åœ–ç‰‡
 		/// </summary>
 		virtual void PlayFrames() noexcept override;
 
@@ -71,7 +71,7 @@ namespace MyAPP::Form::Object {
 
 		// static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		/// <summary>
-		/// ´V¼Æ¶°¦X
+		/// å¹€æ•¸é›†åˆ
 		/// </summary>
 		static constexpr inline char* const Frames[] = { "imgs/super mario/1-1/CoinForBlueBG/frame0.png", "imgs/super mario/1-1/CoinForBlueBG/frame1.png", "imgs/super mario/1-1/CoinForBlueBG/frame2.png", "imgs/super mario/1-1/CoinForBlueBG/frame3.png", "imgs/super mario/1-1/CoinForBlueBG/frame4.png", "imgs/super mario/1-1/CoinForBlueBG/frame5.png" };
 		bool play{ true };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef BRICK_HPP
 #define BRICK_HPP
 
@@ -13,7 +13,7 @@ namespace MyAPP::Form::Object {
 		grey
 	};
 	/// <summary>
-	/// ©Ò¦³¿jÀYªº¤÷Ãş§O Ä~©ÓImageObject
+	/// æ‰€æœ‰ç£šé ­çš„çˆ¶é¡åˆ¥ ç¹¼æ‰¿ImageObject
 	/// </summary>
 	class Brick : public ImageObject {
 	public:
@@ -49,17 +49,17 @@ namespace MyAPP::Form::Object {
 		virtual void behavior(void* data = nullptr) override;
 
 		/// <summary>
-		/// ³QºVÀ»¨Æ¥ó
+		/// è¢«æ•²æ“Šäº‹ä»¶
 		/// </summary>
 		virtual void bonk() noexcept;
 
 		/// <summary>
-		/// ¸õÅDÄ²µo
+		/// è·³èºè§¸ç™¼
 		/// </summary>
 		virtual void bonkJump() noexcept;
 
 		/// <summary>
-		/// ¨ú±o¤è¶ô¥Ø«eª¬ºA
+		/// å–å¾—æ–¹å¡Šç›®å‰ç‹€æ…‹
 		/// </summary>
 		/// <returns></returns>
 		inline auto getState() const noexcept { return state; }
@@ -76,12 +76,12 @@ namespace MyAPP::Form::Object {
 
 	protected:
 		/// <summary>
-		/// °õ¦æ¸õÅD
+		/// åŸ·è¡Œè·³èº
 		/// </summary>
 		void dojump() noexcept;
 
 		/// <summary>
-		/// ¼Y¸¨¨Æ¥ó
+		/// å¢œè½äº‹ä»¶
 		/// </summary>
 		void comeDown() noexcept;
 

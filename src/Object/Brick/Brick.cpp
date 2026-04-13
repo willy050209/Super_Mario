@@ -1,4 +1,4 @@
-#include "Object/Brick/Brick.hpp"
+﻿#include "Object/Brick/Brick.hpp"
 namespace MyAPP::Form:: Object {
 	void Brick::behavior(void* data) {
 		dojump();

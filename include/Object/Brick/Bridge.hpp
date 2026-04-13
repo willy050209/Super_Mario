@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef BRIDGE_HPP
 #define BRIDGE_HPP
 
@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¾ôª«¥ó Ä~©ÓBrick
+	/// æ©‹ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Bridge : public Brick {
 	public:

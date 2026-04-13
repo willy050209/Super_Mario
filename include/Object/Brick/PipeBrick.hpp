@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef PIPEBRICK_HPP
 #define PIPEBRICK_HPP
 
@@ -28,7 +28,7 @@ namespace MyAPP::Form::Object {
 		virtual void behavior(void* data = nullptr) override {};
 
 		/// <summary>
-		/// ¨ú±o¤è¶ô¥Ø«eª¬ºA
+		/// å–å¾—æ–¹å¡Šç›®å‰ç‹€æ…‹
 		/// </summary>
 		/// <returns></returns>
 		inline auto getState() const noexcept { return state; }

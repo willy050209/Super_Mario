@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef CHECKPOINT_HPP
 #define CHECKPOINT_HPP
 
@@ -6,7 +6,7 @@
 #include "Interface/ICollisionable.hpp"
 namespace MyAPP::Form ::Object {
 	/// <summary>
-	/// ¦sÀÉÂIª«¥ó Ä~©ÓBrick
+	/// å­˜æª”é»ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class CheckPoint : Interface::ICollisionable, public Brick {
 	public:
@@ -14,7 +14,7 @@ namespace MyAPP::Form ::Object {
 		///
 		/// </summary>
 		/// <param name="name">ID</param>
-		/// <param name="ImagePath">¹Ï¤ù¸ô®|(¹w³] CheckPoint::CheckPointImagePath)</param>
+		/// <param name="ImagePath">åœ–ç‰‡è·¯å¾‘(é è¨­ CheckPoint::CheckPointImagePath)</param>
 		explicit CheckPoint(const std::string& name,
 			const float zIndex = -10,
 			const glm::vec2& pivot = { 0, 0 })
@@ -35,7 +35,7 @@ namespace MyAPP::Form ::Object {
 		virtual void CheckCollision(void* data) override;
 
 		/// <summary>
-		/// ¹Ï¤ù¸ô®|
+		/// åœ–ç‰‡è·¯å¾‘
 		/// </summary>
 		static constexpr inline char* const CheckPointImagePath = "imgs/super mario/CheckPoint.png";
 

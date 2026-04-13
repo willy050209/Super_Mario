@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef FLAGFORMPOLE_HPP
 #define FLAGFORMPOLE_HPP

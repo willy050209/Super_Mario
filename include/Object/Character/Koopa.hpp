@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef KOOPA_HPP
 #define KOOPA_HPP
 #include "Character.hpp"
@@ -106,7 +106,7 @@ namespace MyAPP::Form::Object {
 			m_Transform.translation = position;
 		}
 
-		bool left = false; // ¬O§_¦V¥ª²¾°Ê
+		bool left = false; // æ˜¯å¦å‘å·¦ç§»å‹•
 
 	private:
 		virtual void CheckCollision(void* data) override;

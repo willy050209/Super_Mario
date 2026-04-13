@@ -1,4 +1,4 @@
-#include "Object/Character/Mario.hpp"
+ï»¿#include "Object/Character/Mario.hpp"
 #include "Object/ImageObject.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
@@ -261,7 +261,7 @@ namespace MyAPP::Form::Object {
 
 	void Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
 		//double multiple = ((float)WINDOW_HEIGHT / 480);
-		//static size_t fireCount{ 0 }; // ¤õ²y­p¼Æ¾¹
+		//static size_t fireCount{ 0 }; // ç«çƒè¨ˆæ•¸å™¨
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 		auto fire = std::make_shared<Fire>("Fire", 20);
@@ -277,7 +277,7 @@ namespace MyAPP::Form::Object {
 			else {
 				fire->SetPosition(mario->GetPosition() + glm::vec2(fire->GetSize().x, 0));
 			}
-			// °¨§Q¼Úy¤¤¤ß¦ì¸m + 30 * ­¿²vªº°ª«×
+			// é¦¬åˆ©æ­yä¸­å¿ƒä½ç½® + 30 * å€ç‡çš„é«˜åº¦
 			/*fire->yposition = mario->GetPosition().y + 30 * multiple;
 			fire->xposition = mario->GetPosition().x;
 			fire->my_standar = fire->xposition + 16 * multiple + WINDOW_WIDTH / 2;
@@ -301,7 +301,7 @@ namespace MyAPP::Form::Object {
 			m_Transform.translation.y += multiple * (-62.0f / 32.0f);
 		}
 		else  {
-			// ¹ê§@¥b¶êªi§Î
+			// å¯¦ä½œåŠåœ“æ³¢å½¢
 			static const float PI = std::acos(-1);
 			static constexpr auto frequency = 0.2f; // Frequency of the sine wave
 			//m_Transform.translation.x += distance.x;

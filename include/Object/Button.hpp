@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
@@ -9,7 +9,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// «ö¶s¨Æ¥ó Ä~©ÓTextObject
+			/// æŒ‰éˆ•äº‹ä»¶ ç¹¼æ‰¿TextObject
 			/// </summary>
 			class Button : public TextObject {
 			public:
@@ -47,25 +47,25 @@ namespace MyAPP {
 				Button() = delete;
 
 				/// <summary>
-				/// ¨ú±o³Q¿ï¨ú¨ì§ïÅÜªºÃC¦â
+				/// å–å¾—è¢«é¸å–åˆ°æ”¹è®Šçš„é¡è‰²
 				/// </summary>
 				/// <returns></returns>
 				inline const Util::Color& GetClickedColor() const noexcept { return ClickedColor; }
 
 				/// <summary>
-				/// ¨ú±oCallBack Function
+				/// å–å¾—CallBack Function
 				/// </summary>
 				/// <returns></returns>
 				inline auto GetCallBackFunc() const noexcept { return CallBackFunc; }
 
 				/// <summary>
-				/// ³]©wCallBack Function
+				/// è¨­å®šCallBack Function
 				/// </summary>
 				/// <param name="CallBackFunc"></param>
 				inline void SetCallBackFunc(std::function<void(Button* const, void*)> CallBackFunc_) noexcept { this->CallBackFunc = CallBackFunc_; }
 
 				/// <summary>
-				/// ªí³æ¨ê·s®É°õ¦æ
+				/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 				/// </summary>
 				/// <param name="data"></param>
 				virtual void behavior(void* data = nullptr) override;
@@ -77,17 +77,17 @@ namespace MyAPP {
 				std::function<void(Button* const, void*)> CallBackFunc = nullptr;
 
 				/// <summary>
-				/// ÂIÀ»ÃC¦â
+				/// é»æ“Šé¡è‰²
 				/// </summary>
 				Util::Color ClickedColor;
 
 				/// <summary>
-				/// ¹w³]ÃC¦â
+				/// é è¨­é¡è‰²
 				/// </summary>
 				Util::Color defultColor{ Util::Color::FromName(Util::Colors::BLACK) };
 
 				/// <summary>
-				/// Ä²µo
+				/// è§¸ç™¼
 				/// </summary>
 				bool trigger = false;
 			};

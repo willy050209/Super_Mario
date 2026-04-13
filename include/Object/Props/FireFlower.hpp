@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef FIREFLOWER_HPP
 #define FIREFLOWER_HPP
 
@@ -10,7 +10,7 @@
 
 namespace MyAPP::Form::Object::Props {
 	/// <summary>
-	/// ¤õµKªá Ä~©ÓProps
+	/// ç«ç„°èŠ± ç¹¼æ‰¿Props
 	/// </summary>
 	class FireFlower : Interface::ICollisionable, Interface::Iframes, Interface::IJumpable, public Props {
 	public:

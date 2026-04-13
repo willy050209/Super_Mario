@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef USERTYPE_HPP
 #define USERTYPE_HPP
 

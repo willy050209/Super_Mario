@@ -1,4 +1,4 @@
-#include "Object/Points.hpp"
+﻿#include "Object/Points.hpp"
 #include "GameManager.hpp"
 #include "FormManger.hpp"
 

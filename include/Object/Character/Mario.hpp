@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef MARIO_HPP
 #define MARIO_HPP
 #include "config.hpp"
@@ -18,7 +18,7 @@ namespace MyAPP::Form {
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// °¨¤O¼Úª«¥ó Ä~©ÓCharacter
+	/// é¦¬åŠ›æ­ç‰©ä»¶ ç¹¼æ‰¿Character
 	/// </summary>
 	class Mario : public Character {
 	public:
@@ -52,19 +52,19 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ¨ú±o¥Ø«eª¬ºA
+		/// å–å¾—ç›®å‰ç‹€æ…‹
 		/// </summary>
 		inline State GetState() const noexcept { return state; }
 		inline Mario_type GetMario_type() const noexcept { return mario_type; }
 		// inline Mario_Invincible GetMario_Invincible() const noexcept { return mario_invincible; }
 
 		/// <summary>
-		/// ·Ç³Æ¸õÅD
+		/// æº–å‚™è·³èº
 		/// </summary>
 		void jump(float d = 4.5f) noexcept;
 
 		/// <summary>
-		/// °õ¦æ¤U¼Y
+		/// åŸ·è¡Œä¸‹å¢œ
 		/// </summary>
 		inline void down() noexcept {
 			state = State::DOWN;
@@ -73,7 +73,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ªí³æ¨ê·s®É°õ¦æ
+		/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data">GameManager * </param>
 		virtual void behavior(void* data = nullptr) override;
@@ -85,27 +85,27 @@ namespace MyAPP::Form::Object {
 		// virtual void move(const float& d = DEFAULTDISPLACEMENT) override;
 
 		/// <summary>
-		/// ²¾°Ê¨Æ¥ó
+		/// ç§»å‹•äº‹ä»¶
 		/// </summary>
 		virtual void move() noexcept override;
 
 		/// <summary>
-		/// ¤Á´«¹Ï¤ù
+		/// åˆ‡æ›åœ–ç‰‡
 		/// </summary>
 		void changeImg() noexcept;
 
 		/// <summary>
-		/// ¦º¤`¸õÅD¨Æ¥ó
+		/// æ­»äº¡è·³èºäº‹ä»¶
 		/// </summary>
 		// void diedjump() noexcept;
 
 		/// <summary>
-		/// ¦º¤`¨Æ¥ó
+		/// æ­»äº¡äº‹ä»¶
 		/// </summary>
 		virtual void died() noexcept override;
 
 		/// <summary>
-		/// ³]©wstate «ØÄ³¨Ï¥ÎchangeState(State state_)
+		/// è¨­å®šstate å»ºè­°ä½¿ç”¨changeState(State state_)
 		/// </summary>
 		inline void changeState(const std::string& str) noexcept {
 			if (str == "UP")
@@ -119,7 +119,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ³]©wstate
+		/// è¨­å®šstate
 		/// </summary>
 		/// <param name="state_"></param>
 		/// <returns>enum class State
@@ -132,7 +132,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ³]©wmario_type
+		/// è¨­å®šmario_type
 		/// </summary>
 		/// <param name="type_"></param>
 		inline void changeType(Mario_type type_) noexcept {
@@ -141,7 +141,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ¬O§_¬OµL¼Ä
+		/// æ˜¯å¦æ˜¯ç„¡æ•µ
 		/// </summary>
 		inline auto isInvincible() const noexcept {
 			return invincibleCount > 0;
@@ -156,7 +156,7 @@ namespace MyAPP::Form::Object {
 		}
 
 		/// <summary>
-		/// ­«³]©Ò¦³ª¬ºA
+		/// é‡è¨­æ‰€æœ‰ç‹€æ…‹
 		/// </summary>
 		virtual void Reset() noexcept override {
 			state = State::MOVE;
@@ -216,12 +216,12 @@ namespace MyAPP::Form::Object {
 		int jumpCobo = 0;
 	private:
 		/// <summary>
-		/// °õ¦æ¸õÅD
+		/// åŸ·è¡Œè·³èº
 		/// </summary>
 		void doJump() noexcept;
 
 		/// <summary>
-		/// ¼Y¸¨¨Æ¥ó
+		/// å¢œè½äº‹ä»¶
 		/// </summary>
 		virtual void comeDown() noexcept override;
 
@@ -325,7 +325,7 @@ namespace MyAPP::Form::Object {
 		}
 		virtual void PlayFrames() noexcept override;
 
-		bool left = false; // ¬O§_¦V¥ª²¾°Ê
+		bool left = false; // æ˜¯å¦å‘å·¦ç§»å‹•
 
 		static constexpr auto GetFrames() { return Frame; }
 
@@ -335,8 +335,8 @@ namespace MyAPP::Form::Object {
 
 		void destroyFire(FormManger& FM) noexcept;
 		
-		//float yposition = 0.0f; // Y¶b¦ì¸m
-		//float xposition = 0.0f; // X¶b¦ì¸m
+		//float yposition = 0.0f; // Yè»¸ä½ç½®
+		//float xposition = 0.0f; // Xè»¸ä½ç½®
 		//float my_standar = 0.0f;
 		bool touch_ground = false;
 		bool destroyflag = false;

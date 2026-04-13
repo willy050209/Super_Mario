@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef CORE_CONTEXT_HPP
 #define CORE_CONTEXT_HPP
 

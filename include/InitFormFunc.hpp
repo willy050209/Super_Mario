@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef INITFORM_FUNC
 #define INITFORM_FUNC(func_name) static inline void func_name(MyAPP::GameManager* self) noexcept
 #endif // !INITFORM_FUNC

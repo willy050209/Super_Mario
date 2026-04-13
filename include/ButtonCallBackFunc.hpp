@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef BUTTONCALLBACKFUNC_hpp
 #define BUTTONCALLBACKFUNC_hpp
 
