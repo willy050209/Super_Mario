@@ -1,4 +1,4 @@
-//#pragma once
+﻿//#pragma once
 //#ifndef MYBGM_HPP
 //#define MYBGM_HPP
 //

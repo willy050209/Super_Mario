@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef FORM_HPP
 #define FORM_HPP
 
@@ -18,25 +18,25 @@ namespace MyAPP{
 			Form() {}
 
 			/// <summary>
-			/// ¥[¤Jªí³æ
+			/// åŠ å…¥è¡¨å–®
 			/// </summary>
-			/// <param name="obj">ª«¥ó</param>
+			/// <param name="obj">ç‰©ä»¶</param>
 			inline void addForm(ObjectPtr obj) noexcept {
 				//m_Root.AddChild(obj);
 				m_Events.push_back(obj);
 			}
 
 			/// <summary>
-			/// ²¾°£ªí³æ
+			/// ç§»é™¤è¡¨å–®
 			/// </summary>
-			/// <param name="obj">ª«¥ó</param>
+			/// <param name="obj">ç‰©ä»¶</param>
 			inline void removeFormObj(ObjectPtr obj) noexcept {
 				//m_Root.RemoveChild(obj);
 				m_Events.erase(std::remove(m_Events.begin(), m_Events.end(), obj), m_Events.end());
 			}
 
 			/// <summary>
-			/// ÄÀ©ñªí³æ¨Æ¥ó
+			/// é‡‹æ”¾è¡¨å–®äº‹ä»¶
 			/// </summary>
 			inline void free() noexcept {
 				// for (auto& it : m_Events) {
@@ -46,7 +46,7 @@ namespace MyAPP{
 			}
 
 			/// <summary>
-			/// °õ¦æ©Ò¦³¨Æ¥ó
+			/// åŸ·è¡Œæ‰€æœ‰äº‹ä»¶
 			/// </summary>
 			/// <param name="data">GameManager *</param>
 			inline void doAllEvent(void* data = nullptr) noexcept {
@@ -54,7 +54,7 @@ namespace MyAPP{
 			}
 
 			/// <summary>
-			/// ­«Ã¸ªí³æ
+			/// é‡ç¹ªè¡¨å–®
 			/// </summary>
 			inline void Update() noexcept {
 				m_Root.Update();
@@ -62,7 +62,7 @@ namespace MyAPP{
 
 			Util::Renderer m_Root;
 			/// <summary>
-			/// ¨Æ¥ó°}¦C
+			/// äº‹ä»¶é™£åˆ—
 			/// </summary>
 			ObjectPtrVec m_Events;
 		};

@@ -1,241 +1,108 @@
-#include "Object/Character/Turtle.hpp"
+﻿#include "Object/Character/Turtle.hpp"
 #include "config.hpp"
 #include "ImageObject.hpp"
 #include "GameManager.hpp"
-#include "userType.hpp"
+#include "AssetManager.hpp"
+#include "Constants.hpp"
 
 #include <memory>
 #include <execution>
 #include <algorithm>
+
 namespace MyAPP::Form::Object {
-	void Turtle::behavior(void* data) {
-		if (!static_cast<MyAPP::GameManager*>(data)->pause) {
-			if (moveFlag) {
-				move();
-			}
-			ChangeImg();
-			comeDown();
-			CheckCollision(data);
-		}
-	}
 
-	void Turtle::died() noexcept {
-		diedFlag = true;
-		switch (turtlecolor) {
-		case MyAPP::Form::Object::Turtle::TurtleColor::Default:
-			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(TortoiseShell);
-			break;
-		case MyAPP::Form::Object::Turtle::TurtleColor::Dark:
-			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(DarkTortoiseShell);
-			break;
-		case MyAPP::Form::Object::Turtle::TurtleColor::Red:
-			std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage(RedTortoiseShell);
-			break;
-		default:
-			break;
-		}
-	}
-
-	void Turtle::move() noexcept {
-		if (diedFlag) {
-			auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
-			bool flag = true;
-			auto MyPos = GetPosition();
-			if (MyPos.y < WINDOW_HEIGHT) {
-				const auto MySize = GetSize();
-				MyPos.x += (left == 1 ? -(getDEFAULTDISPLACEMENT() / 2) : getDEFAULTDISPLACEMENT() / 2);
-				auto tmp = MyPos;
-				tmp.y -= MySize.y;
-				tmp.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
-				for (auto& it : *bricks) {
-					if (it->collisionable && it->inRange(tmp, GetSize())) {
-						if (it->MyType == ObjectType::LeftEdge || it->MyType == ObjectType::QuestionBlock)
-							continue;
-						flag = true;
-						break;
-					}
-				}
-				if (MyPos.y < WINDOW_HEIGHT && flag) {
-					const auto MySize = GetSize();
-					MyPos.x += (left == 1 ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2);
-					for (auto& it : *bricks) {
-						if (it->collisionable && it->inRange(MyPos, MySize)) {
-							if (it->MyType == ObjectType::LeftEdge)
-								continue;
-							moveFlag = false;
-							return;
-						}
-					}
-					SetPosition(MyPos);
-				}
-			}
-		}
-		else {
-			auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
-			bool flag = false;
-			glm::vec2 pos = GetPosition() + glm::vec2{ GetSize().x * ((left == 1) ? -1 : 1), -GetSize().y };
-			for (auto& it : *bricks) {
-				if (it->collisionable && it->inRange(pos, GetSize())) {
-					if (it->MyType == ObjectType::LeftEdge)
-						continue;
-					flag = true;
-					break;
-				}
-			}
-			if (!flag) {
-				left ^= 1;
-			}
-			else {
-				Character::move();
-			}
-		}
-	}
-
-	void Turtle::Reset() noexcept {
-		Character::Reset();
-		diedFlag = false;
-		moveFlag = true;
-	}
-
-
-	void Turtle::ChangeImg() noexcept {
-		if (!diedFlag) {
-			imageChangeDelay++;
-			if (imageChangeDelay >= (FPS_CAP / 3)) {
-				imgIndex++;
-				imgIndex &= 1;
-				switch (turtlecolor) {
-				case MyAPP::Form::Object::Turtle::TurtleColor::Default:
-					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? Frames[imgIndex] : imgs_r[imgIndex]));
-					break;
-				case MyAPP::Form::Object::Turtle::TurtleColor::Dark:
-					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? FramesDark[imgIndex] : darkimgs_r[imgIndex]));
-					break;
-				case MyAPP::Form::Object::Turtle::TurtleColor::Red:
-					std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? FramesRed[imgIndex] : Redimgs_r[imgIndex]));
-					break;
-				default:
-					break;
-				}
-				//std::static_pointer_cast<Util::Image>(m_Drawable)->SetImage((left ? (dark ? FramesDark[imgIndex] : Frames[imgIndex]) : (dark ? darkimgs_r[imgIndex] : imgs_r[imgIndex])));
-				imageChangeDelay = 0;
-			}
-		}
-	}
-
-	void Turtle::comeDown() noexcept {
-		auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
-		bool flag = true;
-		auto tmp = GetPosition();
-		if (tmp.y < WINDOW_HEIGHT) {
-			tmp.y -= getDEFAULTDISPLACEMENT();
-			const auto MySize = GetSize();
-			std::for_each(std::execution::seq, bricks->begin(), bricks->end(), [&](auto& it) {
-				if (it->collisionable && it->inRange(tmp, MySize)) {
-					if (it->getState() == Brick::State::jump) {
-						died();
-						tmp = GetPosition();
-						// break;
-					}
-					flag = false;
-					tmp.y = it->GetPosition().y + (it->GetSize().y) / 2 + (MySize.y /2);
-					// break;
-				}
-			});
-			SetPosition(tmp);
-		}
-	}
-	void Turtle::CheckCollision(void* data) {
-		using namespace MyAPP::Form::Object;
-		using MyAPP::Form::Object::Character;
-		auto GM = static_cast<MyAPP::GameManager*>(data);
-		auto& FM = GM->GetFormManger();
-		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
-		auto marioPos = mario->GetPosition();
-		auto marioSize = mario->GetSize();
-		if (diedFlag && collisionable && moveFlag) {
-			auto& characters = FM.GetFormAndObject(FM.GetNowForm()).m_Characters;
-			std::for_each(characters.begin(), characters.end(), [&](CharacterPtr& it) {
-				if (it->MyType == ObjectType::Mario || it->m_ID == m_ID || (it->MyType == ObjectType::Turtle && std::static_pointer_cast<Turtle>(it)->diedFlag)) {
-					return;
-				}
-				else {
-					if (it->collisionable && inRange(it->GetPosition(),it->GetSize())) {
-						it->died();
-						GM->addPoint(100);
-						Points::UpdatePoint(FM,Points::PointType::pts100);
-					}
-				}
-				});
-		}
-		if (!GM->opMode && mario->GetState() != Mario::State::DIED) {
-			if (collisionable && mario->collisionable && inRange(marioPos, marioSize)) {
-				if (diedFlag && GetVisibility() && inRange(marioPos, marioSize)) {
-					if (GetPosition().x > marioPos.x) {
-						SetLeft<false>();
-						setMoveFlag(true);
-					}
-					else {
-						SetLeft<true>();
-						setMoveFlag(true);
-					}
-				}
-				else if (mario->isInvincible() || (mario->GetState() == Mario::State::DOWN && mario->getBottom() >getBottom())) {
-					died();
-					switch (mario->jumpCobo) {
-					case 0:
-					case 1:
-						GM->addPoint(100);
-						Points::UpdatePoint(FM, Points::PointType::pts100);
-						break;
-					case 2:
-						GM->addPoint(200);
-						Points::UpdatePoint(FM, Points::PointType::pts200);
-						break;
-					case 3:
-						GM->addPoint(400);
-						Points::UpdatePoint(FM, Points::PointType::pts400);
-						break;
-					case 4:
-						GM->addPoint(800);
-						Points::UpdatePoint(FM, Points::PointType::pts800);
-						break;
-					case 5:
-						GM->addPoint(1000);
-						Points::UpdatePoint(FM, Points::PointType::pts1000);
-						break;
-					case 6:
-						GM->addPoint(2000);
-						Points::UpdatePoint(FM, Points::PointType::pts2000);
-						break;
-					case 7:
-						GM->addPoint(4000);
-						Points::UpdatePoint(FM, Points::PointType::pts4000);
-						break;
-					case 8:
-						GM->addPoint(5000);
-						Points::UpdatePoint(FM, Points::PointType::pts5000);
-						break;
-					default:
-						GM->IncHP();
-						Points::UpdatePoint(FM, Points::PointType::pts1up);
-						break;
-					}
-					if (mario->GetState() == Mario::State::DOWN) {
-
-						mario->jump(1.0);
-					}
-				}
-				else if (mario->GetState() == Mario::State::UP) {
-					return;
-				}
-				else {
-					mario->died();
-					if (mario->isdied()) {
-						GM->LostALife();
-					}
-				}
-			}
-		}
-	}
+Turtle::Turtle(const std::string& name, int zindex)
+    : Character(name, Frames[0], zindex) {
+    MyType = ObjectType::Turtle;
+    left = 1;
+    
+    m_Physics = &AddComponent<PhysicsComponent>(true);
+    m_Physics->SetVelocity({-2.0f, 0});
+    
+    m_Animation = &AddComponent<AnimationComponent>(6.0f);
+    m_Animation->AddAnimation("walk_L", { Frames[0], Frames[1] });
+    m_Animation->AddAnimation("walk_R", { imgs_r[0], imgs_r[1] });
+    m_Animation->AddAnimation("walk_dark_L", { FramesDark[0], FramesDark[1] });
+    m_Animation->AddAnimation("walk_dark_R", { darkimgs_r[0], darkimgs_r[1] });
+    m_Animation->AddAnimation("walk_red_L", { FramesRed[0], FramesRed[1] });
+    m_Animation->AddAnimation("walk_red_R", { Redimgs_r[0], Redimgs_r[1] });
+    m_Animation->Play("walk_L");
 }
+
+void Turtle::behavior(void* data) {
+    auto GM = static_cast<GameManager*>(data);
+    if (!GM->pause) {
+        if (diedFlag && !moveFlag) return;
+
+        // Base component updates
+        Object::behavior(data);
+
+        // Animation logic
+        if (!diedFlag) {
+            std::string themePrefix = dark ? "walk_dark_" : (turtlecolor == TurtleColor::Red ? "walk_red_" : "walk_");
+            m_Animation->Play(themePrefix + (left ? "L" : "R"));
+        }
+
+        // Collision with bricks
+        auto bricks = std::static_pointer_cast<BrickPtrVec>(userdata);
+        if (bricks) {
+            m_Physics->ResolveCollisions(*bricks);
+            if (m_Physics->GetVelocity().x == 0 && !diedFlag) {
+                left = !left;
+                m_Physics->SetVelocity({ (left ? -2.0f : 2.0f), m_Physics->GetVelocity().y });
+            }
+        }
+
+        CheckCollision(data);
+    }
+}
+
+void Turtle::died() noexcept {
+    diedFlag = true;
+    moveFlag = false;
+    m_Physics->SetVelocity({0, 0});
+    
+    std::string shellImg = TortoiseShell;
+    if (dark) shellImg = DarkTortoiseShell;
+    else if (turtlecolor == TurtleColor::Red) shellImg = RedTortoiseShell;
+    
+    setImage(shellImg);
+}
+
+void Turtle::Reset() noexcept {
+    Character::Reset();
+    diedFlag = false;
+    moveFlag = true;
+    m_Physics->SetVelocity({-2.0f, 0});
+}
+
+void Turtle::CheckCollision(void* data) {
+    auto GM = static_cast<MyAPP::GameManager*>(data);
+    auto& FM = GM->GetFormManager();
+    auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
+    if (!mario || GM->opMode || mario->GetState() == Mario::State::DIED) return;
+
+    if (collisionable && mario->collisionable && inRange(mario->GetPosition(), mario->GetSize())) {
+        if (diedFlag) {
+            // Kick the shell
+            moveFlag = true;
+            left = (mario->GetPosition().x < GetPosition().x) ? 0 : 1;
+            m_Physics->SetVelocity({ (left ? -6.0f : 6.0f), 0 });
+        }
+        else if (mario->isInvincible() || (mario->GetState() == Mario::State::DOWN && mario->getBottom() > getBottom())) {
+            died();
+            GM->addPoint(200);
+            if (mario->GetState() == Mario::State::DOWN) {
+                mario->jump(1.0);
+            }
+        }
+        else if (mario->GetState() != Mario::State::UP) {
+            mario->died();
+            if (mario->isdied()) {
+                GM->LostALife();
+            }
+        }
+    }
+}
+
+} // namespace MyAPP::Form::Object

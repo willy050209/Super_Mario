@@ -1,4 +1,4 @@
-#include "Object/Character/Koopa.hpp"
+ï»¿#include "Object/Character/Koopa.hpp"
 #include "Object/Character/MArio.hpp"
 #include "GameManager.hpp"
 #include "FilePath.hpp"
@@ -79,7 +79,7 @@ void MyAPP::Form::Object::Koopa::checkPosition() noexcept {
 
 void MyAPP::Form::Object::Koopa::turn(void* data) noexcept {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	left = (GetPosition().x >= mario->GetPosition().x) ? 1 : 0;
 }
@@ -87,7 +87,7 @@ void MyAPP::Form::Object::Koopa::turn(void* data) noexcept {
 void MyAPP::Form::Object::Koopa::CheckCollision(void* data) {
 	using namespace MyAPP::Form::Object;
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();
@@ -115,16 +115,16 @@ void MyAPP::Form::Object::Koopa::random_shoot(void* data) noexcept {
 	shootdelay++;
 	if(shootdelay >= FPS_CAP){
 		auto random0to9 = []() {
-			// «Ø¥ß¤@­Ó¥]§t 0 ¨ì 9 ªº¦V¶q
+			// å»ºç«‹ä¸€å€‹åŒ…å« 0 åˆ° 9 çš„å‘é‡
 			std::vector<int> arr(10);
-			std::iota(arr.begin(), arr.end(), 0); // ¶ñ¥R 0, 1, ..., 9
+			std::iota(arr.begin(), arr.end(), 0); // å¡«å…… 0, 1, ..., 9
 
-			// ¨Ï¥Î·í«e®É¶¡§@¬°ºØ¤l¨Óªì©l¤Æ¶Ã¼Æ²£¥Í¾¹
-			// ³o¼Ë¨C¦¸°õ¦æ³£·|¦³¤£¦Pªº¬~µPµ²ªG
+			// ä½¿ç”¨ç•¶å‰æ™‚é–“ä½œç‚ºç¨®å­ä¾†åˆå§‹åŒ–äº‚æ•¸ç”¢ç”Ÿå™¨
+			// é€™æ¨£æ¯æ¬¡åŸ·è¡Œéƒ½æœƒæœ‰ä¸åŒçš„æ´—ç‰Œçµæœ
 			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 			std::default_random_engine rng(seed);
 
-			// ¨Ï¥Î std::shuffle ¶i¦æ¬~µP
+			// ä½¿ç”¨ std::shuffle é€²è¡Œæ´—ç‰Œ
 			std::shuffle(arr.begin(), arr.end(), rng);
 
 			return arr[0];
@@ -142,7 +142,7 @@ void MyAPP::Form::Object::Koopa::random_shoot(void* data) noexcept {
 void MyAPP::Form::Object::Koopa::shoot(void* data) noexcept {
 	std::cout << "shoot\n\r";
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	Koopa_Fire::CreateFire(FM);
 }
 
@@ -150,10 +150,10 @@ void MyAPP::Form::Object::Koopa_Fire::behavior(void* data) {
 	this->CheckCollision(data);
 	this->Move({ (left) ? -getDEFAULTDISPLACEMENT() / 2 : getDEFAULTDISPLACEMENT() / 2, 0 });
 	if (destroyflag)
-		destroyFire(static_cast<GameManager*>(data)->GetFormManger());
+		destroyFire(static_cast<GameManager*>(data)->GetFormManager());
 }
 
-void MyAPP::Form::Object::Koopa_Fire::CreateFire(MyAPP::Form::FormManger& FM) noexcept {
+void MyAPP::Form::Object::Koopa_Fire::CreateFire(MyAPP::Form::FormManager& FM) noexcept {
 	auto koopa_ptr = FM.GetFormObject<Koopa>(FM.GetNowForm(), "Koopa");
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	auto fire = std::make_shared<Koopa_Fire>("Koopa_Fire", 20);
@@ -185,7 +185,7 @@ void MyAPP::Form::Object::Koopa_Fire::Move(const glm::vec2& distance) noexcept {
 
 void MyAPP::Form::Object::Koopa_Fire::CheckCollision(void* data) {
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	if (mario == nullptr || moveEvent == nullptr || GM->opMode)
@@ -208,7 +208,7 @@ void MyAPP::Form::Object::Koopa_Fire::CheckCollision(void* data) {
 		destroyflag = true;
 }
 
-void MyAPP::Form::Object::Koopa_Fire::destroyFire(FormManger& FM) noexcept {
+void MyAPP::Form::Object::Koopa_Fire::destroyFire(FormManager& FM) noexcept {
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
 	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(moveEvent->userdata);
 	auto& [enemys, pipes, props, objs] = (*tuplePtr);

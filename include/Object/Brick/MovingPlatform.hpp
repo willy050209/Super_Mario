@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef MOVINGPLATFORM_HPP
 #define MOVINGPLATFORM_HPP
 
@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¥­¥xª«¥ó Ä~©ÓBrick
+	/// å¹³å°ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class MovingPlatform :Interface::ICollisionable, public Brick {
 	public:
@@ -16,7 +16,7 @@ namespace MyAPP::Form::Object {
 		///
 		/// </summary>
 		/// <param name="name">ID</param>
-		/// <param name="ImagePath">¹Ï¤ù¸ô®|(¹w³] CheckPoint::CheckPointImagePath)</param>
+		/// <param name="ImagePath">åœ–ç‰‡è·¯å¾‘(é è¨­ CheckPoint::CheckPointImagePath)</param>
 		explicit MovingPlatform(const std::string& name,
 			const float zIndex = 20,
 			const glm::vec2& pivot = { 0, 0 })

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef FORMPROFILE_HPP
 #define FORMPROFILE_HPP
 

@@ -1,7 +1,7 @@
-#include "Object/Brick/MovingPlatform.hpp"
+﻿#include "Object/Brick/MovingPlatform.hpp"
 #include "Position.hpp"
 #include "GameManager.hpp"
-#include "FormManger.hpp"
+#include "FormManager.hpp"
 #include "Object/Character/Mario.hpp"
 
 void MyAPP::Form::Object::MovingPlatform::behavior(void* data) {
@@ -22,7 +22,7 @@ void MyAPP::Form::Object::MovingPlatform::behavior(void* data) {
 
 void MyAPP::Form::Object::MovingPlatform::CheckCollision(void* data) {
 	auto GM = static_cast<GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (mario) {
 		if (inRange(mario->GetPosition(), GetSize()) ) {

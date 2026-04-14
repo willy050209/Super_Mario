@@ -1,25 +1,25 @@
-#pragma once
+ï»¿#pragma once
 #ifndef ProgressBar_HPP
 #define ProgressBar_HPP
 #include <iostream>
 
 inline void showProgressBar(int total, int current, int width = 50) noexcept {
-	// ­pºâ§¹¦¨¦Ê¤À¤ñ
+	// è¨ˆç®—å®Œæˆç™¾åˆ†æ¯”
 	auto ratio = static_cast<float>(current) / total;
 	auto completedWidth = static_cast<int>(ratio * width);
 
-	// ¿é¥X¶i«×±ø
+	// è¼¸å‡ºé€²åº¦æ¢
 	std::cout << "[";
 	for (auto i = 0; i < width; ++i) {
 		if (i < completedWidth) {
-			std::cout << "="; // ¤w§¹¦¨³¡¤À
+			std::cout << "="; // å·²å®Œæˆéƒ¨åˆ†
 		}
 		else {
-			std::cout << " "; // ¥¼§¹¦¨³¡¤À
+			std::cout << " "; // æœªå®Œæˆéƒ¨åˆ†
 		}
 	}
 	std::cout << "] " << static_cast<int>(ratio * 100) << "%";
-	std::cout << "\r"; // ¦^¨ì¦æ­º¡AÂĞ»\¤§«eªº¿é¥X
-	std::cout.flush(); // ±j¨î¨ê·s¿é¥X½w½Ä°Ï
+	std::cout << "\r"; // å›åˆ°è¡Œé¦–ï¼Œè¦†è“‹ä¹‹å‰çš„è¼¸å‡º
+	std::cout.flush(); // å¼·åˆ¶åˆ·æ–°è¼¸å‡ºç·©è¡å€
 }
 #endif // !ProgressBar_HPP

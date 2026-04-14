@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef Flagpole_HPP
 #define Flagpole_HPP
 
@@ -8,7 +8,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ºX±ìª«¥ó Ä~©ÓBrick
+	/// æ——æ¡¿ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Flagpole : public Brick {
 	public:

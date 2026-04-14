@@ -1,4 +1,4 @@
-//#include "MyBGM.hpp"
+﻿//#include "MyBGM.hpp"
 //#include <windows.h>
 //#include <mmsystem.h>
 //#include <stdio.h>

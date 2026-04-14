@@ -1,4 +1,4 @@
-#include "Object/Brick/Coin.hpp"
+﻿#include "Object/Brick/Coin.hpp"
 #include "config.hpp"
 #include "GameManager.hpp"
 
@@ -26,7 +26,7 @@ void MyAPP::Form::Object::Coin::PlayFrames() noexcept {
 void MyAPP::Form::Object::Coin::CheckCollision(void* data) noexcept {
 	using namespace MyAPP::Form::Object;
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
 	auto marioPos = mario->GetPosition();
 	auto marioSize = mario->GetSize();

@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #ifndef OBJECTTYPE_HPP
 #define OBJECTTYPE_HPP
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¦CÁ|©Ò¦³Ä~©ÓObjectªº«¬§O
+	/// åˆ—èˆ‰æ‰€æœ‰ç¹¼æ‰¿Objectçš„åž‹åˆ¥
 	/// </summary>
 	enum class ObjectType {
 		Object,

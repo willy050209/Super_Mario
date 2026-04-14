@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef TEXTOBJECT_HPP
 #define TEXTOBJECT_HPP
 
@@ -52,9 +52,9 @@ namespace MyAPP {
 				void setColor(const Util::Color& color);
 
 				/// <summary>
-				/// ¨ú±o¦Û¨­¤j¤p
+				/// å–å¾—è‡ªèº«å¤§å°
 				/// </summary>
-				/// <returns>¯x§Î¤j¤p</returns>
+				/// <returns>çŸ©å½¢å¤§å°</returns>
 				inline glm::vec2 GetSize() const noexcept override {
 					return std::dynamic_pointer_cast<Util::Text>(m_Drawable)->GetSize();
 				}

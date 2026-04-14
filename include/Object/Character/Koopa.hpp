@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #ifndef KOOPA_HPP
 #define KOOPA_HPP
 #include "Character.hpp"
@@ -8,7 +8,7 @@
 #include "Interface/IMovable.hpp"
 #include "FilePath.hpp"
 namespace MyAPP::Form {
-	class FormManger;
+	class FormManager;
 }
 namespace MyAPP::Form::Object {
 	class Koopa : public Character, Interface::ICollisionable,Interface::Iframes {
@@ -99,19 +99,19 @@ namespace MyAPP::Form::Object {
 
 		void behavior(void* data = nullptr) override;
 
-		static void CreateFire(MyAPP::Form::FormManger& FM) noexcept;
+		static void CreateFire(MyAPP::Form::FormManager& FM) noexcept;
 
 		virtual void Move(const glm::vec2& distance) noexcept override;
 		virtual void MoveTo(const glm::vec2& position) noexcept override {
 			m_Transform.translation = position;
 		}
 
-		bool left = false; // ¨Oß_¶V•™≤æ∞ 
+		bool left = false; // ÊòØÂê¶ÂêëÂ∑¶ÁßªÂãï
 
 	private:
 		virtual void CheckCollision(void* data) override;
 
-		void destroyFire(FormManger& FM) noexcept;
+		void destroyFire(FormManager& FM) noexcept;
 
 		float Xcount = 0.f;
 		bool touch_ground = false;

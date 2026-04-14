@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef Door_HPP
 #define Door_HPP
 
@@ -9,7 +9,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¦sÀÉÂIª«¥ó Ä~©ÓBrick
+	/// å­˜æª”é»žç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Door :Interface::ICollisionable, public Brick {
 	public:

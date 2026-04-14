@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.16)
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 project(Super_Mario)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -10,31 +11,17 @@ set(FETCHCONTENT_QUIET FALSE)
 
 FetchContent_Declare(
     ptsd
-
-    #URL         https://github.com/ntut-open-source-club/practical-tools-for-simple-design/archive/refs/tags/v0.2.zip
-
-    # Or alternatively if you want to use a specific git commit instead of a release:
-    # GIT_REPOSITORY  https://github.com/ntut-open-source-club/practical-tools-for-simple-design.git
-    # GIT_TAG         <git_tag>
-
     SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/PTSD
 )
 
-#FetchContent_MakeAvailable(ptsd)
+FetchContent_Declare(
+    json
+    URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
+)
 
-#FetchContent_Declare(
-#    ImageResizer
-#
-#    URL https://github.com/willy050209/ImageResizer_CS/archive/refs/tags/V1.0.zip
-#
-#    SOURCE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/ImageResizer
-#)
-#FetchContent_MakeAvailable(PTSD ImageResizer)
+FetchContent_MakeAvailable(ptsd json)
 
-
-FetchContent_MakeAvailable(PTSD)
-
-file(GLOB_RECURSE SRC_FILES src/*.cpp)
+file(GLOB_RECURSE SRC_FILES src/*.cpp src/Object/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.hpp)
 file(GLOB_RECURSE HEADER_FILES include/Object/*.hpp)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES})
@@ -69,4 +56,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/i
 target_link_libraries(${PROJECT_NAME}
     SDL2::SDL2main
     PTSD
+    nlohmann_json::nlohmann_json
 )

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef SPINNINGFIREBALLS_HPP
 #define SPINNINGFIREBALLS_HPP
 
@@ -13,13 +13,13 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// ¤õ¬W¿jÀYª«¥ó Ä~©ÓBrick¡A»İ·f°tFireBalls¥H¦P¨Ï¥Î¡Cmake_SpinningFireBalls«Ø¥ß§¹¾ãª«¥ó
+			/// ç«æŸ±ç£šé ­ç‰©ä»¶ ç¹¼æ‰¿Brickï¼Œéœ€æ­é…FireBallsä»¥åŒä½¿ç”¨ã€‚make_SpinningFireBallså»ºç«‹å®Œæ•´ç‰©ä»¶
 			/// </summary>
 			class SpinningFireBalls : Interface::Iframes,  public Brick {
 			public:
 
 				/// <summary>
-				/// ¤£«ØÄ³¥Î¨Ó«Ø¥ß SpinningFireBalls «ØÄ³§ï¥Î make_SpinningFireBalls
+				/// ä¸å»ºè­°ç”¨ä¾†å»ºç«‹ SpinningFireBalls å»ºè­°æ”¹ç”¨ make_SpinningFireBalls
 				/// </summary>
 				/// <param name="name"></param>
 				/// <param name="zIndex"></param>
@@ -51,7 +51,7 @@ namespace MyAPP {
 
 
 				/// <summary>
-				/// ªí³æ¨ê·s®É°õ¦æ
+				/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 				/// </summary>
 				/// <param name="data"></param>
 				virtual void behavior(void* data = nullptr) override;
@@ -63,7 +63,7 @@ namespace MyAPP {
 				
 			private:
 				/// <summary>
-				/// ¼½©ñ¹Ï¤ù
+				/// æ’­æ”¾åœ–ç‰‡
 				/// </summary>
 				virtual void PlayFrames() noexcept override;
 
@@ -80,7 +80,7 @@ namespace MyAPP {
 
 				// static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 				/// <summary>
-				/// ´V¼Æ¶°¦X
+				/// å¹€æ•¸é›†åˆ
 				/// </summary>
 				//std::array<std::string, 103> Frames; // = init_Frames<103>();
 

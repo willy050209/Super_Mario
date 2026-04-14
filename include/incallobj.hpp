@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef INC_ALL_OBJECT_HPP
 #define INC_ALL_OBJECT_HPP
 

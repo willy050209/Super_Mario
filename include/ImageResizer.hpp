@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <cmath>
-#include <filesystem> // C++17 ¥H¤Wª©¥»
+#include <filesystem> // C++17 ä»¥ä¸Šç‰ˆæœ¬
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -27,12 +27,12 @@ inline auto get_all_files(const fs::path& directory) {
 
 [[nodiscard]] inline auto getSubdirectoriesRecursive(const std::string& path) noexcept {
 	std::vector<std::string> subdirectories{ path };
-	std::error_code ec; // ¥Î©ó³B²z¥i¯àµo¥Íªº¿ù»~
+	std::error_code ec; // ç”¨æ–¼è™•ç†å¯èƒ½ç™¼ç”Ÿçš„éŒ¯èª¤
 
 	for (const auto& entry : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::skip_permission_denied, ec)) {
 		if (ec) {
 			std::cerr << "Error accessing path: " << entry.path() << " - " << ec.message() << std::endl;
-			continue; // µo¥Í¿ù»~«h¸õ¹L·í«e¶µ¥Ø
+			continue; // ç™¼ç”ŸéŒ¯èª¤å‰‡è·³éç•¶å‰é …ç›®
 		}
 		if (entry.is_directory()) {
 			subdirectories.push_back(std::move(entry.path().string()));
@@ -41,24 +41,24 @@ inline auto get_all_files(const fs::path& directory) {
 	return subdirectories;
 }
 
-// ¨ç¦¡¥Î©ó±N¼v¹³©ñ¤j¡A¨Ã»¼°j³B²z¤l¥Ø¿ı
+// å‡½å¼ç”¨æ–¼å°‡å½±åƒæ”¾å¤§ï¼Œä¸¦éè¿´è™•ç†å­ç›®éŒ„
 void enlargeImages(const std::string& folderPath, double scaleFactor, const std::string& outputPath) {
-	// ÀË¬d¸ê®Æ§¨¸ô®|¬O§_¦³®Ä
+	// æª¢æŸ¥è³‡æ–™å¤¾è·¯å¾‘æ˜¯å¦æœ‰æ•ˆ
 	if (!fs::exists(folderPath) || !fs::is_directory(folderPath)) {
-		std::cerr << "¿ù»~¡G´£¨Ñªº¸ô®|¤£¬O¦³®Äªº¿é¤J¸ê®Æ§¨¸ô®|¡G" << outputPath << std::endl;
+		std::cerr << "éŒ¯èª¤ï¼šæä¾›çš„è·¯å¾‘ä¸æ˜¯æœ‰æ•ˆçš„è¼¸å…¥è³‡æ–™å¤¾è·¯å¾‘ï¼š" << outputPath << std::endl;
 		return;
 	}
 
-	// ÀË¬d¿é¥X¸ô®|¬O§_¦³®Ä
+	// æª¢æŸ¥è¼¸å‡ºè·¯å¾‘æ˜¯å¦æœ‰æ•ˆ
 	if (!fs::exists(outputPath) || !fs::is_directory(outputPath)) {
 		fs::create_directory(outputPath);
 	}
 
 
-	// ­¡¥N¸ê®Æ§¨¤¤ªº©Ò¦³ÀÉ®×©M¤l¥Ø¿ı
+	// è¿­ä»£è³‡æ–™å¤¾ä¸­çš„æ‰€æœ‰æª”æ¡ˆå’Œå­ç›®éŒ„
 	for (const auto& entry : fs::directory_iterator(folderPath)) {
 		//if (entry.is_directory()) {
-		//	// »¼°j©I¥s¦Û¨­¨Ó³B²z¤l¥Ø¿ı
+		//	// éè¿´å‘¼å«è‡ªèº«ä¾†è™•ç†å­ç›®éŒ„
 		//	std::string newOutputPath = (fs::path(outputPath) / entry.path().filename()).string();
 		//	if (!fs::exists(newOutputPath)) {
 		//		fs::create_directory(newOutputPath);
@@ -67,20 +67,20 @@ void enlargeImages(const std::string& folderPath, double scaleFactor, const std:
 		//}
 		//else 
 		if (entry.is_regular_file() && entry.path().extension() == ".png") {
-			// ³B²z .png ÀÉ®×
+			// è™•ç† .png æª”æ¡ˆ
 			std::string imagePath = entry.path().string();
-			// ¨Ï¥Î SDL_image Åª¨ú¼v¹³
+			// ä½¿ç”¨ SDL_image è®€å–å½±åƒ
 			SDL_Surface* imageSurface = IMG_Load(imagePath.c_str());
 			if (!imageSurface) {
-				//std::cerr << "µLªkÅª¨ú¼v¹³¡G" << imagePath << "¡A­ì¦]: " << IMG_GetError() << std::endl;
-				continue; // Åª¨ú¥¢±Ñ¡A¸õ¹L¦¹¼v¹³
+				//std::cerr << "ç„¡æ³•è®€å–å½±åƒï¼š" << imagePath << "ï¼ŒåŸå› : " << IMG_GetError() << std::endl;
+				continue; // è®€å–å¤±æ•—ï¼Œè·³éæ­¤å½±åƒ
 			}
 
-			// ­pºâ·sªº¤Ø¤o
+			// è¨ˆç®—æ–°çš„å°ºå¯¸
 			int newWidth = static_cast<int>(imageSurface->w * scaleFactor);
 			int newHeight = static_cast<int>(imageSurface->h * scaleFactor);
 
-			// «Ø¥ß·sªº SDL_Surface ¨ÓÀx¦s©ñ¤jªº¼v¹³
+			// å»ºç«‹æ–°çš„ SDL_Surface ä¾†å„²å­˜æ”¾å¤§çš„å½±åƒ
 			SDL_Surface* enlargedSurface = SDL_CreateRGBSurface(0, newWidth, newHeight, 32,
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 				0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
@@ -89,31 +89,31 @@ void enlargeImages(const std::string& folderPath, double scaleFactor, const std:
 #endif
 			);
 			if (!enlargedSurface) {
-				//std::cerr << "µLªk«Ø¥ß©ñ¤jªº¼v¹³ªí­±¡G " << SDL_GetError() << std::endl;
+				//std::cerr << "ç„¡æ³•å»ºç«‹æ”¾å¤§çš„å½±åƒè¡¨é¢ï¼š " << SDL_GetError() << std::endl;
 				SDL_FreeSurface(imageSurface);
 				continue;
 			}
 
-			// ¨Ï¥Î SDL_SoftStretch ¶i¦æÁY©ñ
+			// ä½¿ç”¨ SDL_SoftStretch é€²è¡Œç¸®æ”¾
 			if (SDL_SoftStretch(imageSurface, NULL, enlargedSurface, NULL) < 0) {
-				//std::cerr << "¼v¹³ÁY©ñ¥¢±Ñ¡G " << SDL_GetError() << std::endl;
+				//std::cerr << "å½±åƒç¸®æ”¾å¤±æ•—ï¼š " << SDL_GetError() << std::endl;
 				SDL_FreeSurface(imageSurface);
 				SDL_FreeSurface(enlargedSurface);
 				continue;
 			}
 
-			// «Ø¥ß¿é¥XÀÉ®×¦WºÙ¡A©ñ¦b¹ïÀ³ªº¤l¸ê®Æ§¨
+			// å»ºç«‹è¼¸å‡ºæª”æ¡ˆåç¨±ï¼Œæ”¾åœ¨å°æ‡‰çš„å­è³‡æ–™å¤¾
 			std::string outputImagePath = (fs::path(outputPath) / ( entry.path().filename().string())).string();
 
-			// ¨Ï¥Î SDL_image ±N©ñ¤jªº¼v¹³¼g¤J·sªºÀÉ®×
+			// ä½¿ç”¨ SDL_image å°‡æ”¾å¤§çš„å½±åƒå¯«å…¥æ–°çš„æª”æ¡ˆ
 			if (IMG_SavePNG(enlargedSurface, outputImagePath.c_str()) < 0) {
-				//std::cerr << "µLªk¼g¤J©ñ¤jªº¼v¹³¡G" << outputImagePath << "¡A­ì¦]: " << std::endl;
+				//std::cerr << "ç„¡æ³•å¯«å…¥æ”¾å¤§çš„å½±åƒï¼š" << outputImagePath << "ï¼ŒåŸå› : " << std::endl;
 			}
 			else {
-				//std::cout << "¦¨¥\©ñ¤j¨ÃÀx¦s¼v¹³¡G" << outputImagePath << std::endl;
+				//std::cout << "æˆåŠŸæ”¾å¤§ä¸¦å„²å­˜å½±åƒï¼š" << outputImagePath << std::endl;
 			}
 			//showProgressBar(total, current++);
-			// ÄÀ©ñ SDL_Surface
+			// é‡‹æ”¾ SDL_Surface
 			SDL_FreeSurface(imageSurface);
 			SDL_FreeSurface(enlargedSurface);
 		}

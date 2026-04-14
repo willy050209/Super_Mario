@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef ICOMEDOWNABLE_FPP
 #define ICOMEDOWNABLE_FPP
 

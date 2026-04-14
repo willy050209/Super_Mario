@@ -1,6 +1,6 @@
-#pragma once
-#ifndef FORMMANGER_HPP
-#define FORMMANGER_HPP
+﻿#pragma once
+#ifndef FormManager_HPP
+#define FormManager_HPP
 
 #include "Form/Form.hpp"
 #include "incallobj.hpp"
@@ -46,13 +46,13 @@ namespace MyAPP::Form {
 	/// <summary>
 	/// �޲z���P�ƥ�
 	/// </summary>
-	class FormManger {
+	class FormManager {
 	public:
-		FormManger() : nowForm("null") {}
+		FormManager() : nowForm("null") {}
 
-		FormManger(const std::string& formName) : nowForm(formName) {}
+		FormManager(const std::string& formName) : nowForm(formName) {}
 
-		// FormManger(std::string formName) : nowForm(formName) {}
+		// FormManager(std::string formName) : nowForm(formName) {}
 
 		/// <summary>
 		/// ���o�ثe���W��
@@ -789,4 +789,4 @@ namespace MyAPP::Form {
 		bool isPause = false;
 	};
 }
-#endif //! FORMMANGER_HPP
+#endif //! FormManager_HPP

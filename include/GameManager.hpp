@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
-#ifndef GAMEMANGER_HPP
-#define GAMEMANGER_HPP
+#ifndef GAMEMANAGER_HPP
+#define GAMEMANAGER_HPP
 
 #include "MyContext.hpp"
 #include "Util/BGM.hpp"
-#include "Form/FormManger.hpp"
+#include "Form/FormManager.hpp"
 #include "MyBGM.hpp"
 #include "FilePath.hpp"
 #include "Util/SFX.hpp"
@@ -14,7 +14,7 @@
 
 namespace MyAPP {
 	/// <summary>
-	/// ºŞ²z¹CÀ¸¶}©l¡B°õ¦æ¡B¼È°±¡Bµ²§ô
+	/// ç®¡ç†éŠæˆ²é–‹å§‹ã€åŸ·è¡Œã€æš«åœã€çµæŸ
 	/// </summary>
 	class GameManager {
 
@@ -23,41 +23,41 @@ namespace MyAPP {
 		~GameManager() = default;
 
 		/// <summary>
-		/// °õ¦æªì©l¤Æ
+		/// åŸ·è¡Œåˆå§‹åŒ–
 		/// </summary>
 		void init() noexcept;
 
 		/// <summary>
-		/// ªí³æ¨ê·s
+		/// è¡¨å–®åˆ·æ–°
 		/// </summary>
 		/// <param name=""></param>
 		void Update(std::shared_ptr<Core::Context>&) noexcept;
 
 		/// <summary>
-		/// µ²§ô¹CÀ¸
+		/// çµæŸéŠæˆ²
 		/// </summary>
 		void End() noexcept;
 
 		/// <summary>
-		/// ¨ú±o¹CÀ¸¬O§_µ²§ô
+		/// å–å¾—éŠæˆ²æ˜¯å¦çµæŸ
 		/// </summary>
 		/// <returns></returns>
 		inline auto isEnd() const noexcept { return endstate; }
 
 		/// <summary>
-		/// ¨ú±oFormManger
+		/// å–å¾—FormManager
 		/// </summary>
 		/// <returns></returns>
-		inline auto& GetFormManger() noexcept { return MyFM; }
+		inline auto& GetFormManager() noexcept { return MyFM; }
 
 		/// <summary>
-		/// ¨Ï§_»İ­n­«±Ò
+		/// ä½¿å¦éœ€è¦é‡å•Ÿ
 		/// </summary>
 		/// <returns></returns>
 		inline auto GetRestart() const noexcept { return m_Restart; }
 
 		/// <summary>
-		/// ¨ú±o¦sÀÉÂI®y¼Ğ
+		/// å–å¾—å­˜æª”é»åº§æ¨™
 		/// </summary>
 		/// <returns>CheckPoint Position</returns>
 		inline const auto& GetCheckPointPos() const noexcept {
@@ -65,43 +65,43 @@ namespace MyAPP {
 		}
 
 		/// <summary>
-		/// ¨ú±oª±®a¦å¶q
+		/// å–å¾—ç©å®¶è¡€é‡
 		/// </summary>
 		/// <returns>HP</returns>
 		inline const auto& GetHP() const noexcept { return HP; }
 
 		/// <summary>
-		/// ¨ú±oª±®a¤À¼Æ
+		/// å–å¾—ç©å®¶åˆ†æ•¸
 		/// </summary>
 		/// <returns>Point</returns>
 		inline const auto& GetPoint() const noexcept { return point; }
 
 		/// <summary>
-		/// ¼W¥[¤À¼Æ
+		/// å¢åŠ åˆ†æ•¸
 		/// </summary>
 		/// <param name="val">lvalue ref</param>
 		inline auto addPoint(const int& val) noexcept { point += val; }
 
 		/// <summary>
-		/// ¦å¶q»¼¼W
+		/// è¡€é‡éå¢
 		/// </summary>
 		inline auto IncHP() noexcept { ++HP; }
 
 		/// <summary>
-		/// ¦å¶q»¼´î
+		/// è¡€é‡éæ¸›
 		/// </summary>
 		inline auto DecHP() noexcept { --HP; }
 
 		// inline std::shared_ptr<Util::BGM>& GetBGM() noexcept { return bgm; }
 
 		/// <summary>
-		/// ³]©w¬O§_­n­«±Ò
+		/// è¨­å®šæ˜¯å¦è¦é‡å•Ÿ
 		/// </summary>
 		/// <param name="val"></param>
 		inline auto SetRestart(bool val) noexcept { m_Restart = val; }
 
 		/// <summary>
-		/// Àx¦s¦ì¸m
+		/// å„²å­˜ä½ç½®
 		/// </summary>
 		/// <param name="pos">Position</param>
 		inline auto SaveCheckPointPos(const glm::vec2& pos) noexcept {
@@ -111,18 +111,18 @@ namespace MyAPP {
 		void LostALife() noexcept;
 
 		/// <summary>
-		/// ¹CÀ¸BGM
+		/// éŠæˆ²BGM
 		/// </summary>
 		std::shared_ptr<Util::BGM> bgm = nullptr;
 		std::shared_ptr<Util::SFX> sfx = nullptr;
 
 		/// <summary>
-		/// ¬O§_©ó¼È°±ª¬ºA
+		/// æ˜¯å¦æ–¼æš«åœç‹€æ…‹
 		/// </summary>
 		bool pause{ false };
 
 		/// <summary>
-		/// ¬O§_±Ò¥ÎµL¼Ä¼Ò¦¡
+		/// æ˜¯å¦å•Ÿç”¨ç„¡æ•µæ¨¡å¼
 		/// </summary>
 		bool opMode = false;
 
@@ -133,34 +133,34 @@ namespace MyAPP {
 	private:
 
 		/// <summary>
-		/// µ²§ôª¬ºA
+		/// çµæŸç‹€æ…‹
 		/// </summary>
 		bool endstate = false;
 
 		/// <summary>
-		/// ­«±Òª¬ºA
+		/// é‡å•Ÿç‹€æ…‹
 		/// </summary>
 		bool m_Restart = false;
 
 		/// <summary>
-		/// ºŞ²z©Ò¦³ªí³æ
+		/// ç®¡ç†æ‰€æœ‰è¡¨å–®
 		/// </summary>
-		MyAPP::Form::FormManger MyFM{};
+		MyAPP::Form::FormManager MyFM{};
 
 		/// <summary>
-		/// ª±®aHP
+		/// ç©å®¶HP
 		/// </summary>
 		int HP = 3;
 
 		/// <summary>
-		/// ª±®a¤À¼Æ
+		/// ç©å®¶åˆ†æ•¸
 		/// </summary>
 		int point = 0;
 		// std::vector<std::shared_ptr<MyBGM::BGM>> bgms;
 
 
 		/// <summary>
-		/// ¤W¤@­Ó¦sÀÉÂI®y¼Ğ
+		/// ä¸Šä¸€å€‹å­˜æª”é»åº§æ¨™
 		/// </summary>
 		glm::vec2 checkPointPos{ 0, 0 };
 	};
@@ -168,4 +168,4 @@ namespace MyAPP {
 
 }
 
-#endif // !GAMEMANGER_HPP
+#endif // !GAMEMANAGER_HPP

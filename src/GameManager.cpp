@@ -1,4 +1,4 @@
-#include "GameManager.hpp"
+﻿#include "GameManager.hpp"
 #include "incallobj.hpp"
 #include "Position.hpp"
 #include "config.hpp"

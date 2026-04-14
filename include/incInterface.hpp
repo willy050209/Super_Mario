@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef INC_INTERFACE_HPP
 #define INC_INTERFACE_HPP

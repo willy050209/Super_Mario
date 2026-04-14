@@ -1,13 +1,13 @@
-#include "Object/Points.hpp"
+﻿#include "Object/Points.hpp"
 #include "GameManager.hpp"
-#include "FormManger.hpp"
+#include "FormManager.hpp"
 
 void MyAPP::Form::Object::Points::behavior(void* data) {
 	using MyAPP::Form::Object::ImageObject;
 	if (m_Visible) {
 		if (count <= 0) {
 			auto GM = static_cast<GameManager*>(data);
-			auto& FM = GM->GetFormManger();
+			auto& FM = GM->GetFormManager();
 			FM.removeObject<Points>(FM.GetNowForm(), m_ID);
 			m_Visible = false;
 			return;
@@ -22,7 +22,7 @@ void MyAPP::Form::Object::Points::setPoint(PointType pointType) {
 	setImage(PointsImage[(int)pointType]);
 	count = FPS_CAP / 2;
 }
-void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManger& FM, PointType pointType) {
+void MyAPP::Form::Object::Points::UpdatePoint(MyAPP::Form::FormManager& FM, PointType pointType) {
 	using MyAPP::Form::Object::Mario;
 	using MyAPP::Form::Object::EventObject;
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef FIREBALLS_HPP
 #define FIREBALLS_HPP
 
@@ -9,7 +9,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ¤õ¬Wª«¥ó Ä~©ÓBrick¡A½Ğ¤Å³æ¿W¾A¥Î
+	/// ç«æŸ±ç‰©ä»¶ ç¹¼æ‰¿Brickï¼Œè«‹å‹¿å–®ç¨é©ç”¨
 	/// </summary>
 	class FireBalls :Interface::ICollisionable, public Brick {
 	public:
@@ -30,7 +30,7 @@ namespace MyAPP::Form::Object {
 
 
 		/// <summary>
-		/// ªí³æ¨ê·s®É°õ¦æ
+		/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data"></param>
 		virtual void behavior(void* data = nullptr) override;

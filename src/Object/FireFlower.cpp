@@ -1,4 +1,4 @@
-#include "Object/Props/FireFlower.hpp"
+﻿#include "Object/Props/FireFlower.hpp"
 #include "config.hpp"
 #include "GameManager.hpp"
 #include <iostream>
@@ -23,7 +23,7 @@ namespace MyAPP:: Form:: Object::Props {
 	void FireFlower::CheckCollision(void* data) {
 		if (m_Visible) {
 			auto GM = static_cast<GameManager*>(data);
-			auto& fm = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+			auto& fm = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 			auto mario = fm.GetFormObject<Mario>(fm.GetNowForm(), "Mario");
 			if (inRange(mario->GetPosition(), mario->GetSize())) {
 				mario->changeType(Mario::Mario_type::FieryMario);

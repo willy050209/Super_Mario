@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef EVENTCALLCALLBACKFUNC_hpp
 #define EVENTCALLCALLBACKFUNC_hpp
 #include "InitFormFunc.hpp"
@@ -25,7 +25,7 @@ using namespace MyAPP::Form::Object;
 // INITFORM_FUNC(initForm_1_2);
 
 // inline void loadCheckpoint(GameManager* const GM, std::shared_ptr<std::vector<std::shared_ptr<CheckPoint>>> checkPoints) noexcept {
-//	auto& FM = GM->GetFormManger();
+//	auto& FM = GM->GetFormManager();
 //	auto& mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 //	auto& background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
 //	//auto& checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
@@ -67,7 +67,7 @@ EVENTCALLCALLBACKFUN(GetSystemTimeFunc) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::tuple(std::vector(std::shared_ptr(Character)), std::vector(std::shared_ptr(Brick))) </param>
 EVENTCALLCALLBACKFUN(moveEvent) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 	// const auto Displacement = WINDOW_HEIGHT / 15/2;
 	auto tuplePtr = std::static_pointer_cast<GameObjectTuple>(self->userdata);
 	auto& [enemys, pipes, props, objs] = (*tuplePtr);
@@ -293,7 +293,7 @@ EVENTCALLCALLBACKFUN(moveEvent) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::tuple(int, int, std::shared_ptr(TextObject))) </param>
 EVENTCALLCALLBACKFUN(UpdateTimeText) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 	auto& [num, nowtime] = (*(std::static_pointer_cast<std::tuple<int, int>>(self->userdata)));
 	auto timetext = FM.GetFormObject<TextObject>(FM.GetNowForm(), "Timetext");
 	if (timetext == nullptr)
@@ -337,7 +337,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 //EVENTCALLCALLBACKFUN(CheckDoors) {
-//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 //	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 //	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 //	auto marioPos = mario->GetPosition();
@@ -434,7 +434,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Character)) </param>
 //EVENTCALLCALLBACKFUN(CheckEneyCollision) {
 //	auto GM = static_cast<MyAPP::GameManager*>(data);
-//	auto& FM = GM->GetFormManger();
+//	auto& FM = GM->GetFormManager();
 //	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 //	auto eneys = std::static_pointer_cast<std::vector<std::shared_ptr<MyAPP::Form::Object::Character>>>(self->userdata);
 //	auto marioPos = mario->GetPosition();
@@ -489,7 +489,7 @@ EVENTCALLCALLBACKFUN(UpdateTimeText) {
 /// <param name="self">���V��e���󪺫���</param>
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CallFinish) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto& bgm = static_cast<MyAPP::GameManager*>(data)->bgm;
 	auto& sfx = static_cast<MyAPP::GameManager*>(data)->sfx;
@@ -514,7 +514,7 @@ EVENTCALLCALLBACKFUN(CallFinish) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Brick)) </param>
 EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto flagpole = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto marioPos = mario->GetPosition();
@@ -571,7 +571,7 @@ EVENTCALLCALLBACKFUN(CheckFlagpoleCollision) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::array(std::shared_ptr(Brick), 2) </param>
 EVENTCALLCALLBACKFUN(moveToDoor) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 	auto doorarrPtr = std::static_pointer_cast<BrickPtrVec>(self->userdata);
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto marioPos = mario->GetPosition();
@@ -598,7 +598,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 //EVENTCALLCALLBACKFUN(CheckPointCollision) {
-//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+//	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 //	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 //	auto background = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "Background");
 //	auto checkPoints = std::static_pointer_cast<std::vector<std::shared_ptr<CheckPoint>>>(self->userdata);
@@ -622,7 +622,7 @@ EVENTCALLCALLBACKFUN(moveToDoor) {
 /// <param name="data">GameManager *</param>
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(CheckPoint)) </param>
 EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
-	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManger();
+	auto& FM = static_cast<MyAPP::GameManager*>(data)->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	auto bricks = std::static_pointer_cast<BrickPtrVec>(mario->userdata);
 	auto moveEvent = FM.GetFormObject<EventObject>(FM.GetNowForm(), "MoveEvent");
@@ -685,7 +685,7 @@ EVENTCALLCALLBACKFUN(GoBackCheckPoint) {
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdateHPText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "HPText");
 	std::unique_ptr<char> textstr(new char[10]);
 	sprintf(textstr.get(), "HP:%d", GM->GetHP());
@@ -700,7 +700,7 @@ EVENTCALLCALLBACKFUN(UpdateHPText) {
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 	if (!isInWindow(mario) && mario->GetPosition().y < 0) {
 		GM->LostALife();
@@ -722,7 +722,7 @@ EVENTCALLCALLBACKFUN(CheckMarioPosition) {
 /// <param name="self->userdata"> *std::vector(std::tuple(int, std::vector(bool))) </param>
 EVENTCALLCALLBACKFUN(SleepAllevent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	/// <summary> count �Ȱ����V�� 
 	/// bvec �쥻�ƥ󪺪��A </summary>
 	auto& [count, bvec] = (*std::static_pointer_cast<SleepAllEventUserDataType>(self->userdata));
@@ -757,7 +757,7 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Coin)) </param>
 //EVENTCALLCALLBACKFUN(CheckCoinsCollision) {
 //	auto GM = static_cast<MyAPP::GameManager*>(data);
-//	auto& FM = GM->GetFormManger();
+//	auto& FM = GM->GetFormManager();
 //	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
 //	auto coins = std::static_pointer_cast<std::vector<std::shared_ptr<Coin>>>(self->userdata);
 //	auto marioPos = mario->GetPosition();
@@ -778,7 +778,7 @@ EVENTCALLCALLBACKFUN(SleepAllevent) {
 /// <param name="data">GameManager *</param>
 EVENTCALLCALLBACKFUN(UpdatePointText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "PointText");
 	/// <summary>���Ƥ�r</summary>
 	std::unique_ptr<char> textstr(new char[10]);
@@ -795,7 +795,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 /// <param name="self->userdata"> *std::vector(std::shared_ptr(Turtle)) </param>
 //EVENTCALLCALLBACKFUN(CheckTortoiseShellCollision) {
 //	auto GM = static_cast<MyAPP::GameManager*>(data);
-//	auto& FM = GM->GetFormManger();
+//	auto& FM = GM->GetFormManager();
 //	auto mario = (FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario"));
 //	auto turtles = std::static_pointer_cast<std::vector<std::shared_ptr<Turtle>>>(self->userdata);
 //	auto marioPos = mario->GetPosition();
@@ -834,7 +834,7 @@ EVENTCALLCALLBACKFUN(UpdatePointText) {
 /// <param name="self->userdata">�����ت����</param>
 EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto form = std::static_pointer_cast<std::string>(self->userdata);
 	using MyAPP::Form::FormNames;
 	if (form == nullptr) {
@@ -881,7 +881,7 @@ EVENTCALLCALLBACKFUN(ChangeFormEvent) {
 /// <param name="self->userdata">�ؼЪ��</param>
 EVENTCALLCALLBACKFUN(freeForm) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	FM.freeForm(*std::static_pointer_cast<std::string>(self->userdata));
 	self->Enable = false;
 	//auto& m_Events = FM.GetFormAndObject(FM.GetNowForm()).m_Events;
@@ -898,7 +898,7 @@ EVENTCALLCALLBACKFUN(UpdateFrameCount) {
 		Coin::nextFrame();
 		coinimgIndex = (coinimgIndex + 1) % 6;
 		auto GM = static_cast<MyAPP::GameManager*>(data);
-		auto& FM = GM->GetFormManger();
+		auto& FM = GM->GetFormManager();
 		auto coinimg = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "coinimg");
 		if (coinimg) {
 			std::static_pointer_cast<Util::Image>(coinimg->GetDrawable())->SetImage(Coin::GetFrames()[coinimgIndex]);
@@ -912,7 +912,7 @@ EVENTCALLCALLBACKFUN(UpdateFrameCount) {
 
 EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	auto text = FM.GetFormObject<TextObject>(FM.GetNowForm(), "CoinnumText");
 	if (text) {
 		auto coinimg = FM.GetFormObject<ImageObject>(FM.GetNowForm(), "coinimg");
@@ -929,7 +929,7 @@ EVENTCALLCALLBACKFUN(UpdateCoinCountText) {
 
 EVENTCALLCALLBACKFUN(FlagpoleAddPoint) {
 	auto GM = static_cast<MyAPP::GameManager*>(data);
-	auto& FM = GM->GetFormManger();
+	auto& FM = GM->GetFormManager();
 	if(auto userdata = std::static_pointer_cast<SleepAllEventUserDataType>(self->userdata)) {
 		auto& [time, bvec] = *userdata;
 		if (time >0) {

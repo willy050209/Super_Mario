@@ -1,7 +1,7 @@
-#include "Object/Brick/QuestionBlock.hpp"
+﻿#include "Object/Brick/QuestionBlock.hpp"
 #include "config.hpp"
 #include "GameManager.hpp"
-#include "Form/FormManger.hpp"
+#include "Form/FormManager.hpp"
 #include "Object/EventObject.hpp"
 #include "Util/Image.hpp"
 #include "FilePath.hpp"
@@ -50,7 +50,7 @@ namespace MyAPP::Form:: Object {
 		if (!isbonked) {
 			return;
 		}
-		auto& FM = GM->GetFormManger();
+		auto& FM = GM->GetFormManager();
 		if (userdata == nullptr) {
 			CoinPoints::CreateCoinPoints(FM, GetPosition());
 			Points::UpdatePoint(FM, Points::PointType::pts200);

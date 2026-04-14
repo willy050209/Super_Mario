@@ -1,4 +1,4 @@
-#include "Object/Props/Mushroom.hpp"
+﻿#include "Object/Props/Mushroom.hpp"
 #include "GameManager.hpp"
 #include "userType.hpp"
 #include <iostream>
@@ -33,7 +33,7 @@ void MyAPP::Form::Object::Props::Mushroom::Move(const glm::vec2& distance) noexc
 void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 	if (m_Visible) {
 		auto GM = static_cast<MyAPP::GameManager*>(gm);
-		auto& FM = GM->GetFormManger();
+		auto& FM = GM->GetFormManager();
 		auto mario = FM.GetFormObject<Mario>(FM.GetNowForm(), "Mario");
 		if (inRange(mario->GetPosition(), mario->GetSize())) {
 			switch (MyCategory) {
@@ -61,7 +61,6 @@ void MyAPP::Form::Object::Props::Mushroom::CheckCollision(void* gm) {
 				else if (mario->GetMario_type() == Mario::Mario_type::InvincibleMario) {
 					mario->changeType(Mario::Mario_type::InvincibleSuperMario);
 				}
-				//mario->CheckPos(gm);
 				Points::UpdatePoint(FM, Points::PointType::pts1000);
 				GM->addPoint(1000);
 				break;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef MYDEFINE_HPP
 #define MYDEFINE_HPP

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef POSITION_HPP
 #define POSITION_HPP
@@ -7,20 +7,20 @@
 #include "config.hpp"
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¥ªÃäªºX¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€å·¦é‚Šçš„Xè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>X¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Xè»¸åšåº§æ¨™</returns>
 template <class T>
 inline int GetLeftEdge(T& obj) noexcept {
 	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¤W­±ªºY¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€ä¸Šé¢çš„Yè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>Y¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Yè»¸åšåº§æ¨™</returns>
 template <class T>
 inline int GetTopEdge(T& obj) noexcept {
 	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);
@@ -30,40 +30,40 @@ inline int GetTopEdge(T& obj) noexcept {
 #include "userType.hpp"
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¥ªÃäªºX¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€å·¦é‚Šçš„Xè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>X¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Xè»¸åšåº§æ¨™</returns>
 inline int GetLeftEdge(ObjectPtr obj) noexcept {
 	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¤W­±ªºY¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€ä¸Šé¢çš„Yè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>Y¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Yè»¸åšåº§æ¨™</returns>
 inline int GetTopEdge(ObjectPtr obj) noexcept {
 	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);
 }
 
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¥ªÃäªºX¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€å·¦é‚Šçš„Xè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>X¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Xè»¸åšåº§æ¨™</returns>
 template<class T>
 inline int GetLeftEdge(T* obj) noexcept {
 	return -((WINDOW_WIDTH / 2) - (obj->GetSize().x / 2));
 }
 
 /// <summary>
-/// ¨ú±o¸Óª«¥ó­n¤Á»ôµe­±³Ì¤W­±ªºY¶b°µ®y¼Ð
+/// å–å¾—è©²ç‰©ä»¶è¦åˆ‡é½Šç•«é¢æœ€ä¸Šé¢çš„Yè»¸åšåº§æ¨™
 /// </summary>
-/// <param name="obj"> ª«¥ó</param>
-/// <returns>Y¶b°µ®y¼Ð</returns>
+/// <param name="obj"> ç‰©ä»¶</param>
+/// <returns>Yè»¸åšåº§æ¨™</returns>
 template<class T>
 inline int GetTopEdge(T* obj) noexcept {
 	return (WINDOW_HEIGHT / 2) - (obj->GetSize().y / 2);

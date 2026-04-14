@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef AXE_HPP
 #define AXE_HPP
 #include "Object/Brick/Brick.hpp"
@@ -7,7 +7,7 @@
 
 namespace MyAPP::Form::Object {
 	/// <summary>
-	/// ©òÀYª«¥ó Ä~©ÓBrick
+	/// æ–§é ­ç‰©ä»¶ ç¹¼æ‰¿Brick
 	/// </summary>
 	class Axe : Interface::ICollisionable, Interface::Iframes, public Brick {
 	public:
@@ -26,12 +26,12 @@ namespace MyAPP::Form::Object {
 		Axe() = delete;
 
 		/// <summary>
-		/// ³QºVÀ»¨Æ¥ó
+		/// è¢«æ•²æ“Šäº‹ä»¶
 		/// </summary>
 		virtual void bonk() noexcept override {};
 
 		/// <summary>
-		/// ªí³æ¨ê·s®É°õ¦æ
+		/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 		/// </summary>
 		/// <param name="data"></param>
 		virtual void behavior(void* data = nullptr) override;
@@ -43,7 +43,7 @@ namespace MyAPP::Form::Object {
 
 	private:
 		/// <summary>
-		/// ¼½©ñ¹Ï¤ù
+		/// æ’­æ”¾åœ–ç‰‡
 		/// </summary>
 		virtual void PlayFrames() noexcept override;
 
@@ -51,7 +51,7 @@ namespace MyAPP::Form::Object {
 
 		// static constexpr inline char* const EmptyBlockImagePath{ "imgs/super mario/EmptyBlock.png" };
 		/// <summary>
-		/// ´V¼Æ¶°¦X
+		/// å¹€æ•¸é›†åˆ
 		/// </summary>
 		static constexpr inline char* const Frames[] = { "imgs/super mario/Axe/frame0.png", "imgs/super mario/Axe/frame1.png", "imgs/super mario/Axe/frame2.png", "imgs/super mario/Axe/frame3.png", "imgs/super mario/Axe/frame4.png", "imgs/super mario/Axe/frame5.png" };
 		int count{ 0 }, imgindex{ 0 };

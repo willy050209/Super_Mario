@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef IMAGEOBJECT_HPP
 #define IMAGEOBJECT_HPP
 
@@ -8,7 +8,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// ¹Ï¤ùª«¥ó Ä~©ÓObject
+			/// åœ–ç‰‡ç‰©ä»¶ ç¹¼æ‰¿Object
 			/// </summary>
 			class ImageObject : public Object {
 

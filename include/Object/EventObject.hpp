@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef EVENTOBJECT_HPP
 #define EVENTOBJECT_HPP
 
@@ -8,7 +8,7 @@ namespace MyAPP {
 	namespace Form {
 		namespace Object {
 			/// <summary>
-			/// ¨Æ¥óª«¥ó Ä~©ÓObject
+			/// äº‹ä»¶ç‰©ä»¶ ç¹¼æ‰¿Object
 			/// </summary>
 			class EventObject : public Object {
 
@@ -28,19 +28,19 @@ namespace MyAPP {
 				EventObject& operator=(EventObject&&) = delete;
 
 				/// <summary>
-				/// ¨ú±oCallBack Function
+				/// å–å¾—CallBack Function
 				/// </summary>
 				/// <returns></returns>
 				inline auto& GetCallBackFunc() const noexcept { return CallBackFunc; }
 
 				/// <summary>
-				/// ³]©wCallBack Function
+				/// è¨­å®šCallBack Function
 				/// </summary>
 				/// <param name="CallBackFunc"></param>
 				inline void SetCallBackFunc(std::function<void(EventObject* const, void*)> CallBackFunc_) noexcept { this->CallBackFunc = CallBackFunc_; }
 
 				/// <summary>
-				/// ªí³æ¨ê·s®É°õ¦æ
+				/// è¡¨å–®åˆ·æ–°æ™‚åŸ·è¡Œ
 				/// </summary>
 				/// <param name="data"></param>
 				virtual void behavior(void* data = nullptr) override {
@@ -49,7 +49,7 @@ namespace MyAPP {
 				}
 
 				/// <summary>
-				/// ¬O§_±Ò¥Î¨Æ¥ó
+				/// æ˜¯å¦å•Ÿç”¨äº‹ä»¶
 				/// </summary>
 				bool Enable = true;
 

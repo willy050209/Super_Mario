@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef ICOLLISIONABLE_HPP
 #define ICOLLISIONABLE_HPP

@@ -1,7 +1,7 @@
-#include "Object/Brick/ContinueCoinBrick.hpp"
+﻿#include "Object/Brick/ContinueCoinBrick.hpp"
 #include "Object/Points.hpp"
 #include "GameManager.hpp"
-#include "FormManger.hpp"
+#include "FormManager.hpp"
 #include "filePath.hpp"
 
 void MyAPP::Form::Object::ContinueCoinBrick::bonk() noexcept {
@@ -31,7 +31,7 @@ void MyAPP::Form::Object::ContinueCoinBrick::bonk() noexcept {
 void MyAPP::Form::Object::ContinueCoinBrick::behavior(void* data) {
 	if (trigger) {
 		auto GM = static_cast<GameManager*>(data);
-		auto& FM = static_cast<GameManager*>(data)->GetFormManger();
+		auto& FM = static_cast<GameManager*>(data)->GetFormManager();
 		CoinPoints::CreateCoinPoints(FM, GetPosition());
 		Points::UpdatePoint(FM, Points::PointType::pts200);
 		static_cast<GameManager*>(data)->addPoint(200);
@@ -45,7 +45,7 @@ void MyAPP::Form::Object::ContinueCoinBrick::behavior(void* data) {
 }
 
 
-void MyAPP::Form::Object::CoinPoints::CreateCoinPoints(MyAPP::Form::FormManger& FM, glm::vec2 pos) {
+void MyAPP::Form::Object::CoinPoints::CreateCoinPoints(MyAPP::Form::FormManager& FM, glm::vec2 pos) {
 	auto pointobj = std::make_shared<CoinPoints>("CoinPoints");
 	if (pointobj) {
 		pointobj->SetPosition(pos + glm::vec2{ 0, pointobj->GetSize().y });
@@ -60,7 +60,7 @@ void MyAPP::Form::Object::CoinPoints::behavior(void* data) {
 		PlayFrames();
 		if (lifeCount <= 0) {
 			auto GM = static_cast<GameManager*>(data);
-			auto& FM = GM->GetFormManger();
+			auto& FM = GM->GetFormManager();
 			FM.removeFirstObject<ImageObject>(FM.GetNowForm(), name);
 			m_Visible = false;
 			return;

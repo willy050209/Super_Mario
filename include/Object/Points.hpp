@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef POINTS_HPP
 #define POINTS_HPP
@@ -7,13 +7,13 @@
 #include "ObjectType.hpp"
 #include "Util/Image.hpp"
 #include "config.hpp"
-#include "FormManger.hpp"
+#include "FormManager.hpp"
 #include <string>
 #include <memory>
 #include <glm/vec2.hpp>
 
 namespace MyAPP::Form {
-	class FormManger;
+	class FormManager;
 }
 
 namespace MyAPP::Form::Object {
@@ -50,7 +50,7 @@ namespace MyAPP::Form::Object {
 
 		void setPoint(PointType pointtype);
 
-		static void UpdatePoint(MyAPP::Form::FormManger& FM, PointType pointtype);
+		static void UpdatePoint(MyAPP::Form::FormManager& FM, PointType pointtype);
 
 	private:
 		

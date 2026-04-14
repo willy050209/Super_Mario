@@ -1,4 +1,4 @@
-#include "TextObject.hpp"
+﻿#include "TextObject.hpp"
 
 namespace MyAPP {
 	namespace Form {
