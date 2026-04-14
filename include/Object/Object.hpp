@@ -1,12 +1,17 @@
-﻿#pragma once
+#pragma once
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
 #include "ObjectType.hpp"
+#include "Component.hpp"
+#include <vector>
+#include <memory>
+#include <string>
 
-namespace MyAPP::Form:: Object {
+namespace MyAPP::Form::Object {
+
 	/// <summary>
 	/// 提供所有物件的父類
 	/// </summary>
@@ -23,13 +28,30 @@ namespace MyAPP::Form:: Object {
 			m_ID = IDCounter++;
 		}
 
+		virtual ~Object() = default;
+
 		Object(const Object&) = delete;
-
 		Object(Object&&) = delete;
-
 		Object& operator=(const Object&) = delete;
-
 		Object& operator=(Object&&) = delete;
+
+		template<typename T, typename... Args>
+		T& AddComponent(Args&&... args) {
+			auto component = std::make_unique<T>(std::forward<Args>(args)...);
+			component->SetOwner(this);
+			T& ref = *component;
+			m_Components.push_back(std::move(component));
+			return ref;
+		}
+
+		template<typename T>
+		T* GetComponent() {
+			for (auto& component : m_Components) {
+				T* ptr = dynamic_cast<T*>(component.get());
+				if (ptr) return ptr;
+			}
+			return nullptr;
+		}
 
 		/// <summary>
 		/// 取得 Core::Drawable
@@ -102,7 +124,11 @@ namespace MyAPP::Form:: Object {
 		/// 每次表單刷新時執行
 		/// </summary>
 		/// <param name="data">GameManager *</param>
-		virtual void behavior(void* data = nullptr) {}
+		virtual void behavior(void* data = nullptr) {
+			for (auto& component : m_Components) {
+				component->Update(data);
+			}
+		}
 
 				
 		/// <summary>
@@ -129,6 +155,9 @@ namespace MyAPP::Form:: Object {
 		/// 專屬於此物件的唯一編號(若物件數超過size_t的上限會重複)
 		/// </summary>
 		size_t m_ID;
+
+	protected:
+		std::vector<std::unique_ptr<Component>> m_Components;
 
 	private:
 		/// <summary>

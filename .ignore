@@ -1,0 +1,8 @@
+build/
+build_gemini/
+build_new/
+cmake-build-debug/
+out/
+bin/
+obj/
+./build_output.txt

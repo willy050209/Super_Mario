@@ -1,17 +1,18 @@
 ﻿#pragma once
-#include "Object/Character/Mario.hpp"
+#include "Object/Character/MarioEnums.hpp"
 #include <string>
 #include <vector>
 #include <unordered_map>
 
 namespace MyAPP::Form::Object {
 
+class Mario; // Forward declaration
 /**
  * @brief Configuration structure for different Mario types (Small, Super, Fire).
  */
 struct MarioTypeConfig {
     std::string name;
-    std::unordered_map<Mario::State, std::vector<std::vector<std::string>>> animations; // [state][facing_left][frames]
+    std::unordered_map<MarioState, std::vector<std::vector<std::string>>> animations; // [state][facing_left][frames]
     float jumpForce;
     float moveSpeed;
     bool canBreakBricks;
@@ -22,11 +23,11 @@ struct MarioTypeConfig {
  */
 class MarioConfigProvider {
 public:
-    static const MarioTypeConfig& GetConfig(Mario::Mario_type type);
+    static const MarioTypeConfig& GetConfig(MarioType type);
 
 private:
     static void Initialize();
-    static inline std::unordered_map<Mario::Mario_type, MarioTypeConfig> s_Configs;
+    static inline std::unordered_map<MarioType, MarioTypeConfig> s_Configs;
     static inline bool s_Initialized = false;
 };
 

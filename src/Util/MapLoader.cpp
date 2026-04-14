@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace MyAPP::Util {
+namespace MyAPP::Utils {
 
 void MapLoader::LoadMap(const std::string& jsonPath, const std::string& formName, MyAPP::Form::FormManager& FM) {
     std::ifstream file(jsonPath);
@@ -62,4 +62,4 @@ void MapLoader::LoadMap(const std::string& jsonPath, const std::string& formName
     std::cout << "Successfully loaded map: " << jsonPath << " into form: " << formName << std::endl;
 }
 
-} // namespace MyAPP::Util
+} // namespace MyAPP::Utils

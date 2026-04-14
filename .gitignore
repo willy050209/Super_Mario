@@ -488,6 +488,7 @@ FodyWeavers.xsd
 
 # Default build directory for CMake extension
 build/
+build_gemini/
 
 # Ignore 3rd party dependencies
 lib/
@@ -498,3 +499,5 @@ docs/html/
 # PTSD/
 
 ImageResizer/
+
+build_output.txt

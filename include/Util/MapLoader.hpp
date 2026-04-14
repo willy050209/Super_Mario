@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "Form/FormManager.hpp"
 
-namespace MyAPP::Util {
+namespace MyAPP::Utils {
 
 /**
  * @brief Handles loading game maps from JSON files and populating the FormManager.
@@ -17,4 +17,4 @@ private:
     using json = nlohmann::json;
 };
 
-} // namespace MyAPP::Util
+} // namespace MyAPP::Utils

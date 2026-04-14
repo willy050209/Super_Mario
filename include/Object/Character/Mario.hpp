@@ -14,7 +14,7 @@
 #include "Object/AnimationComponent.hpp"
 #include "Object/InputComponent.hpp"
 #include "Object/AudioComponent.hpp"
-#include "Object/Character/MarioAttributes.hpp"
+#include "Object/Character/MarioEnums.hpp"
 
 namespace MyAPP::Form {
 	class FormManager;
@@ -24,24 +24,8 @@ namespace MyAPP::Form::Object {
 
 	class Mario : public Character {
 	public:
-		enum class State {
-			UP,
-			MOVE,
-			DOWN,
-			CROUCH,
-			DIED,
-			STAND,
-			Invincible,
-		};
-
-		enum class Mario_type {
-			Mario,
-			SuperMario,
-			FieryMario,
-			InvincibleMario,
-			InvincibleSuperMario,
-			InvincibleFieryMario
-		};
+		using State = MarioState;
+		using Mario_type = MarioType;
 
 		explicit Mario(const std::string& name, int zindex);
 

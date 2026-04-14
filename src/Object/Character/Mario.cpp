@@ -1,5 +1,7 @@
 ﻿#include "Object/Character/Mario.hpp"
+#include "Object/Character/MarioAttributes.hpp"
 #include "Object/ImageObject.hpp"
+#include "AssetManager.hpp"
 #include "Util/Input.hpp"
 #include "config.hpp"
 #include "FilePath.hpp"
@@ -27,7 +29,7 @@ Mario::Mario(const std::string& name, int zindex)
     changeType(Mario_type::Mario);
 }
 
-void Mario::changeType(Mario_type type_) {
+void Mario::changeType(Mario_type type_) noexcept {
     auto oldSize = GetSize();
     mario_type = type_;
     
@@ -160,7 +162,7 @@ void Mario::StandCheck() noexcept {}
 // --- Fire Implementation ---
 
 Fire::Fire(const std::string& name, float zIndex, const glm::vec2& pivot)
-    : ImageObject(name, AssetManager::GetInstance().GetImage(Frame[0]), zIndex, pivot) {
+    : ImageObject(name, std::static_pointer_cast<Core::Drawable>(::MyAPP::AssetManager::GetInstance().GetImage(Frame[0])), zIndex, pivot) {
     MyType = ObjectType::Fire;
 }
 

@@ -1,0 +1,13 @@
+# Gemini CLI ignore file
+build/
+build_gemini/
+build_new/
+cmake-build-debug/
+out/
+bin/
+obj/
+*.exe
+*.obj
+*.pdb
+*.ilk
+build_output.txt
